@@ -6,6 +6,11 @@ test: cargo-build target-dir
 	clang test.c lib-ruby-parser-c-bindings/target/debug/liblib_ruby_parser_c_bindings.a -o target/test
 	./target/test
 
+valgrind:
+	valgrind --leak-check=full --error-exitcode=1 ./target/test
+
+test-all: test valgrind
+
 target-dir:
 	mkdir -p target
 

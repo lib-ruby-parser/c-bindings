@@ -1,114 +1,112 @@
 extern crate bindgen;
 extern crate lib_ruby_parser_nodes;
 
-use lib_ruby_parser_nodes::{FieldType, Node};
+use lib_ruby_parser_nodes::FieldType;
+use std::collections::HashSet;
 use std::path::Path;
 
-fn fields(node: &Node) -> String {
-    let mut result = "".to_owned();
-
-    for field in node.fields.iter() {
-        let field_name = match &field.field_name[..] {
-            "default" => "default_",
-            other => other,
-        };
-
-        let field_declaration = match field.field_type {
-            FieldType::Node => format!("struct Node *{}", field_name),
-            FieldType::Nodes => format!("struct NodeList *{}", field_name),
-            FieldType::MaybeNode => format!("struct Node *{}", field_name),
-            FieldType::Range => format!("struct Range *{}", field_name),
-            FieldType::MaybeRange => format!("struct Range *{}", field_name),
-            FieldType::Str => format!("struct StringValue *{}", field_name),
-            FieldType::MaybeStr => format!("struct StringValue *{}", field_name),
-            FieldType::Chars => format!("struct StringValue *{}", field_name),
-            FieldType::StringValue => format!("struct StringValue *{}", field_name),
-            FieldType::U8 => format!("unsigned char {}", field_name),
-            FieldType::Usize => format!("size_t {}", field_name),
-            FieldType::RawString => format!("struct StringValue *{}", field_name),
-            FieldType::RegexOptions => format!("struct StringValue *{}", field_name),
-        };
-
-        result.push_str(&format!("    {};\n", field_declaration));
-    }
-
-    result
+fn sorted_set<T: std::cmp::Ord>(set: HashSet<T>) -> Vec<T> {
+    let mut vec = set.into_iter().collect::<Vec<_>>();
+    vec.sort();
+    vec
 }
 
 fn build_c_files() {
-    let nodes = &lib_ruby_parser_nodes::nodes().unwrap();
-    let target_dir = Path::new(file!())
+    let nodes = lib_ruby_parser_nodes::nodes().unwrap();
+
+    let mut node_methods = HashSet::new();
+    let mut node_list_methods = HashSet::new();
+    let mut range_methods = HashSet::new();
+    let mut string_methods = HashSet::new();
+    let mut usize_methods = HashSet::new();
+
+    let mut structs = "".to_owned();
+
+    for node in nodes.iter() {
+        structs.push_str(&format!("struct {}\n{{\n}};\n", node.struct_name));
+
+        for node in node.fields.iter() {
+            let field_name = node.field_name.to_owned();
+            match node.field_type {
+                FieldType::Node | FieldType::MaybeNode => {
+                    node_methods.insert(field_name.to_owned());
+                }
+                FieldType::Nodes => {
+                    node_list_methods.insert(field_name.to_owned());
+                }
+                FieldType::Range | FieldType::MaybeRange => {
+                    range_methods.insert(field_name.to_owned());
+                }
+                FieldType::Str
+                | FieldType::MaybeStr
+                | FieldType::Chars
+                | FieldType::StringValue
+                | FieldType::RawString
+                | FieldType::RegexOptions => {
+                    string_methods.insert(field_name.to_owned());
+                }
+                FieldType::U8 | FieldType::Usize => {
+                    usize_methods.insert(field_name.to_owned());
+                }
+            }
+        }
+    }
+
+    let mut fns = "".to_owned();
+    for mid in sorted_set(node_methods).iter() {
+        fns.push_str(&format!(
+            "extern struct Node *get_{}_node(struct Node *node);\n",
+            mid
+        ));
+    }
+    for mid in sorted_set(node_list_methods).iter() {
+        fns.push_str(&format!(
+            "extern struct Node *get_{}_list(struct Node *node);\n",
+            mid
+        ));
+
+        fns.push_str(&format!(
+            "extern size_t get_{}_length(struct Node *node);\n",
+            mid
+        ));
+    }
+    for mid in sorted_set(range_methods).iter() {
+        fns.push_str(&format!(
+            "extern struct Range *get_{}(struct Node *node);\n",
+            mid
+        ));
+    }
+    for mid in sorted_set(string_methods).iter() {
+        fns.push_str(&format!("extern char *get_{}(struct Node *node);\n", mid));
+    }
+
+    for mid in sorted_set(usize_methods).iter() {
+        fns.push_str(&format!("extern size_t *get_{}(struct Node *node);\n", mid));
+    }
+
+    let target_file = Path::new(file!())
         .parent()
         .unwrap()
-        .join("../includes/gen")
+        .join("../includes/gen.h")
         .to_str()
         .unwrap()
         .to_owned();
 
-    std::fs::create_dir_all(&target_dir).unwrap();
+    let contents = format!(
+        "#ifndef LIB_RUBY_PARSER_GEN_H
+#define LIB_RUBY_PARSER_GEN_H
 
-    let mut includes = "".to_owned();
-    let mut enum_code = "".to_owned();
-    let mut union_code = "".to_owned();
-
-    for node in nodes.iter() {
-        let mut contents = "".to_owned();
-        let guard = format!("NODE_{}_H", node.filename.to_uppercase());
-
-        contents.push_str(&format!(
-            "#ifndef {guard}\n#define {guard}\n\n",
-            guard = guard
-        ));
-        contents.push_str(
-            "#include \"node.h\"
-#include \"../range.h\"
 #include <stddef.h>
 
+{structs}
+{fns}
+#endif // LIB_RUBY_PARSER_GEN_H
 ",
-        );
-        contents.push_str(&format!("struct {}\n", node.struct_name));
-        contents.push_str("{\n");
-        contents.push_str(&fields(node));
-        contents.push_str("};\n\n");
-        contents.push_str(&format!("#endif // {}\n", guard));
-
-        std::fs::write(&format!("{}/{}.h", target_dir, node.filename), contents).unwrap();
-
-        includes.push_str(&format!("#include \"{}.h\"\n", node.filename));
-        enum_code.push_str(&format!("    {},\n", node.filename.to_uppercase()));
-        union_code.push_str(&format!(
-            "    struct {name} *{name};\n",
-            name = node.struct_name
-        ));
-    }
-
-    let root = format!(
-        "#ifndef NODE_NODE_H
-#define NODE_NODE_H
-
-{includes}
-enum NodeKind
-{{
-{enum_code}}};
-
-union InnerNode
-{{
-{union_code}}};
-
-struct Node
-{{
-    enum NodeKind kind;
-    union InnerNode inner;
-}};
-
-#endif // NODE_NODE_H
-",
-        includes = includes,
-        enum_code = enum_code,
-        union_code = union_code
+        structs = structs,
+        fns = fns
     );
 
-    std::fs::write(&format!("{}/node.h", target_dir), root).unwrap();
+    std::fs::write(&target_file, contents).unwrap();
 }
 
 fn build_bindings() {
@@ -136,7 +134,7 @@ fn build_bindings() {
 }
 
 fn main() {
-    // build_c_files();
+    build_c_files();
 
     build_bindings();
 }

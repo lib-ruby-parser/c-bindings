@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include "types.h"
+#include "gen.h"
 
 extern struct ParserResult *parse(
     const char *input, size_t length);
