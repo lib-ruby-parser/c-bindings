@@ -15,7 +15,6 @@ fn unwrap_parser_result_ptr(
 }
 
 #[no_mangle]
-#[allow(improper_ctypes_definitions)]
 pub extern "C" fn debug_format_parser_result(parser_result: *mut ParserResult) -> *mut u8 {
     match unwrap_parser_result_ptr(parser_result) {
         Some(data) => {
@@ -26,23 +25,6 @@ pub extern "C" fn debug_format_parser_result(parser_result: *mut ParserResult) -
             std::mem::forget(bytes);
             ptr
         }
-        None => std::ptr::null_mut(),
-    }
-}
-
-#[no_mangle]
-#[allow(improper_ctypes_definitions)]
-pub extern "C" fn inspect_format_parser_result(parser_result: *mut ParserResult) -> *mut u8 {
-    match unwrap_parser_result_ptr(parser_result) {
-        Some(data) => match &data.ast {
-            Some(ast) => {
-                let mut bytes = CString::new(ast.inspect(0)).unwrap().into_bytes_with_nul();
-                let ptr = bytes.as_mut_ptr();
-                std::mem::forget(bytes);
-                ptr
-            }
-            None => std::ptr::null_mut(),
-        },
         None => std::ptr::null_mut(),
     }
 }

@@ -11,7 +11,6 @@ extern struct ParserResult *parse(
 extern void parser_result_free(struct ParserResult *parser_result);
 
 extern char *debug_format_parser_result(struct ParserResult *parser_result);
-extern char *inspect_format_parser_result(struct ParserResult *parser_result);
 
 extern struct Node *extract_ast(struct ParserResult *parser_result);
 extern struct Tokens *extract_tokens(struct ParserResult *parser_result);
@@ -24,5 +23,7 @@ extern void tokens_free(struct Tokens *tokens);
 extern void diagnostics_free(struct Diagnostics *diagnostics);
 extern void comments_free(struct Comments *comments);
 extern void magic_comments_free(struct MagicComments *magic_comments);
+
+extern char *inspect_node(struct Node *node);
 
 #endif // LIB_RUBY_PARSER_H
