@@ -197,6 +197,21 @@ void test_debug_format_parser_result()
     free(actual);
 }
 
+void test_inspect_format_parser_result()
+{
+    struct ParserResult *result;
+    char *actual, *expected;
+
+    result = parse_code(valid_code);
+    actual = inspect_format_parser_result(result);
+    expected = "s(:send,\n"
+               "  s(:int, \"2\"), \"+\",\n"
+               "  s(:int, \"2\"))";
+    assert(strcmp(expected, actual) == 0);
+    parser_result_free(result);
+    free(actual);
+}
+
 int main()
 {
     test_parse();
@@ -208,5 +223,5 @@ int main()
     test_extract_magic_comments();
 
     test_debug_format_parser_result();
-    // test_inspect_format_parser_result();
+    test_inspect_format_parser_result();
 }
