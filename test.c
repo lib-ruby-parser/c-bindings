@@ -197,22 +197,77 @@ void test_debug_format_parser_result()
     free(actual);
 }
 
-void test_inspect_node()
+struct Node *get_ast(const char *code)
 {
     struct ParserResult *result;
     struct Node *ast;
+
+    result = parse_code(code);
+    ast = extract_ast(result);
+    parser_result_free(result);
+    return ast;
+}
+
+void test_inspect_node()
+{
+    struct Node *ast = get_ast(valid_code);
     char *actual, *expected;
 
-    result = parse_code(valid_code);
-    ast = extract_ast(result);
     actual = inspect_node(ast);
     expected = "s(:send,\n"
                "  s(:int, \"2\"), \"+\",\n"
                "  s(:int, \"2\"))";
     assert(strcmp(expected, actual) == 0);
-    parser_result_free(result);
     node_free(ast);
     free(actual);
+}
+
+void test_get_recv_node()
+{
+    struct Node *ast = get_ast(valid_code);
+    char *actual, *expected;
+
+    struct Node *receiver = get_recv_node(ast);
+    actual = inspect_node(receiver);
+
+    assert(strcmp("s(:int, \"2\")", actual) == 0);
+    node_free(ast);
+    free(actual);
+}
+
+void test_get_args_list()
+{
+    struct Node *ast = get_ast("foo(20, 30)");
+    char *actual, *expected;
+
+    struct NodeList *args = get_args_list(ast);
+    size_t len = args->length;
+
+    assert(len == 2);
+
+    actual = inspect_node(get_list_item(args, 0));
+    assert(strcmp("s(:int, \"20\")", actual) == 0);
+    free(actual);
+
+    actual = inspect_node(get_list_item(args, 1));
+    assert(strcmp("s(:int, \"30\")", actual) == 0);
+    free(actual);
+
+    node_free(ast);
+    free(args);
+}
+
+void test_node_kind()
+{
+    struct Node *ast = get_ast("foo(20, 'bar')");
+    struct NodeList *args = get_args_list(ast);
+
+    assert(node_kind(ast) == NODE_SEND);
+    assert(node_kind(get_list_item(args, 0)) == NODE_INT);
+    assert(node_kind(get_list_item(args, 1)) == NODE_STR_);
+
+    node_free(ast);
+    free(args);
 }
 
 int main()
@@ -227,4 +282,10 @@ int main()
 
     test_debug_format_parser_result();
     test_inspect_node();
+
+    test_get_recv_node();
+    test_get_args_list();
+    test_node_kind();
+
+    printf("all tests passed.\n");
 }

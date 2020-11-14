@@ -185,7 +185,9 @@ dependencies = [
 
 [[package]]
 name = "lib-ruby-parser-nodes"
-version = "0.1.0"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "53be91cb6447c62a5a6c16554c7dbb998e967dfb0b8e0bc71c47bef45b01268f"
 dependencies = [
  "serde",
  "serde_yaml",

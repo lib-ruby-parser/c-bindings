@@ -25,5 +25,7 @@ extern void comments_free(struct Comments *comments);
 extern void magic_comments_free(struct MagicComments *magic_comments);
 
 extern char *inspect_node(struct Node *node);
+extern struct Node *get_list_item(struct NodeList *list, size_t at);
+extern enum NodeType node_kind(struct Node *node);
 
 #endif // LIB_RUBY_PARSER_H

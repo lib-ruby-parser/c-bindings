@@ -19,4 +19,5 @@ cargo-build:
 
 clean:
 	rm -rf target
-	cd lib-ruby-parser-c-bindings && cargo clean
+	rm includes/gen.h
+	rm lib-ruby-parser-c-bindings/src/bindings.rs

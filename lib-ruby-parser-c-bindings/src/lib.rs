@@ -17,6 +17,8 @@ pub use parse_result::*;
 mod free;
 
 mod node;
+mod node_gen;
+pub use node_gen::*;
 
 pub fn leak_value<T>(value: T) -> &'static T {
     Box::leak(Box::new(value))

@@ -13,6 +13,13 @@ struct Node
     char dummy;
 };
 
+struct NodeList
+{
+    size_t length;
+    size_t capacity;
+    struct Node *head;
+};
+
 struct Tokens
 {
     char dummy;
