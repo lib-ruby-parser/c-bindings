@@ -89,5 +89,14 @@ You can find some examples in `main.c` and `test.c`.
 
         returns a `at`th item of the given `list`
 
++ `size_t range_begin(struct Range *range)`
 
+        returns `begin` of the given `range`. Equivalent to calling `range.begin_pos` in Rust.
 
++ `size_t range_end(struct Range *range)`
+
+        returns `end` of the given `range`. Equivalent to calling `range.end_pos` in Rust.
+
++ `size_t range_source(struct Range *range)`
+
+        returns `source` of the given `range`. Equivalent to calling `range.source()` in Rust.

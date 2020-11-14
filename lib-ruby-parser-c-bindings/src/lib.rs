@@ -20,6 +20,9 @@ mod node;
 mod node_gen;
 pub use node_gen::*;
 
+mod range;
+pub use range::*;
+
 pub fn leak_value<T>(value: T) -> &'static T {
     Box::leak(Box::new(value))
 }

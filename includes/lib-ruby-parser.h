@@ -28,4 +28,8 @@ extern char *inspect_node(struct Node *node);
 extern struct Node *get_list_item(struct NodeList *list, size_t at);
 extern enum NodeType node_kind(struct Node *node);
 
+extern size_t range_begin(struct Range *range);
+extern size_t range_end(struct Range *range);
+extern char *range_source(struct Range *range);
+
 #endif // LIB_RUBY_PARSER_H

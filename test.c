@@ -270,6 +270,21 @@ void test_node_kind()
     free(args);
 }
 
+void test_range()
+{
+    struct Node *ast = get_ast("foo(20, 'bar')");
+    struct Range *expression_l = get_expression_l(ast);
+
+    assert(range_begin(expression_l) == 0);
+    assert(range_end(expression_l) == 14);
+
+    char *source = range_source(expression_l);
+    assert(strcmp(source, "foo(20, 'bar')") == 0);
+    free(source);
+
+    node_free(ast);
+}
+
 int main()
 {
     test_parse();
@@ -286,6 +301,8 @@ int main()
     test_get_recv_node();
     test_get_args_list();
     test_node_kind();
+
+    test_range();
 
     printf("all tests passed.\n");
 }
