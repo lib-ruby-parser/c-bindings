@@ -81,6 +81,62 @@ pub extern \"C\" fn {method_name}(node: *mut Node) -> {return_type} {{
     }
 }
 
+impl From<&FieldType> for CFieldType {
+    fn from(field_type: &FieldType) -> Self {
+        match field_type {
+            FieldType::Node => Self::NodePtr,
+            FieldType::MaybeNode => Self::NodePtr,
+            FieldType::Nodes => Self::NodeListPtr,
+            FieldType::Range => Self::RangePtr,
+            FieldType::MaybeRange => Self::RangePtr,
+            FieldType::Str => Self::CharPtr,
+            FieldType::MaybeStr => Self::CharPtr,
+            FieldType::Chars => Self::CharPtr,
+            FieldType::StringValue => Self::CharPtr,
+            FieldType::RawString => Self::CharPtr,
+            FieldType::RegexOptions => Self::NodePtr,
+            FieldType::U8 => Self::SizeT,
+            FieldType::Usize => Self::SizeT,
+        }
+    }
+}
+
+fn handler_for_field_type(field_type: &FieldType) -> &'static str {
+    match field_type {
+        FieldType::Node => "boxed_node_to_ptr",
+        FieldType::MaybeNode => "maybe_boxed_node_to_ptr",
+        FieldType::Nodes => "nodes_vec_to_ptr",
+        FieldType::Range => "range_to_ptr",
+        FieldType::MaybeRange => "maybe_range_to_ptr",
+        FieldType::Str => "str_to_ptr",
+        FieldType::MaybeStr => "maybe_str_to_ptr",
+        FieldType::Chars => "chars_to_ptr",
+        FieldType::StringValue => "string_value_to_ptr",
+        FieldType::RawString => "str_to_ptr",
+        FieldType::RegexOptions => "maybe_boxed_node_to_ptr",
+        FieldType::U8 => "u8_to_size_t",
+        FieldType::Usize => "usize_to_size_t",
+    }
+}
+
+fn method_name_for_field_type(field_type: &FieldType, field_name: &str) -> String {
+    match field_type {
+        FieldType::Node => format!("get_{}_node", field_name),
+        FieldType::MaybeNode => format!("get_{}_node", field_name),
+        FieldType::Nodes => format!("get_{}_list", field_name),
+        FieldType::Range => format!("get_{}", field_name),
+        FieldType::MaybeRange => format!("get_{}", field_name),
+        FieldType::Str => format!("get_{}_str", field_name),
+        FieldType::MaybeStr => format!("get_{}_str", field_name),
+        FieldType::Chars => format!("get_{}_str", field_name),
+        FieldType::StringValue => format!("get_{}_str", field_name),
+        FieldType::RawString => format!("get_{}_str", field_name),
+        FieldType::RegexOptions => format!("get_{}_node", field_name),
+        FieldType::U8 => format!("get_{}_num", field_name),
+        FieldType::Usize => format!("get_{}_num", field_name),
+    }
+}
+
 struct NodeWithField {
     node_name: String,
     field_name: String,
@@ -150,132 +206,11 @@ impl FieldsRegistry {
     }
 
     fn add_field(&mut self, field_type: &FieldType, field_name: &str, node_name: &str) {
-        match field_type {
-            FieldType::Node => {
-                self.add_c_field(
-                    &CFieldType::NodePtr,
-                    field_name,
-                    "boxed_node_to_ptr",
-                    &format!("get_{}_node", field_name),
-                    node_name,
-                );
-            }
-            FieldType::MaybeNode => {
-                self.add_c_field(
-                    &CFieldType::NodePtr,
-                    field_name,
-                    "maybe_boxed_node_to_ptr",
-                    &format!("get_{}_node", field_name),
-                    node_name,
-                );
-            }
-            FieldType::Nodes => {
-                self.add_c_field(
-                    &CFieldType::NodeListPtr,
-                    field_name,
-                    "nodes_vec_to_ptr",
-                    &format!("get_{}_list", field_name),
-                    node_name,
-                );
-                self.add_c_field(
-                    &CFieldType::SizeT,
-                    field_name,
-                    "nodes_vec_len",
-                    &format!("get_{}_len", field_name),
-                    node_name,
-                );
-            }
-            FieldType::Range => {
-                self.add_c_field(
-                    &CFieldType::RangePtr,
-                    field_name,
-                    "range_to_ptr",
-                    &format!("get_{}", field_name),
-                    node_name,
-                );
-            }
-            FieldType::MaybeRange => {
-                self.add_c_field(
-                    &CFieldType::RangePtr,
-                    field_name,
-                    "maybe_range_to_ptr",
-                    &format!("get_{}", field_name),
-                    node_name,
-                );
-            }
-            FieldType::Str => {
-                self.add_c_field(
-                    &CFieldType::CharPtr,
-                    field_name,
-                    "str_to_ptr",
-                    &format!("get_{}_str", field_name),
-                    node_name,
-                );
-            }
-            FieldType::MaybeStr => {
-                self.add_c_field(
-                    &CFieldType::CharPtr,
-                    field_name,
-                    "maybe_str_to_ptr",
-                    &format!("get_{}_str", field_name),
-                    node_name,
-                );
-            }
-            FieldType::Chars => {
-                self.add_c_field(
-                    &CFieldType::CharPtr,
-                    field_name,
-                    "chars_to_ptr",
-                    &format!("get_{}_str", field_name),
-                    node_name,
-                );
-            }
-            FieldType::StringValue => {
-                self.add_c_field(
-                    &CFieldType::CharPtr,
-                    field_name,
-                    "string_value_to_ptr",
-                    &format!("get_{}_str", field_name),
-                    node_name,
-                );
-            }
-            FieldType::RawString => {
-                self.add_c_field(
-                    &CFieldType::CharPtr,
-                    field_name,
-                    "str_to_ptr",
-                    &format!("get_{}_str", field_name),
-                    node_name,
-                );
-            }
-            FieldType::RegexOptions => {
-                self.add_c_field(
-                    &CFieldType::NodePtr,
-                    field_name,
-                    "maybe_boxed_node_to_ptr",
-                    &format!("get_{}_node", field_name),
-                    node_name,
-                );
-            }
-            FieldType::U8 => {
-                self.add_c_field(
-                    &CFieldType::SizeT,
-                    field_name,
-                    "u8_to_size_t",
-                    &format!("get_{}_num", field_name),
-                    node_name,
-                );
-            }
-            FieldType::Usize => {
-                self.add_c_field(
-                    &CFieldType::SizeT,
-                    field_name,
-                    "usize_to_size_t",
-                    &format!("get_{}_num", field_name),
-                    node_name,
-                );
-            }
-        }
+        let c_field_type = CFieldType::from(field_type);
+        let handler = handler_for_field_type(field_type);
+        let method_name = method_name_for_field_type(field_type, field_name);
+
+        self.add_c_field(&c_field_type, field_name, handler, &method_name, node_name);
     }
 
     fn get(&self, c_field_type: &CFieldType) -> &HashMap<String, CFieldMeta> {

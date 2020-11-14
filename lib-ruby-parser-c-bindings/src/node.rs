@@ -92,10 +92,6 @@ pub mod helpers {
         chars.as_mut_ptr() as *mut u8
     }
 
-    pub fn nodes_vec_len<T>(vec: &mut Vec<T>) -> size_t {
-        vec.len() as size_t
-    }
-
     pub fn u8_to_size_t(v: &mut u8) -> size_t {
         *v as size_t
     }
