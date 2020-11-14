@@ -2,3 +2,4 @@ lib-ruby-parser-c-bindings/target
 target
 lib-ruby-parser-c-bindings/src/bindings.rs
 includes/gen.h
+lib-ruby-parser-c-bindings/src/node_gen.rs

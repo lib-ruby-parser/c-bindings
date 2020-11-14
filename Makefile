@@ -21,3 +21,4 @@ clean:
 	rm -rf target
 	rm includes/gen.h
 	rm lib-ruby-parser-c-bindings/src/bindings.rs
+	rm lib-ruby-parser-c-bindings/src/node_gen.rs
