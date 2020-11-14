@@ -1,9 +1,9 @@
 build: cargo-build target-dir
-	clang main.c lib-ruby-parser-c-bindings/target/debug/liblib_ruby_parser_c_bindings.a -o target/main
+	clang main.c lib-ruby-parser-c-bindings/target/debug/liblib_ruby_parser_c_bindings.a -lpthread -ldl -o target/main
 	./target/main
 
 test: cargo-build target-dir
-	clang test.c lib-ruby-parser-c-bindings/target/debug/liblib_ruby_parser_c_bindings.a -o target/test
+	clang test.c lib-ruby-parser-c-bindings/target/debug/liblib_ruby_parser_c_bindings.a -lpthread -ldl -o target/test
 	./target/test
 
 valgrind:
