@@ -5,24 +5,28 @@
 extern crate lib_ruby_parser;
 
 pub mod bindings;
+use bindings::ParserResult;
 
-mod ptr_unptr;
+use std::slice;
 
-mod parse;
-pub use parse::parse;
+#[no_mangle]
+pub extern "C" fn parse(input: *const u8, length: usize) -> *const ParserResult {
+    let input = unsafe { slice::from_raw_parts(input, length) };
+    let options = lib_ruby_parser::ParserOptions {
+        ..Default::default()
+    };
+    let parser_result = lib_ruby_parser::Parser::new(input, options)
+        .unwrap()
+        .do_parse();
 
-mod parse_result;
-pub use parse_result::*;
+    let parser_result = ParserResult::from(parser_result);
+    ptr_value(parser_result)
+}
 
-mod free;
-
-mod node;
 mod node_gen;
-pub use node_gen::*;
+mod to_c;
+pub use to_c::StringPtr;
 
-mod range;
-pub use range::*;
-
-pub fn leak_value<T>(value: T) -> &'static T {
-    Box::leak(Box::new(value))
+pub fn ptr_value<T>(value: T) -> *mut T {
+    Box::into_raw(Box::new(value))
 }

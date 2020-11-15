@@ -9,7 +9,7 @@ version = "0.1.0"
 crate-type = ["staticlib"]
 
 [dependencies]
-lib-ruby-parser = "0.2.0"
+lib-ruby-parser = {path = "../../lib-ruby-parser"}
 
 [build-dependencies]
 bindgen = "0.53.1"
