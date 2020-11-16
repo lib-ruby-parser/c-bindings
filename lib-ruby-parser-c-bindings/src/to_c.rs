@@ -14,7 +14,7 @@ fn vec_to_c_list<T, Target>(vec: Vec<T>, f: fn(T) -> Target) -> (*mut Target, si
     (ptr, len)
 }
 
-fn string_to_ptr(s: String) -> *mut i8 {
+pub fn string_to_ptr(s: String) -> *mut i8 {
     let mut bytes = CString::new(s).unwrap().into_bytes_with_nul();
     let ptr = bytes.as_mut_ptr();
     std::mem::forget(bytes);

@@ -1,24 +1,37 @@
-build: cargo-build target-dir
-	clang main.c lib-ruby-parser-c-bindings/target/debug/liblib_ruby_parser_c_bindings.a -lpthread -ldl -o target/main
-	./target/main
+CC = clang
+RUST_OBJ = lib-ruby-parser-c-bindings/target/debug/liblib_ruby_parser_c_bindings.a
+CC_DEFAULT_FLAGS = -g -lpthread -ldl
+TARGET_DIR = target
 
-test: cargo-build target-dir
-	clang test.c lib-ruby-parser-c-bindings/target/debug/liblib_ruby_parser_c_bindings.a -lpthread -ldl -o target/test
-	./target/test
+main: build-main
+	$(TARGET_DIR)/main
 
-valgrind:
-	valgrind --leak-check=full --error-exitcode=1 ./target/test
+build-main: cargo-build target-dir
+	$(CC) main.c $(RUST_OBJ) $(CC_DEFAULT_FLAGS) -o $(TARGET_DIR)/main
 
-test-all: test valgrind
+test: build-test
+	./$(TARGET_DIR)/test
+
+build-test: cargo-build target-dir
+	$(CC) test.c $(RUST_OBJ) $(CC_DEFAULT_FLAGS) -o $(TARGET_DIR)/test
+
+test-valgrind: build-test
+	valgrind --leak-check=full --error-exitcode=1 ./$(TARGET_DIR)/test
+
+test-asan:
+	$(CC) main.c $(RUST_OBJ) -fsanitize=address $(CC_DEFAULT_FLAGS) -o $(TARGET_DIR)/main
+	./$(TARGET_DIR)/test
+
+test-all: test test-valgrind test-asan
 
 target-dir:
-	mkdir -p target
+	mkdir -p $(TARGET_DIR)
 
 cargo-build:
 	cd lib-ruby-parser-c-bindings && cargo build
 
 clean:
-	rm -rf target
+	rm -rf $(TARGET_DIR)
 	rm includes/gen.h
 	rm lib-ruby-parser-c-bindings/src/bindings.rs
 	rm lib-ruby-parser-c-bindings/src/node_gen.rs

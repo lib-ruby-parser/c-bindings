@@ -56,18 +56,16 @@ union InnerNode
 struct Node
 {{
     enum NodeType node_type;
-    union InnerNode inner;
+    union InnerNode *inner;
 }};
 
-void node_free(struct Node *node)
+void inner_node_free(union InnerNode *inner_node, enum NodeType node_type)
 {{
-    if (node == NULL) {{
-        return;
-    }}
-    switch (node->node_type)
+    switch (node_type)
     {{
-{node_free_branches}
+{inner_node_free_branches}
     }}
+    free(inner_node);
 }}
 
 #endif // LIB_RUBY_PARSER_GEN_H
@@ -75,7 +73,7 @@ void node_free(struct Node *node)
             node_structs = node_structs,
             node_enum = node_enum,
             variants = self.variants(),
-            node_free_branches = self.node_free_branches_code()
+            inner_node_free_branches = self.inner_node_free_branches_code()
         )
     }
 
@@ -93,13 +91,13 @@ void node_free(struct Node *node)
             .join("\n")
     }
 
-    fn node_free_branches_code(&self) -> String {
+    fn inner_node_free_branches_code(&self) -> String {
         self.rust_nodes
             .iter()
             .map(|node| {
                 format!(
                     "    case NODE_{upper}:
-        {lower}_node_free(node->inner._{lower});
+        {lower}_node_free(inner_node->_{lower});
         break;",
                     upper = node.filename.to_uppercase(),
                     lower = node.filename.to_lowercase()

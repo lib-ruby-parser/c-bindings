@@ -27,6 +27,13 @@ impl CFieldType {
         }
     }
 
+    pub fn is_nullable(&self) -> bool {
+        match self {
+            Self::NodePtr | Self::NodeList | Self::RangePtr | Self::CharPtr => true,
+            Self::SizeT => false,
+        }
+    }
+
     pub fn declaration_code(&self) -> String {
         match &self {
             Self::NodePtr => "struct Node *",

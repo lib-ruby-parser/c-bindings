@@ -19,9 +19,22 @@ impl<'a> CField<'a> {
     }
 
     pub fn free_code(&self) -> Option<String> {
-        match CFieldType::new(&self.rust_field.field_type).free_fn_name() {
-            Some(fn_name) => Some(format!("    {}(node->{});", fn_name, self.field_name())),
-            None => None,
+        let c_field_type = CFieldType::new(&self.rust_field.field_type);
+
+        if c_field_type.is_nullable() {
+            Some(format!(
+                "    if (node->{field} != NULL) {{
+        {fn_name}(node->{field});
+    }}",
+                fn_name = c_field_type.free_fn_name()?,
+                field = self.field_name()
+            ))
+        } else {
+            Some(format!(
+                "    {fn_name}(node->{field});",
+                fn_name = c_field_type.free_fn_name()?,
+                field = self.field_name()
+            ))
         }
     }
 

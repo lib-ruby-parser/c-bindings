@@ -28,9 +28,7 @@ struct {struct_name}
 
 void {name_lower}_node_free(struct {struct_name} *node)
 {{
-    printf(\"{name_lower}_node_free\\n\");
 {free_fields}
-    printf(\"removing inner {name_lower} node\\n\");
     free(node);
 }}",
             struct_name = self.rust_node.struct_name,

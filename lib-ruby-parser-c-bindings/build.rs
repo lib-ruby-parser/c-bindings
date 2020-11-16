@@ -42,6 +42,7 @@ fn build_bindings() {
     let bindings = bindgen::Builder::default()
         .header(types_h)
         .parse_callbacks(Box::new(bindgen::CargoCallbacks))
+        .derive_debug(false)
         .generate()
         .expect("Unable to generate bindings");
 
