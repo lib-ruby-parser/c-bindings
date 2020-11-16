@@ -4,99 +4,83 @@ You can find some examples in `main.c` and `test.c`.
 
 ## API
 
-+ `struct ParserResult *parse(const char *input, size_t length)`
+1. `struct ParserResult *parse(const char *input, size_t length)`
 
-        parses given input into `ParserResult` (a wrapper around Rust struct)
+    Parses given input into `ParserResult`
 
-+ `void parser_result_free(struct ParserResult *parser_result)`
+    ```c
+    const char *input = "2 + 2";
+    struct ParserResult *result = parse(input, strlen(input));
+    struct Node *node = result->ast;
+    struct Tokens *tokens = result->tokens;
+    struct Diagnostics *diagnostics = result->diagnostics;
+    struct Comments *comments = result->comments;
+    struct MagicComments *magic_comments = result->magic_comments;
+    ```
+2. `void parser_result_free(struct ParserResult *result)`
 
-        deallocates the memory of the `ParserResult`
+    Deallocates the memory of the `ParserResult`, recursively `free`s all fields
 
-+ `struct Node *extract_ast(struct ParserResult *parser_result)`
+3. `node->node_type` and `node->inner`
 
-        extracts `ast` field from the `ParserResult` and return `Node` (a wrapper around Rust struct)
+    Generic `Node` struct has only two fields: `node_type` and `inner`.
+    `node_type` is an enum that can be used to identifier which variant of the `inner` union should be used.
 
-+ `void node_free(struct Node *node)`
+    ```c
+    assert(node->node_type == NODE_SEND);
+    struct Send *send = node->inner->_send;
+    ```
 
-        deallocates the memory of the `Node`, must be used only on `Node` that is extracted from the `ParserResult`
+    This way you can "unwrap" generic node and convert it into specific node type.
+    Specialized node types fully mirror API of Rust nodes, check [full documentation](https://docs.rs/lib-ruby-parser) to understand what is a specialized `Node`.
 
-+ `struct Tokens *extract_tokens(struct ParserResult *parser_result)`
+4. `char *debug_fmt_ast(struct Node *node)`
 
-        extracts `tokens` field from the `ParserResult` and returns `Tokens` struct (a wrapper around `Vec<Token>`)
+    Returns a pretty-printed debug representation of the given `node`
 
-+ `void tokens_free(struct Tokens *tokens)`
+    ```c
+    const char *code = "2 + 2"
+    printf("%s\n", debug_fmt_ast(parse(code, strlen(code))));
+    ```
 
-        deallocates the memory of the `Tokens`, must be used only on `Tokens` that is extracted from the `ParserResult`
+    prints
 
-+ `struct Diagnostics *extract_diagnostics(struct ParserResult *parser_result)`
+    ```
+    Send {
+        recv: Int {
+            value: "2",
+            operator_l: None,
+            expression_l: Range {
+                begin_pos: 0,
+                end_pos: 1,
+            },
+        },
+        method_name: "+",
+        args: [
+            Int {
+                value: "2",
+                operator_l: None,
+                expression_l: Range {
+                    begin_pos: 4,
+                    end_pos: 5,
+                },
+            },
+        ],
+        dot_l: None,
+        selector_l: Range {
+            begin_pos: 2,
+            end_pos: 3,
+        },
+        begin_l: None,
+        end_l: None,
+        operator_l: None,
+        expression_l: Range {
+            begin_pos: 0,
+            end_pos: 5,
+        },
+    }
+    ```
 
-        extracts `diagnostics` field from the `ParserResult` and returns `Diagnostis` struct (a wrapper around `Vec<Diagnostic>`)
+    It's based on Rust `std::fmt::Debug` trait. Its implementation is fully custom, because it needs to walk through pointers.
 
-+ `void diagnostics_free(struct Diagnostics *diagnostics)`
-
-        deallocates the memory of the `Diagnostics`, must be used only on `Diagnostics` that is extracted from the `ParserResult`
-
-+ `struct Comments *extract_comments(struct ParserResult *parser_result)`
-
-        extracts `comments` field from the `ParserResult` and returns `Comments` struct (a wrapper around `Vec<Comment>`)
-
-+ `void comments_free(struct Comments *comments)`
-
-        deallocates the memory of the `Comments`, must be used only on `Comments` that is extracted from the `ParserResult`
-
-+ `struct MagicComments *extract_magic_comments(struct ParserResult *parser_result)`
-
-        extracts `magic_comments` field from the `ParserResult` and returns `MagicComments` struct (a wrapper around `Vec<MagicComment>`)
-
-+ `void magic_comments_free(struct MagicComments *magic_comments)`
-
-        deallocates the memory of the `MagicComments`, must be used only on `MagicComments` that is extracted from the `ParserResult`
-
-
-+ `char *inspect_node(struct Node *node)`
-
-        returns a string representation of the `Node` in the format of `whitequark/parser`
-
-+ `enum NodeType node_kind(struct Node *node)`
-
-        returns kind of the node
-
-+ `struct Node *get_<NAME>_node(struct Node *node)`
-
-        returns a `Node` property  of the given `node` called `NAME`
-        e.g. for `Def` node (if you know that it's a `def` node) you can call `get_body_node` to get a `body` property.
-        This method should be used with `Box<Node>` and `Option<Box<Node>>` properties, check [documentation of `lib-ruby-parser`](https://docs.rs/lib-ruby-parser)
-
-+ `struct NodeList *get_<NAME>_list(struct Node *node)`
-
-        returns a `NodeList` property  of the given `node` called `NAME`
-        e.g. for `Hash` node (if you know that it's a `hash` node) you can call `get_pairs_list` to get a `pairs` property.
-        This method should be used with `Vec<Node>` properties, check [documentation of `lib-ruby-parser`](https://docs.rs/lib-ruby-parser)
-
-+ `struct Range *get_<NAME>_l(struct Node *node)`
-
-        returns a `Range` property  of the given `node` called `NAME`
-        e.g. for `Send` node (if you know that it's a `send` node) you can call `get_dot_l` to get a `dot_l` property.
-        This method should be used with `Range` or `Option<Range>` properties, check [documentation of `lib-ruby-parser`](https://docs.rs/lib-ruby-parser)
-
-+ `char *get_<NAME>_str(struct Node *node)`
-
-        returns a `char *` property  of the given `node` called `NAME`
-        e.g. for `Lvar` node (if you know that it's a `lvar` node) you can call `get_name_str` to get a `name` property.
-        This method should be used with `String`, `Option<String>`, `Vec<char>` or `StringValue` properties, check [documentation of `lib-ruby-parser`](https://docs.rs/lib-ruby-parser)
-
-+ `struct Node *get_list_item(struct NodeList *list, size_t at)`
-
-        returns a `at`th item of the given `list`
-
-+ `size_t range_begin(struct Range *range)`
-
-        returns `begin` of the given `range`. Equivalent to calling `range.begin_pos` in Rust.
-
-+ `size_t range_end(struct Range *range)`
-
-        returns `end` of the given `range`. Equivalent to calling `range.end_pos` in Rust.
-
-+ `size_t range_source(struct Range *range)`
-
-        returns `source` of the given `range`. Equivalent to calling `range.source()` in Rust.
+    Keep in mind that `char *` that it returns must be `free`-ed manually.

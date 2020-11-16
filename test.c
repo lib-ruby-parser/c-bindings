@@ -111,6 +111,8 @@ void test_debug_format()
 
     assert_str_eq(actual, expected);
 
+    printf("%s\n", actual);
+
     parser_result_free(result);
     free(actual);
 }
