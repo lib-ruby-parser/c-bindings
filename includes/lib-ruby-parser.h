@@ -26,6 +26,11 @@ void diagnostics_free(struct Diagnostics *diagnostics)
 {
     if (diagnostics->len > 0)
     {
+        for (size_t i = 0; i < diagnostics->len; i++)
+        {
+            struct Diagnostic diagnostic = diagnostics->list[i];
+            free(diagnostic.message);
+        }
         free(diagnostics->list);
     }
     free(diagnostics);

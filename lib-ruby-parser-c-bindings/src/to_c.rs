@@ -89,8 +89,17 @@ impl From<Vec<lib_ruby_parser::Diagnostic>> for Diagnostics {
 }
 
 impl From<lib_ruby_parser::Diagnostic> for Diagnostic {
-    fn from(_: lib_ruby_parser::Diagnostic) -> Self {
-        todo!()
+    fn from(diagnostic: lib_ruby_parser::Diagnostic) -> Self {
+        let level = match diagnostic.level {
+            lib_ruby_parser::ErrorLevel::Warning => ErrorLevel_WARNING,
+            lib_ruby_parser::ErrorLevel::Error => ErrorLevel_ERROR,
+        };
+        let message = string_to_ptr(diagnostic.render_message());
+        Diagnostic {
+            level,
+            message,
+            range: Range::from(diagnostic.range),
+        }
     }
 }
 

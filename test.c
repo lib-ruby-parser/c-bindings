@@ -144,11 +144,31 @@ void test_tokens()
     parser_result_free(result);
 }
 
+#define assert_diagnostic(diagnostic, expected_level, expected_message, expected_begin, expected_end) \
+    assert_eq(diagnostic.level, expected_level);                                                      \
+    assert_str_eq(diagnostic.message, expected_message);                                              \
+    assert_eq(diagnostic.range.begin_pos, expected_begin);                                            \
+    assert_eq(diagnostic.range.end_pos, expected_end);
+
+void test_diagnostics()
+{
+    struct ParserResult *result = parse_code("self = 1; nil = 2");
+    struct Diagnostics *diagnostics = result->diagnostics;
+
+    assert_eq(diagnostics->len, 2);
+
+    assert_diagnostic(diagnostics->list[0], ERROR, "Can't change the value of self", 0, 4);
+    assert_diagnostic(diagnostics->list[1], ERROR, "Can't assign to nil", 10, 13);
+
+    parser_result_free(result);
+}
+
 int main()
 {
     test_parse();
     test_debug_format();
     test_tokens();
+    test_diagnostics();
 
     printf("all tests passed.\n");
 }
