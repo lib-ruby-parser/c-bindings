@@ -95,5 +95,6 @@ void range_free(struct Range *range)
 }
 
 extern char *debug_fmt_ast(struct Node *node);
+extern char *token_name(int token_type);
 
 #endif // LIB_RUBY_PARSER_H

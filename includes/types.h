@@ -28,15 +28,10 @@ enum ErrorLevel
     ERROR
 };
 
-struct DiagnosticMessage
-{
-    char dummy;
-};
-
 struct Diagnostic
 {
     enum ErrorLevel level;
-    struct DiagnosticMessage *message;
+    char *message;
     struct Range range;
 };
 

@@ -69,3 +69,9 @@ pub extern "C" fn debug_fmt_ast(node: *mut bindings::Node) -> *mut i8 {
     let node = unsafe { *node };
     string_to_ptr(format!("{:#?}", node))
 }
+
+#[no_mangle]
+pub extern "C" fn token_name(id: i32) -> *mut i8 {
+    let token_name = lib_ruby_parser::token_name(id);
+    string_to_ptr(token_name)
+}
