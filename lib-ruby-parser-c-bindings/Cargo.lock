@@ -163,11 +163,11 @@ checksum = "830d08ce1d1d941e6b30645f1a0eb5643013d835ce3779a5fc208261dbe10f55"
 
 [[package]]
 name = "lib-ruby-parser"
-version = "0.4.0"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "74811ed57567011b57554b3473464e398a27c880d7c4d4e4a70763c67fbc796c"
+checksum = "e7f8a41f7a162ad3ea1dfb09458b51bca00a73e6e7d490c09eafec8e54379fa3"
 dependencies = [
- "lib-ruby-parser-nodes 0.1.0",
+ "lib-ruby-parser-nodes",
  "onig",
  "rust-bison-skeleton",
 ]
@@ -178,24 +178,14 @@ version = "0.1.0"
 dependencies = [
  "bindgen",
  "lib-ruby-parser",
- "lib-ruby-parser-nodes 0.2.0",
+ "lib-ruby-parser-nodes",
 ]
 
 [[package]]
 name = "lib-ruby-parser-nodes"
-version = "0.1.0"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2aaa648d6244aea705c85db050579b4f680d58e677bb10d6ed63501872489ffe"
-dependencies = [
- "serde",
- "serde_yaml",
-]
-
-[[package]]
-name = "lib-ruby-parser-nodes"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "53be91cb6447c62a5a6c16554c7dbb998e967dfb0b8e0bc71c47bef45b01268f"
+checksum = "62974193d5ffb2a9e90d51b30b8b028a69da4dd152672114912c17e9dafba50f"
 dependencies = [
  "serde",
  "serde_yaml",

@@ -132,7 +132,7 @@ class A::B < ::C
             foo
         end
 
-        { foo: bar, :baz => foo }
+        { 'foo': bar, :baz => foo }
 
         if foo then bar else baz; end
         foo if bar
