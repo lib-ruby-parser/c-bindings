@@ -36,6 +36,7 @@ impl From<lib_ruby_parser::ParserResult> for ParserResult {
             diagnostics,
             comments,
             magic_comments,
+            input,
         } = parser_result;
 
         ParserResult {
@@ -48,6 +49,7 @@ impl From<lib_ruby_parser::ParserResult> for ParserResult {
             diagnostics: ptr_value(Diagnostics::from(diagnostics)),
             comments: ptr_value(Comments::from(comments)),
             magic_comments: ptr_value(MagicComments::from(magic_comments)),
+            input: vec_to_ptr(input.bytes),
         }
     }
 }

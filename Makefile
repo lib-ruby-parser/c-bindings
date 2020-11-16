@@ -18,7 +18,7 @@ build-test: cargo-build target-dir
 test-valgrind: build-test
 	valgrind --leak-check=full --error-exitcode=1 ./$(TARGET_DIR)/test
 
-test-asan:
+test-asan: build-test
 	$(CC) main.c $(RUST_OBJ) -fsanitize=address $(CC_DEFAULT_FLAGS) -o $(TARGET_DIR)/main
 	./$(TARGET_DIR)/test
 

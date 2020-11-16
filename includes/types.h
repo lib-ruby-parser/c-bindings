@@ -79,6 +79,7 @@ struct ParserResult
     struct Diagnostics *diagnostics;
     struct Comments *comments;
     struct MagicComments *magic_comments;
+    char *input;
 };
 
 #endif // LIB_RUBY_PARSER_TYPES_H

@@ -15,9 +15,7 @@ pub extern "C" fn parse(input: *const u8, length: usize) -> *const ParserResult 
     let options = lib_ruby_parser::ParserOptions {
         ..Default::default()
     };
-    let parser_result = lib_ruby_parser::Parser::new(input, options)
-        .unwrap()
-        .do_parse();
+    let parser_result = lib_ruby_parser::Parser::new(input, options).do_parse();
 
     let parser_result = ParserResult::from(parser_result);
     ptr_value(parser_result)

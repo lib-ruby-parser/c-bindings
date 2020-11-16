@@ -163,13 +163,11 @@ checksum = "830d08ce1d1d941e6b30645f1a0eb5643013d835ce3779a5fc208261dbe10f55"
 
 [[package]]
 name = "lib-ruby-parser"
-version = "0.3.0"
+version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7af7e4f1df7a8d31c4e450e9ebdf2180a9f392c82cf1ea5d3b566118457d8ebe"
+checksum = "74811ed57567011b57554b3473464e398a27c880d7c4d4e4a70763c67fbc796c"
 dependencies = [
- "lazy_static",
  "lib-ruby-parser-nodes 0.1.0",
- "regex",
  "rust-bison-skeleton",
 ]
 
@@ -299,9 +297,9 @@ checksum = "3b181ba2dcf07aaccad5448e8ead58db5b742cf85dfe035e2227f137a539a189"
 
 [[package]]
 name = "rust-bison-skeleton"
-version = "0.6.0"
+version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "356c49de3e347796600ed41e70df6091c2564ef192bdd23e7919f29d25afd8fa"
+checksum = "4cb780b6383f9748cf633fda49b163ea7ecae4119bd91fe71a669ec2f7c6936e"
 
 [[package]]
 name = "rustc-hash"
