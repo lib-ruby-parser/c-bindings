@@ -16,6 +16,7 @@ You can find some examples in `main.c` and `test.c`.
     struct Diagnostics *diagnostics = result->diagnostics;
     struct Comments *comments = result->comments;
     struct MagicComments *magic_comments = result->magic_comments;
+    char *input = result->input;
     ```
 2. `void parser_result_free(struct ParserResult *result)`
 
@@ -84,3 +85,11 @@ You can find some examples in `main.c` and `test.c`.
     It's based on Rust `std::fmt::Debug` trait. Its implementation is fully custom, because it needs to walk through pointers.
 
     Keep in mind that `char *` that it returns must be `free`-ed manually.
+
+5. `size_t range_size(struct Range *range)`
+
+    Returns size of the range (literally `end_pos - begin_pos`)
+
+6. `char *range_source(struct Range *range, char *input)`
+
+    Returns source of the given range. `input` is a field of the `ParserResult` struct.

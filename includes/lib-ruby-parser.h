@@ -2,6 +2,7 @@
 #define LIB_RUBY_PARSER_H
 
 #include <stddef.h>
+#include <string.h>
 #include "types.h"
 #include "gen.h"
 
@@ -102,5 +103,32 @@ void range_free(struct Range *range)
 
 extern char *debug_fmt_ast(struct Node *node);
 extern char *token_name(int token_type);
+
+size_t range_size(struct Range *range)
+{
+    if (range == NULL)
+    {
+        return 0;
+    }
+    return range->end_pos - range->begin_pos;
+}
+
+char *range_source(struct Range *range, const char *input)
+{
+    if (range == NULL)
+    {
+        return NULL;
+    }
+    if (range->end_pos > strlen(input))
+    {
+        return NULL;
+    }
+
+    size_t size = range_size(range);
+    char *source = malloc(size + 1);
+    memcpy(source, &input[range->begin_pos], size);
+    source[size] = '\0';
+    return source;
+}
 
 #endif // LIB_RUBY_PARSER_H

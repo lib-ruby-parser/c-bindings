@@ -196,6 +196,19 @@ void test_magic_comments()
     parser_result_free(result);
 }
 
+void test_range()
+{
+    struct ParserResult *result = parse_code("2 + 2");
+    struct Range *expression_l = result->ast->inner->_send->expression_l;
+
+    assert_eq(range_size(expression_l), 5);
+    char *source = range_source(expression_l, result->input);
+    assert_str_eq(source, "2 + 2");
+
+    free(source);
+    parser_result_free(result);
+}
+
 int main()
 {
     test_parse();
@@ -204,6 +217,8 @@ int main()
     test_diagnostics();
     test_comments();
     test_magic_comments();
+
+    test_range();
 
     printf("all tests passed.\n");
 }

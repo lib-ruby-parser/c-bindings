@@ -28,6 +28,13 @@ fn vec_to_ptr(vec: Vec<u8>) -> *mut i8 {
     ptr as *mut i8
 }
 
+fn input_to_ptr(input: lib_ruby_parser::source::buffer::Input) -> *mut i8 {
+    let mut bytes = CString::new(input.bytes).unwrap().into_bytes_with_nul();
+    let ptr = bytes.as_mut_ptr();
+    std::mem::forget(bytes);
+    ptr as *mut i8
+}
+
 impl From<lib_ruby_parser::ParserResult> for ParserResult {
     fn from(parser_result: lib_ruby_parser::ParserResult) -> Self {
         let lib_ruby_parser::ParserResult {
@@ -49,7 +56,7 @@ impl From<lib_ruby_parser::ParserResult> for ParserResult {
             diagnostics: ptr_value(Diagnostics::from(diagnostics)),
             comments: ptr_value(Comments::from(comments)),
             magic_comments: ptr_value(MagicComments::from(magic_comments)),
-            input: vec_to_ptr(input.bytes),
+            input: input_to_ptr(input),
         }
     }
 }
