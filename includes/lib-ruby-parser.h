@@ -23,6 +23,7 @@ void tokens_free(struct Tokens *tokens)
     }
     free(tokens);
 }
+
 void diagnostics_free(struct Diagnostics *diagnostics)
 {
     if (diagnostics->len > 0)
@@ -36,6 +37,7 @@ void diagnostics_free(struct Diagnostics *diagnostics)
     }
     free(diagnostics);
 }
+
 void comments_free(struct Comments *comments)
 {
     if (comments->len > 0)
@@ -44,6 +46,7 @@ void comments_free(struct Comments *comments)
     }
     free(comments);
 }
+
 void magic_comments_free(struct MagicComments *magic_comments)
 {
     if (magic_comments->len > 0)
@@ -94,10 +97,6 @@ void node_list_free(struct NodeList *node_list)
 
 void range_free(struct Range *range)
 {
-    if (range == NULL)
-    {
-        return;
-    }
     free(range);
 }
 
@@ -106,19 +105,11 @@ extern char *token_name(int token_type);
 
 size_t range_size(struct Range *range)
 {
-    if (range == NULL)
-    {
-        return 0;
-    }
     return range->end_pos - range->begin_pos;
 }
 
 char *range_source(struct Range *range, const char *input)
 {
-    if (range == NULL)
-    {
-        return NULL;
-    }
     if (range->end_pos > strlen(input))
     {
         return NULL;

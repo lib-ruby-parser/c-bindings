@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "includes/lib-ruby-parser.h"
 #include <assert.h>
+#include "includes/lib-ruby-parser.h"
 
 const char *invalid_code = "+";
 
@@ -205,8 +205,37 @@ void test_range()
     char *source = range_source(expression_l, result->input);
     assert_str_eq(source, "2 + 2");
 
+    struct Range invalid = {.begin_pos = 0, .end_pos = 10000};
+    assert_eq(range_source(&invalid, result->input), NULL);
+
     free(source);
     parser_result_free(result);
+}
+
+void test_all_nodes()
+{
+    char *fcontent = NULL;
+    int fsize = 0;
+    FILE *fp;
+
+    fp = fopen("all_nodes.rb", "r");
+
+    assert_not_null(fp);
+
+    fseek(fp, 0, SEEK_END);
+    fsize = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+
+    fcontent = malloc(fsize + 1);
+    fread(fcontent, 1, fsize, fp);
+    fcontent[fsize] = '\0';
+
+    struct ParserResult *result = parse_code(fcontent);
+    assert_not_null(result->ast);
+
+    parser_result_free(result);
+    free(fcontent);
+    fclose(fp);
 }
 
 int main()
@@ -219,6 +248,8 @@ int main()
     test_magic_comments();
 
     test_range();
+
+    test_all_nodes();
 
     printf("all tests passed.\n");
 }
