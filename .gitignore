@@ -3,3 +3,4 @@ target
 lib-ruby-parser-c-bindings/src/bindings.rs
 includes/gen.h
 lib-ruby-parser-c-bindings/src/node_gen.rs
+lib-ruby-parser-c-bindings/Cargo.lock
