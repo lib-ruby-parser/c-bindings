@@ -130,7 +130,7 @@ void test_debug_format()
 void test_tokens()
 {
     struct ParserResult *result = parse_code("2 + 3");
-    struct Tokens *tokens = result->tokens;
+    struct TokenList *tokens = result->tokens;
 
     assert_eq(tokens->len, 4);
     struct Token tok;
@@ -147,8 +147,8 @@ void test_tokens()
 #define assert_diagnostic(diagnostic, expected_level, expected_message, expected_begin, expected_end) \
     assert_eq(diagnostic.level, expected_level);                                                      \
     assert_str_eq(diagnostic.message, expected_message);                                              \
-    assert_eq(diagnostic.range.begin_pos, expected_begin);                                            \
-    assert_eq(diagnostic.range.end_pos, expected_end);
+    assert_eq(diagnostic.range->begin_pos, expected_begin);                                           \
+    assert_eq(diagnostic.range->end_pos, expected_end);
 
 void test_diagnostics()
 {
@@ -157,8 +157,8 @@ void test_diagnostics()
 
     assert_eq(diagnostics->len, 2);
 
-    assert_diagnostic(diagnostics->list[0], ERROR, "Can't change the value of self", 0, 4);
-    assert_diagnostic(diagnostics->list[1], ERROR, "Can't assign to nil", 10, 13);
+    assert_diagnostic(diagnostics->list[0], ERROR_LEVEL_ERROR, "Can't change the value of self", 0, 4);
+    assert_diagnostic(diagnostics->list[1], ERROR_LEVEL_ERROR, "Can't assign to nil", 10, 13);
 
     parser_result_free(result);
 }
@@ -166,12 +166,12 @@ void test_diagnostics()
 void test_comments()
 {
     struct ParserResult *result = parse_code("# foo\n# bar\nbaz");
-    struct Comments *comments = result->comments;
+    struct CommentList *comments = result->comments;
 
     assert_eq(comments->len, 2);
 
-    assert_range(&comments->list[0].location, 0, 6);
-    assert_range(&comments->list[1].location, 6, 12);
+    assert_range(comments->list[0].location, 0, 6);
+    assert_range(comments->list[1].location, 6, 12);
 
     parser_result_free(result);
 }
@@ -179,19 +179,19 @@ void test_comments()
 void test_magic_comments()
 {
     struct ParserResult *result = parse_code("# warn-indent: true\n# frozen-string-literal: true\n# encoding: utf-8\n");
-    struct MagicComments *magic_comments = result->magic_comments;
+    struct MagicCommentList *magic_comments = result->magic_comments;
 
     assert_eq(magic_comments->list[0].kind, WARN_INDENT);
-    assert_range(&magic_comments->list[0].key_l, 2, 13);
-    assert_range(&magic_comments->list[0].value_l, 15, 19);
+    assert_range(magic_comments->list[0].key_l, 2, 13);
+    assert_range(magic_comments->list[0].value_l, 15, 19);
 
     assert_eq(magic_comments->list[1].kind, FROZEN_STRING_LITERAL);
-    assert_range(&magic_comments->list[1].key_l, 22, 43);
-    assert_range(&magic_comments->list[1].value_l, 45, 49);
+    assert_range(magic_comments->list[1].key_l, 22, 43);
+    assert_range(magic_comments->list[1].value_l, 45, 49);
 
     assert_eq(magic_comments->list[2].kind, ENCODING);
-    assert_range(&magic_comments->list[2].key_l, 52, 60);
-    assert_range(&magic_comments->list[2].value_l, 62, 67);
+    assert_range(magic_comments->list[2].key_l, 52, 60);
+    assert_range(magic_comments->list[2].value_l, 62, 67);
 
     parser_result_free(result);
 }

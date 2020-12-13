@@ -52,19 +52,19 @@ impl From<lib_ruby_parser::ParserResult> for ParserResult {
             } else {
                 std::ptr::null_mut()
             },
-            tokens: ptr_value(Tokens::from(tokens)),
+            tokens: ptr_value(TokenList::from(tokens)),
             diagnostics: ptr_value(Diagnostics::from(diagnostics)),
-            comments: ptr_value(Comments::from(comments)),
-            magic_comments: ptr_value(MagicComments::from(magic_comments)),
+            comments: ptr_value(CommentList::from(comments)),
+            magic_comments: ptr_value(MagicCommentList::from(magic_comments)),
             input: input_to_ptr(input),
         }
     }
 }
 
-impl From<Vec<lib_ruby_parser::Token>> for Tokens {
+impl From<Vec<lib_ruby_parser::Token>> for TokenList {
     fn from(tokens: Vec<lib_ruby_parser::Token>) -> Self {
         let (list, len) = vec_to_c_list(tokens, Token::from);
-        Tokens { list, len }
+        TokenList { list, len }
     }
 }
 
@@ -100,37 +100,37 @@ impl From<Vec<lib_ruby_parser::Diagnostic>> for Diagnostics {
 impl From<lib_ruby_parser::Diagnostic> for Diagnostic {
     fn from(diagnostic: lib_ruby_parser::Diagnostic) -> Self {
         let level = match diagnostic.level {
-            lib_ruby_parser::ErrorLevel::Warning => ErrorLevel_WARNING,
-            lib_ruby_parser::ErrorLevel::Error => ErrorLevel_ERROR,
+            lib_ruby_parser::ErrorLevel::Warning => ErrorLevel_ERROR_LEVEL_WARNING,
+            lib_ruby_parser::ErrorLevel::Error => ErrorLevel_ERROR_LEVEL_ERROR,
         };
         let message = string_to_ptr(diagnostic.render_message());
         Diagnostic {
             level,
             message,
-            range: Range::from(diagnostic.range),
+            range: ptr_value(Range::from(diagnostic.range)),
         }
     }
 }
 
-impl From<Vec<lib_ruby_parser::source::Comment>> for Comments {
+impl From<Vec<lib_ruby_parser::source::Comment>> for CommentList {
     fn from(comments: Vec<lib_ruby_parser::source::Comment>) -> Self {
         let (list, len) = vec_to_c_list(comments, Comment::from);
-        Comments { list, len }
+        CommentList { list, len }
     }
 }
 
 impl From<lib_ruby_parser::source::Comment> for Comment {
     fn from(comment: lib_ruby_parser::source::Comment) -> Self {
         Comment {
-            location: Range::from(comment.location),
+            location: ptr_value(Range::from(comment.location)),
         }
     }
 }
 
-impl From<Vec<lib_ruby_parser::source::MagicComment>> for MagicComments {
+impl From<Vec<lib_ruby_parser::source::MagicComment>> for MagicCommentList {
     fn from(magic_comments: Vec<lib_ruby_parser::source::MagicComment>) -> Self {
         let (list, len) = vec_to_c_list(magic_comments, MagicComment::from);
-        MagicComments { list, len }
+        MagicCommentList { list, len }
     }
 }
 
@@ -150,8 +150,8 @@ impl From<lib_ruby_parser::source::MagicComment> for MagicComment {
         };
         MagicComment {
             kind,
-            key_l: Range::from(key_l),
-            value_l: Range::from(value_l),
+            key_l: ptr_value(Range::from(key_l)),
+            value_l: ptr_value(Range::from(value_l)),
         }
     }
 }

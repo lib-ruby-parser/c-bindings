@@ -12,10 +12,10 @@ You can find some examples in `main.c` and `test.c`.
     const char *input = "2 + 2";
     struct ParserResult *result = parse(input, strlen(input));
     struct Node *node = result->ast;
-    struct Tokens *tokens = result->tokens;
+    struct TokenList *tokens = result->tokens;
     struct Diagnostics *diagnostics = result->diagnostics;
-    struct Comments *comments = result->comments;
-    struct MagicComments *magic_comments = result->magic_comments;
+    struct CommentList *comments = result->comments;
+    struct MagicCommentList *magic_comments = result->magic_comments;
     char *input = result->input;
     ```
 2. `void parser_result_free(struct ParserResult *result)`

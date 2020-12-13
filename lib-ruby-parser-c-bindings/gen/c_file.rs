@@ -28,22 +28,31 @@ impl CFile {
 
 struct Node;
 void node_free(struct Node *node);
-
-struct NodeList
+void maybe_node_free(struct Node *node)
 {{
-    size_t len;
-    struct Node *list;
-}};
+    if (node != NULL) {{
+        node_free(node);
+    }}
+}}
 
+struct NodeList;
 void node_list_free(struct NodeList *list);
-
-struct Range
+void maybe_node_list_free(struct NodeList *list)
 {{
-    size_t begin_pos;
-    size_t end_pos;
-}};
+    if (list != NULL) {{
+        node_list_free(list);
+    }}
+}}
+
+struct Range;
 void range_free(struct Range *range);
-void char_ptr_free(char *range);
+void maybe_range_free(struct Range *range)
+{{
+    if (range != NULL) {{
+        range_free(range);
+    }}
+}}
+
 {node_structs}
 
 {node_enum}
@@ -66,6 +75,12 @@ void inner_node_free(union InnerNode *inner_node, enum NodeType node_type)
 {inner_node_free_branches}
     }}
     free(inner_node);
+}}
+
+void node_free(struct Node *node)
+{{
+    inner_node_free(node->inner, node->node_type);
+    free(node);
 }}
 
 #endif // LIB_RUBY_PARSER_GEN_H
