@@ -63,7 +63,7 @@ impl InnerNode {{
             .iter()
             .map(|node| {
                 format!(
-                    "            lib_ruby_parser::Node::{name}(inner) => Node::from(*inner),",
+                    "            lib_ruby_parser::Node::{name}(inner) => Node::from(inner),",
                     name = node.struct_name
                 )
             })
