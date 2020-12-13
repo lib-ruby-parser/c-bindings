@@ -41,7 +41,6 @@ fn build_bindings() {
 
     let bindings = bindgen::Builder::default()
         .header(types_h)
-        .derive_debug(false)
         .whitelist_type("ParserOptions")
         .whitelist_type("ParserResult")
         .generate()

@@ -5,11 +5,9 @@
 #include <assert.h>
 #include "includes/lib-ruby-parser.h"
 
-const char *invalid_code = "+";
-
-struct ParserResult *parse_code(const char *code)
+struct ParserResult *parse_code(struct ParserOptions *options, const char *code)
 {
-    return parse(code, strlen(code));
+    return parse(options, code, strlen(code));
 }
 
 #define assert_not_null(obj) \
@@ -31,7 +29,7 @@ struct Node *WatchNode = NULL;
 
 void test_parse()
 {
-    struct ParserResult *result = parse_code("foo(100, 'baz')");
+    struct ParserResult *result = parse_code(NULL, "foo(100, 'baz')");
     assert_not_null(result);
 
     struct Node *node;
@@ -74,50 +72,6 @@ void test_parse()
     parser_result_free(result);
 }
 
-void test_debug_format()
-{
-    struct ParserResult *result = parse_code("2 + 2");
-    char *actual = debug_fmt_ast(result->ast);
-    char *expected = "Send {\n"
-                     "    recv: Int {\n"
-                     "        value: \"2\",\n"
-                     "        operator_l: None,\n"
-                     "        expression_l: Range {\n"
-                     "            begin_pos: 0,\n"
-                     "            end_pos: 1,\n"
-                     "        },\n"
-                     "    },\n"
-                     "    method_name: \"+\",\n"
-                     "    args: [\n"
-                     "        Int {\n"
-                     "            value: \"2\",\n"
-                     "            operator_l: None,\n"
-                     "            expression_l: Range {\n"
-                     "                begin_pos: 4,\n"
-                     "                end_pos: 5,\n"
-                     "            },\n"
-                     "        },\n"
-                     "    ],\n"
-                     "    dot_l: None,\n"
-                     "    selector_l: Range {\n"
-                     "        begin_pos: 2,\n"
-                     "        end_pos: 3,\n"
-                     "    },\n"
-                     "    begin_l: None,\n"
-                     "    end_l: None,\n"
-                     "    operator_l: None,\n"
-                     "    expression_l: Range {\n"
-                     "        begin_pos: 0,\n"
-                     "        end_pos: 5,\n"
-                     "    },\n"
-                     "}";
-
-    assert_str_eq(actual, expected);
-
-    parser_result_free(result);
-    free(actual);
-}
-
 #define assert_token(tok, expected_tok_name, expected_tok_value, expected_begin, expected_end) \
     tok_name = token_name(tok.token_type);                                                     \
     assert_str_eq(tok_name, expected_tok_name);                                                \
@@ -129,7 +83,7 @@ void test_debug_format()
 
 void test_tokens()
 {
-    struct ParserResult *result = parse_code("2 + 3");
+    struct ParserResult *result = parse_code(NULL, "2 + 3");
     struct TokenList *tokens = result->tokens;
 
     assert_eq(tokens->len, 4);
@@ -152,7 +106,7 @@ void test_tokens()
 
 void test_diagnostics()
 {
-    struct ParserResult *result = parse_code("self = 1; nil = 2");
+    struct ParserResult *result = parse_code(NULL, "self = 1; nil = 2");
     struct Diagnostics *diagnostics = result->diagnostics;
 
     assert_eq(diagnostics->len, 2);
@@ -165,7 +119,7 @@ void test_diagnostics()
 
 void test_comments()
 {
-    struct ParserResult *result = parse_code("# foo\n# bar\nbaz");
+    struct ParserResult *result = parse_code(NULL, "# foo\n# bar\nbaz");
     struct CommentList *comments = result->comments;
 
     assert_eq(comments->len, 2);
@@ -178,7 +132,7 @@ void test_comments()
 
 void test_magic_comments()
 {
-    struct ParserResult *result = parse_code("# warn-indent: true\n# frozen-string-literal: true\n# encoding: utf-8\n");
+    struct ParserResult *result = parse_code(NULL, "# warn-indent: true\n# frozen-string-literal: true\n# encoding: utf-8\n");
     struct MagicCommentList *magic_comments = result->magic_comments;
 
     assert_eq(magic_comments->list[0].kind, WARN_INDENT);
@@ -198,7 +152,7 @@ void test_magic_comments()
 
 void test_range()
 {
-    struct ParserResult *result = parse_code("2 + 2");
+    struct ParserResult *result = parse_code(NULL, "2 + 2");
     struct Range *expression_l = result->ast->inner->_send->expression_l;
 
     assert_eq(range_size(expression_l), 5);
@@ -230,7 +184,7 @@ void test_all_nodes()
     fread(fcontent, 1, fsize, fp);
     fcontent[fsize] = '\0';
 
-    struct ParserResult *result = parse_code(fcontent);
+    struct ParserResult *result = parse_code(NULL, fcontent);
     assert_not_null(result->ast);
 
     parser_result_free(result);
@@ -238,10 +192,54 @@ void test_all_nodes()
     fclose(fp);
 }
 
+char *decoded_source = "# encoding: us-ascii\n3";
+const char *decoding_error = "only US-ASCII is supported";
+
+char *copy_string(const char *source)
+{
+    size_t len = strlen(source);
+    char *out = (char *)malloc(len + 1);
+    strcpy(out, source);
+    return out;
+}
+
+struct DecoderOutput decoder(const char *encoding, const char *input, size_t len)
+{
+    if (strcmp(encoding, "US_ASCII") == 0)
+    {
+        return decode_ok(copy_string(decoded_source), strlen(decoded_source));
+    }
+
+    return decode_err(copy_string(decoding_error));
+}
+
+void test_custom_decoder_ok()
+{
+    struct ParserOptions options = {.buffer_name = "(test_custom_decoder_ok)", .debug = false, .decoder = decoder};
+    struct ParserResult *result = parse_code(&options, "# encoding: us-ascii\n2");
+
+    struct Node *node = assert_not_null(result->ast);
+    assert_eq(node->node_type, NODE_INT);
+    assert_str_eq(node->inner->_int->value, "3");
+
+    parser_result_free(result);
+}
+
+void test_custom_decoder_err()
+{
+    struct ParserOptions options = {.buffer_name = "(test_custom_decoder_ok)", .debug = false, .decoder = decoder};
+    struct ParserResult *result = parse_code(&options, "# encoding: koi8-r\n2");
+
+    assert_eq(result->ast, NULL);
+    assert_eq(result->diagnostics->len, 1);
+    assert_str_eq("encoding error: DecodingError(\"only US-ASCII is supported\")", result->diagnostics->list[0].message);
+
+    parser_result_free(result);
+}
+
 int main()
 {
     test_parse();
-    test_debug_format();
     test_tokens();
     test_diagnostics();
     test_comments();
@@ -250,6 +248,8 @@ int main()
     test_range();
 
     test_all_nodes();
+    test_custom_decoder_ok();
+    test_custom_decoder_err();
 
     printf("all tests passed.\n");
 }

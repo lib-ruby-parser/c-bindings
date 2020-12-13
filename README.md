@@ -35,57 +35,6 @@ You can find some examples in `main.c` and `test.c`.
     This way you can "unwrap" generic node and convert it into specific node type.
     Specialized node types fully mirror API of Rust nodes, check [full documentation](https://docs.rs/lib-ruby-parser) to understand what is a specialized `Node`.
 
-4. `char *debug_fmt_ast(struct Node *node)`
-
-    Returns a pretty-printed debug representation of the given `node`
-
-    ```c
-    const char *code = "2 + 2"
-    printf("%s\n", debug_fmt_ast(parse(code, strlen(code))));
-    ```
-
-    prints
-
-    ```
-    Send {
-        recv: Int {
-            value: "2",
-            operator_l: None,
-            expression_l: Range {
-                begin_pos: 0,
-                end_pos: 1,
-            },
-        },
-        method_name: "+",
-        args: [
-            Int {
-                value: "2",
-                operator_l: None,
-                expression_l: Range {
-                    begin_pos: 4,
-                    end_pos: 5,
-                },
-            },
-        ],
-        dot_l: None,
-        selector_l: Range {
-            begin_pos: 2,
-            end_pos: 3,
-        },
-        begin_l: None,
-        end_l: None,
-        operator_l: None,
-        expression_l: Range {
-            begin_pos: 0,
-            end_pos: 5,
-        },
-    }
-    ```
-
-    It's based on Rust `std::fmt::Debug` trait. Its implementation is fully custom, because it needs to walk through pointers.
-
-    Keep in mind that `char *` that it returns must be `free`-ed manually.
-
 5. `size_t range_size(struct Range *range)`
 
     Returns size of the range (literally `end_pos - begin_pos`)

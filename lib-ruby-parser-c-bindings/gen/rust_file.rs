@@ -15,7 +15,6 @@ impl RustFile {
             "use crate::bindings::*;
 use crate::StringPtr;
 use crate::ptr_value;
-use crate::debug_str_ptr;
 
 impl From<lib_ruby_parser::Node> for Node {{
     fn from(node: lib_ruby_parser::Node) -> Self {{
@@ -26,9 +25,6 @@ impl From<lib_ruby_parser::Node> for Node {{
 }}
 
 {from_impls}
-
-use std::fmt;
-{debug_impls}
 
 impl InnerNode {{
     pub fn to_debug_string(&self, node_type: u32) -> String {{
@@ -46,12 +42,6 @@ impl InnerNode {{
                 .nodes
                 .iter()
                 .map(|node| FromImplementation::new(node).code())
-                .collect::<Vec<_>>()
-                .join("\n"),
-            debug_impls = self
-                .nodes
-                .iter()
-                .map(|node| DebugImplementation::new(node).code())
                 .collect::<Vec<_>>()
                 .join("\n"),
             node_enum_to_string_impl = self.node_enum_to_string_impl()
@@ -166,86 +156,5 @@ impl From<lib_ruby_parser::nodes::{name}> for Node {{
             .map(|field| CField::new(field).field_name())
             .collect::<Vec<_>>()
             .join(", ")
-    }
-}
-
-struct DebugImplementation<'a> {
-    node: &'a Node,
-}
-
-impl<'a> DebugImplementation<'a> {
-    pub fn new(node: &'a Node) -> Self {
-        Self { node }
-    }
-
-    pub fn code(&self) -> String {
-        format!(
-            "impl fmt::Debug for {struct_name} {{
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {{
-        let fmt = &mut f.debug_struct(\"{struct_name}\");
-{fields}
-        fmt.finish()
-    }}
-}}
-",
-            struct_name = self.node.struct_name,
-            fields = self.fields()
-        )
-    }
-
-    fn fields(&self) -> String {
-        self.node
-            .fields
-            .iter()
-            .map(|field| {
-                let field_name = CField::new(field).field_name();
-
-                let fmt = match field.field_type {
-                    FieldType::Node => {
-                        format!("fmt.field(\"{field_name}\", unsafe {{ &*self.{field_name} }})", field_name = field_name)
-                    }
-                    FieldType::Nodes => {
-                        format!("fmt.field(\"{field_name}\", unsafe {{ &*self.{field_name} }})", field_name = field_name)
-                    }
-                    FieldType::MaybeNode => {
-                        format!("if self.{field_name}.is_null() {{ fmt.field(\"{field_name}\", &Option::<()>::None) }} else {{ fmt.field(\"{field_name}\", unsafe {{ &*self.{field_name} }})  }}", field_name = field_name)
-                    }
-                    FieldType::Range => {
-                        format!("fmt.field(\"{field_name}\", unsafe {{ &*self.{field_name} }})", field_name = field_name)
-                    }
-                    FieldType::MaybeRange => {
-                        format!("if self.{field_name}.is_null() {{ fmt.field(\"{field_name}\", &Option::<()>::None) }} else {{ fmt.field(\"{field_name}\", unsafe {{ &*self.{field_name} }})  }}", field_name = field_name)
-                    }
-                    FieldType::Str => {
-                        format!("fmt.field(\"{field_name}\", &debug_str_ptr(self.{field_name}))", field_name = field_name)
-                    }
-                    FieldType::MaybeStr => {
-                        format!("fmt.field(\"{field_name}\", &debug_str_ptr(self.{field_name}))", field_name = field_name)
-                    }
-                    FieldType::Chars => {
-                        format!("fmt.field(\"{field_name}\", &debug_str_ptr(self.{field_name}))", field_name = field_name)
-                    }
-                    FieldType::StringValue => {
-                        format!("fmt.field(\"{field_name}\", &debug_str_ptr(self.{field_name}))", field_name = field_name)
-                    }
-                    FieldType::U8 => {
-                        format!("fmt.field(\"{field_name}\", &self.{field_name})", field_name = field_name)
-                    }
-                    FieldType::Usize => {
-                        format!("fmt.field(\"{field_name}\", &self.{field_name})", field_name = field_name)
-                    }
-                    FieldType::RawString => {
-                        format!("fmt.field(\"{field_name}\", &debug_str_ptr(self.{field_name}))", field_name = field_name)
-                    }
-                    FieldType::RegexOptions => {
-                        format!("if self.{field_name}.is_null() {{ fmt.field(\"{field_name}\", &Option::<()>::None) }} else {{ fmt.field(\"{field_name}\", unsafe {{ &*self.{field_name} }})  }}", field_name = field_name)
-                    }
-                };
-                format!(
-                    "        let fmt = &mut {};", fmt
-                )
-            })
-            .collect::<Vec<_>>()
-            .join("\n")
     }
 }

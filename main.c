@@ -5,9 +5,7 @@
 
 int main()
 {
-    struct ParserResult *result = parse("2 + 2", 5);
-    char *s = debug_fmt_ast(result->ast);
-    printf("%s\n", s);
+    struct ParserResult *result = parse(NULL, "2 + 2", 5);
     free(s);
     parser_result_free(result);
 }

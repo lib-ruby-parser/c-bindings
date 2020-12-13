@@ -5,15 +5,24 @@
 extern crate lib_ruby_parser;
 
 pub mod bindings;
-use bindings::ParserResult;
+use bindings::{ParserOptions, ParserResult};
+
+mod from_c;
 
 use std::slice;
 
 #[no_mangle]
-pub extern "C" fn parse(input: *const u8, length: usize) -> *const ParserResult {
+pub extern "C" fn parse(
+    options: *const ParserOptions,
+    input: *const u8,
+    length: usize,
+) -> *const ParserResult {
     let input = unsafe { slice::from_raw_parts(input, length) };
-    let options = lib_ruby_parser::ParserOptions {
-        ..Default::default()
+
+    let options = if options.is_null() {
+        lib_ruby_parser::ParserOptions::default()
+    } else {
+        lib_ruby_parser::ParserOptions::from(unsafe { *options })
     };
     let parser_result = lib_ruby_parser::Parser::new(input, options).do_parse();
 
@@ -30,25 +39,19 @@ pub fn ptr_value<T>(value: T) -> *mut T {
 }
 
 use std::fmt;
-impl fmt::Debug for bindings::Node {
+impl fmt::Debug for bindings::DecoderOutput {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str(&unsafe { *self.inner }.to_debug_string(self.node_type))
-    }
-}
-
-impl fmt::Debug for bindings::Range {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.debug_struct("Range")
-            .field("begin_pos", &self.begin_pos)
-            .field("end_pos", &self.end_pos)
-            .finish()
-    }
-}
-
-impl fmt::Debug for bindings::NodeList {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let nodes = unsafe { std::slice::from_raw_parts(self.list, self.len as usize) };
-        f.debug_list().entries(nodes).finish()
+        match self.status {
+            bindings::DecodingStatus_DECODING_STATUS_OK => {
+                let value = unsafe { self.value.success };
+                f.write_fmt(format_args!("DecoderOutput({:?})", value))
+            }
+            bindings::DecodingStatus_DECODING_STATUS_ERROR => {
+                let value = unsafe { self.value.error };
+                f.write_fmt(format_args!("DecoderOutput({:?})", value))
+            }
+            _ => panic!("bug"),
+        }
     }
 }
 
@@ -58,15 +61,6 @@ pub fn debug_str_ptr(ptr: *mut ::std::os::raw::c_char) -> String {
 }
 
 use to_c::string_to_ptr;
-
-#[no_mangle]
-pub extern "C" fn debug_fmt_ast(node: *mut bindings::Node) -> *mut i8 {
-    if node.is_null() {
-        return string_to_ptr("(null)".to_owned());
-    }
-    let node = unsafe { *node };
-    string_to_ptr(format!("{:#?}", node))
-}
 
 #[no_mangle]
 pub extern "C" fn token_name(id: i32) -> *mut i8 {
