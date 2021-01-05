@@ -10,6 +10,7 @@
 #include "node_list.h"
 #include "parser_options.h"
 #include "custom_decoder.h"
+#include "token_rewriter.h"
 #include "parser_result.h"
 
 #endif // LIB_RUBY_PARSER_TYPES_H

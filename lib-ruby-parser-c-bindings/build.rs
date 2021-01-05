@@ -36,6 +36,17 @@ fn build_rs_files() {
 
 fn build_bindings() {
     println!("cargo:rerun-if-changed=../includes/types.h");
+    println!("cargo:rerun-if-changed=../includes/loc.h");
+    println!("cargo:rerun-if-changed=../includes/range.h");
+    println!("cargo:rerun-if-changed=../includes/token.h");
+    println!("cargo:rerun-if-changed=../includes/diagnostic.h");
+    println!("cargo:rerun-if-changed=../includes/comment.h");
+    println!("cargo:rerun-if-changed=../includes/magic_comment.h");
+    println!("cargo:rerun-if-changed=../includes/node_list.h");
+    println!("cargo:rerun-if-changed=../includes/parser_options.h");
+    println!("cargo:rerun-if-changed=../includes/custom_decoder.h");
+    println!("cargo:rerun-if-changed=../includes/token_rewriter.h");
+    println!("cargo:rerun-if-changed=../includes/parser_result.h");
 
     let types_h = relative_path("../includes/types.h");
 

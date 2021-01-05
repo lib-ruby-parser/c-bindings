@@ -205,7 +205,7 @@ char *copy_string(const char *source)
 
 struct DecoderOutput decoder(const char *encoding, const char *input, size_t len)
 {
-    if (strcmp(encoding, "US_ASCII") == 0)
+    if (strcmp(encoding, "US-ASCII") == 0)
     {
         return decode_ok(copy_string(decoded_source), strlen(decoded_source));
     }

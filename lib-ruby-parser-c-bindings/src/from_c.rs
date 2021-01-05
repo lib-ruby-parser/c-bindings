@@ -1,10 +1,10 @@
 use crate::bindings::{
     size_t, DecoderOutput, DecoderOutputError, DecoderOutputSuccess,
     DecodingStatus_DECODING_STATUS_ERROR as DECODING_ERROR,
-    DecodingStatus_DECODING_STATUS_OK as DECODING_OK, ParserOptions,
+    DecodingStatus_DECODING_STATUS_OK as DECODING_OK, ParserOptions, TokenRewriter,
 };
 
-use lib_ruby_parser::source::{InputError, RecognizedEncoding};
+use lib_ruby_parser::source::InputError;
 use std::ffi::{CStr, CString};
 
 impl From<DecoderOutputError> for Result<Vec<u8>, InputError> {
@@ -58,10 +58,8 @@ impl From<ParserOptions> for lib_ruby_parser::ParserOptions {
         let debug = options.debug;
         let decoder = match options.decoder {
             Some(decoder) => {
-                let decode = move |encoding: RecognizedEncoding,
-                                   input: &[u8]|
-                      -> Result<Vec<u8>, InputError> {
-                    let encoding = CString::new(format!("{:?}", encoding)).unwrap();
+                let decode = move |encoding: &str, input: &[u8]| -> Result<Vec<u8>, InputError> {
+                    let encoding = CString::new(encoding).unwrap();
                     let encoding_ptr = encoding.as_bytes_with_nul().as_ptr();
 
                     let output = unsafe {
@@ -80,10 +78,26 @@ impl From<ParserOptions> for lib_ruby_parser::ParserOptions {
             }
             None => lib_ruby_parser::source::CustomDecoder::default(),
         };
+        let record_tokens = options.record_tokens;
+        let token_rewriter = if options.token_rewriter.is_null() {
+            None
+        } else {
+            let rewriter = unsafe { *options.token_rewriter }.into();
+            Some(rewriter)
+        };
+
         lib_ruby_parser::ParserOptions {
             buffer_name,
             debug,
             decoder,
+            record_tokens,
+            token_rewriter,
         }
+    }
+}
+
+impl From<TokenRewriter> for Box<dyn lib_ruby_parser::token_rewriter::TokenRewriter> {
+    fn from(_: TokenRewriter) -> Self {
+        todo!()
     }
 }

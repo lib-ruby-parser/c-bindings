@@ -10,6 +10,9 @@ struct Token
     int token_type;
     char *token_value;
     struct Loc *loc;
+
+    int lex_state_before;
+    int lex_state_after;
 };
 
 struct TokenList

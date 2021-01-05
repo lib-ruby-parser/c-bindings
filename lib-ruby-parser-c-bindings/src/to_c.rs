@@ -74,6 +74,7 @@ impl From<lib_ruby_parser::Token> for Token {
             token_type,
             token_value,
             loc,
+            ..
         } = token;
         let token_value = string_to_ptr(token_value.to_string_lossy());
 
@@ -86,6 +87,9 @@ impl From<lib_ruby_parser::Token> for Token {
             token_type,
             token_value,
             loc,
+
+            lex_state_before: 0,
+            lex_state_after: 0,
         }
     }
 }

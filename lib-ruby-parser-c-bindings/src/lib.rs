@@ -64,6 +64,6 @@ use to_c::string_to_ptr;
 
 #[no_mangle]
 pub extern "C" fn token_name(id: i32) -> *mut i8 {
-    let token_name = lib_ruby_parser::token_name(id);
+    let token_name = lib_ruby_parser::token_name(id).to_owned();
     string_to_ptr(token_name)
 }
