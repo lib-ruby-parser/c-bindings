@@ -10,6 +10,7 @@ enum MagicCommentKind
     ENCODING,
     FROZEN_STRING_LITERAL,
     WARN_INDENT,
+    SHAREABLE_CONSTANT_VALUE,
 };
 
 struct MagicComment

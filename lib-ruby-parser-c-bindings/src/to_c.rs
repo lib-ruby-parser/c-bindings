@@ -147,6 +147,9 @@ impl From<lib_ruby_parser::source::MagicComment> for MagicComment {
                 MagicCommentKind_FROZEN_STRING_LITERAL
             }
             lib_ruby_parser::source::MagicCommentKind::WarnIndent => MagicCommentKind_WARN_INDENT,
+            lib_ruby_parser::source::MagicCommentKind::ShareableContstantValue => {
+                MagicCommentKind_SHAREABLE_CONSTANT_VALUE
+            }
         };
         MagicComment {
             kind,
