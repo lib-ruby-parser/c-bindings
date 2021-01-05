@@ -73,13 +73,15 @@ void test_parse()
 }
 
 #define assert_token(tok, expected_tok_name, expected_tok_value, expected_begin, expected_end) \
-    tok_name = token_name(tok.token_type);                                                     \
-    assert_str_eq(tok_name, expected_tok_name);                                                \
-    free(tok_name);                                                                            \
-    assert_str_eq(tok.token_value, expected_tok_value);                                        \
-    assert_not_null(tok.loc);                                                                  \
-    assert_eq(tok.loc->begin, expected_begin);                                                 \
-    assert_eq(tok.loc->end, expected_end);
+    {                                                                                          \
+        char *tok_name = token_name(tok.token_type);                                           \
+        assert_str_eq(tok_name, expected_tok_name);                                            \
+        free(tok_name);                                                                        \
+        assert_str_eq(tok.token_value, expected_tok_value);                                    \
+        assert_not_null(tok.loc);                                                              \
+        assert_eq(tok.loc->begin, expected_begin);                                             \
+        assert_eq(tok.loc->end, expected_end);                                                 \
+    }
 
 void test_tokens()
 {
@@ -87,8 +89,6 @@ void test_tokens()
     struct TokenList *tokens = result->tokens;
 
     assert_eq(tokens->len, 4);
-    struct Token tok;
-    char *tok_name;
 
     assert_token(tokens->list[0], "tINTEGER", "2", 0, 1);
     assert_token(tokens->list[1], "tPLUS", "+", 2, 3);
@@ -237,6 +237,49 @@ void test_custom_decoder_err()
     parser_result_free(result);
 }
 
+const char *three = "3";
+struct TokenRewriterOutput rewrite_token(void *state, struct Token token, const char *input)
+{
+    if (strcmp(token.token_value, "2") == 0)
+    {
+        // rewrite "2" to "3"
+        free(token.token_value);
+        token.token_value = copy_string(three);
+    }
+
+    struct TokenRewriterOutput output = {
+        .token = token,
+        .token_rewriter_action = REWRITE_ACTION_KEEP,
+        .lex_state_action = {
+            .kind = LEX_STATE_ACTION_KEEP}};
+    return output;
+}
+
+void test_token_rewriter()
+{
+    struct TokenRewriter token_rewriter = {
+        .rewriter = rewrite_token,
+        .state = NULL,
+    };
+    struct ParserOptions options = {
+        .buffer_name = "(test_custom_decoder_ok)",
+        .debug = false,
+        .token_rewriter = &token_rewriter,
+        .record_tokens = true};
+    struct ParserResult *result = parse_code(&options, "1 + 2");
+
+    struct TokenList *tokens = result->tokens;
+
+    assert_eq(tokens->len, 4);
+
+    assert_token(tokens->list[0], "tINTEGER", "1", 0, 1);
+    assert_token(tokens->list[1], "tPLUS", "+", 2, 3);
+    assert_token(tokens->list[2], "tINTEGER", "3", 4, 5);
+    assert_token(tokens->list[3], "EOF", "", 5, 5);
+
+    parser_result_free(result);
+}
+
 int main()
 {
     test_parse();
@@ -248,8 +291,11 @@ int main()
     test_range();
 
     test_all_nodes();
+
     test_custom_decoder_ok();
     test_custom_decoder_err();
+
+    test_token_rewriter();
 
     printf("all tests passed.\n");
 }

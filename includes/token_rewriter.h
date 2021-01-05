@@ -1,7 +1,7 @@
-#ifndef LIB_RUBY_PARSER_TOKEN_REWRITER_h
-#define LIB_RUBY_PARSER_TOKEN_REWRITER_h
+#ifndef LIB_RUBY_PARSER_TOKEN_REWRITER_H
+#define LIB_RUBY_PARSER_TOKEN_REWRITER_H
 
-enum RewriteAction
+enum TokenRewriteAction
 {
     REWRITE_ACTION_DROP,
     REWRITE_ACTION_KEEP,
@@ -32,4 +32,21 @@ struct LexStateAction
     union LexStateActionValue value;
 };
 
-#endif // LIB_RUBY_PARSER_TOKEN_REWRITER_h
+struct TokenRewriterOutput
+{
+    struct Token token;
+    enum TokenRewriteAction token_rewriter_action;
+    struct LexStateAction lex_state_action;
+};
+
+struct TokenRewriter;
+
+typedef struct TokenRewriterOutput TokenRewriterFn(void *state, struct Token token, const char *input);
+
+struct TokenRewriter
+{
+    void *state;
+    TokenRewriterFn *rewriter;
+};
+
+#endif // LIB_RUBY_PARSER_TOKEN_REWRITER_H
