@@ -1,11 +1,16 @@
+#[cfg(feature = "generate-bindings")]
 extern crate bindgen;
+#[cfg(feature = "generate-bindings")]
 extern crate lib_ruby_parser_nodes;
 
 use std::path::Path;
 
+#[cfg(feature = "generate-bindings")]
 mod gen;
+#[cfg(feature = "generate-bindings")]
 use gen::{CFile, RustFile};
 
+#[allow(dead_code)]
 fn relative_path(path: &str) -> String {
     Path::new(file!())
         .parent()
@@ -16,15 +21,16 @@ fn relative_path(path: &str) -> String {
         .to_owned()
 }
 
+#[cfg(feature = "generate-bindings")]
 fn build_c_files() {
-    let output_path = relative_path("../includes/gen.h");
-
     let nodes = lib_ruby_parser_nodes::nodes().unwrap();
-    let contents = CFile::new(nodes).code();
+    let c_file = CFile::new(nodes);
 
-    std::fs::write(&output_path, contents).unwrap();
+    std::fs::write(&relative_path("../includes/node.h"), c_file.node_h()).unwrap();
+    std::fs::write(&relative_path("../includes/node.c"), c_file.node_c()).unwrap();
 }
 
+#[cfg(feature = "generate-bindings")]
 fn build_rs_files() {
     let output_path = relative_path("src/node_gen.rs");
 
@@ -34,6 +40,7 @@ fn build_rs_files() {
     std::fs::write(&output_path, contents).unwrap();
 }
 
+#[cfg(feature = "generate-bindings")]
 fn build_bindings() {
     println!("cargo:rerun-if-changed=../includes/types.h");
     println!("cargo:rerun-if-changed=../includes/loc.h");
@@ -54,6 +61,7 @@ fn build_bindings() {
         .header(types_h)
         .whitelist_type("ParserOptions")
         .whitelist_type("ParserResult")
+        .layout_tests(false)
         .generate()
         .expect("Unable to generate bindings");
 
@@ -63,10 +71,18 @@ fn build_bindings() {
         .expect("Couldn't write bindings!");
 }
 
+#[cfg(feature = "generate-bindings")]
 fn main() {
     build_c_files();
 
     build_rs_files();
 
     build_bindings();
+}
+
+#[cfg(not(feature = "generate-bindings"))]
+fn main() {
+    println!(
+        "Running with disabled 'generate-bindings' feature, so bindgen is disabled too. All files are expected to be pre-generated"
+    );
 }

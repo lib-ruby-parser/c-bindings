@@ -10,11 +10,11 @@ impl CFile {
         Self { rust_nodes }
     }
 
-    pub fn code(&self) -> String {
-        let node_structs = self
+    pub fn node_h(&self) -> String {
+        let declarations = self
             .rust_nodes
             .iter()
-            .map(|node| CStruct::new(&node).code())
+            .map(|node| CStruct::new(&node).declaration())
             .collect::<Vec<_>>()
             .join("\n");
 
@@ -25,35 +25,14 @@ impl CFile {
 #define LIB_RUBY_PARSER_GEN_H
 
 #include <stddef.h>
+#include <stdint.h>
+#include \"node_list.h\"
+#include \"range.h\"
 
 struct Node;
 void node_free(struct Node *node);
-void maybe_node_free(struct Node *node)
-{{
-    if (node != NULL) {{
-        node_free(node);
-    }}
-}}
 
-struct NodeList;
-void node_list_free(struct NodeList *list);
-void maybe_node_list_free(struct NodeList *list)
-{{
-    if (list != NULL) {{
-        node_list_free(list);
-    }}
-}}
-
-struct Range;
-void range_free(struct Range *range);
-void maybe_range_free(struct Range *range)
-{{
-    if (range != NULL) {{
-        range_free(range);
-    }}
-}}
-
-{node_structs}
+{declarations}
 
 {node_enum}
 
@@ -67,6 +46,52 @@ struct Node
     enum NodeType node_type;
     union InnerNode *inner;
 }};
+
+void inner_node_free(union InnerNode *inner_node, enum NodeType node_type);
+void node_free(struct Node *node);
+
+#endif // LIB_RUBY_PARSER_GEN_H
+",
+            declarations = declarations,
+            node_enum = node_enum,
+            variants = self.variants(),
+        )
+    }
+
+    pub fn node_c(&self) -> String {
+        let struct_implementations = self
+            .rust_nodes
+            .iter()
+            .map(|node| CStruct::new(&node).implementation())
+            .collect::<Vec<_>>()
+            .join("\n");
+
+        format!(
+            "#include <stdlib.h>
+#include \"node.h\"
+
+void maybe_node_free(struct Node *node)
+{{
+    if (node != NULL) {{
+        node_free(node);
+    }}
+}}
+
+void maybe_node_list_free(struct NodeList *list)
+{{
+    if (list != NULL) {{
+        node_list_free(list);
+    }}
+}}
+
+void maybe_range_free(struct Range *range)
+{{
+    if (range != NULL) {{
+        range_free(range);
+    }}
+}}
+
+{struct_implementations}
 
 void inner_node_free(union InnerNode *inner_node, enum NodeType node_type)
 {{
@@ -82,12 +107,8 @@ void node_free(struct Node *node)
     inner_node_free(node->inner, node->node_type);
     free(node);
 }}
-
-#endif // LIB_RUBY_PARSER_GEN_H
 ",
-            node_structs = node_structs,
-            node_enum = node_enum,
-            variants = self.variants(),
+            struct_implementations = struct_implementations,
             inner_node_free_branches = self.inner_node_free_branches_code()
         )
     }

@@ -1,9 +1,8 @@
 #ifndef LIB_RUBY_PARSER_TOKEN_H
 #define LIB_RUBY_PARSER_TOKEN_H
 
-#include <stdlib.h>
-
-struct Loc;
+#include <stdint.h>
+#include "loc.h"
 
 struct Token
 {
@@ -17,23 +16,10 @@ struct Token
 
 struct TokenList
 {
-    size_t len;
+    uint32_t len;
     struct Token *list;
 };
 
-void tokens_free(struct TokenList *tokens)
-{
-    if (tokens->len > 0)
-    {
-        for (size_t i = 0; i < tokens->len; i++)
-        {
-            struct Token token = tokens->list[i];
-            free(token.token_value);
-            free(token.loc);
-        }
-        free(tokens->list);
-    }
-    free(tokens);
-}
+void tokens_free(struct TokenList *tokens);
 
 #endif // LIB_RUBY_PARSER_TOKEN_H

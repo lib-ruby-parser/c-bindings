@@ -2,13 +2,13 @@ use crate::bindings::*;
 use crate::ptr_value;
 use std::ffi::CString;
 
-fn vec_to_c_list<T, Target>(vec: Vec<T>, f: fn(T) -> Target) -> (*mut Target, size_t) {
+fn vec_to_c_list<T, Target>(vec: Vec<T>, f: fn(T) -> Target) -> (*mut Target, u32) {
     let mut boxed_slice = vec
         .into_iter()
         .map(f)
         .collect::<Vec<_>>()
         .into_boxed_slice();
-    let len = boxed_slice.len() as size_t;
+    let len = boxed_slice.len() as u32;
     let ptr = boxed_slice.as_mut_ptr();
     std::mem::forget(boxed_slice);
     (ptr, len)
@@ -79,8 +79,8 @@ impl From<lib_ruby_parser::Token> for Token {
         let token_value = string_to_ptr(token_value.to_string_lossy());
 
         let loc = ptr_value(Loc {
-            begin: loc.begin as size_t,
-            end: loc.end as size_t,
+            begin: loc.begin as u32,
+            end: loc.end as u32,
         });
 
         Token {
@@ -169,8 +169,8 @@ impl From<lib_ruby_parser::source::Range> for Range {
             begin_pos, end_pos, ..
         } = range;
         Range {
-            begin_pos: begin_pos as size_t,
-            end_pos: end_pos as size_t,
+            begin_pos: begin_pos as u32,
+            end_pos: end_pos as u32,
         }
     }
 }

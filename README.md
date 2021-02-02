@@ -4,7 +4,7 @@ You can find some examples in `main.c` and `test.c`.
 
 ## API
 
-1. `struct ParserResult *parse(const char *input, size_t length)`
+1. `struct ParserResult *parse(const char *input, uint32_t length)`
 
     Parses given input into `ParserResult`
 
@@ -35,7 +35,7 @@ You can find some examples in `main.c` and `test.c`.
     This way you can "unwrap" generic node and convert it into specific node type.
     Specialized node types fully mirror API of Rust nodes, check [full documentation](https://docs.rs/lib-ruby-parser) to understand what is a specialized `Node`.
 
-5. `size_t range_size(struct Range *range)`
+5. `uint32_t range_size(struct Range *range)`
 
     Returns size of the range (literally `end_pos - begin_pos`)
 

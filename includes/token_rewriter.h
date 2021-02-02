@@ -1,6 +1,8 @@
 #ifndef LIB_RUBY_PARSER_TOKEN_REWRITER_H
 #define LIB_RUBY_PARSER_TOKEN_REWRITER_H
 
+#include "token.h"
+
 enum TokenRewriteAction
 {
     REWRITE_ACTION_DROP,
@@ -22,7 +24,7 @@ union LexStateActionValue
 
     struct
     {
-
+        int dummy;
     } keep;
 };
 

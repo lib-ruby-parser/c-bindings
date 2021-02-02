@@ -33,7 +33,7 @@ impl CFieldType {
             Self::NodeList => "struct NodeList *",
             Self::RangePtr => "struct Range *",
             Self::CharPtr => "char *",
-            Self::SizeT => "size_t ",
+            Self::SizeT => "uint32_t ",
         }
         .to_owned()
     }

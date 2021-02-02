@@ -2,8 +2,8 @@
 #define LIB_RUBY_PARSER_MAGIC_COMMENT_H
 
 #include <stddef.h>
-
-struct Range;
+#include <stdint.h>
+#include "range.h"
 
 enum MagicCommentKind
 {
@@ -22,23 +22,10 @@ struct MagicComment
 
 struct MagicCommentList
 {
-    size_t len;
+    uint32_t len;
     struct MagicComment *list;
 };
 
-void magic_comments_free(struct MagicCommentList *magic_comments)
-{
-    if (magic_comments->len > 0)
-    {
-        for (size_t i = 0; i < magic_comments->len; i++)
-        {
-            struct MagicComment magic_comment = magic_comments->list[i];
-            range_free(magic_comment.key_l);
-            range_free(magic_comment.value_l);
-        }
-        free(magic_comments->list);
-    }
-    free(magic_comments);
-}
+void magic_comments_free(struct MagicCommentList *magic_comments);
 
 #endif // LIB_RUBY_PARSER_MAGIC_COMMENT_H

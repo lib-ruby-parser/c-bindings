@@ -12,33 +12,77 @@ env:
 jobs:
   test:
     name: run tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.build.os }}
+    env:
+      CARGO_BUILD_TARGET: ${{ matrix.build.target }}
+      CC: ${{ matrix.build.cc }}
+      CXX: ${{ matrix.build.cxx }}
+      LD: ${{ matrix.build.ld }}
+      CARGOFLAGS: ${{ matrix.build.cargoflags }}
     strategy:
       fail-fast: false
       matrix:
-        rust: [stable, beta, nightly]
+        build:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            cc: clang-9
+            cxx: clang++-9
+            ld: ld.lld-9
+            cargoflags: --features="generate-bindings,onig"
+            run: |
+              make build-static test-valgrind
+              make clean
+              CCFLAGS="-fsanitize=address" make test
+
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            cc: clang
+            cxx: clang++
+            ld: ld
+            cargoflags: --features="generate-bindings,onig"
+            run: |
+              make build-static
+              make clean
+              CCFLAGS="-fsanitize=address" make test
+
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            cc: cl.exe
+            cxx: cl.exe
+            ld: link.exe
+            cargoflags: ""
+            run: make build-static
 
     steps:
-      - name: checkout
-        uses: actions/checkout@v2
-        with:
-          submodules: true
+      - name: setup msvc on windows
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: fix linker on windows
+        if: runner.os == 'Windows'
+        run: |
+          rm "C:\\Program Files\\Git\\usr\\bin\\link.exe"
+          which -a link.exe
 
       - name: install rust
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: ${{ matrix.rust }}
+          toolchain: stable
+          target: ${{ matrix.build.target }}
           override: true
 
-      - name: apt-get update
-        run: sudo apt-get update
-
-      - name: install clang
-        run: sudo apt-get install -y clang-format clang-tidy clang-tools clang libc++-dev libc++1 libc++abi-dev libc++abi1 libclang-dev libclang1 libomp-dev libomp5 lld lldb llvm-dev llvm-runtime llvm
+      - name: checkout
+        uses: actions/checkout@v2
 
       - name: install valgrind
-        run: sudo apt-get install -y valgrind
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y valgrind libtool-bin
 
       - name: run tests
-        run: make test-all
+        shell: bash
+        run: |
+          make setup
+          ${{ matrix.build.run }}
