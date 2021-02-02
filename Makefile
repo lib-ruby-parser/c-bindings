@@ -121,19 +121,19 @@ gen-headers: $(RUST_OBJ)
 LIB_RUBY_PARSER_TMP_H = target/lib-ruby-parser-tmp.h
 LIB_RUBY_PARSER_H = target/lib-ruby-parser.h
 $(LIB_RUBY_PARSER_H):
-	cat includes/node.h > $(LIB_RUBY_PARSER_TMP_H)
+	cat src/node.h > $(LIB_RUBY_PARSER_TMP_H)
 
-	cat includes/loc.h >> $(LIB_RUBY_PARSER_TMP_H)
-	cat includes/range.h >> $(LIB_RUBY_PARSER_TMP_H)
-	cat includes/token.h >> $(LIB_RUBY_PARSER_TMP_H)
-	cat includes/diagnostic.h >> $(LIB_RUBY_PARSER_TMP_H)
-	cat includes/comment.h >> $(LIB_RUBY_PARSER_TMP_H)
-	cat includes/magic_comment.h >> $(LIB_RUBY_PARSER_TMP_H)
-	cat includes/node_list.h >> $(LIB_RUBY_PARSER_TMP_H)
-	cat includes/custom_decoder.h >> $(LIB_RUBY_PARSER_TMP_H)
-	cat includes/token_rewriter.h >> $(LIB_RUBY_PARSER_TMP_H)
-	cat includes/parser_options.h >> $(LIB_RUBY_PARSER_TMP_H)
-	cat includes/parser_result.h >> $(LIB_RUBY_PARSER_TMP_H)
+	cat src/loc.h >> $(LIB_RUBY_PARSER_TMP_H)
+	cat src/range.h >> $(LIB_RUBY_PARSER_TMP_H)
+	cat src/token.h >> $(LIB_RUBY_PARSER_TMP_H)
+	cat src/diagnostic.h >> $(LIB_RUBY_PARSER_TMP_H)
+	cat src/comment.h >> $(LIB_RUBY_PARSER_TMP_H)
+	cat src/magic_comment.h >> $(LIB_RUBY_PARSER_TMP_H)
+	cat src/node_list.h >> $(LIB_RUBY_PARSER_TMP_H)
+	cat src/custom_decoder.h >> $(LIB_RUBY_PARSER_TMP_H)
+	cat src/token_rewriter.h >> $(LIB_RUBY_PARSER_TMP_H)
+	cat src/parser_options.h >> $(LIB_RUBY_PARSER_TMP_H)
+	cat src/parser_result.h >> $(LIB_RUBY_PARSER_TMP_H)
 
 	echo "#ifndef LIB_RUBY_PARSER_H" > $(LIB_RUBY_PARSER_H)
 	echo "#define LIB_RUBY_PARSER_H" >> $(LIB_RUBY_PARSER_H)
@@ -149,48 +149,48 @@ $(LIB_RUBY_PARSER_H):
 # Objects
 
 OBJECTS =
-$(TARGET_DIR)/comment$(OBJ_FILE_EXT): includes/comment.h includes/comment.c
-	$(CC) includes/comment.c $(CCFLAGS) $(CCOBJFLAGS)
+$(TARGET_DIR)/comment$(OBJ_FILE_EXT): src/comment.h src/comment.c
+	$(CC) src/comment.c $(CCFLAGS) $(CCOBJFLAGS)
 	mv comment$(OBJ_FILE_EXT) $(TARGET_DIR)/comment$(OBJ_FILE_EXT)
 OBJECTS += $(TARGET_DIR)/comment$(OBJ_FILE_EXT)
 
-$(TARGET_DIR)/range$(OBJ_FILE_EXT): includes/range.h includes/range.c
-	$(CC) includes/range.c $(CCFLAGS) $(CCOBJFLAGS)
+$(TARGET_DIR)/range$(OBJ_FILE_EXT): src/range.h src/range.c
+	$(CC) src/range.c $(CCFLAGS) $(CCOBJFLAGS)
 	mv range$(OBJ_FILE_EXT) $(TARGET_DIR)/range$(OBJ_FILE_EXT)
 OBJECTS += $(TARGET_DIR)/range$(OBJ_FILE_EXT)
 
-$(TARGET_DIR)/diagnostic$(OBJ_FILE_EXT): includes/diagnostic.h includes/diagnostic.c
-	$(CC) includes/diagnostic.c $(CCFLAGS) $(CCOBJFLAGS)
+$(TARGET_DIR)/diagnostic$(OBJ_FILE_EXT): src/diagnostic.h src/diagnostic.c
+	$(CC) src/diagnostic.c $(CCFLAGS) $(CCOBJFLAGS)
 	mv diagnostic$(OBJ_FILE_EXT) $(TARGET_DIR)/diagnostic$(OBJ_FILE_EXT)
 OBJECTS += $(TARGET_DIR)/diagnostic$(OBJ_FILE_EXT)
 
-$(TARGET_DIR)/custom_decoder$(OBJ_FILE_EXT): includes/custom_decoder.h includes/custom_decoder.c
-	$(CC) includes/custom_decoder.c $(CCFLAGS) $(CCOBJFLAGS)
+$(TARGET_DIR)/custom_decoder$(OBJ_FILE_EXT): src/custom_decoder.h src/custom_decoder.c
+	$(CC) src/custom_decoder.c $(CCFLAGS) $(CCOBJFLAGS)
 	mv custom_decoder$(OBJ_FILE_EXT) $(TARGET_DIR)/custom_decoder$(OBJ_FILE_EXT)
 OBJECTS += $(TARGET_DIR)/custom_decoder$(OBJ_FILE_EXT)
 
-$(TARGET_DIR)/magic_comment$(OBJ_FILE_EXT): includes/magic_comment.h includes/magic_comment.c
-	$(CC) includes/magic_comment.c $(CCFLAGS) $(CCOBJFLAGS)
+$(TARGET_DIR)/magic_comment$(OBJ_FILE_EXT): src/magic_comment.h src/magic_comment.c
+	$(CC) src/magic_comment.c $(CCFLAGS) $(CCOBJFLAGS)
 	mv magic_comment$(OBJ_FILE_EXT) $(TARGET_DIR)/magic_comment$(OBJ_FILE_EXT)
 OBJECTS += $(TARGET_DIR)/magic_comment$(OBJ_FILE_EXT)
 
-$(TARGET_DIR)/node_list$(OBJ_FILE_EXT): includes/node_list.h includes/node_list.c
-	$(CC) includes/node_list.c $(CCFLAGS) $(CCOBJFLAGS)
+$(TARGET_DIR)/node_list$(OBJ_FILE_EXT): src/node_list.h src/node_list.c
+	$(CC) src/node_list.c $(CCFLAGS) $(CCOBJFLAGS)
 	mv node_list$(OBJ_FILE_EXT) $(TARGET_DIR)/node_list$(OBJ_FILE_EXT)
 OBJECTS += $(TARGET_DIR)/node_list$(OBJ_FILE_EXT)
 
-$(TARGET_DIR)/parser_result$(OBJ_FILE_EXT): includes/parser_result.h includes/parser_result.c
-	$(CC) includes/parser_result.c $(CCFLAGS) $(CCOBJFLAGS)
+$(TARGET_DIR)/parser_result$(OBJ_FILE_EXT): src/parser_result.h src/parser_result.c
+	$(CC) src/parser_result.c $(CCFLAGS) $(CCOBJFLAGS)
 	mv parser_result$(OBJ_FILE_EXT) $(TARGET_DIR)/parser_result$(OBJ_FILE_EXT)
 OBJECTS += $(TARGET_DIR)/parser_result$(OBJ_FILE_EXT)
 
-$(TARGET_DIR)/token$(OBJ_FILE_EXT): includes/token.h includes/token.c
-	$(CC) includes/token.c $(CCFLAGS) $(CCOBJFLAGS)
+$(TARGET_DIR)/token$(OBJ_FILE_EXT): src/token.h src/token.c
+	$(CC) src/token.c $(CCFLAGS) $(CCOBJFLAGS)
 	mv token$(OBJ_FILE_EXT) $(TARGET_DIR)/token$(OBJ_FILE_EXT)
 OBJECTS += $(TARGET_DIR)/token$(OBJ_FILE_EXT)
 
-$(TARGET_DIR)/node$(OBJ_FILE_EXT): includes/node.h includes/node.c
-	$(CC) includes/node.c $(CCFLAGS) $(CCOBJFLAGS)
+$(TARGET_DIR)/node$(OBJ_FILE_EXT): src/node.h src/node.c
+	$(CC) src/node.c $(CCFLAGS) $(CCOBJFLAGS)
 	mv node$(OBJ_FILE_EXT) $(TARGET_DIR)/node$(OBJ_FILE_EXT)
 OBJECTS += $(TARGET_DIR)/node$(OBJ_FILE_EXT)
 

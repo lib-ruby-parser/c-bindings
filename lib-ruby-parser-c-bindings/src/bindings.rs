@@ -132,7 +132,9 @@ pub struct LexStateActionValue__bindgen_ty_1 {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
-pub struct LexStateActionValue__bindgen_ty_2 {}
+pub struct LexStateActionValue__bindgen_ty_2 {
+    pub dummy: ::std::os::raw::c_int,
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct LexStateAction {

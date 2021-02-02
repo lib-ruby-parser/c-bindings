@@ -26,8 +26,8 @@ fn build_c_files() {
     let nodes = lib_ruby_parser_nodes::nodes().unwrap();
     let c_file = CFile::new(nodes);
 
-    std::fs::write(&relative_path("../includes/node.h"), c_file.node_h()).unwrap();
-    std::fs::write(&relative_path("../includes/node.c"), c_file.node_c()).unwrap();
+    std::fs::write(&relative_path("../src/node.h"), c_file.node_h()).unwrap();
+    std::fs::write(&relative_path("../src/node.c"), c_file.node_c()).unwrap();
 }
 
 #[cfg(feature = "generate-bindings")]
@@ -42,20 +42,20 @@ fn build_rs_files() {
 
 #[cfg(feature = "generate-bindings")]
 fn build_bindings() {
-    println!("cargo:rerun-if-changed=../includes/types.h");
-    println!("cargo:rerun-if-changed=../includes/loc.h");
-    println!("cargo:rerun-if-changed=../includes/range.h");
-    println!("cargo:rerun-if-changed=../includes/token.h");
-    println!("cargo:rerun-if-changed=../includes/diagnostic.h");
-    println!("cargo:rerun-if-changed=../includes/comment.h");
-    println!("cargo:rerun-if-changed=../includes/magic_comment.h");
-    println!("cargo:rerun-if-changed=../includes/node_list.h");
-    println!("cargo:rerun-if-changed=../includes/parser_options.h");
-    println!("cargo:rerun-if-changed=../includes/custom_decoder.h");
-    println!("cargo:rerun-if-changed=../includes/token_rewriter.h");
-    println!("cargo:rerun-if-changed=../includes/parser_result.h");
+    println!("cargo:rerun-if-changed=../src/types.h");
+    println!("cargo:rerun-if-changed=../src/loc.h");
+    println!("cargo:rerun-if-changed=../src/range.h");
+    println!("cargo:rerun-if-changed=../src/token.h");
+    println!("cargo:rerun-if-changed=../src/diagnostic.h");
+    println!("cargo:rerun-if-changed=../src/comment.h");
+    println!("cargo:rerun-if-changed=../src/magic_comment.h");
+    println!("cargo:rerun-if-changed=../src/node_list.h");
+    println!("cargo:rerun-if-changed=../src/parser_options.h");
+    println!("cargo:rerun-if-changed=../src/custom_decoder.h");
+    println!("cargo:rerun-if-changed=../src/token_rewriter.h");
+    println!("cargo:rerun-if-changed=../src/parser_result.h");
 
-    let types_h = relative_path("../includes/types.h");
+    let types_h = relative_path("../src/types.h");
 
     let bindings = bindgen::Builder::default()
         .header(types_h)
