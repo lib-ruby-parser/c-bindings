@@ -1,5 +1,5 @@
 use crate::bindings::{
-    size_t, DecoderOutput, DecoderOutputError, DecoderOutputSuccess,
+    DecoderOutput, DecoderOutputError, DecoderOutputSuccess,
     DecodingStatus_DECODING_STATUS_ERROR as DECODING_ERROR,
     DecodingStatus_DECODING_STATUS_OK as DECODING_OK, LexStateActionKind_LEX_STATE_ACTION_KEEP,
     LexStateActionKind_LEX_STATE_ACTION_SET, ParserOptions, Token,
@@ -69,7 +69,7 @@ impl From<ParserOptions> for lib_ruby_parser::ParserOptions {
                         decoder(
                             encoding_ptr as *const i8,
                             input.as_ptr() as *const i8,
-                            input.len() as size_t,
+                            input.len() as u32,
                         )
                     };
 

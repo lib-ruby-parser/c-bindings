@@ -132,8 +132,8 @@ impl From<lib_ruby_parser::nodes::{name}> for Node {{
                     FieldType::StringValue => {
                         format!("StringPtr::from(node.{}).unwrap()", field.field_name)
                     }
-                    FieldType::U8 => format!("node.{} as size_t", field.field_name),
-                    FieldType::Usize => format!("node.{} as size_t", field.field_name),
+                    FieldType::U8 => format!("node.{} as u32", field.field_name),
+                    FieldType::Usize => format!("node.{} as u32", field.field_name),
                     FieldType::RawString => {
                         format!("StringPtr::from(node.{}).unwrap()", field.field_name)
                     }

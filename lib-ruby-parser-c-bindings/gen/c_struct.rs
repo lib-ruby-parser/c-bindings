@@ -18,7 +18,7 @@ impl<'a> CStruct<'a> {
         }
     }
 
-    pub fn code(&self) -> String {
+    pub fn declaration(&self) -> String {
         format!(
             "
 struct {struct_name}
@@ -26,13 +26,23 @@ struct {struct_name}
 {fields_declaration}
 }};
 
+void {name_lower}_node_free(struct {struct_name} *node);
+",
+            struct_name = self.rust_node.struct_name,
+            fields_declaration = self.fields_declaration(),
+            name_lower = self.rust_node.filename.to_lowercase(),
+        )
+    }
+
+    pub fn implementation(&self) -> String {
+        format!(
+            "
 void {name_lower}_node_free(struct {struct_name} *node)
 {{
 {free_fields}
     free(node);
 }}",
             struct_name = self.rust_node.struct_name,
-            fields_declaration = self.fields_declaration(),
             name_lower = self.rust_node.filename.to_lowercase(),
             free_fields = self.free_fields_code()
         )

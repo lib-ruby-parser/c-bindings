@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <assert.h>
-#include "includes/lib-ruby-parser.h"
+#include "target/lib-ruby-parser.h"
 
 struct ParserResult *parse_code(struct ParserOptions *options, const char *code)
 {
@@ -197,13 +197,13 @@ const char *decoding_error = "only US-ASCII is supported";
 
 char *copy_string(const char *source)
 {
-    size_t len = strlen(source);
+    uint32_t len = strlen(source);
     char *out = (char *)malloc(len + 1);
     strcpy(out, source);
     return out;
 }
 
-struct DecoderOutput decoder(const char *encoding, const char *input, size_t len)
+struct DecoderOutput decoder(const char *encoding, const char *input, uint32_t len)
 {
     if (strcmp(encoding, "US-ASCII") == 0)
     {

@@ -2,8 +2,8 @@
 #define LIB_RUBY_PARSER_DIAGNOSTIC_H
 
 #include <stddef.h>
-
-struct Range;
+#include <stdint.h>
+#include "range.h"
 
 enum ErrorLevel
 {
@@ -20,23 +20,10 @@ struct Diagnostic
 
 struct Diagnostics
 {
-    size_t len;
+    uint32_t len;
     struct Diagnostic *list;
 };
 
-void diagnostics_free(struct Diagnostics *diagnostics)
-{
-    if (diagnostics->len > 0)
-    {
-        for (size_t i = 0; i < diagnostics->len; i++)
-        {
-            struct Diagnostic diagnostic = diagnostics->list[i];
-            free(diagnostic.message);
-            range_free(diagnostic.range);
-        }
-        free(diagnostics->list);
-    }
-    free(diagnostics);
-}
+void diagnostics_free(struct Diagnostics *diagnostics);
 
 #endif // LIB_RUBY_PARSER_DIAGNOSTIC_H
