@@ -1,0 +1,173 @@
+name: release
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  create-release:
+    name: create-release
+    runs-on: ubuntu-latest
+    steps:
+      - name: get version number
+        run: |
+          echo "GITHUB_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: print version number
+        run: |
+          echo "tag = ${{ env.GITHUB_TAG }}"
+
+      - name: create release on github
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.GITHUB_TAG }}
+          release_name: ${{ env.GITHUB_TAG }}
+
+      - name: generate env artifact
+        run: |
+          echo "RELEASE_UPLOAD_URL=${{ steps.create_release.outputs.upload_url }}" > artifact-env
+          echo "GITHUB_TAG=$GITHUB_TAG" >> artifact-env
+
+      - name: save env artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: artifact-env
+          path: artifact-env
+
+  upload-release:
+    name: upload-release
+    needs: ['create-release']
+    runs-on: ${{ matrix.build.os }}
+    env:
+      CARGO_BUILD_TARGET: ${{ matrix.build.target }}
+      CC: ${{ matrix.build.cc }}
+      CXX: ${{ matrix.build.cxx }}
+      LD: ${{ matrix.build.ld }}
+      CARGOFLAGS: ${{ matrix.build.cargoflags }}
+      BUILD_ENV: release
+    strategy:
+      fail-fast: false
+      matrix:
+        build:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            cc: clang-9
+            cxx: clang++-9
+            ld: ld.lld-9
+            cargoflags: --features="onig"
+            output: lib-ruby-parser-x86_64-unknown-linux-gnu.a
+
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            cc: clang
+            cxx: clang++
+            ld: ld
+            cargoflags: --features="onig"
+            output: lib-ruby-parser-x86_64-apple-darwin.a
+
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            cc: cl.exe
+            cxx: cl.exe
+            ld: link.exe
+            cargoflags: ""
+            output: lib-ruby-parser-x86_64-pc-windows-msvc.lib
+
+    steps:
+      - name: setup msvc on windows
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: fix linker on windows
+        if: runner.os == 'Windows'
+        run: |
+          rm "C:\\Program Files\\Git\\usr\\bin\\link.exe"
+          which -a link.exe
+
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: download env artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: artifact-env
+          path: artifact-env
+
+      - name: load env artifact
+        shell: bash
+        run: cat artifact-env/artifact-env >> $GITHUB_ENV
+
+      - name: install rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+          override: true
+
+      - name: build
+        shell: bash
+        run: |
+          make setup
+          make build-static
+
+      - name: show asset
+        shell: bash
+        run: ls -l target/release/${{ matrix.build.output }}
+
+      - name: upload assets
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ env.RELEASE_UPLOAD_URL }}
+          asset_path: target/release/${{ matrix.build.output }}
+          asset_name: ${{ matrix.build.output }}
+          asset_content_type: application/octet-stream
+
+  upload-headers:
+    name: upload-headers
+    needs: ['create-release']
+    runs-on: ubuntu-latest
+    env:
+      BUILD_ENV: release
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: download env artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: artifact-env
+          path: artifact-env
+
+      - name: load env artifact
+        run: cat artifact-env/artifact-env >> $GITHUB_ENV
+
+      - name: install rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+          override: true
+
+      - name: generate lib-ruby-parser.h
+        run: |
+          make setup
+          make gen-headers
+          make target/lib-ruby-parser.h
+
+      - name: show asset
+        run: ls -l target/lib-ruby-parser.h
+
+      - name: upload assets
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ env.RELEASE_UPLOAD_URL }}
+          asset_path: target/lib-ruby-parser.h
+          asset_name: lib-ruby-parser.h
+          asset_content_type: application/octet-stream
