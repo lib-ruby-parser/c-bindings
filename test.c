@@ -203,8 +203,13 @@ char *copy_string(const char *source)
     return out;
 }
 
-struct DecoderOutput decoder(const char *encoding, const char *input, uint32_t len)
+struct DecoderOutput do_decode(void *state, const char *encoding, const char *input, uint32_t len)
 {
+    (void)state;
+    (void)encoding;
+    (void)input;
+    (void)len;
+    assert_str_eq("foo", state);
     if (strcmp(encoding, "US-ASCII") == 0)
     {
         return decode_ok(copy_string(decoded_source), strlen(decoded_source));
@@ -215,7 +220,8 @@ struct DecoderOutput decoder(const char *encoding, const char *input, uint32_t l
 
 void test_custom_decoder_ok()
 {
-    struct ParserOptions options = {.buffer_name = "(test_custom_decoder_ok)", .debug = false, .decoder = decoder};
+    struct CustomDecoder decoder = {.state = (void *)"foo", .decoder = do_decode};
+    struct ParserOptions options = {.buffer_name = "(test_custom_decoder_ok)", .debug = false, .decoder = &decoder};
     struct ParserResult *result = parse_code(&options, "# encoding: us-ascii\n2");
 
     struct Node *node = assert_not_null(result->ast);
@@ -227,7 +233,8 @@ void test_custom_decoder_ok()
 
 void test_custom_decoder_err()
 {
-    struct ParserOptions options = {.buffer_name = "(test_custom_decoder_ok)", .debug = false, .decoder = decoder};
+    struct CustomDecoder decoder = {.state = (void *)"foo", .decoder = do_decode};
+    struct ParserOptions options = {.buffer_name = "(test_custom_decoder_err)", .debug = false, .decoder = &decoder};
     struct ParserResult *result = parse_code(&options, "# encoding: koi8-r\n2");
 
     assert_eq(result->ast, NULL);
@@ -240,6 +247,8 @@ void test_custom_decoder_err()
 const char *three = "3";
 struct TokenRewriterOutput rewrite_token(void *state, struct Token token, const char *input)
 {
+    (void)state;
+    (void)input;
     if (strcmp(token.token_value, "2") == 0)
     {
         // rewrite "2" to "3"
@@ -262,7 +271,7 @@ void test_token_rewriter()
         .state = NULL,
     };
     struct ParserOptions options = {
-        .buffer_name = "(test_custom_decoder_ok)",
+        .buffer_name = "(test_token_rewriter)",
         .debug = false,
         .token_rewriter = &token_rewriter,
         .record_tokens = true};
@@ -282,20 +291,25 @@ void test_token_rewriter()
 
 int main()
 {
-    test_parse();
-    test_tokens();
-    test_diagnostics();
-    test_comments();
-    test_magic_comments();
+#define test(name)                    \
+    printf("Running test_%s", #name); \
+    test_##name();                    \
+    printf("... OK\n");
 
-    test_range();
+    test(parse);
+    test(tokens);
+    test(diagnostics);
+    test(comments);
+    test(magic_comments);
 
-    test_all_nodes();
+    test(range);
 
-    test_custom_decoder_ok();
-    test_custom_decoder_err();
+    test(all_nodes);
 
-    test_token_rewriter();
+    test(custom_decoder_ok);
+    test(custom_decoder_err);
+
+    test(token_rewriter);
 
     printf("all tests passed.\n");
 }

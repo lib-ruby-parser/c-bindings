@@ -229,6 +229,7 @@ test-valgrind: $(TARGET_DIR)/test-runner
 clean:
 	rm -rf $(TARGET_DIR)
 	mkdir -p $(TARGET_DIR)
+	rm -f $(LIB_RUBY_PARSER_H)
 
 test-cov: cargo-build target-dir
 	$(CC) test.c $(RUST_OBJ) $(CC_DEFAULT_FLAGS) -fprofile-instr-generate -fcoverage-mapping -o $(TARGET_DIR)/test

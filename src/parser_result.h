@@ -12,6 +12,7 @@ struct ParserResult
     struct CommentList *comments;
     struct MagicCommentList *magic_comments;
     char *input;
+    uint32_t input_len;
 };
 
 void parser_result_free(struct ParserResult *parser_result);

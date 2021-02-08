@@ -33,7 +33,13 @@ struct DecoderOutput
     union DecoderOutputValue value;
 };
 
-typedef struct DecoderOutput CustomDecoder(const char *encoding, const char *input, uint32_t len);
+typedef struct DecoderOutput CustomDecoderFn(void *state, const char *encoding, const char *input, uint32_t len);
+
+struct CustomDecoder
+{
+    void *state;
+    CustomDecoderFn *decoder;
+};
 
 struct DecoderOutput decode_ok(char *bytes, uint32_t len);
 struct DecoderOutput decode_err(char *error_message);

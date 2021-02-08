@@ -9,7 +9,7 @@ struct ParserOptions
 {
     char *buffer_name;
     bool debug;
-    CustomDecoder *decoder;
+    struct CustomDecoder *decoder;
     bool record_tokens;
     struct TokenRewriter *token_rewriter;
 };

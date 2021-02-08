@@ -27,9 +27,12 @@ pub struct TokenList {
     pub len: u32,
     pub list: *mut Token,
 }
-pub const ErrorLevel_ERROR_LEVEL_WARNING: ErrorLevel = 0;
-pub const ErrorLevel_ERROR_LEVEL_ERROR: ErrorLevel = 1;
-pub type ErrorLevel = u32;
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+pub enum ErrorLevel {
+    ERROR_LEVEL_WARNING = 0,
+    ERROR_LEVEL_ERROR = 1,
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Diagnostic {
@@ -54,11 +57,14 @@ pub struct CommentList {
     pub len: u32,
     pub list: *mut Comment,
 }
-pub const MagicCommentKind_ENCODING: MagicCommentKind = 0;
-pub const MagicCommentKind_FROZEN_STRING_LITERAL: MagicCommentKind = 1;
-pub const MagicCommentKind_WARN_INDENT: MagicCommentKind = 2;
-pub const MagicCommentKind_SHAREABLE_CONSTANT_VALUE: MagicCommentKind = 3;
-pub type MagicCommentKind = u32;
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+pub enum MagicCommentKind {
+    ENCODING = 0,
+    FROZEN_STRING_LITERAL = 1,
+    WARN_INDENT = 2,
+    SHAREABLE_CONSTANT_VALUE = 3,
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct MagicComment {
@@ -78,9 +84,12 @@ pub struct NodeList {
     pub len: u32,
     pub list: *mut Node,
 }
-pub const DecodingStatus_DECODING_STATUS_OK: DecodingStatus = 0;
-pub const DecodingStatus_DECODING_STATUS_ERROR: DecodingStatus = 1;
-pub type DecodingStatus = u32;
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+pub enum DecodingStatus {
+    DECODING_STATUS_OK = 0,
+    DECODING_STATUS_ERROR = 1,
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct DecoderOutputSuccess {
@@ -105,19 +114,32 @@ pub struct DecoderOutput {
     pub status: DecodingStatus,
     pub value: DecoderOutputValue,
 }
-pub type CustomDecoder = ::std::option::Option<
+pub type CustomDecoderFn = ::std::option::Option<
     unsafe extern "C" fn(
+        state: *mut ::std::os::raw::c_void,
         encoding: *const ::std::os::raw::c_char,
         input: *const ::std::os::raw::c_char,
         len: u32,
     ) -> DecoderOutput,
 >;
-pub const TokenRewriteAction_REWRITE_ACTION_DROP: TokenRewriteAction = 0;
-pub const TokenRewriteAction_REWRITE_ACTION_KEEP: TokenRewriteAction = 1;
-pub type TokenRewriteAction = u32;
-pub const LexStateActionKind_LEX_STATE_ACTION_SET: LexStateActionKind = 0;
-pub const LexStateActionKind_LEX_STATE_ACTION_KEEP: LexStateActionKind = 1;
-pub type LexStateActionKind = u32;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct CustomDecoder {
+    pub state: *mut ::std::os::raw::c_void,
+    pub decoder: CustomDecoderFn,
+}
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+pub enum TokenRewriteAction {
+    REWRITE_ACTION_DROP = 0,
+    REWRITE_ACTION_KEEP = 1,
+}
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+pub enum LexStateActionKind {
+    LEX_STATE_ACTION_SET = 0,
+    LEX_STATE_ACTION_KEEP = 1,
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union LexStateActionValue {
@@ -166,7 +188,7 @@ pub struct TokenRewriter {
 pub struct ParserOptions {
     pub buffer_name: *mut ::std::os::raw::c_char,
     pub debug: bool,
-    pub decoder: CustomDecoder,
+    pub decoder: *mut CustomDecoder,
     pub record_tokens: bool,
     pub token_rewriter: *mut TokenRewriter,
 }
@@ -179,6 +201,7 @@ pub struct ParserResult {
     pub comments: *mut CommentList,
     pub magic_comments: *mut MagicCommentList,
     pub input: *mut ::std::os::raw::c_char,
+    pub input_len: u32,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]

@@ -16,7 +16,7 @@ generate-bindings = ["bindgen", "lib-ruby-parser-nodes"]
 onig = ["lib-ruby-parser/onig"]
 
 [dependencies]
-lib-ruby-parser = "=3.0.0-3"
+lib-ruby-parser = "=3.0.0-4"
 
 [build-dependencies]
 bindgen = {version = "0.53.1", optional = true}

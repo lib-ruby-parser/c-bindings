@@ -61,6 +61,11 @@ fn build_bindings() {
         .header(types_h)
         .whitelist_type("ParserOptions")
         .whitelist_type("ParserResult")
+        .rustified_enum("LexStateActionKind")
+        .rustified_enum("TokenRewriteAction")
+        .rustified_enum("DecodingStatus")
+        .rustified_enum("MagicCommentKind")
+        .rustified_enum("ErrorLevel")
         .layout_tests(false)
         .generate()
         .expect("Unable to generate bindings");
