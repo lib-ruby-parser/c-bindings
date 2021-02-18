@@ -128,11 +128,10 @@ impl From<lib_ruby_parser::Node> for Node {
             lib_ruby_parser::Node::XHeredoc(inner) => Node::from(inner),
             lib_ruby_parser::Node::Xstr(inner) => Node::from(inner),
             lib_ruby_parser::Node::Yield(inner) => Node::from(inner),
-            lib_ruby_parser::Node::ZSuper(inner) => Node::from(inner),
+            lib_ruby_parser::Node::ZSuper(inner) => Node::from(inner)
         }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Alias> for Node {
     fn from(node: lib_ruby_parser::nodes::Alias) -> Self {
@@ -147,7 +146,6 @@ impl From<lib_ruby_parser::nodes::Alias> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::AndAsgn> for Node {
     fn from(node: lib_ruby_parser::nodes::AndAsgn) -> Self {
         let node_type = NodeType_NODE_AND_ASGN;
@@ -160,7 +158,6 @@ impl From<lib_ruby_parser::nodes::AndAsgn> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::And> for Node {
     fn from(node: lib_ruby_parser::nodes::And) -> Self {
@@ -175,7 +172,6 @@ impl From<lib_ruby_parser::nodes::And> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Arg> for Node {
     fn from(node: lib_ruby_parser::nodes::Arg) -> Self {
         let node_type = NodeType_NODE_ARG;
@@ -186,7 +182,6 @@ impl From<lib_ruby_parser::nodes::Arg> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Args> for Node {
     fn from(node: lib_ruby_parser::nodes::Args) -> Self {
@@ -201,7 +196,6 @@ impl From<lib_ruby_parser::nodes::Args> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Array> for Node {
     fn from(node: lib_ruby_parser::nodes::Array) -> Self {
         let node_type = NodeType_NODE_ARRAY;
@@ -214,7 +208,6 @@ impl From<lib_ruby_parser::nodes::Array> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::ArrayPattern> for Node {
     fn from(node: lib_ruby_parser::nodes::ArrayPattern) -> Self {
@@ -229,7 +222,6 @@ impl From<lib_ruby_parser::nodes::ArrayPattern> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::ArrayPatternWithTail> for Node {
     fn from(node: lib_ruby_parser::nodes::ArrayPatternWithTail) -> Self {
         let node_type = NodeType_NODE_ARRAY_PATTERN_WITH_TAIL;
@@ -243,7 +235,6 @@ impl From<lib_ruby_parser::nodes::ArrayPatternWithTail> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::BackRef> for Node {
     fn from(node: lib_ruby_parser::nodes::BackRef) -> Self {
         let node_type = NodeType_NODE_BACK_REF;
@@ -254,7 +245,6 @@ impl From<lib_ruby_parser::nodes::BackRef> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Begin> for Node {
     fn from(node: lib_ruby_parser::nodes::Begin) -> Self {
@@ -268,7 +258,6 @@ impl From<lib_ruby_parser::nodes::Begin> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Block> for Node {
     fn from(node: lib_ruby_parser::nodes::Block) -> Self {
@@ -285,7 +274,6 @@ impl From<lib_ruby_parser::nodes::Block> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::BlockPass> for Node {
     fn from(node: lib_ruby_parser::nodes::BlockPass) -> Self {
         let node_type = NodeType_NODE_BLOCK_PASS;
@@ -297,7 +285,6 @@ impl From<lib_ruby_parser::nodes::BlockPass> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Blockarg> for Node {
     fn from(node: lib_ruby_parser::nodes::Blockarg) -> Self {
@@ -312,7 +299,6 @@ impl From<lib_ruby_parser::nodes::Blockarg> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Break> for Node {
     fn from(node: lib_ruby_parser::nodes::Break) -> Self {
         let node_type = NodeType_NODE_BREAK_;
@@ -324,7 +310,6 @@ impl From<lib_ruby_parser::nodes::Break> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Case> for Node {
     fn from(node: lib_ruby_parser::nodes::Case) -> Self {
@@ -342,7 +327,6 @@ impl From<lib_ruby_parser::nodes::Case> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::CaseMatch> for Node {
     fn from(node: lib_ruby_parser::nodes::CaseMatch) -> Self {
         let node_type = NodeType_NODE_CASE_MATCH;
@@ -358,7 +342,6 @@ impl From<lib_ruby_parser::nodes::CaseMatch> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Casgn> for Node {
     fn from(node: lib_ruby_parser::nodes::Casgn) -> Self {
@@ -376,7 +359,6 @@ impl From<lib_ruby_parser::nodes::Casgn> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Cbase> for Node {
     fn from(node: lib_ruby_parser::nodes::Cbase) -> Self {
         let node_type = NodeType_NODE_CBASE;
@@ -386,7 +368,6 @@ impl From<lib_ruby_parser::nodes::Cbase> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Class> for Node {
     fn from(node: lib_ruby_parser::nodes::Class) -> Self {
@@ -404,7 +385,6 @@ impl From<lib_ruby_parser::nodes::Class> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Complex> for Node {
     fn from(node: lib_ruby_parser::nodes::Complex) -> Self {
         let node_type = NodeType_NODE_COMPLEX;
@@ -416,7 +396,6 @@ impl From<lib_ruby_parser::nodes::Complex> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Const> for Node {
     fn from(node: lib_ruby_parser::nodes::Const) -> Self {
@@ -432,7 +411,6 @@ impl From<lib_ruby_parser::nodes::Const> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::ConstPattern> for Node {
     fn from(node: lib_ruby_parser::nodes::ConstPattern) -> Self {
         let node_type = NodeType_NODE_CONST_PATTERN;
@@ -446,7 +424,6 @@ impl From<lib_ruby_parser::nodes::ConstPattern> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::CSend> for Node {
     fn from(node: lib_ruby_parser::nodes::CSend) -> Self {
@@ -466,7 +443,6 @@ impl From<lib_ruby_parser::nodes::CSend> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Cvar> for Node {
     fn from(node: lib_ruby_parser::nodes::Cvar) -> Self {
         let node_type = NodeType_NODE_CVAR;
@@ -477,7 +453,6 @@ impl From<lib_ruby_parser::nodes::Cvar> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Cvasgn> for Node {
     fn from(node: lib_ruby_parser::nodes::Cvasgn) -> Self {
@@ -492,7 +467,6 @@ impl From<lib_ruby_parser::nodes::Cvasgn> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Def> for Node {
     fn from(node: lib_ruby_parser::nodes::Def) -> Self {
@@ -511,7 +485,6 @@ impl From<lib_ruby_parser::nodes::Def> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Defined> for Node {
     fn from(node: lib_ruby_parser::nodes::Defined) -> Self {
         let node_type = NodeType_NODE_DEFINED;
@@ -525,7 +498,6 @@ impl From<lib_ruby_parser::nodes::Defined> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Defs> for Node {
     fn from(node: lib_ruby_parser::nodes::Defs) -> Self {
@@ -546,7 +518,6 @@ impl From<lib_ruby_parser::nodes::Defs> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Dstr> for Node {
     fn from(node: lib_ruby_parser::nodes::Dstr) -> Self {
         let node_type = NodeType_NODE_DSTR;
@@ -559,7 +530,6 @@ impl From<lib_ruby_parser::nodes::Dstr> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Dsym> for Node {
     fn from(node: lib_ruby_parser::nodes::Dsym) -> Self {
@@ -574,7 +544,6 @@ impl From<lib_ruby_parser::nodes::Dsym> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::EFlipFlop> for Node {
     fn from(node: lib_ruby_parser::nodes::EFlipFlop) -> Self {
         let node_type = NodeType_NODE_EFLIPFLOP;
@@ -588,7 +557,6 @@ impl From<lib_ruby_parser::nodes::EFlipFlop> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::EmptyElse> for Node {
     fn from(node: lib_ruby_parser::nodes::EmptyElse) -> Self {
         let node_type = NodeType_NODE_EMPTY_ELSE;
@@ -599,7 +567,6 @@ impl From<lib_ruby_parser::nodes::EmptyElse> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Encoding> for Node {
     fn from(node: lib_ruby_parser::nodes::Encoding) -> Self {
         let node_type = NodeType_NODE_ENCODING_;
@@ -609,7 +576,6 @@ impl From<lib_ruby_parser::nodes::Encoding> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Ensure> for Node {
     fn from(node: lib_ruby_parser::nodes::Ensure) -> Self {
@@ -624,7 +590,6 @@ impl From<lib_ruby_parser::nodes::Ensure> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Erange> for Node {
     fn from(node: lib_ruby_parser::nodes::Erange) -> Self {
         let node_type = NodeType_NODE_ERANGE;
@@ -638,7 +603,6 @@ impl From<lib_ruby_parser::nodes::Erange> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::False> for Node {
     fn from(node: lib_ruby_parser::nodes::False) -> Self {
         let node_type = NodeType_NODE_FALSE_;
@@ -649,7 +613,6 @@ impl From<lib_ruby_parser::nodes::False> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::File> for Node {
     fn from(node: lib_ruby_parser::nodes::File) -> Self {
         let node_type = NodeType_NODE_FILE;
@@ -659,7 +622,6 @@ impl From<lib_ruby_parser::nodes::File> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::FindPattern> for Node {
     fn from(node: lib_ruby_parser::nodes::FindPattern) -> Self {
@@ -674,7 +636,6 @@ impl From<lib_ruby_parser::nodes::FindPattern> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Float> for Node {
     fn from(node: lib_ruby_parser::nodes::Float) -> Self {
         let node_type = NodeType_NODE_FLOAT;
@@ -686,7 +647,6 @@ impl From<lib_ruby_parser::nodes::Float> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::For> for Node {
     fn from(node: lib_ruby_parser::nodes::For) -> Self {
@@ -705,7 +665,6 @@ impl From<lib_ruby_parser::nodes::For> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::ForwardArg> for Node {
     fn from(node: lib_ruby_parser::nodes::ForwardArg) -> Self {
         let node_type = NodeType_NODE_FORWARD_ARG;
@@ -715,7 +674,6 @@ impl From<lib_ruby_parser::nodes::ForwardArg> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::ForwardedArgs> for Node {
     fn from(node: lib_ruby_parser::nodes::ForwardedArgs) -> Self {
@@ -727,7 +685,6 @@ impl From<lib_ruby_parser::nodes::ForwardedArgs> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Gvar> for Node {
     fn from(node: lib_ruby_parser::nodes::Gvar) -> Self {
         let node_type = NodeType_NODE_GVAR;
@@ -738,7 +695,6 @@ impl From<lib_ruby_parser::nodes::Gvar> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Gvasgn> for Node {
     fn from(node: lib_ruby_parser::nodes::Gvasgn) -> Self {
@@ -754,7 +710,6 @@ impl From<lib_ruby_parser::nodes::Gvasgn> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Hash> for Node {
     fn from(node: lib_ruby_parser::nodes::Hash) -> Self {
         let node_type = NodeType_NODE_HASH;
@@ -768,7 +723,6 @@ impl From<lib_ruby_parser::nodes::Hash> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Kwargs> for Node {
     fn from(node: lib_ruby_parser::nodes::Kwargs) -> Self {
         let node_type = NodeType_NODE_KWARGS;
@@ -779,7 +733,6 @@ impl From<lib_ruby_parser::nodes::Kwargs> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::HashPattern> for Node {
     fn from(node: lib_ruby_parser::nodes::HashPattern) -> Self {
@@ -794,7 +747,6 @@ impl From<lib_ruby_parser::nodes::HashPattern> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Heredoc> for Node {
     fn from(node: lib_ruby_parser::nodes::Heredoc) -> Self {
         let node_type = NodeType_NODE_HEREDOC;
@@ -807,7 +759,6 @@ impl From<lib_ruby_parser::nodes::Heredoc> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::If> for Node {
     fn from(node: lib_ruby_parser::nodes::If) -> Self {
@@ -826,7 +777,6 @@ impl From<lib_ruby_parser::nodes::If> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::IfGuard> for Node {
     fn from(node: lib_ruby_parser::nodes::IfGuard) -> Self {
         let node_type = NodeType_NODE_IF_GUARD;
@@ -838,7 +788,6 @@ impl From<lib_ruby_parser::nodes::IfGuard> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::IfMod> for Node {
     fn from(node: lib_ruby_parser::nodes::IfMod) -> Self {
@@ -853,7 +802,6 @@ impl From<lib_ruby_parser::nodes::IfMod> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::IfTernary> for Node {
     fn from(node: lib_ruby_parser::nodes::IfTernary) -> Self {
@@ -870,7 +818,6 @@ impl From<lib_ruby_parser::nodes::IfTernary> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::IFlipFlop> for Node {
     fn from(node: lib_ruby_parser::nodes::IFlipFlop) -> Self {
         let node_type = NodeType_NODE_IFLIPFLOP;
@@ -883,7 +830,6 @@ impl From<lib_ruby_parser::nodes::IFlipFlop> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::MatchPattern> for Node {
     fn from(node: lib_ruby_parser::nodes::MatchPattern) -> Self {
@@ -898,7 +844,6 @@ impl From<lib_ruby_parser::nodes::MatchPattern> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::MatchPatternP> for Node {
     fn from(node: lib_ruby_parser::nodes::MatchPatternP) -> Self {
         let node_type = NodeType_NODE_MATCH_PATTERN_P;
@@ -911,7 +856,6 @@ impl From<lib_ruby_parser::nodes::MatchPatternP> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::InPattern> for Node {
     fn from(node: lib_ruby_parser::nodes::InPattern) -> Self {
@@ -928,7 +872,6 @@ impl From<lib_ruby_parser::nodes::InPattern> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Index> for Node {
     fn from(node: lib_ruby_parser::nodes::Index) -> Self {
         let node_type = NodeType_NODE_INDEX;
@@ -942,7 +885,6 @@ impl From<lib_ruby_parser::nodes::Index> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::IndexAsgn> for Node {
     fn from(node: lib_ruby_parser::nodes::IndexAsgn) -> Self {
@@ -960,7 +902,6 @@ impl From<lib_ruby_parser::nodes::IndexAsgn> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Int> for Node {
     fn from(node: lib_ruby_parser::nodes::Int) -> Self {
         let node_type = NodeType_NODE_INT;
@@ -972,7 +913,6 @@ impl From<lib_ruby_parser::nodes::Int> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Irange> for Node {
     fn from(node: lib_ruby_parser::nodes::Irange) -> Self {
@@ -987,7 +927,6 @@ impl From<lib_ruby_parser::nodes::Irange> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Ivar> for Node {
     fn from(node: lib_ruby_parser::nodes::Ivar) -> Self {
         let node_type = NodeType_NODE_IVAR;
@@ -998,7 +937,6 @@ impl From<lib_ruby_parser::nodes::Ivar> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Ivasgn> for Node {
     fn from(node: lib_ruby_parser::nodes::Ivasgn) -> Self {
@@ -1014,7 +952,6 @@ impl From<lib_ruby_parser::nodes::Ivasgn> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Kwarg> for Node {
     fn from(node: lib_ruby_parser::nodes::Kwarg) -> Self {
         let node_type = NodeType_NODE_KWARG;
@@ -1026,7 +963,6 @@ impl From<lib_ruby_parser::nodes::Kwarg> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::KwBegin> for Node {
     fn from(node: lib_ruby_parser::nodes::KwBegin) -> Self {
@@ -1041,7 +977,6 @@ impl From<lib_ruby_parser::nodes::KwBegin> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Kwnilarg> for Node {
     fn from(node: lib_ruby_parser::nodes::Kwnilarg) -> Self {
         let node_type = NodeType_NODE_KWNILARG;
@@ -1052,7 +987,6 @@ impl From<lib_ruby_parser::nodes::Kwnilarg> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Kwoptarg> for Node {
     fn from(node: lib_ruby_parser::nodes::Kwoptarg) -> Self {
@@ -1067,7 +1001,6 @@ impl From<lib_ruby_parser::nodes::Kwoptarg> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Kwrestarg> for Node {
     fn from(node: lib_ruby_parser::nodes::Kwrestarg) -> Self {
         let node_type = NodeType_NODE_KWRESTARG;
@@ -1081,7 +1014,6 @@ impl From<lib_ruby_parser::nodes::Kwrestarg> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Kwsplat> for Node {
     fn from(node: lib_ruby_parser::nodes::Kwsplat) -> Self {
         let node_type = NodeType_NODE_KWSPLAT;
@@ -1094,7 +1026,6 @@ impl From<lib_ruby_parser::nodes::Kwsplat> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Lambda> for Node {
     fn from(node: lib_ruby_parser::nodes::Lambda) -> Self {
         let node_type = NodeType_NODE_LAMBDA;
@@ -1104,7 +1035,6 @@ impl From<lib_ruby_parser::nodes::Lambda> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Line> for Node {
     fn from(node: lib_ruby_parser::nodes::Line) -> Self {
@@ -1116,7 +1046,6 @@ impl From<lib_ruby_parser::nodes::Line> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Lvar> for Node {
     fn from(node: lib_ruby_parser::nodes::Lvar) -> Self {
         let node_type = NodeType_NODE_LVAR;
@@ -1127,7 +1056,6 @@ impl From<lib_ruby_parser::nodes::Lvar> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Lvasgn> for Node {
     fn from(node: lib_ruby_parser::nodes::Lvasgn) -> Self {
@@ -1143,7 +1071,6 @@ impl From<lib_ruby_parser::nodes::Lvasgn> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Masgn> for Node {
     fn from(node: lib_ruby_parser::nodes::Masgn) -> Self {
         let node_type = NodeType_NODE_MASGN;
@@ -1156,7 +1083,6 @@ impl From<lib_ruby_parser::nodes::Masgn> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::MatchAlt> for Node {
     fn from(node: lib_ruby_parser::nodes::MatchAlt) -> Self {
@@ -1171,7 +1097,6 @@ impl From<lib_ruby_parser::nodes::MatchAlt> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::MatchAs> for Node {
     fn from(node: lib_ruby_parser::nodes::MatchAs) -> Self {
         let node_type = NodeType_NODE_MATCH_AS;
@@ -1185,7 +1110,6 @@ impl From<lib_ruby_parser::nodes::MatchAs> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::MatchCurrentLine> for Node {
     fn from(node: lib_ruby_parser::nodes::MatchCurrentLine) -> Self {
         let node_type = NodeType_NODE_MATCH_CURRENT_LINE;
@@ -1196,7 +1120,6 @@ impl From<lib_ruby_parser::nodes::MatchCurrentLine> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::MatchNilPattern> for Node {
     fn from(node: lib_ruby_parser::nodes::MatchNilPattern) -> Self {
@@ -1210,7 +1133,6 @@ impl From<lib_ruby_parser::nodes::MatchNilPattern> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::MatchRest> for Node {
     fn from(node: lib_ruby_parser::nodes::MatchRest) -> Self {
         let node_type = NodeType_NODE_MATCH_REST;
@@ -1223,7 +1145,6 @@ impl From<lib_ruby_parser::nodes::MatchRest> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::MatchVar> for Node {
     fn from(node: lib_ruby_parser::nodes::MatchVar) -> Self {
         let node_type = NodeType_NODE_MATCH_VAR;
@@ -1235,7 +1156,6 @@ impl From<lib_ruby_parser::nodes::MatchVar> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::MatchWithLvasgn> for Node {
     fn from(node: lib_ruby_parser::nodes::MatchWithLvasgn) -> Self {
@@ -1250,7 +1170,6 @@ impl From<lib_ruby_parser::nodes::MatchWithLvasgn> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Mlhs> for Node {
     fn from(node: lib_ruby_parser::nodes::Mlhs) -> Self {
         let node_type = NodeType_NODE_MLHS;
@@ -1263,7 +1182,6 @@ impl From<lib_ruby_parser::nodes::Mlhs> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Module> for Node {
     fn from(node: lib_ruby_parser::nodes::Module) -> Self {
@@ -1279,7 +1197,6 @@ impl From<lib_ruby_parser::nodes::Module> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Next> for Node {
     fn from(node: lib_ruby_parser::nodes::Next) -> Self {
         let node_type = NodeType_NODE_NEXT;
@@ -1292,7 +1209,6 @@ impl From<lib_ruby_parser::nodes::Next> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Nil> for Node {
     fn from(node: lib_ruby_parser::nodes::Nil) -> Self {
         let node_type = NodeType_NODE_NIL;
@@ -1302,7 +1218,6 @@ impl From<lib_ruby_parser::nodes::Nil> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::NthRef> for Node {
     fn from(node: lib_ruby_parser::nodes::NthRef) -> Self {
@@ -1314,7 +1229,6 @@ impl From<lib_ruby_parser::nodes::NthRef> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Numblock> for Node {
     fn from(node: lib_ruby_parser::nodes::Numblock) -> Self {
@@ -1331,7 +1245,6 @@ impl From<lib_ruby_parser::nodes::Numblock> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::OpAsgn> for Node {
     fn from(node: lib_ruby_parser::nodes::OpAsgn) -> Self {
         let node_type = NodeType_NODE_OP_ASGN;
@@ -1345,7 +1258,6 @@ impl From<lib_ruby_parser::nodes::OpAsgn> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Optarg> for Node {
     fn from(node: lib_ruby_parser::nodes::Optarg) -> Self {
@@ -1361,7 +1273,6 @@ impl From<lib_ruby_parser::nodes::Optarg> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Or> for Node {
     fn from(node: lib_ruby_parser::nodes::Or) -> Self {
         let node_type = NodeType_NODE_OR;
@@ -1374,7 +1285,6 @@ impl From<lib_ruby_parser::nodes::Or> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::OrAsgn> for Node {
     fn from(node: lib_ruby_parser::nodes::OrAsgn) -> Self {
@@ -1389,7 +1299,6 @@ impl From<lib_ruby_parser::nodes::OrAsgn> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Pair> for Node {
     fn from(node: lib_ruby_parser::nodes::Pair) -> Self {
         let node_type = NodeType_NODE_PAIR;
@@ -1403,7 +1312,6 @@ impl From<lib_ruby_parser::nodes::Pair> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Pin> for Node {
     fn from(node: lib_ruby_parser::nodes::Pin) -> Self {
         let node_type = NodeType_NODE_PIN;
@@ -1415,7 +1323,6 @@ impl From<lib_ruby_parser::nodes::Pin> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Postexe> for Node {
     fn from(node: lib_ruby_parser::nodes::Postexe) -> Self {
@@ -1431,7 +1338,6 @@ impl From<lib_ruby_parser::nodes::Postexe> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Preexe> for Node {
     fn from(node: lib_ruby_parser::nodes::Preexe) -> Self {
         let node_type = NodeType_NODE_PREEXE;
@@ -1446,7 +1352,6 @@ impl From<lib_ruby_parser::nodes::Preexe> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Procarg0> for Node {
     fn from(node: lib_ruby_parser::nodes::Procarg0) -> Self {
         let node_type = NodeType_NODE_PROCARG0;
@@ -1460,7 +1365,6 @@ impl From<lib_ruby_parser::nodes::Procarg0> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Rational> for Node {
     fn from(node: lib_ruby_parser::nodes::Rational) -> Self {
         let node_type = NodeType_NODE_RATIONAL;
@@ -1473,7 +1377,6 @@ impl From<lib_ruby_parser::nodes::Rational> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Redo> for Node {
     fn from(node: lib_ruby_parser::nodes::Redo) -> Self {
         let node_type = NodeType_NODE_REDO;
@@ -1483,7 +1386,6 @@ impl From<lib_ruby_parser::nodes::Redo> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::RegOpt> for Node {
     fn from(node: lib_ruby_parser::nodes::RegOpt) -> Self {
@@ -1495,7 +1397,6 @@ impl From<lib_ruby_parser::nodes::RegOpt> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Regexp> for Node {
     fn from(node: lib_ruby_parser::nodes::Regexp) -> Self {
@@ -1511,7 +1412,6 @@ impl From<lib_ruby_parser::nodes::Regexp> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Rescue> for Node {
     fn from(node: lib_ruby_parser::nodes::Rescue) -> Self {
         let node_type = NodeType_NODE_RESCUE;
@@ -1525,7 +1425,6 @@ impl From<lib_ruby_parser::nodes::Rescue> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::RescueBody> for Node {
     fn from(node: lib_ruby_parser::nodes::RescueBody) -> Self {
@@ -1543,7 +1442,6 @@ impl From<lib_ruby_parser::nodes::RescueBody> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Restarg> for Node {
     fn from(node: lib_ruby_parser::nodes::Restarg) -> Self {
         let node_type = NodeType_NODE_RESTARG;
@@ -1557,7 +1455,6 @@ impl From<lib_ruby_parser::nodes::Restarg> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Retry> for Node {
     fn from(node: lib_ruby_parser::nodes::Retry) -> Self {
         let node_type = NodeType_NODE_RETRY;
@@ -1567,7 +1464,6 @@ impl From<lib_ruby_parser::nodes::Retry> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Return> for Node {
     fn from(node: lib_ruby_parser::nodes::Return) -> Self {
@@ -1580,7 +1476,6 @@ impl From<lib_ruby_parser::nodes::Return> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::SClass> for Node {
     fn from(node: lib_ruby_parser::nodes::SClass) -> Self {
@@ -1597,7 +1492,6 @@ impl From<lib_ruby_parser::nodes::SClass> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Self_> for Node {
     fn from(node: lib_ruby_parser::nodes::Self_) -> Self {
         let node_type = NodeType_NODE_SELF_;
@@ -1607,7 +1501,6 @@ impl From<lib_ruby_parser::nodes::Self_> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Send> for Node {
     fn from(node: lib_ruby_parser::nodes::Send) -> Self {
@@ -1627,7 +1520,6 @@ impl From<lib_ruby_parser::nodes::Send> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Shadowarg> for Node {
     fn from(node: lib_ruby_parser::nodes::Shadowarg) -> Self {
         let node_type = NodeType_NODE_SHADOWARG;
@@ -1638,7 +1530,6 @@ impl From<lib_ruby_parser::nodes::Shadowarg> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Splat> for Node {
     fn from(node: lib_ruby_parser::nodes::Splat) -> Self {
@@ -1652,7 +1543,6 @@ impl From<lib_ruby_parser::nodes::Splat> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Str> for Node {
     fn from(node: lib_ruby_parser::nodes::Str) -> Self {
         let node_type = NodeType_NODE_STR_;
@@ -1665,7 +1555,6 @@ impl From<lib_ruby_parser::nodes::Str> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Super> for Node {
     fn from(node: lib_ruby_parser::nodes::Super) -> Self {
@@ -1681,7 +1570,6 @@ impl From<lib_ruby_parser::nodes::Super> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Sym> for Node {
     fn from(node: lib_ruby_parser::nodes::Sym) -> Self {
         let node_type = NodeType_NODE_SYM;
@@ -1695,7 +1583,6 @@ impl From<lib_ruby_parser::nodes::Sym> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::True> for Node {
     fn from(node: lib_ruby_parser::nodes::True) -> Self {
         let node_type = NodeType_NODE_TRUE_;
@@ -1705,7 +1592,6 @@ impl From<lib_ruby_parser::nodes::True> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Undef> for Node {
     fn from(node: lib_ruby_parser::nodes::Undef) -> Self {
@@ -1719,7 +1605,6 @@ impl From<lib_ruby_parser::nodes::Undef> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::UnlessGuard> for Node {
     fn from(node: lib_ruby_parser::nodes::UnlessGuard) -> Self {
         let node_type = NodeType_NODE_UNLESS_GUARD;
@@ -1731,7 +1616,6 @@ impl From<lib_ruby_parser::nodes::UnlessGuard> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Until> for Node {
     fn from(node: lib_ruby_parser::nodes::Until) -> Self {
@@ -1748,7 +1632,6 @@ impl From<lib_ruby_parser::nodes::Until> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::UntilPost> for Node {
     fn from(node: lib_ruby_parser::nodes::UntilPost) -> Self {
         let node_type = NodeType_NODE_UNTIL_POST;
@@ -1761,7 +1644,6 @@ impl From<lib_ruby_parser::nodes::UntilPost> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::When> for Node {
     fn from(node: lib_ruby_parser::nodes::When) -> Self {
@@ -1776,7 +1658,6 @@ impl From<lib_ruby_parser::nodes::When> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::While> for Node {
     fn from(node: lib_ruby_parser::nodes::While) -> Self {
@@ -1793,7 +1674,6 @@ impl From<lib_ruby_parser::nodes::While> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::WhilePost> for Node {
     fn from(node: lib_ruby_parser::nodes::WhilePost) -> Self {
         let node_type = NodeType_NODE_WHILE_POST;
@@ -1806,7 +1686,6 @@ impl From<lib_ruby_parser::nodes::WhilePost> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::XHeredoc> for Node {
     fn from(node: lib_ruby_parser::nodes::XHeredoc) -> Self {
@@ -1821,7 +1700,6 @@ impl From<lib_ruby_parser::nodes::XHeredoc> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::Xstr> for Node {
     fn from(node: lib_ruby_parser::nodes::Xstr) -> Self {
         let node_type = NodeType_NODE_XSTR;
@@ -1834,7 +1712,6 @@ impl From<lib_ruby_parser::nodes::Xstr> for Node {
         Node { node_type, inner }
     }
 }
-
 
 impl From<lib_ruby_parser::nodes::Yield> for Node {
     fn from(node: lib_ruby_parser::nodes::Yield) -> Self {
@@ -1850,7 +1727,6 @@ impl From<lib_ruby_parser::nodes::Yield> for Node {
     }
 }
 
-
 impl From<lib_ruby_parser::nodes::ZSuper> for Node {
     fn from(node: lib_ruby_parser::nodes::ZSuper) -> Self {
         let node_type = NodeType_NODE_ZSUPER;
@@ -1860,138 +1736,3 @@ impl From<lib_ruby_parser::nodes::ZSuper> for Node {
         Node { node_type, inner }
     }
 }
-
-
-impl InnerNode {
-    pub fn to_debug_string(&self, node_type: u32) -> String {
-        match node_type {
-            NodeType_NODE_ALIAS => format!("{:#?}",  unsafe { *self._alias }),
-            NodeType_NODE_AND_ASGN => format!("{:#?}",  unsafe { *self._and_asgn }),
-            NodeType_NODE_AND => format!("{:#?}",  unsafe { *self._and }),
-            NodeType_NODE_ARG => format!("{:#?}",  unsafe { *self._arg }),
-            NodeType_NODE_ARGS => format!("{:#?}",  unsafe { *self._args }),
-            NodeType_NODE_ARRAY => format!("{:#?}",  unsafe { *self._array }),
-            NodeType_NODE_ARRAY_PATTERN => format!("{:#?}",  unsafe { *self._array_pattern }),
-            NodeType_NODE_ARRAY_PATTERN_WITH_TAIL => format!("{:#?}",  unsafe { *self._array_pattern_with_tail }),
-            NodeType_NODE_BACK_REF => format!("{:#?}",  unsafe { *self._back_ref }),
-            NodeType_NODE_BEGIN => format!("{:#?}",  unsafe { *self._begin }),
-            NodeType_NODE_BLOCK => format!("{:#?}",  unsafe { *self._block }),
-            NodeType_NODE_BLOCK_PASS => format!("{:#?}",  unsafe { *self._block_pass }),
-            NodeType_NODE_BLOCKARG => format!("{:#?}",  unsafe { *self._blockarg }),
-            NodeType_NODE_BREAK_ => format!("{:#?}",  unsafe { *self._break_ }),
-            NodeType_NODE_CASE => format!("{:#?}",  unsafe { *self._case }),
-            NodeType_NODE_CASE_MATCH => format!("{:#?}",  unsafe { *self._case_match }),
-            NodeType_NODE_CASGN => format!("{:#?}",  unsafe { *self._casgn }),
-            NodeType_NODE_CBASE => format!("{:#?}",  unsafe { *self._cbase }),
-            NodeType_NODE_CLASS => format!("{:#?}",  unsafe { *self._class }),
-            NodeType_NODE_COMPLEX => format!("{:#?}",  unsafe { *self._complex }),
-            NodeType_NODE_CONST_ => format!("{:#?}",  unsafe { *self._const_ }),
-            NodeType_NODE_CONST_PATTERN => format!("{:#?}",  unsafe { *self._const_pattern }),
-            NodeType_NODE_CSEND => format!("{:#?}",  unsafe { *self._csend }),
-            NodeType_NODE_CVAR => format!("{:#?}",  unsafe { *self._cvar }),
-            NodeType_NODE_CVASGN => format!("{:#?}",  unsafe { *self._cvasgn }),
-            NodeType_NODE_DEF => format!("{:#?}",  unsafe { *self._def }),
-            NodeType_NODE_DEFINED => format!("{:#?}",  unsafe { *self._defined }),
-            NodeType_NODE_DEFS => format!("{:#?}",  unsafe { *self._defs }),
-            NodeType_NODE_DSTR => format!("{:#?}",  unsafe { *self._dstr }),
-            NodeType_NODE_DSYM => format!("{:#?}",  unsafe { *self._dsym }),
-            NodeType_NODE_EFLIPFLOP => format!("{:#?}",  unsafe { *self._eflipflop }),
-            NodeType_NODE_EMPTY_ELSE => format!("{:#?}",  unsafe { *self._empty_else }),
-            NodeType_NODE_ENCODING_ => format!("{:#?}",  unsafe { *self._encoding_ }),
-            NodeType_NODE_ENSURE => format!("{:#?}",  unsafe { *self._ensure }),
-            NodeType_NODE_ERANGE => format!("{:#?}",  unsafe { *self._erange }),
-            NodeType_NODE_FALSE_ => format!("{:#?}",  unsafe { *self._false_ }),
-            NodeType_NODE_FILE => format!("{:#?}",  unsafe { *self._file }),
-            NodeType_NODE_FIND_PATTERN => format!("{:#?}",  unsafe { *self._find_pattern }),
-            NodeType_NODE_FLOAT => format!("{:#?}",  unsafe { *self._float }),
-            NodeType_NODE_FOR_ => format!("{:#?}",  unsafe { *self._for_ }),
-            NodeType_NODE_FORWARD_ARG => format!("{:#?}",  unsafe { *self._forward_arg }),
-            NodeType_NODE_FORWARDED_ARGS => format!("{:#?}",  unsafe { *self._forwarded_args }),
-            NodeType_NODE_GVAR => format!("{:#?}",  unsafe { *self._gvar }),
-            NodeType_NODE_GVASGN => format!("{:#?}",  unsafe { *self._gvasgn }),
-            NodeType_NODE_HASH => format!("{:#?}",  unsafe { *self._hash }),
-            NodeType_NODE_KWARGS => format!("{:#?}",  unsafe { *self._kwargs }),
-            NodeType_NODE_HASH_PATTERN => format!("{:#?}",  unsafe { *self._hash_pattern }),
-            NodeType_NODE_HEREDOC => format!("{:#?}",  unsafe { *self._heredoc }),
-            NodeType_NODE_IF_ => format!("{:#?}",  unsafe { *self._if_ }),
-            NodeType_NODE_IF_GUARD => format!("{:#?}",  unsafe { *self._if_guard }),
-            NodeType_NODE_IF_MOD => format!("{:#?}",  unsafe { *self._if_mod }),
-            NodeType_NODE_IF_TERNARY => format!("{:#?}",  unsafe { *self._if_ternary }),
-            NodeType_NODE_IFLIPFLOP => format!("{:#?}",  unsafe { *self._iflipflop }),
-            NodeType_NODE_MATCH_PATTERN => format!("{:#?}",  unsafe { *self._match_pattern }),
-            NodeType_NODE_MATCH_PATTERN_P => format!("{:#?}",  unsafe { *self._match_pattern_p }),
-            NodeType_NODE_IN_PATTERN => format!("{:#?}",  unsafe { *self._in_pattern }),
-            NodeType_NODE_INDEX => format!("{:#?}",  unsafe { *self._index }),
-            NodeType_NODE_INDEX_ASGN => format!("{:#?}",  unsafe { *self._index_asgn }),
-            NodeType_NODE_INT => format!("{:#?}",  unsafe { *self._int }),
-            NodeType_NODE_IRANGE => format!("{:#?}",  unsafe { *self._irange }),
-            NodeType_NODE_IVAR => format!("{:#?}",  unsafe { *self._ivar }),
-            NodeType_NODE_IVASGN => format!("{:#?}",  unsafe { *self._ivasgn }),
-            NodeType_NODE_KWARG => format!("{:#?}",  unsafe { *self._kwarg }),
-            NodeType_NODE_KWBEGIN => format!("{:#?}",  unsafe { *self._kwbegin }),
-            NodeType_NODE_KWNILARG => format!("{:#?}",  unsafe { *self._kwnilarg }),
-            NodeType_NODE_KWOPTARG => format!("{:#?}",  unsafe { *self._kwoptarg }),
-            NodeType_NODE_KWRESTARG => format!("{:#?}",  unsafe { *self._kwrestarg }),
-            NodeType_NODE_KWSPLAT => format!("{:#?}",  unsafe { *self._kwsplat }),
-            NodeType_NODE_LAMBDA => format!("{:#?}",  unsafe { *self._lambda }),
-            NodeType_NODE_LINE => format!("{:#?}",  unsafe { *self._line }),
-            NodeType_NODE_LVAR => format!("{:#?}",  unsafe { *self._lvar }),
-            NodeType_NODE_LVASGN => format!("{:#?}",  unsafe { *self._lvasgn }),
-            NodeType_NODE_MASGN => format!("{:#?}",  unsafe { *self._masgn }),
-            NodeType_NODE_MATCH_ALT => format!("{:#?}",  unsafe { *self._match_alt }),
-            NodeType_NODE_MATCH_AS => format!("{:#?}",  unsafe { *self._match_as }),
-            NodeType_NODE_MATCH_CURRENT_LINE => format!("{:#?}",  unsafe { *self._match_current_line }),
-            NodeType_NODE_MATCH_NIL_PATTERN => format!("{:#?}",  unsafe { *self._match_nil_pattern }),
-            NodeType_NODE_MATCH_REST => format!("{:#?}",  unsafe { *self._match_rest }),
-            NodeType_NODE_MATCH_VAR => format!("{:#?}",  unsafe { *self._match_var }),
-            NodeType_NODE_MATCH_WITH_LVASGN => format!("{:#?}",  unsafe { *self._match_with_lvasgn }),
-            NodeType_NODE_MLHS => format!("{:#?}",  unsafe { *self._mlhs }),
-            NodeType_NODE_MODULE => format!("{:#?}",  unsafe { *self._module }),
-            NodeType_NODE_NEXT => format!("{:#?}",  unsafe { *self._next }),
-            NodeType_NODE_NIL => format!("{:#?}",  unsafe { *self._nil }),
-            NodeType_NODE_NTH_REF => format!("{:#?}",  unsafe { *self._nth_ref }),
-            NodeType_NODE_NUMBLOCK => format!("{:#?}",  unsafe { *self._numblock }),
-            NodeType_NODE_OP_ASGN => format!("{:#?}",  unsafe { *self._op_asgn }),
-            NodeType_NODE_OPTARG => format!("{:#?}",  unsafe { *self._optarg }),
-            NodeType_NODE_OR => format!("{:#?}",  unsafe { *self._or }),
-            NodeType_NODE_OR_ASGN => format!("{:#?}",  unsafe { *self._or_asgn }),
-            NodeType_NODE_PAIR => format!("{:#?}",  unsafe { *self._pair }),
-            NodeType_NODE_PIN => format!("{:#?}",  unsafe { *self._pin }),
-            NodeType_NODE_POSTEXE => format!("{:#?}",  unsafe { *self._postexe }),
-            NodeType_NODE_PREEXE => format!("{:#?}",  unsafe { *self._preexe }),
-            NodeType_NODE_PROCARG0 => format!("{:#?}",  unsafe { *self._procarg0 }),
-            NodeType_NODE_RATIONAL => format!("{:#?}",  unsafe { *self._rational }),
-            NodeType_NODE_REDO => format!("{:#?}",  unsafe { *self._redo }),
-            NodeType_NODE_REG_OPT => format!("{:#?}",  unsafe { *self._reg_opt }),
-            NodeType_NODE_REGEXP => format!("{:#?}",  unsafe { *self._regexp }),
-            NodeType_NODE_RESCUE => format!("{:#?}",  unsafe { *self._rescue }),
-            NodeType_NODE_RESCUE_BODY => format!("{:#?}",  unsafe { *self._rescue_body }),
-            NodeType_NODE_RESTARG => format!("{:#?}",  unsafe { *self._restarg }),
-            NodeType_NODE_RETRY => format!("{:#?}",  unsafe { *self._retry }),
-            NodeType_NODE_RETURN_ => format!("{:#?}",  unsafe { *self._return_ }),
-            NodeType_NODE_SCLASS => format!("{:#?}",  unsafe { *self._sclass }),
-            NodeType_NODE_SELF_ => format!("{:#?}",  unsafe { *self._self_ }),
-            NodeType_NODE_SEND => format!("{:#?}",  unsafe { *self._send }),
-            NodeType_NODE_SHADOWARG => format!("{:#?}",  unsafe { *self._shadowarg }),
-            NodeType_NODE_SPLAT => format!("{:#?}",  unsafe { *self._splat }),
-            NodeType_NODE_STR_ => format!("{:#?}",  unsafe { *self._str_ }),
-            NodeType_NODE_SUPER_ => format!("{:#?}",  unsafe { *self._super_ }),
-            NodeType_NODE_SYM => format!("{:#?}",  unsafe { *self._sym }),
-            NodeType_NODE_TRUE_ => format!("{:#?}",  unsafe { *self._true_ }),
-            NodeType_NODE_UNDEF => format!("{:#?}",  unsafe { *self._undef }),
-            NodeType_NODE_UNLESS_GUARD => format!("{:#?}",  unsafe { *self._unless_guard }),
-            NodeType_NODE_UNTIL => format!("{:#?}",  unsafe { *self._until }),
-            NodeType_NODE_UNTIL_POST => format!("{:#?}",  unsafe { *self._until_post }),
-            NodeType_NODE_WHEN => format!("{:#?}",  unsafe { *self._when }),
-            NodeType_NODE_WHILE_ => format!("{:#?}",  unsafe { *self._while_ }),
-            NodeType_NODE_WHILE_POST => format!("{:#?}",  unsafe { *self._while_post }),
-            NodeType_NODE_X_HEREDOC => format!("{:#?}",  unsafe { *self._x_heredoc }),
-            NodeType_NODE_XSTR => format!("{:#?}",  unsafe { *self._xstr }),
-            NodeType_NODE_YIELD_ => format!("{:#?}",  unsafe { *self._yield_ }),
-            NodeType_NODE_ZSUPER => format!("{:#?}",  unsafe { *self._zsuper }),
-            _ => panic!("unsupported node type {}", node_type)
-        }
-    }
-}
-
-

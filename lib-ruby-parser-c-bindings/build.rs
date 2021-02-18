@@ -3,23 +3,8 @@ extern crate bindgen;
 #[cfg(feature = "generate-bindings")]
 extern crate lib_ruby_parser_nodes;
 
-use std::path::Path;
-
 #[cfg(feature = "generate-bindings")]
 mod gen;
-#[cfg(feature = "generate-bindings")]
-use gen::RustFile;
-
-#[allow(dead_code)]
-fn relative_path(path: &str) -> String {
-    Path::new(file!())
-        .parent()
-        .unwrap()
-        .join(path)
-        .to_str()
-        .unwrap()
-        .to_owned()
-}
 
 #[cfg(feature = "generate-bindings")]
 fn build_c_files() {
@@ -31,12 +16,12 @@ fn build_c_files() {
 
 #[cfg(feature = "generate-bindings")]
 fn build_rs_files() {
-    let output_path = relative_path("src/node_gen.rs");
-
     let nodes = lib_ruby_parser_nodes::nodes();
-    let contents = RustFile::new(nodes).code();
 
-    std::fs::write(&output_path, contents).unwrap();
+    gen::NodeGenRs::new(&nodes).write();
+    // let contents = RustFile::new(nodes).code();
+
+    // std::fs::write("src/node_gen.rs", contents).unwrap();
 }
 
 #[cfg(feature = "generate-bindings")]
@@ -53,10 +38,8 @@ fn build_bindings() {
     println!("cargo:rerun-if-changed=../src/token_rewriter.h");
     println!("cargo:rerun-if-changed=../src/parser_result.h");
 
-    let types_h = relative_path("../src/types.h");
-
     let bindings = bindgen::Builder::default()
-        .header(types_h)
+        .header("../src/types.h")
         .whitelist_type("ParserOptions")
         .whitelist_type("ParserResult")
         .rustified_enum("LexStateActionKind")
@@ -68,9 +51,8 @@ fn build_bindings() {
         .generate()
         .expect("Unable to generate bindings");
 
-    let out_path = relative_path("src/bindings.rs");
     bindings
-        .write_to_file(out_path)
+        .write_to_file("src/bindings.rs")
         .expect("Couldn't write bindings!");
 }
 

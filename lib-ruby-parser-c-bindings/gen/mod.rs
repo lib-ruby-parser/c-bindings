@@ -9,8 +9,5 @@ pub use node_h::NodeH;
 mod node_c;
 pub use node_c::NodeC;
 
-mod node_field;
-pub use node_field::NodeField;
-
-mod rust_file;
-pub use rust_file::RustFile;
+mod node_gen_rs;
+pub use node_gen_rs::NodeGenRs;
