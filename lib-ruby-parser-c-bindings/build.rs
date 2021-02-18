@@ -8,7 +8,7 @@ use std::path::Path;
 #[cfg(feature = "generate-bindings")]
 mod gen;
 #[cfg(feature = "generate-bindings")]
-use gen::{CFile, RustFile};
+use gen::RustFile;
 
 #[allow(dead_code)]
 fn relative_path(path: &str) -> String {
@@ -24,10 +24,9 @@ fn relative_path(path: &str) -> String {
 #[cfg(feature = "generate-bindings")]
 fn build_c_files() {
     let nodes = lib_ruby_parser_nodes::nodes();
-    let c_file = CFile::new(nodes);
 
-    std::fs::write(&relative_path("../src/node.h"), c_file.node_h()).unwrap();
-    std::fs::write(&relative_path("../src/node.c"), c_file.node_c()).unwrap();
+    gen::NodeH::new(&nodes).write();
+    gen::NodeC::new(&nodes).write();
 }
 
 #[cfg(feature = "generate-bindings")]

@@ -1365,8 +1365,6 @@ struct ZSuper
 
 void zsuper_node_free(struct ZSuper *node);
 
-
-
 enum NodeType
 {
     NODE_ALIAS,
@@ -1494,7 +1492,6 @@ enum NodeType
     NODE_YIELD_,
     NODE_ZSUPER,
 };
-
 
 union InnerNode
 {

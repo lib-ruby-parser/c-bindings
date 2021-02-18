@@ -1,4 +1,4 @@
-use super::CField;
+use super::NodeField;
 use lib_ruby_parser_nodes::{FieldType, Node};
 
 pub struct RustFile {
@@ -112,7 +112,7 @@ impl From<lib_ruby_parser::nodes::{name}> for Node {{
             .fields
             .iter()
             .map(|field| {
-                let field_name = CField::new(field).field_name();
+                let field_name = NodeField::new(field).field_name();
 
                 let get = match field.field_type {
                     FieldType::Node => format!("ptr_value(Node::from(node.{}))", field.field_name),
@@ -153,7 +153,7 @@ impl From<lib_ruby_parser::nodes::{name}> for Node {{
         self.node
             .fields
             .iter()
-            .map(|field| CField::new(field).field_name())
+            .map(|field| NodeField::new(field).field_name())
             .collect::<Vec<_>>()
             .join(", ")
     }
