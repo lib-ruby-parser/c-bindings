@@ -3,7 +3,7 @@ use lib_ruby_parser_nodes::FieldType;
 pub enum CFieldType {
     NodePtr,
     NodeList,
-    RangePtr,
+    LocPtr,
     CharPtr,
     SizeT,
 }
@@ -14,8 +14,8 @@ impl CFieldType {
             FieldType::Node => Self::NodePtr,
             FieldType::MaybeNode => Self::NodePtr,
             FieldType::Nodes => Self::NodeList,
-            FieldType::Range => Self::RangePtr,
-            FieldType::MaybeRange => Self::RangePtr,
+            FieldType::Loc => Self::LocPtr,
+            FieldType::MaybeLoc => Self::LocPtr,
             FieldType::Str => Self::CharPtr,
             FieldType::MaybeStr => Self::CharPtr,
             FieldType::Chars => Self::CharPtr,
@@ -31,7 +31,7 @@ impl CFieldType {
         match &self {
             Self::NodePtr => "struct Node *",
             Self::NodeList => "struct NodeList *",
-            Self::RangePtr => "struct Range *",
+            Self::LocPtr => "struct Loc *",
             Self::CharPtr => "char *",
             Self::SizeT => "uint32_t ",
         }
@@ -42,7 +42,7 @@ impl CFieldType {
         match &self {
             Self::NodePtr => Some("maybe_node_free"),
             Self::NodeList => Some("maybe_node_list_free"),
-            Self::RangePtr => Some("maybe_range_free"),
+            Self::LocPtr => Some("maybe_loc_free"),
             Self::CharPtr => Some("free"),
             Self::SizeT => None,
         }

@@ -36,7 +36,7 @@ impl From<Vec<char>> for StringPtr {
 
 impl From<lib_ruby_parser::StringValue> for StringPtr {
     fn from(string_value: lib_ruby_parser::StringValue) -> Self {
-        let mut str_bytes = string_value.bytes;
+        let mut str_bytes = string_value.bytes.raw;
         str_bytes.push(0);
         Self {
             ptr: vec_to_ptr(str_bytes),

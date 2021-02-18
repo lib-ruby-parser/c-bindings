@@ -8,12 +8,6 @@ pub struct Loc {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
-pub struct Range {
-    pub begin_pos: u32,
-    pub end_pos: u32,
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
 pub struct Token {
     pub token_type: ::std::os::raw::c_int,
     pub token_value: *mut ::std::os::raw::c_char,
@@ -38,7 +32,7 @@ pub enum ErrorLevel {
 pub struct Diagnostic {
     pub level: ErrorLevel,
     pub message: *mut ::std::os::raw::c_char,
-    pub range: *mut Range,
+    pub loc: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -49,7 +43,7 @@ pub struct Diagnostics {
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Comment {
-    pub location: *mut Range,
+    pub location: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -69,8 +63,8 @@ pub enum MagicCommentKind {
 #[derive(Debug, Copy, Clone)]
 pub struct MagicComment {
     pub kind: MagicCommentKind,
-    pub key_l: *mut Range,
-    pub value_l: *mut Range,
+    pub key_l: *mut Loc,
+    pub value_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -208,76 +202,76 @@ pub struct ParserResult {
 pub struct Alias {
     pub to: *mut Node,
     pub from: *mut Node,
-    pub keyword_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct AndAsgn {
     pub recv: *mut Node,
     pub value: *mut Node,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct And {
     pub lhs: *mut Node,
     pub rhs: *mut Node,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Arg {
     pub name: *mut ::std::os::raw::c_char,
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Args {
     pub args: *mut NodeList,
-    pub expression_l: *mut Range,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
+    pub expression_l: *mut Loc,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Array {
     pub elements: *mut NodeList,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct ArrayPattern {
     pub elements: *mut NodeList,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct ArrayPatternWithTail {
     pub elements: *mut NodeList,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct BackRef {
     pub name: *mut ::std::os::raw::c_char,
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Begin {
     pub statements: *mut NodeList,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -285,31 +279,31 @@ pub struct Block {
     pub call: *mut Node,
     pub args: *mut Node,
     pub body: *mut Node,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct BlockPass {
     pub value: *mut Node,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Blockarg {
     pub name: *mut ::std::os::raw::c_char,
-    pub operator_l: *mut Range,
-    pub name_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub name_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Break {
     pub args: *mut NodeList,
-    pub keyword_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -317,10 +311,10 @@ pub struct Case {
     pub expr: *mut Node,
     pub when_bodies: *mut NodeList,
     pub else_body: *mut Node,
-    pub keyword_l: *mut Range,
-    pub else_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub else_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -328,10 +322,10 @@ pub struct CaseMatch {
     pub expr: *mut Node,
     pub in_bodies: *mut NodeList,
     pub else_body: *mut Node,
-    pub keyword_l: *mut Range,
-    pub else_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub else_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -339,15 +333,15 @@ pub struct Casgn {
     pub scope: *mut Node,
     pub name: *mut ::std::os::raw::c_char,
     pub value: *mut Node,
-    pub double_colon_l: *mut Range,
-    pub name_l: *mut Range,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub double_colon_l: *mut Loc,
+    pub name_l: *mut Loc,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Cbase {
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -355,35 +349,35 @@ pub struct Class {
     pub name: *mut Node,
     pub superclass: *mut Node,
     pub body: *mut Node,
-    pub keyword_l: *mut Range,
-    pub operator_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub operator_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Complex {
     pub value: *mut ::std::os::raw::c_char,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Const {
     pub scope: *mut Node,
     pub name: *mut ::std::os::raw::c_char,
-    pub double_colon_l: *mut Range,
-    pub name_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub double_colon_l: *mut Loc,
+    pub name_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct ConstPattern {
     pub const_: *mut Node,
     pub pattern: *mut Node,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -391,27 +385,27 @@ pub struct CSend {
     pub recv: *mut Node,
     pub method_name: *mut ::std::os::raw::c_char,
     pub args: *mut NodeList,
-    pub dot_l: *mut Range,
-    pub selector_l: *mut Range,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub dot_l: *mut Loc,
+    pub selector_l: *mut Loc,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Cvar {
     pub name: *mut ::std::os::raw::c_char,
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Cvasgn {
     pub name: *mut ::std::os::raw::c_char,
     pub value: *mut Node,
-    pub name_l: *mut Range,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub name_l: *mut Loc,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -419,20 +413,20 @@ pub struct Def {
     pub name: *mut ::std::os::raw::c_char,
     pub args: *mut Node,
     pub body: *mut Node,
-    pub keyword_l: *mut Range,
-    pub name_l: *mut Range,
-    pub end_l: *mut Range,
-    pub assignment_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub name_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub assignment_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Defined {
     pub value: *mut Node,
-    pub keyword_l: *mut Range,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -441,87 +435,87 @@ pub struct Defs {
     pub name: *mut ::std::os::raw::c_char,
     pub args: *mut Node,
     pub body: *mut Node,
-    pub keyword_l: *mut Range,
-    pub operator_l: *mut Range,
-    pub name_l: *mut Range,
-    pub assignment_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub operator_l: *mut Loc,
+    pub name_l: *mut Loc,
+    pub assignment_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Dstr {
     pub parts: *mut NodeList,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Dsym {
     pub parts: *mut NodeList,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct EFlipFlop {
     pub left: *mut Node,
     pub right: *mut Node,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct EmptyElse {
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Encoding {
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Ensure {
     pub body: *mut Node,
     pub ensure: *mut Node,
-    pub keyword_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Erange {
     pub left: *mut Node,
     pub right: *mut Node,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct False {
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct File {
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct FindPattern {
     pub elements: *mut NodeList,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Float {
     pub value: *mut ::std::os::raw::c_char,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -529,66 +523,66 @@ pub struct For {
     pub iterator: *mut Node,
     pub iteratee: *mut Node,
     pub body: *mut Node,
-    pub keyword_l: *mut Range,
-    pub operator_l: *mut Range,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub operator_l: *mut Loc,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct ForwardArg {
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct ForwardedArgs {
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Gvar {
     pub name: *mut ::std::os::raw::c_char,
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Gvasgn {
     pub name: *mut ::std::os::raw::c_char,
     pub value: *mut Node,
-    pub name_l: *mut Range,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub name_l: *mut Loc,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Hash {
     pub pairs: *mut NodeList,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Kwargs {
     pub pairs: *mut NodeList,
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct HashPattern {
     pub elements: *mut NodeList,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Heredoc {
     pub parts: *mut NodeList,
-    pub heredoc_body_l: *mut Range,
-    pub heredoc_end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub heredoc_body_l: *mut Loc,
+    pub heredoc_end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -596,18 +590,18 @@ pub struct If {
     pub cond: *mut Node,
     pub if_true: *mut Node,
     pub if_false: *mut Node,
-    pub keyword_l: *mut Range,
-    pub begin_l: *mut Range,
-    pub else_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub begin_l: *mut Loc,
+    pub else_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct IfGuard {
     pub cond: *mut Node,
-    pub keyword_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -615,8 +609,8 @@ pub struct IfMod {
     pub cond: *mut Node,
     pub if_true: *mut Node,
     pub if_false: *mut Node,
-    pub keyword_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -624,33 +618,33 @@ pub struct IfTernary {
     pub cond: *mut Node,
     pub if_true: *mut Node,
     pub if_false: *mut Node,
-    pub question_l: *mut Range,
-    pub colon_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub question_l: *mut Loc,
+    pub colon_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct IFlipFlop {
     pub left: *mut Node,
     pub right: *mut Node,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct MatchPattern {
     pub value: *mut Node,
     pub pattern: *mut Node,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct MatchPatternP {
     pub value: *mut Node,
     pub pattern: *mut Node,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -658,18 +652,18 @@ pub struct InPattern {
     pub pattern: *mut Node,
     pub guard: *mut Node,
     pub body: *mut Node,
-    pub keyword_l: *mut Range,
-    pub begin_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub begin_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Index {
     pub recv: *mut Node,
     pub indexes: *mut NodeList,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -677,203 +671,203 @@ pub struct IndexAsgn {
     pub recv: *mut Node,
     pub indexes: *mut NodeList,
     pub value: *mut Node,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Int {
     pub value: *mut ::std::os::raw::c_char,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Irange {
     pub left: *mut Node,
     pub right: *mut Node,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Ivar {
     pub name: *mut ::std::os::raw::c_char,
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Ivasgn {
     pub name: *mut ::std::os::raw::c_char,
     pub value: *mut Node,
-    pub name_l: *mut Range,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub name_l: *mut Loc,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Kwarg {
     pub name: *mut ::std::os::raw::c_char,
-    pub name_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub name_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct KwBegin {
     pub statements: *mut NodeList,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Kwnilarg {
-    pub name_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub name_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Kwoptarg {
     pub name: *mut ::std::os::raw::c_char,
     pub default_: *mut Node,
-    pub name_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub name_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Kwrestarg {
     pub name: *mut ::std::os::raw::c_char,
-    pub operator_l: *mut Range,
-    pub name_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub name_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Kwsplat {
     pub value: *mut Node,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Lambda {
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Line {
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Lvar {
     pub name: *mut ::std::os::raw::c_char,
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Lvasgn {
     pub name: *mut ::std::os::raw::c_char,
     pub value: *mut Node,
-    pub name_l: *mut Range,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub name_l: *mut Loc,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Masgn {
     pub lhs: *mut Node,
     pub rhs: *mut Node,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct MatchAlt {
     pub lhs: *mut Node,
     pub rhs: *mut Node,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct MatchAs {
     pub value: *mut Node,
     pub as_: *mut Node,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct MatchCurrentLine {
     pub re: *mut Node,
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct MatchNilPattern {
-    pub operator_l: *mut Range,
-    pub name_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub name_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct MatchRest {
     pub name: *mut Node,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct MatchVar {
     pub name: *mut ::std::os::raw::c_char,
-    pub name_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub name_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct MatchWithLvasgn {
     pub re: *mut Node,
     pub value: *mut Node,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Mlhs {
     pub items: *mut NodeList,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Module {
     pub name: *mut Node,
     pub body: *mut Node,
-    pub keyword_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Next {
     pub args: *mut NodeList,
-    pub keyword_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Nil {
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct NthRef {
     pub name: *mut ::std::os::raw::c_char,
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -881,9 +875,9 @@ pub struct Numblock {
     pub call: *mut Node,
     pub numargs: u32,
     pub body: *mut Node,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -891,101 +885,101 @@ pub struct OpAsgn {
     pub recv: *mut Node,
     pub operator: *mut ::std::os::raw::c_char,
     pub value: *mut Node,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Optarg {
     pub name: *mut ::std::os::raw::c_char,
     pub default_: *mut Node,
-    pub name_l: *mut Range,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub name_l: *mut Loc,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Or {
     pub lhs: *mut Node,
     pub rhs: *mut Node,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct OrAsgn {
     pub recv: *mut Node,
     pub value: *mut Node,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Pair {
     pub key: *mut Node,
     pub value: *mut Node,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Pin {
     pub var: *mut Node,
-    pub selector_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub selector_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Postexe {
     pub body: *mut Node,
-    pub keyword_l: *mut Range,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Preexe {
     pub body: *mut Node,
-    pub keyword_l: *mut Range,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Procarg0 {
     pub args: *mut NodeList,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Rational {
     pub value: *mut ::std::os::raw::c_char,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Redo {
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct RegOpt {
     pub options: *mut ::std::os::raw::c_char,
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Regexp {
     pub parts: *mut NodeList,
     pub options: *mut Node,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -993,8 +987,8 @@ pub struct Rescue {
     pub body: *mut Node,
     pub rescue_bodies: *mut NodeList,
     pub else_: *mut Node,
-    pub else_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub else_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1002,45 +996,45 @@ pub struct RescueBody {
     pub exc_list: *mut Node,
     pub exc_var: *mut Node,
     pub body: *mut Node,
-    pub keyword_l: *mut Range,
-    pub assoc_l: *mut Range,
-    pub begin_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub assoc_l: *mut Loc,
+    pub begin_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Restarg {
     pub name: *mut ::std::os::raw::c_char,
-    pub operator_l: *mut Range,
-    pub name_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub name_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Retry {
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Return {
     pub args: *mut NodeList,
-    pub keyword_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct SClass {
     pub expr: *mut Node,
     pub body: *mut Node,
-    pub keyword_l: *mut Range,
-    pub operator_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub operator_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Self_ {
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1048,144 +1042,144 @@ pub struct Send {
     pub recv: *mut Node,
     pub method_name: *mut ::std::os::raw::c_char,
     pub args: *mut NodeList,
-    pub dot_l: *mut Range,
-    pub selector_l: *mut Range,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub dot_l: *mut Loc,
+    pub selector_l: *mut Loc,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Shadowarg {
     pub name: *mut ::std::os::raw::c_char,
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Splat {
     pub value: *mut Node,
-    pub operator_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub operator_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Str {
     pub value: *mut ::std::os::raw::c_char,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Super {
     pub args: *mut NodeList,
-    pub keyword_l: *mut Range,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Sym {
     pub name: *mut ::std::os::raw::c_char,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct True {
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Undef {
     pub names: *mut NodeList,
-    pub keyword_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct UnlessGuard {
     pub cond: *mut Node,
-    pub keyword_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Until {
     pub cond: *mut Node,
     pub body: *mut Node,
-    pub keyword_l: *mut Range,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct UntilPost {
     pub cond: *mut Node,
     pub body: *mut Node,
-    pub keyword_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct When {
     pub patterns: *mut NodeList,
     pub body: *mut Node,
-    pub keyword_l: *mut Range,
-    pub begin_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub begin_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct While {
     pub cond: *mut Node,
     pub body: *mut Node,
-    pub keyword_l: *mut Range,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct WhilePost {
     pub cond: *mut Node,
     pub body: *mut Node,
-    pub keyword_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct XHeredoc {
     pub parts: *mut NodeList,
-    pub heredoc_body_l: *mut Range,
-    pub heredoc_end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub heredoc_body_l: *mut Loc,
+    pub heredoc_end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Xstr {
     pub parts: *mut NodeList,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Yield {
     pub args: *mut NodeList,
-    pub keyword_l: *mut Range,
-    pub begin_l: *mut Range,
-    pub end_l: *mut Range,
-    pub expression_l: *mut Range,
+    pub keyword_l: *mut Loc,
+    pub begin_l: *mut Loc,
+    pub end_l: *mut Loc,
+    pub expression_l: *mut Loc,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct ZSuper {
-    pub expression_l: *mut Range,
+    pub expression_l: *mut Loc,
 }
 pub const NodeType_NODE_ALIAS: NodeType = 0;
 pub const NodeType_NODE_AND_ASGN: NodeType = 1;

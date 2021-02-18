@@ -23,7 +23,7 @@ fn relative_path(path: &str) -> String {
 
 #[cfg(feature = "generate-bindings")]
 fn build_c_files() {
-    let nodes = lib_ruby_parser_nodes::nodes().unwrap();
+    let nodes = lib_ruby_parser_nodes::nodes();
     let c_file = CFile::new(nodes);
 
     std::fs::write(&relative_path("../src/node.h"), c_file.node_h()).unwrap();
@@ -34,7 +34,7 @@ fn build_c_files() {
 fn build_rs_files() {
     let output_path = relative_path("src/node_gen.rs");
 
-    let nodes = lib_ruby_parser_nodes::nodes().unwrap();
+    let nodes = lib_ruby_parser_nodes::nodes();
     let contents = RustFile::new(nodes).code();
 
     std::fs::write(&output_path, contents).unwrap();
@@ -44,7 +44,6 @@ fn build_rs_files() {
 fn build_bindings() {
     println!("cargo:rerun-if-changed=../src/types.h");
     println!("cargo:rerun-if-changed=../src/loc.h");
-    println!("cargo:rerun-if-changed=../src/range.h");
     println!("cargo:rerun-if-changed=../src/token.h");
     println!("cargo:rerun-if-changed=../src/diagnostic.h");
     println!("cargo:rerun-if-changed=../src/comment.h");

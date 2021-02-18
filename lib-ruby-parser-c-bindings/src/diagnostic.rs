@@ -12,7 +12,7 @@ impl From<lib_ruby_parser::Diagnostic> for bindings::Diagnostic {
         Self {
             level,
             message,
-            range: ptr_value(bindings::Range::from(diagnostic.range)),
+            loc: ptr_value(bindings::Loc::from(diagnostic.loc)),
         }
     }
 }

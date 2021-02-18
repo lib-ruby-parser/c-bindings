@@ -17,7 +17,7 @@ impl From<bindings::Token> for lib_ruby_parser::Token {
 
         lib_ruby_parser::Token {
             token_type,
-            token_value: lib_ruby_parser::TokenValue::String(token_value),
+            token_value: lib_ruby_parser::Bytes::new(token_value.into_bytes()),
             loc: lib_ruby_parser::Loc {
                 begin: loc.begin as usize,
                 end: loc.end as usize,

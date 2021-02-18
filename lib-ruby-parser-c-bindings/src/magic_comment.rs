@@ -24,8 +24,8 @@ impl From<lib_ruby_parser::source::MagicComment> for bindings::MagicComment {
         };
         Self {
             kind,
-            key_l: ptr_value(bindings::Range::from(key_l)),
-            value_l: ptr_value(bindings::Range::from(value_l)),
+            key_l: ptr_value(bindings::Loc::from(key_l)),
+            value_l: ptr_value(bindings::Loc::from(value_l)),
         }
     }
 }

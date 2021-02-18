@@ -16,12 +16,12 @@ mod comment;
 mod custom_decoder;
 mod diagnostic;
 mod list;
+mod loc;
 mod magic_comment;
 mod node;
 mod node_gen;
 mod parser_options;
 mod parser_result;
-mod range;
 mod token;
 mod token_rewriter;
 

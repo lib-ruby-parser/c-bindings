@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include "range.h"
+#include "loc.h"
 
 enum MagicCommentKind
 {
@@ -16,8 +16,8 @@ enum MagicCommentKind
 struct MagicComment
 {
     enum MagicCommentKind kind;
-    struct Range *key_l;
-    struct Range *value_l;
+    struct Loc *key_l;
+    struct Loc *value_l;
 };
 
 struct MagicCommentList

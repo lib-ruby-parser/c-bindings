@@ -118,8 +118,8 @@ impl From<lib_ruby_parser::nodes::{name}> for Node {{
                     FieldType::Node => format!("ptr_value(Node::from(node.{}))", field.field_name),
                     FieldType::Nodes => format!("ptr_value(NodeList::from(node.{}))", field.field_name),
                     FieldType::MaybeNode => format!("if let Some(v) = node.{} {{ ptr_value(Node::from(v)) }} else {{ std::ptr::null_mut() }}", field.field_name),
-                    FieldType::Range => format!("ptr_value(Range::from(node.{}))", field.field_name),
-                    FieldType::MaybeRange => format!("if let Some(v) = node.{} {{ ptr_value(Range::from(v)) }} else {{ std::ptr::null_mut() }}", field.field_name),
+                    FieldType::Loc => format!("ptr_value(Loc::from(node.{}))", field.field_name),
+                    FieldType::MaybeLoc => format!("if let Some(v) = node.{} {{ ptr_value(Loc::from(v)) }} else {{ std::ptr::null_mut() }}", field.field_name),
                     FieldType::Str => {
                         format!("StringPtr::from(node.{}).unwrap()", field.field_name)
                     }

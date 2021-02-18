@@ -1,8 +1,8 @@
 use crate::bindings;
 use crate::ptr_value;
 
-fn input_to_ptr(input: lib_ruby_parser::source::buffer::Input) -> *mut i8 {
-    let mut bytes = std::ffi::CString::new(input.bytes)
+fn input_to_ptr(input: lib_ruby_parser::source::Input) -> *mut i8 {
+    let mut bytes = std::ffi::CString::new(input.as_bytes())
         .unwrap()
         .into_bytes_with_nul();
     let ptr = bytes.as_mut_ptr();
@@ -31,7 +31,7 @@ impl From<lib_ruby_parser::ParserResult> for bindings::ParserResult {
             diagnostics: ptr_value(bindings::Diagnostics::from(diagnostics)),
             comments: ptr_value(bindings::CommentList::from(comments)),
             magic_comments: ptr_value(bindings::MagicCommentList::from(magic_comments)),
-            input_len: input.len() as u32,
+            input_len: input.as_bytes().len() as u32,
             input: input_to_ptr(input),
         }
     }

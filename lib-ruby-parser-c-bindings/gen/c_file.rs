@@ -27,7 +27,7 @@ impl CFile {
 #include <stddef.h>
 #include <stdint.h>
 #include \"node_list.h\"
-#include \"range.h\"
+#include \"loc.h\"
 
 struct Node;
 void node_free(struct Node *node);
@@ -84,10 +84,10 @@ void maybe_node_list_free(struct NodeList *list)
     }}
 }}
 
-void maybe_range_free(struct Range *range)
+void maybe_loc_free(struct Loc *loc)
 {{
-    if (range != NULL) {{
-        range_free(range);
+    if (loc != NULL) {{
+        loc_free(loc);
     }}
 }}
 

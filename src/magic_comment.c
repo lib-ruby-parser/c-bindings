@@ -9,8 +9,8 @@ void magic_comments_free(struct MagicCommentList *magic_comments)
         for (uint32_t i = 0; i < magic_comments->len; i++)
         {
             struct MagicComment magic_comment = magic_comments->list[i];
-            range_free(magic_comment.key_l);
-            range_free(magic_comment.value_l);
+            loc_free(magic_comment.key_l);
+            loc_free(magic_comment.value_l);
         }
         free(magic_comments->list);
     }

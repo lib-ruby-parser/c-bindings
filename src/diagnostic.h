@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include "range.h"
+#include "loc.h"
 
 enum ErrorLevel
 {
@@ -15,7 +15,7 @@ struct Diagnostic
 {
     enum ErrorLevel level;
     char *message;
-    struct Range *range;
+    struct Loc *loc;
 };
 
 struct Diagnostics

@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include "node_list.h"
-#include "range.h"
+#include "loc.h"
 
 struct Node;
 void node_free(struct Node *node);
@@ -14,8 +14,8 @@ struct Alias
 {
     struct Node *to;
     struct Node *from;
-    struct Range *keyword_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *expression_l;
 };
 
 void alias_node_free(struct Alias *node);
@@ -25,8 +25,8 @@ struct AndAsgn
 {
     struct Node *recv;
     struct Node *value;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void and_asgn_node_free(struct AndAsgn *node);
@@ -36,8 +36,8 @@ struct And
 {
     struct Node *lhs;
     struct Node *rhs;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void and_node_free(struct And *node);
@@ -46,7 +46,7 @@ void and_node_free(struct And *node);
 struct Arg
 {
     char *name;
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void arg_node_free(struct Arg *node);
@@ -55,9 +55,9 @@ void arg_node_free(struct Arg *node);
 struct Args
 {
     struct NodeList *args;
-    struct Range *expression_l;
-    struct Range *begin_l;
-    struct Range *end_l;
+    struct Loc *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
 };
 
 void args_node_free(struct Args *node);
@@ -66,9 +66,9 @@ void args_node_free(struct Args *node);
 struct Array
 {
     struct NodeList *elements;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void array_node_free(struct Array *node);
@@ -77,9 +77,9 @@ void array_node_free(struct Array *node);
 struct ArrayPattern
 {
     struct NodeList *elements;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void array_pattern_node_free(struct ArrayPattern *node);
@@ -88,9 +88,9 @@ void array_pattern_node_free(struct ArrayPattern *node);
 struct ArrayPatternWithTail
 {
     struct NodeList *elements;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void array_pattern_with_tail_node_free(struct ArrayPatternWithTail *node);
@@ -99,7 +99,7 @@ void array_pattern_with_tail_node_free(struct ArrayPatternWithTail *node);
 struct BackRef
 {
     char *name;
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void back_ref_node_free(struct BackRef *node);
@@ -108,9 +108,9 @@ void back_ref_node_free(struct BackRef *node);
 struct Begin
 {
     struct NodeList *statements;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void begin_node_free(struct Begin *node);
@@ -121,9 +121,9 @@ struct Block
     struct Node *call;
     struct Node *args;
     struct Node *body;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void block_node_free(struct Block *node);
@@ -132,8 +132,8 @@ void block_node_free(struct Block *node);
 struct BlockPass
 {
     struct Node *value;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void block_pass_node_free(struct BlockPass *node);
@@ -142,9 +142,9 @@ void block_pass_node_free(struct BlockPass *node);
 struct Blockarg
 {
     char *name;
-    struct Range *operator_l;
-    struct Range *name_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *name_l;
+    struct Loc *expression_l;
 };
 
 void blockarg_node_free(struct Blockarg *node);
@@ -153,8 +153,8 @@ void blockarg_node_free(struct Blockarg *node);
 struct Break
 {
     struct NodeList *args;
-    struct Range *keyword_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *expression_l;
 };
 
 void break__node_free(struct Break *node);
@@ -165,10 +165,10 @@ struct Case
     struct Node *expr;
     struct NodeList *when_bodies;
     struct Node *else_body;
-    struct Range *keyword_l;
-    struct Range *else_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *else_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void case_node_free(struct Case *node);
@@ -179,10 +179,10 @@ struct CaseMatch
     struct Node *expr;
     struct NodeList *in_bodies;
     struct Node *else_body;
-    struct Range *keyword_l;
-    struct Range *else_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *else_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void case_match_node_free(struct CaseMatch *node);
@@ -193,10 +193,10 @@ struct Casgn
     struct Node *scope;
     char *name;
     struct Node *value;
-    struct Range *double_colon_l;
-    struct Range *name_l;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *double_colon_l;
+    struct Loc *name_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void casgn_node_free(struct Casgn *node);
@@ -204,7 +204,7 @@ void casgn_node_free(struct Casgn *node);
 
 struct Cbase
 {
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void cbase_node_free(struct Cbase *node);
@@ -215,10 +215,10 @@ struct Class
     struct Node *name;
     struct Node *superclass;
     struct Node *body;
-    struct Range *keyword_l;
-    struct Range *operator_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *operator_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void class_node_free(struct Class *node);
@@ -227,8 +227,8 @@ void class_node_free(struct Class *node);
 struct Complex
 {
     char *value;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void complex_node_free(struct Complex *node);
@@ -238,9 +238,9 @@ struct Const
 {
     struct Node *scope;
     char *name;
-    struct Range *double_colon_l;
-    struct Range *name_l;
-    struct Range *expression_l;
+    struct Loc *double_colon_l;
+    struct Loc *name_l;
+    struct Loc *expression_l;
 };
 
 void const__node_free(struct Const *node);
@@ -250,9 +250,9 @@ struct ConstPattern
 {
     struct Node *const_;
     struct Node *pattern;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void const_pattern_node_free(struct ConstPattern *node);
@@ -263,12 +263,12 @@ struct CSend
     struct Node *recv;
     char *method_name;
     struct NodeList *args;
-    struct Range *dot_l;
-    struct Range *selector_l;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *dot_l;
+    struct Loc *selector_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void csend_node_free(struct CSend *node);
@@ -277,7 +277,7 @@ void csend_node_free(struct CSend *node);
 struct Cvar
 {
     char *name;
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void cvar_node_free(struct Cvar *node);
@@ -287,9 +287,9 @@ struct Cvasgn
 {
     char *name;
     struct Node *value;
-    struct Range *name_l;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *name_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void cvasgn_node_free(struct Cvasgn *node);
@@ -300,11 +300,11 @@ struct Def
     char *name;
     struct Node *args;
     struct Node *body;
-    struct Range *keyword_l;
-    struct Range *name_l;
-    struct Range *end_l;
-    struct Range *assignment_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *name_l;
+    struct Loc *end_l;
+    struct Loc *assignment_l;
+    struct Loc *expression_l;
 };
 
 void def_node_free(struct Def *node);
@@ -313,10 +313,10 @@ void def_node_free(struct Def *node);
 struct Defined
 {
     struct Node *value;
-    struct Range *keyword_l;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void defined_node_free(struct Defined *node);
@@ -328,12 +328,12 @@ struct Defs
     char *name;
     struct Node *args;
     struct Node *body;
-    struct Range *keyword_l;
-    struct Range *operator_l;
-    struct Range *name_l;
-    struct Range *assignment_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *operator_l;
+    struct Loc *name_l;
+    struct Loc *assignment_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void defs_node_free(struct Defs *node);
@@ -342,9 +342,9 @@ void defs_node_free(struct Defs *node);
 struct Dstr
 {
     struct NodeList *parts;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void dstr_node_free(struct Dstr *node);
@@ -353,9 +353,9 @@ void dstr_node_free(struct Dstr *node);
 struct Dsym
 {
     struct NodeList *parts;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void dsym_node_free(struct Dsym *node);
@@ -365,8 +365,8 @@ struct EFlipFlop
 {
     struct Node *left;
     struct Node *right;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void eflipflop_node_free(struct EFlipFlop *node);
@@ -374,7 +374,7 @@ void eflipflop_node_free(struct EFlipFlop *node);
 
 struct EmptyElse
 {
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void empty_else_node_free(struct EmptyElse *node);
@@ -382,7 +382,7 @@ void empty_else_node_free(struct EmptyElse *node);
 
 struct Encoding
 {
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void encoding__node_free(struct Encoding *node);
@@ -392,8 +392,8 @@ struct Ensure
 {
     struct Node *body;
     struct Node *ensure;
-    struct Range *keyword_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *expression_l;
 };
 
 void ensure_node_free(struct Ensure *node);
@@ -403,8 +403,8 @@ struct Erange
 {
     struct Node *left;
     struct Node *right;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void erange_node_free(struct Erange *node);
@@ -412,7 +412,7 @@ void erange_node_free(struct Erange *node);
 
 struct False
 {
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void false__node_free(struct False *node);
@@ -420,7 +420,7 @@ void false__node_free(struct False *node);
 
 struct File
 {
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void file_node_free(struct File *node);
@@ -429,9 +429,9 @@ void file_node_free(struct File *node);
 struct FindPattern
 {
     struct NodeList *elements;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void find_pattern_node_free(struct FindPattern *node);
@@ -440,8 +440,8 @@ void find_pattern_node_free(struct FindPattern *node);
 struct Float
 {
     char *value;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void float_node_free(struct Float *node);
@@ -452,11 +452,11 @@ struct For
     struct Node *iterator;
     struct Node *iteratee;
     struct Node *body;
-    struct Range *keyword_l;
-    struct Range *operator_l;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *operator_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void for__node_free(struct For *node);
@@ -464,7 +464,7 @@ void for__node_free(struct For *node);
 
 struct ForwardArg
 {
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void forward_arg_node_free(struct ForwardArg *node);
@@ -472,7 +472,7 @@ void forward_arg_node_free(struct ForwardArg *node);
 
 struct ForwardedArgs
 {
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void forwarded_args_node_free(struct ForwardedArgs *node);
@@ -481,7 +481,7 @@ void forwarded_args_node_free(struct ForwardedArgs *node);
 struct Gvar
 {
     char *name;
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void gvar_node_free(struct Gvar *node);
@@ -491,9 +491,9 @@ struct Gvasgn
 {
     char *name;
     struct Node *value;
-    struct Range *name_l;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *name_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void gvasgn_node_free(struct Gvasgn *node);
@@ -502,9 +502,9 @@ void gvasgn_node_free(struct Gvasgn *node);
 struct Hash
 {
     struct NodeList *pairs;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void hash_node_free(struct Hash *node);
@@ -513,7 +513,7 @@ void hash_node_free(struct Hash *node);
 struct Kwargs
 {
     struct NodeList *pairs;
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void kwargs_node_free(struct Kwargs *node);
@@ -522,9 +522,9 @@ void kwargs_node_free(struct Kwargs *node);
 struct HashPattern
 {
     struct NodeList *elements;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void hash_pattern_node_free(struct HashPattern *node);
@@ -533,9 +533,9 @@ void hash_pattern_node_free(struct HashPattern *node);
 struct Heredoc
 {
     struct NodeList *parts;
-    struct Range *heredoc_body_l;
-    struct Range *heredoc_end_l;
-    struct Range *expression_l;
+    struct Loc *heredoc_body_l;
+    struct Loc *heredoc_end_l;
+    struct Loc *expression_l;
 };
 
 void heredoc_node_free(struct Heredoc *node);
@@ -546,11 +546,11 @@ struct If
     struct Node *cond;
     struct Node *if_true;
     struct Node *if_false;
-    struct Range *keyword_l;
-    struct Range *begin_l;
-    struct Range *else_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *begin_l;
+    struct Loc *else_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void if__node_free(struct If *node);
@@ -559,8 +559,8 @@ void if__node_free(struct If *node);
 struct IfGuard
 {
     struct Node *cond;
-    struct Range *keyword_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *expression_l;
 };
 
 void if_guard_node_free(struct IfGuard *node);
@@ -571,8 +571,8 @@ struct IfMod
     struct Node *cond;
     struct Node *if_true;
     struct Node *if_false;
-    struct Range *keyword_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *expression_l;
 };
 
 void if_mod_node_free(struct IfMod *node);
@@ -583,9 +583,9 @@ struct IfTernary
     struct Node *cond;
     struct Node *if_true;
     struct Node *if_false;
-    struct Range *question_l;
-    struct Range *colon_l;
-    struct Range *expression_l;
+    struct Loc *question_l;
+    struct Loc *colon_l;
+    struct Loc *expression_l;
 };
 
 void if_ternary_node_free(struct IfTernary *node);
@@ -595,8 +595,8 @@ struct IFlipFlop
 {
     struct Node *left;
     struct Node *right;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void iflipflop_node_free(struct IFlipFlop *node);
@@ -606,8 +606,8 @@ struct MatchPattern
 {
     struct Node *value;
     struct Node *pattern;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void match_pattern_node_free(struct MatchPattern *node);
@@ -617,8 +617,8 @@ struct MatchPatternP
 {
     struct Node *value;
     struct Node *pattern;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void match_pattern_p_node_free(struct MatchPatternP *node);
@@ -629,9 +629,9 @@ struct InPattern
     struct Node *pattern;
     struct Node *guard;
     struct Node *body;
-    struct Range *keyword_l;
-    struct Range *begin_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *begin_l;
+    struct Loc *expression_l;
 };
 
 void in_pattern_node_free(struct InPattern *node);
@@ -641,9 +641,9 @@ struct Index
 {
     struct Node *recv;
     struct NodeList *indexes;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void index_node_free(struct Index *node);
@@ -654,10 +654,10 @@ struct IndexAsgn
     struct Node *recv;
     struct NodeList *indexes;
     struct Node *value;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void index_asgn_node_free(struct IndexAsgn *node);
@@ -666,8 +666,8 @@ void index_asgn_node_free(struct IndexAsgn *node);
 struct Int
 {
     char *value;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void int_node_free(struct Int *node);
@@ -677,8 +677,8 @@ struct Irange
 {
     struct Node *left;
     struct Node *right;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void irange_node_free(struct Irange *node);
@@ -687,7 +687,7 @@ void irange_node_free(struct Irange *node);
 struct Ivar
 {
     char *name;
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void ivar_node_free(struct Ivar *node);
@@ -697,9 +697,9 @@ struct Ivasgn
 {
     char *name;
     struct Node *value;
-    struct Range *name_l;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *name_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void ivasgn_node_free(struct Ivasgn *node);
@@ -708,8 +708,8 @@ void ivasgn_node_free(struct Ivasgn *node);
 struct Kwarg
 {
     char *name;
-    struct Range *name_l;
-    struct Range *expression_l;
+    struct Loc *name_l;
+    struct Loc *expression_l;
 };
 
 void kwarg_node_free(struct Kwarg *node);
@@ -718,9 +718,9 @@ void kwarg_node_free(struct Kwarg *node);
 struct KwBegin
 {
     struct NodeList *statements;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void kwbegin_node_free(struct KwBegin *node);
@@ -728,8 +728,8 @@ void kwbegin_node_free(struct KwBegin *node);
 
 struct Kwnilarg
 {
-    struct Range *name_l;
-    struct Range *expression_l;
+    struct Loc *name_l;
+    struct Loc *expression_l;
 };
 
 void kwnilarg_node_free(struct Kwnilarg *node);
@@ -739,8 +739,8 @@ struct Kwoptarg
 {
     char *name;
     struct Node *default_;
-    struct Range *name_l;
-    struct Range *expression_l;
+    struct Loc *name_l;
+    struct Loc *expression_l;
 };
 
 void kwoptarg_node_free(struct Kwoptarg *node);
@@ -749,9 +749,9 @@ void kwoptarg_node_free(struct Kwoptarg *node);
 struct Kwrestarg
 {
     char *name;
-    struct Range *operator_l;
-    struct Range *name_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *name_l;
+    struct Loc *expression_l;
 };
 
 void kwrestarg_node_free(struct Kwrestarg *node);
@@ -760,8 +760,8 @@ void kwrestarg_node_free(struct Kwrestarg *node);
 struct Kwsplat
 {
     struct Node *value;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void kwsplat_node_free(struct Kwsplat *node);
@@ -769,7 +769,7 @@ void kwsplat_node_free(struct Kwsplat *node);
 
 struct Lambda
 {
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void lambda_node_free(struct Lambda *node);
@@ -777,7 +777,7 @@ void lambda_node_free(struct Lambda *node);
 
 struct Line
 {
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void line_node_free(struct Line *node);
@@ -786,7 +786,7 @@ void line_node_free(struct Line *node);
 struct Lvar
 {
     char *name;
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void lvar_node_free(struct Lvar *node);
@@ -796,9 +796,9 @@ struct Lvasgn
 {
     char *name;
     struct Node *value;
-    struct Range *name_l;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *name_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void lvasgn_node_free(struct Lvasgn *node);
@@ -808,8 +808,8 @@ struct Masgn
 {
     struct Node *lhs;
     struct Node *rhs;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void masgn_node_free(struct Masgn *node);
@@ -819,8 +819,8 @@ struct MatchAlt
 {
     struct Node *lhs;
     struct Node *rhs;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void match_alt_node_free(struct MatchAlt *node);
@@ -830,8 +830,8 @@ struct MatchAs
 {
     struct Node *value;
     struct Node *as_;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void match_as_node_free(struct MatchAs *node);
@@ -840,7 +840,7 @@ void match_as_node_free(struct MatchAs *node);
 struct MatchCurrentLine
 {
     struct Node *re;
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void match_current_line_node_free(struct MatchCurrentLine *node);
@@ -848,9 +848,9 @@ void match_current_line_node_free(struct MatchCurrentLine *node);
 
 struct MatchNilPattern
 {
-    struct Range *operator_l;
-    struct Range *name_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *name_l;
+    struct Loc *expression_l;
 };
 
 void match_nil_pattern_node_free(struct MatchNilPattern *node);
@@ -859,8 +859,8 @@ void match_nil_pattern_node_free(struct MatchNilPattern *node);
 struct MatchRest
 {
     struct Node *name;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void match_rest_node_free(struct MatchRest *node);
@@ -869,8 +869,8 @@ void match_rest_node_free(struct MatchRest *node);
 struct MatchVar
 {
     char *name;
-    struct Range *name_l;
-    struct Range *expression_l;
+    struct Loc *name_l;
+    struct Loc *expression_l;
 };
 
 void match_var_node_free(struct MatchVar *node);
@@ -880,8 +880,8 @@ struct MatchWithLvasgn
 {
     struct Node *re;
     struct Node *value;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void match_with_lvasgn_node_free(struct MatchWithLvasgn *node);
@@ -890,9 +890,9 @@ void match_with_lvasgn_node_free(struct MatchWithLvasgn *node);
 struct Mlhs
 {
     struct NodeList *items;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void mlhs_node_free(struct Mlhs *node);
@@ -902,9 +902,9 @@ struct Module
 {
     struct Node *name;
     struct Node *body;
-    struct Range *keyword_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void module_node_free(struct Module *node);
@@ -913,8 +913,8 @@ void module_node_free(struct Module *node);
 struct Next
 {
     struct NodeList *args;
-    struct Range *keyword_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *expression_l;
 };
 
 void next_node_free(struct Next *node);
@@ -922,7 +922,7 @@ void next_node_free(struct Next *node);
 
 struct Nil
 {
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void nil_node_free(struct Nil *node);
@@ -931,7 +931,7 @@ void nil_node_free(struct Nil *node);
 struct NthRef
 {
     char *name;
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void nth_ref_node_free(struct NthRef *node);
@@ -942,9 +942,9 @@ struct Numblock
     struct Node *call;
     uint32_t numargs;
     struct Node *body;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void numblock_node_free(struct Numblock *node);
@@ -955,8 +955,8 @@ struct OpAsgn
     struct Node *recv;
     char *operator;
     struct Node *value;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void op_asgn_node_free(struct OpAsgn *node);
@@ -966,9 +966,9 @@ struct Optarg
 {
     char *name;
     struct Node *default_;
-    struct Range *name_l;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *name_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void optarg_node_free(struct Optarg *node);
@@ -978,8 +978,8 @@ struct Or
 {
     struct Node *lhs;
     struct Node *rhs;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void or_node_free(struct Or *node);
@@ -989,8 +989,8 @@ struct OrAsgn
 {
     struct Node *recv;
     struct Node *value;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void or_asgn_node_free(struct OrAsgn *node);
@@ -1000,8 +1000,8 @@ struct Pair
 {
     struct Node *key;
     struct Node *value;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void pair_node_free(struct Pair *node);
@@ -1010,8 +1010,8 @@ void pair_node_free(struct Pair *node);
 struct Pin
 {
     struct Node *var;
-    struct Range *selector_l;
-    struct Range *expression_l;
+    struct Loc *selector_l;
+    struct Loc *expression_l;
 };
 
 void pin_node_free(struct Pin *node);
@@ -1020,10 +1020,10 @@ void pin_node_free(struct Pin *node);
 struct Postexe
 {
     struct Node *body;
-    struct Range *keyword_l;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void postexe_node_free(struct Postexe *node);
@@ -1032,10 +1032,10 @@ void postexe_node_free(struct Postexe *node);
 struct Preexe
 {
     struct Node *body;
-    struct Range *keyword_l;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void preexe_node_free(struct Preexe *node);
@@ -1044,9 +1044,9 @@ void preexe_node_free(struct Preexe *node);
 struct Procarg0
 {
     struct NodeList *args;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void procarg0_node_free(struct Procarg0 *node);
@@ -1055,8 +1055,8 @@ void procarg0_node_free(struct Procarg0 *node);
 struct Rational
 {
     char *value;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void rational_node_free(struct Rational *node);
@@ -1064,7 +1064,7 @@ void rational_node_free(struct Rational *node);
 
 struct Redo
 {
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void redo_node_free(struct Redo *node);
@@ -1073,7 +1073,7 @@ void redo_node_free(struct Redo *node);
 struct RegOpt
 {
     char *options;
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void reg_opt_node_free(struct RegOpt *node);
@@ -1083,9 +1083,9 @@ struct Regexp
 {
     struct NodeList *parts;
     struct Node *options;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void regexp_node_free(struct Regexp *node);
@@ -1096,8 +1096,8 @@ struct Rescue
     struct Node *body;
     struct NodeList *rescue_bodies;
     struct Node *else_;
-    struct Range *else_l;
-    struct Range *expression_l;
+    struct Loc *else_l;
+    struct Loc *expression_l;
 };
 
 void rescue_node_free(struct Rescue *node);
@@ -1108,10 +1108,10 @@ struct RescueBody
     struct Node *exc_list;
     struct Node *exc_var;
     struct Node *body;
-    struct Range *keyword_l;
-    struct Range *assoc_l;
-    struct Range *begin_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *assoc_l;
+    struct Loc *begin_l;
+    struct Loc *expression_l;
 };
 
 void rescue_body_node_free(struct RescueBody *node);
@@ -1120,9 +1120,9 @@ void rescue_body_node_free(struct RescueBody *node);
 struct Restarg
 {
     char *name;
-    struct Range *operator_l;
-    struct Range *name_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *name_l;
+    struct Loc *expression_l;
 };
 
 void restarg_node_free(struct Restarg *node);
@@ -1130,7 +1130,7 @@ void restarg_node_free(struct Restarg *node);
 
 struct Retry
 {
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void retry_node_free(struct Retry *node);
@@ -1139,8 +1139,8 @@ void retry_node_free(struct Retry *node);
 struct Return
 {
     struct NodeList *args;
-    struct Range *keyword_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *expression_l;
 };
 
 void return__node_free(struct Return *node);
@@ -1150,10 +1150,10 @@ struct SClass
 {
     struct Node *expr;
     struct Node *body;
-    struct Range *keyword_l;
-    struct Range *operator_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *operator_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void sclass_node_free(struct SClass *node);
@@ -1161,7 +1161,7 @@ void sclass_node_free(struct SClass *node);
 
 struct Self_
 {
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void self__node_free(struct Self_ *node);
@@ -1172,12 +1172,12 @@ struct Send
     struct Node *recv;
     char *method_name;
     struct NodeList *args;
-    struct Range *dot_l;
-    struct Range *selector_l;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *dot_l;
+    struct Loc *selector_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void send_node_free(struct Send *node);
@@ -1186,7 +1186,7 @@ void send_node_free(struct Send *node);
 struct Shadowarg
 {
     char *name;
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void shadowarg_node_free(struct Shadowarg *node);
@@ -1195,8 +1195,8 @@ void shadowarg_node_free(struct Shadowarg *node);
 struct Splat
 {
     struct Node *value;
-    struct Range *operator_l;
-    struct Range *expression_l;
+    struct Loc *operator_l;
+    struct Loc *expression_l;
 };
 
 void splat_node_free(struct Splat *node);
@@ -1205,9 +1205,9 @@ void splat_node_free(struct Splat *node);
 struct Str
 {
     char *value;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void str__node_free(struct Str *node);
@@ -1216,10 +1216,10 @@ void str__node_free(struct Str *node);
 struct Super
 {
     struct NodeList *args;
-    struct Range *keyword_l;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void super__node_free(struct Super *node);
@@ -1228,9 +1228,9 @@ void super__node_free(struct Super *node);
 struct Sym
 {
     char *name;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void sym_node_free(struct Sym *node);
@@ -1238,7 +1238,7 @@ void sym_node_free(struct Sym *node);
 
 struct True
 {
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void true__node_free(struct True *node);
@@ -1247,8 +1247,8 @@ void true__node_free(struct True *node);
 struct Undef
 {
     struct NodeList *names;
-    struct Range *keyword_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *expression_l;
 };
 
 void undef_node_free(struct Undef *node);
@@ -1257,8 +1257,8 @@ void undef_node_free(struct Undef *node);
 struct UnlessGuard
 {
     struct Node *cond;
-    struct Range *keyword_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *expression_l;
 };
 
 void unless_guard_node_free(struct UnlessGuard *node);
@@ -1268,10 +1268,10 @@ struct Until
 {
     struct Node *cond;
     struct Node *body;
-    struct Range *keyword_l;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void until_node_free(struct Until *node);
@@ -1281,8 +1281,8 @@ struct UntilPost
 {
     struct Node *cond;
     struct Node *body;
-    struct Range *keyword_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *expression_l;
 };
 
 void until_post_node_free(struct UntilPost *node);
@@ -1292,9 +1292,9 @@ struct When
 {
     struct NodeList *patterns;
     struct Node *body;
-    struct Range *keyword_l;
-    struct Range *begin_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *begin_l;
+    struct Loc *expression_l;
 };
 
 void when_node_free(struct When *node);
@@ -1304,10 +1304,10 @@ struct While
 {
     struct Node *cond;
     struct Node *body;
-    struct Range *keyword_l;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void while__node_free(struct While *node);
@@ -1317,8 +1317,8 @@ struct WhilePost
 {
     struct Node *cond;
     struct Node *body;
-    struct Range *keyword_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *expression_l;
 };
 
 void while_post_node_free(struct WhilePost *node);
@@ -1327,9 +1327,9 @@ void while_post_node_free(struct WhilePost *node);
 struct XHeredoc
 {
     struct NodeList *parts;
-    struct Range *heredoc_body_l;
-    struct Range *heredoc_end_l;
-    struct Range *expression_l;
+    struct Loc *heredoc_body_l;
+    struct Loc *heredoc_end_l;
+    struct Loc *expression_l;
 };
 
 void x_heredoc_node_free(struct XHeredoc *node);
@@ -1338,9 +1338,9 @@ void x_heredoc_node_free(struct XHeredoc *node);
 struct Xstr
 {
     struct NodeList *parts;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void xstr_node_free(struct Xstr *node);
@@ -1349,10 +1349,10 @@ void xstr_node_free(struct Xstr *node);
 struct Yield
 {
     struct NodeList *args;
-    struct Range *keyword_l;
-    struct Range *begin_l;
-    struct Range *end_l;
-    struct Range *expression_l;
+    struct Loc *keyword_l;
+    struct Loc *begin_l;
+    struct Loc *end_l;
+    struct Loc *expression_l;
 };
 
 void yield__node_free(struct Yield *node);
@@ -1360,7 +1360,7 @@ void yield__node_free(struct Yield *node);
 
 struct ZSuper
 {
-    struct Range *expression_l;
+    struct Loc *expression_l;
 };
 
 void zsuper_node_free(struct ZSuper *node);

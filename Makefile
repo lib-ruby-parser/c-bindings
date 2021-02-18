@@ -124,7 +124,6 @@ $(LIB_RUBY_PARSER_H):
 	cat src/node.h > $(LIB_RUBY_PARSER_TMP_H)
 
 	cat src/loc.h >> $(LIB_RUBY_PARSER_TMP_H)
-	cat src/range.h >> $(LIB_RUBY_PARSER_TMP_H)
 	cat src/token.h >> $(LIB_RUBY_PARSER_TMP_H)
 	cat src/diagnostic.h >> $(LIB_RUBY_PARSER_TMP_H)
 	cat src/comment.h >> $(LIB_RUBY_PARSER_TMP_H)
@@ -154,10 +153,10 @@ $(TARGET_DIR)/comment$(OBJ_FILE_EXT): src/comment.h src/comment.c
 	mv comment$(OBJ_FILE_EXT) $(TARGET_DIR)/comment$(OBJ_FILE_EXT)
 OBJECTS += $(TARGET_DIR)/comment$(OBJ_FILE_EXT)
 
-$(TARGET_DIR)/range$(OBJ_FILE_EXT): src/range.h src/range.c
-	$(CC) src/range.c $(CCFLAGS) $(CCOBJFLAGS)
-	mv range$(OBJ_FILE_EXT) $(TARGET_DIR)/range$(OBJ_FILE_EXT)
-OBJECTS += $(TARGET_DIR)/range$(OBJ_FILE_EXT)
+$(TARGET_DIR)/loc$(OBJ_FILE_EXT): src/loc.h src/loc.c
+	$(CC) src/loc.c $(CCFLAGS) $(CCOBJFLAGS)
+	mv loc$(OBJ_FILE_EXT) $(TARGET_DIR)/loc$(OBJ_FILE_EXT)
+OBJECTS += $(TARGET_DIR)/loc$(OBJ_FILE_EXT)
 
 $(TARGET_DIR)/diagnostic$(OBJ_FILE_EXT): src/diagnostic.h src/diagnostic.c
 	$(CC) src/diagnostic.c $(CCFLAGS) $(CCOBJFLAGS)

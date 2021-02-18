@@ -139,8 +139,8 @@ impl From<lib_ruby_parser::nodes::Alias> for Node {
         let node_type = NodeType_NODE_ALIAS;
         let to = ptr_value(Node::from(node.to));
         let from = ptr_value(Node::from(node.from));
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Alias { to, from, keyword_l, expression_l };
         let inner = ptr_value(InnerNode { _alias: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -153,8 +153,8 @@ impl From<lib_ruby_parser::nodes::AndAsgn> for Node {
         let node_type = NodeType_NODE_AND_ASGN;
         let recv = ptr_value(Node::from(node.recv));
         let value = ptr_value(Node::from(node.value));
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = AndAsgn { recv, value, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _and_asgn: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -167,8 +167,8 @@ impl From<lib_ruby_parser::nodes::And> for Node {
         let node_type = NodeType_NODE_AND;
         let lhs = ptr_value(Node::from(node.lhs));
         let rhs = ptr_value(Node::from(node.rhs));
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = And { lhs, rhs, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _and: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -180,7 +180,7 @@ impl From<lib_ruby_parser::nodes::Arg> for Node {
     fn from(node: lib_ruby_parser::nodes::Arg) -> Self {
         let node_type = NodeType_NODE_ARG;
         let name = StringPtr::from(node.name).unwrap();
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Arg { name, expression_l };
         let inner = ptr_value(InnerNode { _arg: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -192,9 +192,9 @@ impl From<lib_ruby_parser::nodes::Args> for Node {
     fn from(node: lib_ruby_parser::nodes::Args) -> Self {
         let node_type = NodeType_NODE_ARGS;
         let args = ptr_value(NodeList::from(node.args));
-        let expression_l = ptr_value(Range::from(node.expression_l));
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
         let typed_node = Args { args, expression_l, begin_l, end_l };
         let inner = ptr_value(InnerNode { _args: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -206,9 +206,9 @@ impl From<lib_ruby_parser::nodes::Array> for Node {
     fn from(node: lib_ruby_parser::nodes::Array) -> Self {
         let node_type = NodeType_NODE_ARRAY;
         let elements = ptr_value(NodeList::from(node.elements));
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Array { elements, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _array: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -220,9 +220,9 @@ impl From<lib_ruby_parser::nodes::ArrayPattern> for Node {
     fn from(node: lib_ruby_parser::nodes::ArrayPattern) -> Self {
         let node_type = NodeType_NODE_ARRAY_PATTERN;
         let elements = ptr_value(NodeList::from(node.elements));
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = ArrayPattern { elements, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _array_pattern: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -234,9 +234,9 @@ impl From<lib_ruby_parser::nodes::ArrayPatternWithTail> for Node {
     fn from(node: lib_ruby_parser::nodes::ArrayPatternWithTail) -> Self {
         let node_type = NodeType_NODE_ARRAY_PATTERN_WITH_TAIL;
         let elements = ptr_value(NodeList::from(node.elements));
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = ArrayPatternWithTail { elements, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _array_pattern_with_tail: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -248,7 +248,7 @@ impl From<lib_ruby_parser::nodes::BackRef> for Node {
     fn from(node: lib_ruby_parser::nodes::BackRef) -> Self {
         let node_type = NodeType_NODE_BACK_REF;
         let name = StringPtr::from(node.name).unwrap();
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = BackRef { name, expression_l };
         let inner = ptr_value(InnerNode { _back_ref: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -260,9 +260,9 @@ impl From<lib_ruby_parser::nodes::Begin> for Node {
     fn from(node: lib_ruby_parser::nodes::Begin) -> Self {
         let node_type = NodeType_NODE_BEGIN;
         let statements = ptr_value(NodeList::from(node.statements));
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Begin { statements, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _begin: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -276,9 +276,9 @@ impl From<lib_ruby_parser::nodes::Block> for Node {
         let call = ptr_value(Node::from(node.call));
         let args = if let Some(v) = node.args { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
         let body = if let Some(v) = node.body { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let begin_l = ptr_value(Range::from(node.begin_l));
-        let end_l = ptr_value(Range::from(node.end_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = ptr_value(Loc::from(node.begin_l));
+        let end_l = ptr_value(Loc::from(node.end_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Block { call, args, body, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _block: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -290,8 +290,8 @@ impl From<lib_ruby_parser::nodes::BlockPass> for Node {
     fn from(node: lib_ruby_parser::nodes::BlockPass) -> Self {
         let node_type = NodeType_NODE_BLOCK_PASS;
         let value = ptr_value(Node::from(node.value));
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = BlockPass { value, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _block_pass: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -303,9 +303,9 @@ impl From<lib_ruby_parser::nodes::Blockarg> for Node {
     fn from(node: lib_ruby_parser::nodes::Blockarg) -> Self {
         let node_type = NodeType_NODE_BLOCKARG;
         let name = StringPtr::from(node.name).unwrap();
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let name_l = ptr_value(Range::from(node.name_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let name_l = ptr_value(Loc::from(node.name_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Blockarg { name, operator_l, name_l, expression_l };
         let inner = ptr_value(InnerNode { _blockarg: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -317,8 +317,8 @@ impl From<lib_ruby_parser::nodes::Break> for Node {
     fn from(node: lib_ruby_parser::nodes::Break) -> Self {
         let node_type = NodeType_NODE_BREAK_;
         let args = ptr_value(NodeList::from(node.args));
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Break { args, keyword_l, expression_l };
         let inner = ptr_value(InnerNode { _break_: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -332,10 +332,10 @@ impl From<lib_ruby_parser::nodes::Case> for Node {
         let expr = if let Some(v) = node.expr { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
         let when_bodies = ptr_value(NodeList::from(node.when_bodies));
         let else_body = if let Some(v) = node.else_body { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let else_l = if let Some(v) = node.else_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = ptr_value(Range::from(node.end_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let else_l = if let Some(v) = node.else_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = ptr_value(Loc::from(node.end_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Case { expr, when_bodies, else_body, keyword_l, else_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _case: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -349,10 +349,10 @@ impl From<lib_ruby_parser::nodes::CaseMatch> for Node {
         let expr = ptr_value(Node::from(node.expr));
         let in_bodies = ptr_value(NodeList::from(node.in_bodies));
         let else_body = if let Some(v) = node.else_body { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let else_l = if let Some(v) = node.else_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = ptr_value(Range::from(node.end_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let else_l = if let Some(v) = node.else_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = ptr_value(Loc::from(node.end_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = CaseMatch { expr, in_bodies, else_body, keyword_l, else_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _case_match: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -366,10 +366,10 @@ impl From<lib_ruby_parser::nodes::Casgn> for Node {
         let scope = if let Some(v) = node.scope { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
         let name = StringPtr::from(node.name).unwrap();
         let value = if let Some(v) = node.value { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let double_colon_l = if let Some(v) = node.double_colon_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let name_l = ptr_value(Range::from(node.name_l));
-        let operator_l = if let Some(v) = node.operator_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let double_colon_l = if let Some(v) = node.double_colon_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let name_l = ptr_value(Loc::from(node.name_l));
+        let operator_l = if let Some(v) = node.operator_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Casgn { scope, name, value, double_colon_l, name_l, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _casgn: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -380,7 +380,7 @@ impl From<lib_ruby_parser::nodes::Casgn> for Node {
 impl From<lib_ruby_parser::nodes::Cbase> for Node {
     fn from(node: lib_ruby_parser::nodes::Cbase) -> Self {
         let node_type = NodeType_NODE_CBASE;
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Cbase { expression_l };
         let inner = ptr_value(InnerNode { _cbase: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -394,10 +394,10 @@ impl From<lib_ruby_parser::nodes::Class> for Node {
         let name = ptr_value(Node::from(node.name));
         let superclass = if let Some(v) = node.superclass { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
         let body = if let Some(v) = node.body { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let operator_l = if let Some(v) = node.operator_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = ptr_value(Range::from(node.end_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let operator_l = if let Some(v) = node.operator_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = ptr_value(Loc::from(node.end_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Class { name, superclass, body, keyword_l, operator_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _class: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -409,8 +409,8 @@ impl From<lib_ruby_parser::nodes::Complex> for Node {
     fn from(node: lib_ruby_parser::nodes::Complex) -> Self {
         let node_type = NodeType_NODE_COMPLEX;
         let value = StringPtr::from(node.value).unwrap();
-        let operator_l = if let Some(v) = node.operator_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = if let Some(v) = node.operator_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Complex { value, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _complex: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -423,9 +423,9 @@ impl From<lib_ruby_parser::nodes::Const> for Node {
         let node_type = NodeType_NODE_CONST_;
         let scope = if let Some(v) = node.scope { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
         let name = StringPtr::from(node.name).unwrap();
-        let double_colon_l = if let Some(v) = node.double_colon_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let name_l = ptr_value(Range::from(node.name_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let double_colon_l = if let Some(v) = node.double_colon_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let name_l = ptr_value(Loc::from(node.name_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Const { scope, name, double_colon_l, name_l, expression_l };
         let inner = ptr_value(InnerNode { _const_: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -438,9 +438,9 @@ impl From<lib_ruby_parser::nodes::ConstPattern> for Node {
         let node_type = NodeType_NODE_CONST_PATTERN;
         let const_ = ptr_value(Node::from(node.const_));
         let pattern = ptr_value(Node::from(node.pattern));
-        let begin_l = ptr_value(Range::from(node.begin_l));
-        let end_l = ptr_value(Range::from(node.end_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = ptr_value(Loc::from(node.begin_l));
+        let end_l = ptr_value(Loc::from(node.end_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = ConstPattern { const_, pattern, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _const_pattern: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -454,12 +454,12 @@ impl From<lib_ruby_parser::nodes::CSend> for Node {
         let recv = ptr_value(Node::from(node.recv));
         let method_name = StringPtr::from(node.method_name).unwrap();
         let args = ptr_value(NodeList::from(node.args));
-        let dot_l = ptr_value(Range::from(node.dot_l));
-        let selector_l = ptr_value(Range::from(node.selector_l));
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let operator_l = if let Some(v) = node.operator_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let dot_l = ptr_value(Loc::from(node.dot_l));
+        let selector_l = ptr_value(Loc::from(node.selector_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let operator_l = if let Some(v) = node.operator_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = CSend { recv, method_name, args, dot_l, selector_l, begin_l, end_l, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _csend: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -471,7 +471,7 @@ impl From<lib_ruby_parser::nodes::Cvar> for Node {
     fn from(node: lib_ruby_parser::nodes::Cvar) -> Self {
         let node_type = NodeType_NODE_CVAR;
         let name = StringPtr::from(node.name).unwrap();
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Cvar { name, expression_l };
         let inner = ptr_value(InnerNode { _cvar: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -484,9 +484,9 @@ impl From<lib_ruby_parser::nodes::Cvasgn> for Node {
         let node_type = NodeType_NODE_CVASGN;
         let name = StringPtr::from(node.name).unwrap();
         let value = if let Some(v) = node.value { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let name_l = ptr_value(Range::from(node.name_l));
-        let operator_l = if let Some(v) = node.operator_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let name_l = ptr_value(Loc::from(node.name_l));
+        let operator_l = if let Some(v) = node.operator_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Cvasgn { name, value, name_l, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _cvasgn: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -500,11 +500,11 @@ impl From<lib_ruby_parser::nodes::Def> for Node {
         let name = StringPtr::from(node.name).unwrap();
         let args = if let Some(v) = node.args { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
         let body = if let Some(v) = node.body { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let name_l = ptr_value(Range::from(node.name_l));
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let assignment_l = if let Some(v) = node.assignment_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let name_l = ptr_value(Loc::from(node.name_l));
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let assignment_l = if let Some(v) = node.assignment_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Def { name, args, body, keyword_l, name_l, end_l, assignment_l, expression_l };
         let inner = ptr_value(InnerNode { _def: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -516,10 +516,10 @@ impl From<lib_ruby_parser::nodes::Defined> for Node {
     fn from(node: lib_ruby_parser::nodes::Defined) -> Self {
         let node_type = NodeType_NODE_DEFINED;
         let value = ptr_value(Node::from(node.value));
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Defined { value, keyword_l, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _defined: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -534,12 +534,12 @@ impl From<lib_ruby_parser::nodes::Defs> for Node {
         let name = StringPtr::from(node.name).unwrap();
         let args = if let Some(v) = node.args { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
         let body = if let Some(v) = node.body { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let name_l = ptr_value(Range::from(node.name_l));
-        let assignment_l = if let Some(v) = node.assignment_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let name_l = ptr_value(Loc::from(node.name_l));
+        let assignment_l = if let Some(v) = node.assignment_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Defs { definee, name, args, body, keyword_l, operator_l, name_l, assignment_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _defs: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -551,9 +551,9 @@ impl From<lib_ruby_parser::nodes::Dstr> for Node {
     fn from(node: lib_ruby_parser::nodes::Dstr) -> Self {
         let node_type = NodeType_NODE_DSTR;
         let parts = ptr_value(NodeList::from(node.parts));
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Dstr { parts, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _dstr: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -565,9 +565,9 @@ impl From<lib_ruby_parser::nodes::Dsym> for Node {
     fn from(node: lib_ruby_parser::nodes::Dsym) -> Self {
         let node_type = NodeType_NODE_DSYM;
         let parts = ptr_value(NodeList::from(node.parts));
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Dsym { parts, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _dsym: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -580,8 +580,8 @@ impl From<lib_ruby_parser::nodes::EFlipFlop> for Node {
         let node_type = NodeType_NODE_EFLIPFLOP;
         let left = if let Some(v) = node.left { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
         let right = if let Some(v) = node.right { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = EFlipFlop { left, right, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _eflipflop: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -592,7 +592,7 @@ impl From<lib_ruby_parser::nodes::EFlipFlop> for Node {
 impl From<lib_ruby_parser::nodes::EmptyElse> for Node {
     fn from(node: lib_ruby_parser::nodes::EmptyElse) -> Self {
         let node_type = NodeType_NODE_EMPTY_ELSE;
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = EmptyElse { expression_l };
         let inner = ptr_value(InnerNode { _empty_else: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -603,7 +603,7 @@ impl From<lib_ruby_parser::nodes::EmptyElse> for Node {
 impl From<lib_ruby_parser::nodes::Encoding> for Node {
     fn from(node: lib_ruby_parser::nodes::Encoding) -> Self {
         let node_type = NodeType_NODE_ENCODING_;
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Encoding { expression_l };
         let inner = ptr_value(InnerNode { _encoding_: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -616,8 +616,8 @@ impl From<lib_ruby_parser::nodes::Ensure> for Node {
         let node_type = NodeType_NODE_ENSURE;
         let body = if let Some(v) = node.body { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
         let ensure = if let Some(v) = node.ensure { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Ensure { body, ensure, keyword_l, expression_l };
         let inner = ptr_value(InnerNode { _ensure: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -630,8 +630,8 @@ impl From<lib_ruby_parser::nodes::Erange> for Node {
         let node_type = NodeType_NODE_ERANGE;
         let left = if let Some(v) = node.left { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
         let right = if let Some(v) = node.right { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Erange { left, right, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _erange: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -642,7 +642,7 @@ impl From<lib_ruby_parser::nodes::Erange> for Node {
 impl From<lib_ruby_parser::nodes::False> for Node {
     fn from(node: lib_ruby_parser::nodes::False) -> Self {
         let node_type = NodeType_NODE_FALSE_;
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = False { expression_l };
         let inner = ptr_value(InnerNode { _false_: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -653,7 +653,7 @@ impl From<lib_ruby_parser::nodes::False> for Node {
 impl From<lib_ruby_parser::nodes::File> for Node {
     fn from(node: lib_ruby_parser::nodes::File) -> Self {
         let node_type = NodeType_NODE_FILE;
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = File { expression_l };
         let inner = ptr_value(InnerNode { _file: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -665,9 +665,9 @@ impl From<lib_ruby_parser::nodes::FindPattern> for Node {
     fn from(node: lib_ruby_parser::nodes::FindPattern) -> Self {
         let node_type = NodeType_NODE_FIND_PATTERN;
         let elements = ptr_value(NodeList::from(node.elements));
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = FindPattern { elements, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _find_pattern: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -679,8 +679,8 @@ impl From<lib_ruby_parser::nodes::Float> for Node {
     fn from(node: lib_ruby_parser::nodes::Float) -> Self {
         let node_type = NodeType_NODE_FLOAT;
         let value = StringPtr::from(node.value).unwrap();
-        let operator_l = if let Some(v) = node.operator_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = if let Some(v) = node.operator_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Float { value, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _float: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -694,11 +694,11 @@ impl From<lib_ruby_parser::nodes::For> for Node {
         let iterator = ptr_value(Node::from(node.iterator));
         let iteratee = ptr_value(Node::from(node.iteratee));
         let body = if let Some(v) = node.body { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let begin_l = ptr_value(Range::from(node.begin_l));
-        let end_l = ptr_value(Range::from(node.end_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let begin_l = ptr_value(Loc::from(node.begin_l));
+        let end_l = ptr_value(Loc::from(node.end_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = For { iterator, iteratee, body, keyword_l, operator_l, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _for_: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -709,7 +709,7 @@ impl From<lib_ruby_parser::nodes::For> for Node {
 impl From<lib_ruby_parser::nodes::ForwardArg> for Node {
     fn from(node: lib_ruby_parser::nodes::ForwardArg) -> Self {
         let node_type = NodeType_NODE_FORWARD_ARG;
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = ForwardArg { expression_l };
         let inner = ptr_value(InnerNode { _forward_arg: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -720,7 +720,7 @@ impl From<lib_ruby_parser::nodes::ForwardArg> for Node {
 impl From<lib_ruby_parser::nodes::ForwardedArgs> for Node {
     fn from(node: lib_ruby_parser::nodes::ForwardedArgs) -> Self {
         let node_type = NodeType_NODE_FORWARDED_ARGS;
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = ForwardedArgs { expression_l };
         let inner = ptr_value(InnerNode { _forwarded_args: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -732,7 +732,7 @@ impl From<lib_ruby_parser::nodes::Gvar> for Node {
     fn from(node: lib_ruby_parser::nodes::Gvar) -> Self {
         let node_type = NodeType_NODE_GVAR;
         let name = StringPtr::from(node.name).unwrap();
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Gvar { name, expression_l };
         let inner = ptr_value(InnerNode { _gvar: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -745,9 +745,9 @@ impl From<lib_ruby_parser::nodes::Gvasgn> for Node {
         let node_type = NodeType_NODE_GVASGN;
         let name = StringPtr::from(node.name).unwrap();
         let value = if let Some(v) = node.value { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let name_l = ptr_value(Range::from(node.name_l));
-        let operator_l = if let Some(v) = node.operator_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let name_l = ptr_value(Loc::from(node.name_l));
+        let operator_l = if let Some(v) = node.operator_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Gvasgn { name, value, name_l, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _gvasgn: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -759,9 +759,9 @@ impl From<lib_ruby_parser::nodes::Hash> for Node {
     fn from(node: lib_ruby_parser::nodes::Hash) -> Self {
         let node_type = NodeType_NODE_HASH;
         let pairs = ptr_value(NodeList::from(node.pairs));
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Hash { pairs, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _hash: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -773,7 +773,7 @@ impl From<lib_ruby_parser::nodes::Kwargs> for Node {
     fn from(node: lib_ruby_parser::nodes::Kwargs) -> Self {
         let node_type = NodeType_NODE_KWARGS;
         let pairs = ptr_value(NodeList::from(node.pairs));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Kwargs { pairs, expression_l };
         let inner = ptr_value(InnerNode { _kwargs: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -785,9 +785,9 @@ impl From<lib_ruby_parser::nodes::HashPattern> for Node {
     fn from(node: lib_ruby_parser::nodes::HashPattern) -> Self {
         let node_type = NodeType_NODE_HASH_PATTERN;
         let elements = ptr_value(NodeList::from(node.elements));
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = HashPattern { elements, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _hash_pattern: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -799,9 +799,9 @@ impl From<lib_ruby_parser::nodes::Heredoc> for Node {
     fn from(node: lib_ruby_parser::nodes::Heredoc) -> Self {
         let node_type = NodeType_NODE_HEREDOC;
         let parts = ptr_value(NodeList::from(node.parts));
-        let heredoc_body_l = ptr_value(Range::from(node.heredoc_body_l));
-        let heredoc_end_l = ptr_value(Range::from(node.heredoc_end_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let heredoc_body_l = ptr_value(Loc::from(node.heredoc_body_l));
+        let heredoc_end_l = ptr_value(Loc::from(node.heredoc_end_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Heredoc { parts, heredoc_body_l, heredoc_end_l, expression_l };
         let inner = ptr_value(InnerNode { _heredoc: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -815,11 +815,11 @@ impl From<lib_ruby_parser::nodes::If> for Node {
         let cond = ptr_value(Node::from(node.cond));
         let if_true = if let Some(v) = node.if_true { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
         let if_false = if let Some(v) = node.if_false { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let begin_l = ptr_value(Range::from(node.begin_l));
-        let else_l = if let Some(v) = node.else_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let begin_l = ptr_value(Loc::from(node.begin_l));
+        let else_l = if let Some(v) = node.else_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = If { cond, if_true, if_false, keyword_l, begin_l, else_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _if_: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -831,8 +831,8 @@ impl From<lib_ruby_parser::nodes::IfGuard> for Node {
     fn from(node: lib_ruby_parser::nodes::IfGuard) -> Self {
         let node_type = NodeType_NODE_IF_GUARD;
         let cond = ptr_value(Node::from(node.cond));
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = IfGuard { cond, keyword_l, expression_l };
         let inner = ptr_value(InnerNode { _if_guard: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -846,8 +846,8 @@ impl From<lib_ruby_parser::nodes::IfMod> for Node {
         let cond = ptr_value(Node::from(node.cond));
         let if_true = if let Some(v) = node.if_true { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
         let if_false = if let Some(v) = node.if_false { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = IfMod { cond, if_true, if_false, keyword_l, expression_l };
         let inner = ptr_value(InnerNode { _if_mod: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -861,9 +861,9 @@ impl From<lib_ruby_parser::nodes::IfTernary> for Node {
         let cond = ptr_value(Node::from(node.cond));
         let if_true = ptr_value(Node::from(node.if_true));
         let if_false = ptr_value(Node::from(node.if_false));
-        let question_l = ptr_value(Range::from(node.question_l));
-        let colon_l = ptr_value(Range::from(node.colon_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let question_l = ptr_value(Loc::from(node.question_l));
+        let colon_l = ptr_value(Loc::from(node.colon_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = IfTernary { cond, if_true, if_false, question_l, colon_l, expression_l };
         let inner = ptr_value(InnerNode { _if_ternary: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -876,8 +876,8 @@ impl From<lib_ruby_parser::nodes::IFlipFlop> for Node {
         let node_type = NodeType_NODE_IFLIPFLOP;
         let left = if let Some(v) = node.left { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
         let right = if let Some(v) = node.right { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = IFlipFlop { left, right, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _iflipflop: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -890,8 +890,8 @@ impl From<lib_ruby_parser::nodes::MatchPattern> for Node {
         let node_type = NodeType_NODE_MATCH_PATTERN;
         let value = ptr_value(Node::from(node.value));
         let pattern = ptr_value(Node::from(node.pattern));
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = MatchPattern { value, pattern, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _match_pattern: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -904,8 +904,8 @@ impl From<lib_ruby_parser::nodes::MatchPatternP> for Node {
         let node_type = NodeType_NODE_MATCH_PATTERN_P;
         let value = ptr_value(Node::from(node.value));
         let pattern = ptr_value(Node::from(node.pattern));
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = MatchPatternP { value, pattern, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _match_pattern_p: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -919,9 +919,9 @@ impl From<lib_ruby_parser::nodes::InPattern> for Node {
         let pattern = ptr_value(Node::from(node.pattern));
         let guard = if let Some(v) = node.guard { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
         let body = if let Some(v) = node.body { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let begin_l = ptr_value(Range::from(node.begin_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let begin_l = ptr_value(Loc::from(node.begin_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = InPattern { pattern, guard, body, keyword_l, begin_l, expression_l };
         let inner = ptr_value(InnerNode { _in_pattern: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -934,9 +934,9 @@ impl From<lib_ruby_parser::nodes::Index> for Node {
         let node_type = NodeType_NODE_INDEX;
         let recv = ptr_value(Node::from(node.recv));
         let indexes = ptr_value(NodeList::from(node.indexes));
-        let begin_l = ptr_value(Range::from(node.begin_l));
-        let end_l = ptr_value(Range::from(node.end_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = ptr_value(Loc::from(node.begin_l));
+        let end_l = ptr_value(Loc::from(node.end_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Index { recv, indexes, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _index: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -950,10 +950,10 @@ impl From<lib_ruby_parser::nodes::IndexAsgn> for Node {
         let recv = ptr_value(Node::from(node.recv));
         let indexes = ptr_value(NodeList::from(node.indexes));
         let value = if let Some(v) = node.value { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let begin_l = ptr_value(Range::from(node.begin_l));
-        let end_l = ptr_value(Range::from(node.end_l));
-        let operator_l = if let Some(v) = node.operator_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = ptr_value(Loc::from(node.begin_l));
+        let end_l = ptr_value(Loc::from(node.end_l));
+        let operator_l = if let Some(v) = node.operator_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = IndexAsgn { recv, indexes, value, begin_l, end_l, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _index_asgn: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -965,8 +965,8 @@ impl From<lib_ruby_parser::nodes::Int> for Node {
     fn from(node: lib_ruby_parser::nodes::Int) -> Self {
         let node_type = NodeType_NODE_INT;
         let value = StringPtr::from(node.value).unwrap();
-        let operator_l = if let Some(v) = node.operator_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = if let Some(v) = node.operator_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Int { value, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _int: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -979,8 +979,8 @@ impl From<lib_ruby_parser::nodes::Irange> for Node {
         let node_type = NodeType_NODE_IRANGE;
         let left = if let Some(v) = node.left { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
         let right = if let Some(v) = node.right { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Irange { left, right, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _irange: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -992,7 +992,7 @@ impl From<lib_ruby_parser::nodes::Ivar> for Node {
     fn from(node: lib_ruby_parser::nodes::Ivar) -> Self {
         let node_type = NodeType_NODE_IVAR;
         let name = StringPtr::from(node.name).unwrap();
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Ivar { name, expression_l };
         let inner = ptr_value(InnerNode { _ivar: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1005,9 +1005,9 @@ impl From<lib_ruby_parser::nodes::Ivasgn> for Node {
         let node_type = NodeType_NODE_IVASGN;
         let name = StringPtr::from(node.name).unwrap();
         let value = if let Some(v) = node.value { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let name_l = ptr_value(Range::from(node.name_l));
-        let operator_l = if let Some(v) = node.operator_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let name_l = ptr_value(Loc::from(node.name_l));
+        let operator_l = if let Some(v) = node.operator_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Ivasgn { name, value, name_l, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _ivasgn: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1019,8 +1019,8 @@ impl From<lib_ruby_parser::nodes::Kwarg> for Node {
     fn from(node: lib_ruby_parser::nodes::Kwarg) -> Self {
         let node_type = NodeType_NODE_KWARG;
         let name = StringPtr::from(node.name).unwrap();
-        let name_l = ptr_value(Range::from(node.name_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let name_l = ptr_value(Loc::from(node.name_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Kwarg { name, name_l, expression_l };
         let inner = ptr_value(InnerNode { _kwarg: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1032,9 +1032,9 @@ impl From<lib_ruby_parser::nodes::KwBegin> for Node {
     fn from(node: lib_ruby_parser::nodes::KwBegin) -> Self {
         let node_type = NodeType_NODE_KWBEGIN;
         let statements = ptr_value(NodeList::from(node.statements));
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = KwBegin { statements, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _kwbegin: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1045,8 +1045,8 @@ impl From<lib_ruby_parser::nodes::KwBegin> for Node {
 impl From<lib_ruby_parser::nodes::Kwnilarg> for Node {
     fn from(node: lib_ruby_parser::nodes::Kwnilarg) -> Self {
         let node_type = NodeType_NODE_KWNILARG;
-        let name_l = ptr_value(Range::from(node.name_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let name_l = ptr_value(Loc::from(node.name_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Kwnilarg { name_l, expression_l };
         let inner = ptr_value(InnerNode { _kwnilarg: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1059,8 +1059,8 @@ impl From<lib_ruby_parser::nodes::Kwoptarg> for Node {
         let node_type = NodeType_NODE_KWOPTARG;
         let name = StringPtr::from(node.name).unwrap();
         let default_ = ptr_value(Node::from(node.default));
-        let name_l = ptr_value(Range::from(node.name_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let name_l = ptr_value(Loc::from(node.name_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Kwoptarg { name, default_, name_l, expression_l };
         let inner = ptr_value(InnerNode { _kwoptarg: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1072,9 +1072,9 @@ impl From<lib_ruby_parser::nodes::Kwrestarg> for Node {
     fn from(node: lib_ruby_parser::nodes::Kwrestarg) -> Self {
         let node_type = NodeType_NODE_KWRESTARG;
         let name = StringPtr::from(node.name).unwrap();
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let name_l = if let Some(v) = node.name_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let name_l = if let Some(v) = node.name_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Kwrestarg { name, operator_l, name_l, expression_l };
         let inner = ptr_value(InnerNode { _kwrestarg: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1086,8 +1086,8 @@ impl From<lib_ruby_parser::nodes::Kwsplat> for Node {
     fn from(node: lib_ruby_parser::nodes::Kwsplat) -> Self {
         let node_type = NodeType_NODE_KWSPLAT;
         let value = ptr_value(Node::from(node.value));
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Kwsplat { value, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _kwsplat: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1098,7 +1098,7 @@ impl From<lib_ruby_parser::nodes::Kwsplat> for Node {
 impl From<lib_ruby_parser::nodes::Lambda> for Node {
     fn from(node: lib_ruby_parser::nodes::Lambda) -> Self {
         let node_type = NodeType_NODE_LAMBDA;
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Lambda { expression_l };
         let inner = ptr_value(InnerNode { _lambda: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1109,7 +1109,7 @@ impl From<lib_ruby_parser::nodes::Lambda> for Node {
 impl From<lib_ruby_parser::nodes::Line> for Node {
     fn from(node: lib_ruby_parser::nodes::Line) -> Self {
         let node_type = NodeType_NODE_LINE;
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Line { expression_l };
         let inner = ptr_value(InnerNode { _line: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1121,7 +1121,7 @@ impl From<lib_ruby_parser::nodes::Lvar> for Node {
     fn from(node: lib_ruby_parser::nodes::Lvar) -> Self {
         let node_type = NodeType_NODE_LVAR;
         let name = StringPtr::from(node.name).unwrap();
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Lvar { name, expression_l };
         let inner = ptr_value(InnerNode { _lvar: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1134,9 +1134,9 @@ impl From<lib_ruby_parser::nodes::Lvasgn> for Node {
         let node_type = NodeType_NODE_LVASGN;
         let name = StringPtr::from(node.name).unwrap();
         let value = if let Some(v) = node.value { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let name_l = ptr_value(Range::from(node.name_l));
-        let operator_l = if let Some(v) = node.operator_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let name_l = ptr_value(Loc::from(node.name_l));
+        let operator_l = if let Some(v) = node.operator_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Lvasgn { name, value, name_l, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _lvasgn: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1149,8 +1149,8 @@ impl From<lib_ruby_parser::nodes::Masgn> for Node {
         let node_type = NodeType_NODE_MASGN;
         let lhs = ptr_value(Node::from(node.lhs));
         let rhs = ptr_value(Node::from(node.rhs));
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Masgn { lhs, rhs, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _masgn: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1163,8 +1163,8 @@ impl From<lib_ruby_parser::nodes::MatchAlt> for Node {
         let node_type = NodeType_NODE_MATCH_ALT;
         let lhs = ptr_value(Node::from(node.lhs));
         let rhs = ptr_value(Node::from(node.rhs));
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = MatchAlt { lhs, rhs, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _match_alt: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1177,8 +1177,8 @@ impl From<lib_ruby_parser::nodes::MatchAs> for Node {
         let node_type = NodeType_NODE_MATCH_AS;
         let value = ptr_value(Node::from(node.value));
         let as_ = ptr_value(Node::from(node.as_));
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = MatchAs { value, as_, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _match_as: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1190,7 +1190,7 @@ impl From<lib_ruby_parser::nodes::MatchCurrentLine> for Node {
     fn from(node: lib_ruby_parser::nodes::MatchCurrentLine) -> Self {
         let node_type = NodeType_NODE_MATCH_CURRENT_LINE;
         let re = ptr_value(Node::from(node.re));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = MatchCurrentLine { re, expression_l };
         let inner = ptr_value(InnerNode { _match_current_line: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1201,9 +1201,9 @@ impl From<lib_ruby_parser::nodes::MatchCurrentLine> for Node {
 impl From<lib_ruby_parser::nodes::MatchNilPattern> for Node {
     fn from(node: lib_ruby_parser::nodes::MatchNilPattern) -> Self {
         let node_type = NodeType_NODE_MATCH_NIL_PATTERN;
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let name_l = ptr_value(Range::from(node.name_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let name_l = ptr_value(Loc::from(node.name_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = MatchNilPattern { operator_l, name_l, expression_l };
         let inner = ptr_value(InnerNode { _match_nil_pattern: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1215,8 +1215,8 @@ impl From<lib_ruby_parser::nodes::MatchRest> for Node {
     fn from(node: lib_ruby_parser::nodes::MatchRest) -> Self {
         let node_type = NodeType_NODE_MATCH_REST;
         let name = if let Some(v) = node.name { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = MatchRest { name, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _match_rest: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1228,8 +1228,8 @@ impl From<lib_ruby_parser::nodes::MatchVar> for Node {
     fn from(node: lib_ruby_parser::nodes::MatchVar) -> Self {
         let node_type = NodeType_NODE_MATCH_VAR;
         let name = StringPtr::from(node.name).unwrap();
-        let name_l = ptr_value(Range::from(node.name_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let name_l = ptr_value(Loc::from(node.name_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = MatchVar { name, name_l, expression_l };
         let inner = ptr_value(InnerNode { _match_var: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1242,8 +1242,8 @@ impl From<lib_ruby_parser::nodes::MatchWithLvasgn> for Node {
         let node_type = NodeType_NODE_MATCH_WITH_LVASGN;
         let re = ptr_value(Node::from(node.re));
         let value = ptr_value(Node::from(node.value));
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = MatchWithLvasgn { re, value, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _match_with_lvasgn: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1255,9 +1255,9 @@ impl From<lib_ruby_parser::nodes::Mlhs> for Node {
     fn from(node: lib_ruby_parser::nodes::Mlhs) -> Self {
         let node_type = NodeType_NODE_MLHS;
         let items = ptr_value(NodeList::from(node.items));
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Mlhs { items, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _mlhs: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1270,9 +1270,9 @@ impl From<lib_ruby_parser::nodes::Module> for Node {
         let node_type = NodeType_NODE_MODULE;
         let name = ptr_value(Node::from(node.name));
         let body = if let Some(v) = node.body { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let end_l = ptr_value(Range::from(node.end_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let end_l = ptr_value(Loc::from(node.end_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Module { name, body, keyword_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _module: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1284,8 +1284,8 @@ impl From<lib_ruby_parser::nodes::Next> for Node {
     fn from(node: lib_ruby_parser::nodes::Next) -> Self {
         let node_type = NodeType_NODE_NEXT;
         let args = ptr_value(NodeList::from(node.args));
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Next { args, keyword_l, expression_l };
         let inner = ptr_value(InnerNode { _next: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1296,7 +1296,7 @@ impl From<lib_ruby_parser::nodes::Next> for Node {
 impl From<lib_ruby_parser::nodes::Nil> for Node {
     fn from(node: lib_ruby_parser::nodes::Nil) -> Self {
         let node_type = NodeType_NODE_NIL;
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Nil { expression_l };
         let inner = ptr_value(InnerNode { _nil: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1308,7 +1308,7 @@ impl From<lib_ruby_parser::nodes::NthRef> for Node {
     fn from(node: lib_ruby_parser::nodes::NthRef) -> Self {
         let node_type = NodeType_NODE_NTH_REF;
         let name = StringPtr::from(node.name).unwrap();
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = NthRef { name, expression_l };
         let inner = ptr_value(InnerNode { _nth_ref: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1322,9 +1322,9 @@ impl From<lib_ruby_parser::nodes::Numblock> for Node {
         let call = ptr_value(Node::from(node.call));
         let numargs = node.numargs as u32;
         let body = ptr_value(Node::from(node.body));
-        let begin_l = ptr_value(Range::from(node.begin_l));
-        let end_l = ptr_value(Range::from(node.end_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = ptr_value(Loc::from(node.begin_l));
+        let end_l = ptr_value(Loc::from(node.end_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Numblock { call, numargs, body, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _numblock: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1338,8 +1338,8 @@ impl From<lib_ruby_parser::nodes::OpAsgn> for Node {
         let recv = ptr_value(Node::from(node.recv));
         let operator = StringPtr::from(node.operator).unwrap();
         let value = ptr_value(Node::from(node.value));
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = OpAsgn { recv, operator, value, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _op_asgn: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1352,9 +1352,9 @@ impl From<lib_ruby_parser::nodes::Optarg> for Node {
         let node_type = NodeType_NODE_OPTARG;
         let name = StringPtr::from(node.name).unwrap();
         let default_ = ptr_value(Node::from(node.default));
-        let name_l = ptr_value(Range::from(node.name_l));
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let name_l = ptr_value(Loc::from(node.name_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Optarg { name, default_, name_l, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _optarg: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1367,8 +1367,8 @@ impl From<lib_ruby_parser::nodes::Or> for Node {
         let node_type = NodeType_NODE_OR;
         let lhs = ptr_value(Node::from(node.lhs));
         let rhs = ptr_value(Node::from(node.rhs));
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Or { lhs, rhs, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _or: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1381,8 +1381,8 @@ impl From<lib_ruby_parser::nodes::OrAsgn> for Node {
         let node_type = NodeType_NODE_OR_ASGN;
         let recv = ptr_value(Node::from(node.recv));
         let value = ptr_value(Node::from(node.value));
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = OrAsgn { recv, value, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _or_asgn: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1395,8 +1395,8 @@ impl From<lib_ruby_parser::nodes::Pair> for Node {
         let node_type = NodeType_NODE_PAIR;
         let key = ptr_value(Node::from(node.key));
         let value = ptr_value(Node::from(node.value));
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Pair { key, value, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _pair: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1408,8 +1408,8 @@ impl From<lib_ruby_parser::nodes::Pin> for Node {
     fn from(node: lib_ruby_parser::nodes::Pin) -> Self {
         let node_type = NodeType_NODE_PIN;
         let var = ptr_value(Node::from(node.var));
-        let selector_l = ptr_value(Range::from(node.selector_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let selector_l = ptr_value(Loc::from(node.selector_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Pin { var, selector_l, expression_l };
         let inner = ptr_value(InnerNode { _pin: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1421,10 +1421,10 @@ impl From<lib_ruby_parser::nodes::Postexe> for Node {
     fn from(node: lib_ruby_parser::nodes::Postexe) -> Self {
         let node_type = NodeType_NODE_POSTEXE;
         let body = if let Some(v) = node.body { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let begin_l = ptr_value(Range::from(node.begin_l));
-        let end_l = ptr_value(Range::from(node.end_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let begin_l = ptr_value(Loc::from(node.begin_l));
+        let end_l = ptr_value(Loc::from(node.end_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Postexe { body, keyword_l, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _postexe: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1436,10 +1436,10 @@ impl From<lib_ruby_parser::nodes::Preexe> for Node {
     fn from(node: lib_ruby_parser::nodes::Preexe) -> Self {
         let node_type = NodeType_NODE_PREEXE;
         let body = if let Some(v) = node.body { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let begin_l = ptr_value(Range::from(node.begin_l));
-        let end_l = ptr_value(Range::from(node.end_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let begin_l = ptr_value(Loc::from(node.begin_l));
+        let end_l = ptr_value(Loc::from(node.end_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Preexe { body, keyword_l, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _preexe: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1451,9 +1451,9 @@ impl From<lib_ruby_parser::nodes::Procarg0> for Node {
     fn from(node: lib_ruby_parser::nodes::Procarg0) -> Self {
         let node_type = NodeType_NODE_PROCARG0;
         let args = ptr_value(NodeList::from(node.args));
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Procarg0 { args, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _procarg0: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1465,8 +1465,8 @@ impl From<lib_ruby_parser::nodes::Rational> for Node {
     fn from(node: lib_ruby_parser::nodes::Rational) -> Self {
         let node_type = NodeType_NODE_RATIONAL;
         let value = StringPtr::from(node.value).unwrap();
-        let operator_l = if let Some(v) = node.operator_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = if let Some(v) = node.operator_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Rational { value, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _rational: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1477,7 +1477,7 @@ impl From<lib_ruby_parser::nodes::Rational> for Node {
 impl From<lib_ruby_parser::nodes::Redo> for Node {
     fn from(node: lib_ruby_parser::nodes::Redo) -> Self {
         let node_type = NodeType_NODE_REDO;
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Redo { expression_l };
         let inner = ptr_value(InnerNode { _redo: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1489,7 +1489,7 @@ impl From<lib_ruby_parser::nodes::RegOpt> for Node {
     fn from(node: lib_ruby_parser::nodes::RegOpt) -> Self {
         let node_type = NodeType_NODE_REG_OPT;
         let options = StringPtr::from(node.options).unwrap();
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = RegOpt { options, expression_l };
         let inner = ptr_value(InnerNode { _reg_opt: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1502,9 +1502,9 @@ impl From<lib_ruby_parser::nodes::Regexp> for Node {
         let node_type = NodeType_NODE_REGEXP;
         let parts = ptr_value(NodeList::from(node.parts));
         let options = if let Some(v) = node.options { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let begin_l = ptr_value(Range::from(node.begin_l));
-        let end_l = ptr_value(Range::from(node.end_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = ptr_value(Loc::from(node.begin_l));
+        let end_l = ptr_value(Loc::from(node.end_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Regexp { parts, options, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _regexp: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1518,8 +1518,8 @@ impl From<lib_ruby_parser::nodes::Rescue> for Node {
         let body = if let Some(v) = node.body { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
         let rescue_bodies = ptr_value(NodeList::from(node.rescue_bodies));
         let else_ = if let Some(v) = node.else_ { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let else_l = if let Some(v) = node.else_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let else_l = if let Some(v) = node.else_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Rescue { body, rescue_bodies, else_, else_l, expression_l };
         let inner = ptr_value(InnerNode { _rescue: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1533,10 +1533,10 @@ impl From<lib_ruby_parser::nodes::RescueBody> for Node {
         let exc_list = if let Some(v) = node.exc_list { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
         let exc_var = if let Some(v) = node.exc_var { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
         let body = if let Some(v) = node.body { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let assoc_l = if let Some(v) = node.assoc_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let assoc_l = if let Some(v) = node.assoc_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = RescueBody { exc_list, exc_var, body, keyword_l, assoc_l, begin_l, expression_l };
         let inner = ptr_value(InnerNode { _rescue_body: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1548,9 +1548,9 @@ impl From<lib_ruby_parser::nodes::Restarg> for Node {
     fn from(node: lib_ruby_parser::nodes::Restarg) -> Self {
         let node_type = NodeType_NODE_RESTARG;
         let name = StringPtr::from(node.name).unwrap();
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let name_l = if let Some(v) = node.name_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let name_l = if let Some(v) = node.name_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Restarg { name, operator_l, name_l, expression_l };
         let inner = ptr_value(InnerNode { _restarg: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1561,7 +1561,7 @@ impl From<lib_ruby_parser::nodes::Restarg> for Node {
 impl From<lib_ruby_parser::nodes::Retry> for Node {
     fn from(node: lib_ruby_parser::nodes::Retry) -> Self {
         let node_type = NodeType_NODE_RETRY;
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Retry { expression_l };
         let inner = ptr_value(InnerNode { _retry: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1573,8 +1573,8 @@ impl From<lib_ruby_parser::nodes::Return> for Node {
     fn from(node: lib_ruby_parser::nodes::Return) -> Self {
         let node_type = NodeType_NODE_RETURN_;
         let args = ptr_value(NodeList::from(node.args));
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Return { args, keyword_l, expression_l };
         let inner = ptr_value(InnerNode { _return_: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1587,10 +1587,10 @@ impl From<lib_ruby_parser::nodes::SClass> for Node {
         let node_type = NodeType_NODE_SCLASS;
         let expr = ptr_value(Node::from(node.expr));
         let body = if let Some(v) = node.body { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let end_l = ptr_value(Range::from(node.end_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let end_l = ptr_value(Loc::from(node.end_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = SClass { expr, body, keyword_l, operator_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _sclass: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1601,7 +1601,7 @@ impl From<lib_ruby_parser::nodes::SClass> for Node {
 impl From<lib_ruby_parser::nodes::Self_> for Node {
     fn from(node: lib_ruby_parser::nodes::Self_) -> Self {
         let node_type = NodeType_NODE_SELF_;
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Self_ { expression_l };
         let inner = ptr_value(InnerNode { _self_: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1615,12 +1615,12 @@ impl From<lib_ruby_parser::nodes::Send> for Node {
         let recv = if let Some(v) = node.recv { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
         let method_name = StringPtr::from(node.method_name).unwrap();
         let args = ptr_value(NodeList::from(node.args));
-        let dot_l = if let Some(v) = node.dot_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let selector_l = if let Some(v) = node.selector_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let operator_l = if let Some(v) = node.operator_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let dot_l = if let Some(v) = node.dot_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let selector_l = if let Some(v) = node.selector_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let operator_l = if let Some(v) = node.operator_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Send { recv, method_name, args, dot_l, selector_l, begin_l, end_l, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _send: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1632,7 +1632,7 @@ impl From<lib_ruby_parser::nodes::Shadowarg> for Node {
     fn from(node: lib_ruby_parser::nodes::Shadowarg) -> Self {
         let node_type = NodeType_NODE_SHADOWARG;
         let name = StringPtr::from(node.name).unwrap();
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Shadowarg { name, expression_l };
         let inner = ptr_value(InnerNode { _shadowarg: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1644,8 +1644,8 @@ impl From<lib_ruby_parser::nodes::Splat> for Node {
     fn from(node: lib_ruby_parser::nodes::Splat) -> Self {
         let node_type = NodeType_NODE_SPLAT;
         let value = if let Some(v) = node.value { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let operator_l = ptr_value(Range::from(node.operator_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let operator_l = ptr_value(Loc::from(node.operator_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Splat { value, operator_l, expression_l };
         let inner = ptr_value(InnerNode { _splat: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1657,9 +1657,9 @@ impl From<lib_ruby_parser::nodes::Str> for Node {
     fn from(node: lib_ruby_parser::nodes::Str) -> Self {
         let node_type = NodeType_NODE_STR_;
         let value = StringPtr::from(node.value).unwrap();
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Str { value, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _str_: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1671,10 +1671,10 @@ impl From<lib_ruby_parser::nodes::Super> for Node {
     fn from(node: lib_ruby_parser::nodes::Super) -> Self {
         let node_type = NodeType_NODE_SUPER_;
         let args = ptr_value(NodeList::from(node.args));
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Super { args, keyword_l, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _super_: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1686,9 +1686,9 @@ impl From<lib_ruby_parser::nodes::Sym> for Node {
     fn from(node: lib_ruby_parser::nodes::Sym) -> Self {
         let node_type = NodeType_NODE_SYM;
         let name = StringPtr::from(node.name).unwrap();
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Sym { name, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _sym: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1699,7 +1699,7 @@ impl From<lib_ruby_parser::nodes::Sym> for Node {
 impl From<lib_ruby_parser::nodes::True> for Node {
     fn from(node: lib_ruby_parser::nodes::True) -> Self {
         let node_type = NodeType_NODE_TRUE_;
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = True { expression_l };
         let inner = ptr_value(InnerNode { _true_: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1711,8 +1711,8 @@ impl From<lib_ruby_parser::nodes::Undef> for Node {
     fn from(node: lib_ruby_parser::nodes::Undef) -> Self {
         let node_type = NodeType_NODE_UNDEF;
         let names = ptr_value(NodeList::from(node.names));
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Undef { names, keyword_l, expression_l };
         let inner = ptr_value(InnerNode { _undef: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1724,8 +1724,8 @@ impl From<lib_ruby_parser::nodes::UnlessGuard> for Node {
     fn from(node: lib_ruby_parser::nodes::UnlessGuard) -> Self {
         let node_type = NodeType_NODE_UNLESS_GUARD;
         let cond = ptr_value(Node::from(node.cond));
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = UnlessGuard { cond, keyword_l, expression_l };
         let inner = ptr_value(InnerNode { _unless_guard: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1738,10 +1738,10 @@ impl From<lib_ruby_parser::nodes::Until> for Node {
         let node_type = NodeType_NODE_UNTIL;
         let cond = ptr_value(Node::from(node.cond));
         let body = if let Some(v) = node.body { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Until { cond, body, keyword_l, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _until: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1754,8 +1754,8 @@ impl From<lib_ruby_parser::nodes::UntilPost> for Node {
         let node_type = NodeType_NODE_UNTIL_POST;
         let cond = ptr_value(Node::from(node.cond));
         let body = ptr_value(Node::from(node.body));
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = UntilPost { cond, body, keyword_l, expression_l };
         let inner = ptr_value(InnerNode { _until_post: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1768,9 +1768,9 @@ impl From<lib_ruby_parser::nodes::When> for Node {
         let node_type = NodeType_NODE_WHEN;
         let patterns = ptr_value(NodeList::from(node.patterns));
         let body = if let Some(v) = node.body { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let begin_l = ptr_value(Range::from(node.begin_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let begin_l = ptr_value(Loc::from(node.begin_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = When { patterns, body, keyword_l, begin_l, expression_l };
         let inner = ptr_value(InnerNode { _when: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1783,10 +1783,10 @@ impl From<lib_ruby_parser::nodes::While> for Node {
         let node_type = NodeType_NODE_WHILE_;
         let cond = ptr_value(Node::from(node.cond));
         let body = if let Some(v) = node.body { ptr_value(Node::from(v)) } else { std::ptr::null_mut() };
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = While { cond, body, keyword_l, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _while_: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1799,8 +1799,8 @@ impl From<lib_ruby_parser::nodes::WhilePost> for Node {
         let node_type = NodeType_NODE_WHILE_POST;
         let cond = ptr_value(Node::from(node.cond));
         let body = ptr_value(Node::from(node.body));
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = WhilePost { cond, body, keyword_l, expression_l };
         let inner = ptr_value(InnerNode { _while_post: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1812,9 +1812,9 @@ impl From<lib_ruby_parser::nodes::XHeredoc> for Node {
     fn from(node: lib_ruby_parser::nodes::XHeredoc) -> Self {
         let node_type = NodeType_NODE_X_HEREDOC;
         let parts = ptr_value(NodeList::from(node.parts));
-        let heredoc_body_l = ptr_value(Range::from(node.heredoc_body_l));
-        let heredoc_end_l = ptr_value(Range::from(node.heredoc_end_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let heredoc_body_l = ptr_value(Loc::from(node.heredoc_body_l));
+        let heredoc_end_l = ptr_value(Loc::from(node.heredoc_end_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = XHeredoc { parts, heredoc_body_l, heredoc_end_l, expression_l };
         let inner = ptr_value(InnerNode { _x_heredoc: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1826,9 +1826,9 @@ impl From<lib_ruby_parser::nodes::Xstr> for Node {
     fn from(node: lib_ruby_parser::nodes::Xstr) -> Self {
         let node_type = NodeType_NODE_XSTR;
         let parts = ptr_value(NodeList::from(node.parts));
-        let begin_l = ptr_value(Range::from(node.begin_l));
-        let end_l = ptr_value(Range::from(node.end_l));
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let begin_l = ptr_value(Loc::from(node.begin_l));
+        let end_l = ptr_value(Loc::from(node.end_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Xstr { parts, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _xstr: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1840,10 +1840,10 @@ impl From<lib_ruby_parser::nodes::Yield> for Node {
     fn from(node: lib_ruby_parser::nodes::Yield) -> Self {
         let node_type = NodeType_NODE_YIELD_;
         let args = ptr_value(NodeList::from(node.args));
-        let keyword_l = ptr_value(Range::from(node.keyword_l));
-        let begin_l = if let Some(v) = node.begin_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let end_l = if let Some(v) = node.end_l { ptr_value(Range::from(v)) } else { std::ptr::null_mut() };
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let keyword_l = ptr_value(Loc::from(node.keyword_l));
+        let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = Yield { args, keyword_l, begin_l, end_l, expression_l };
         let inner = ptr_value(InnerNode { _yield_: ptr_value(typed_node) });
         Node { node_type, inner }
@@ -1854,7 +1854,7 @@ impl From<lib_ruby_parser::nodes::Yield> for Node {
 impl From<lib_ruby_parser::nodes::ZSuper> for Node {
     fn from(node: lib_ruby_parser::nodes::ZSuper) -> Self {
         let node_type = NodeType_NODE_ZSUPER;
-        let expression_l = ptr_value(Range::from(node.expression_l));
+        let expression_l = ptr_value(Loc::from(node.expression_l));
         let typed_node = ZSuper { expression_l };
         let inner = ptr_value(InnerNode { _zsuper: ptr_value(typed_node) });
         Node { node_type, inner }

@@ -3,11 +3,11 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include "range.h"
+#include "loc.h"
 
 struct Comment
 {
-    struct Range *location;
+    struct Loc *location;
 };
 
 struct CommentList

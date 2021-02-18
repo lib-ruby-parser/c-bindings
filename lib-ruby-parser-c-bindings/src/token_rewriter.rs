@@ -23,13 +23,14 @@ impl CTokenRerwiter {
 impl lib_ruby_parser::token_rewriter::TokenRewriter for CTokenRerwiter {
     fn rewrite_token(
         &mut self,
-        token: lib_ruby_parser::Token,
+        token: Box<lib_ruby_parser::Token>,
         input: &[u8],
     ) -> (
-        lib_ruby_parser::Token,
+        Box<lib_ruby_parser::Token>,
         lib_ruby_parser::token_rewriter::RewriteAction,
         lib_ruby_parser::token_rewriter::LexStateAction,
     ) {
+        let token = *token;
         let rewriter = self.rewriter.unwrap();
         let bindings::TokenRewriterOutput {
             token,
@@ -38,7 +39,7 @@ impl lib_ruby_parser::token_rewriter::TokenRewriter for CTokenRerwiter {
         } = unsafe { rewriter(self.state, token.into(), input.as_ptr() as *const i8) };
 
         (
-            token.into(),
+            Box::new(token.into()),
             token_rewriter_action.into(),
             lex_state_action.into(),
         )

@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include "diagnostic.h"
-#include "range.h"
+#include "loc.h"
 
 void diagnostics_free(struct Diagnostics *diagnostics)
 {
@@ -11,7 +11,7 @@ void diagnostics_free(struct Diagnostics *diagnostics)
         {
             struct Diagnostic diagnostic = diagnostics->list[i];
             free(diagnostic.message);
-            range_free(diagnostic.range);
+            loc_free(diagnostic.loc);
         }
         free(diagnostics->list);
     }

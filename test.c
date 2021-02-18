@@ -16,10 +16,10 @@ struct ParserResult *parse_code(struct ParserOptions *options, const char *code)
 #define assert_eq(actual, expected) \
     assert((actual) == (expected))
 
-#define assert_range(range, begin, end)     \
-    assert_not_null(range);                 \
-    assert_eq((range)->begin_pos, (begin)); \
-    assert_eq((range)->end_pos, (end));
+#define assert_loc(loc, expected_begin, expected_end) \
+    assert_not_null(loc);                             \
+    assert_eq((loc)->begin, (expected_begin));        \
+    assert_eq((loc)->end, (expected_end));
 
 #define assert_str_eq(actual, expected) \
     assert_not_null(actual);            \
@@ -51,23 +51,23 @@ void test_parse()
     assert_eq(arg1.node_type, NODE_INT);
     struct Int *_int = assert_not_null(arg1.inner->_int);
     assert_str_eq(_int->value, "100");
-    assert_range(_int->expression_l, 4, 7);
+    assert_loc(_int->expression_l, 4, 7);
     assert_eq(_int->operator_l, NULL);
 
     struct Node arg2 = args->list[1];
     assert_eq(arg2.node_type, NODE_STR_);
     struct Str *str = assert_not_null(arg2.inner->_str_);
     assert_str_eq(str->value, "baz");
-    assert_range(str->begin_l, 9, 10);
-    assert_range(str->end_l, 13, 14);
-    assert_range(str->expression_l, 9, 14);
+    assert_loc(str->begin_l, 9, 10);
+    assert_loc(str->end_l, 13, 14);
+    assert_loc(str->expression_l, 9, 14);
 
     assert_eq(send->dot_l, NULL);
-    assert_range(send->selector_l, 0, 3);
-    assert_range(send->begin_l, 3, 4);
-    assert_range(send->end_l, 14, 15);
+    assert_loc(send->selector_l, 0, 3);
+    assert_loc(send->begin_l, 3, 4);
+    assert_loc(send->end_l, 14, 15);
     assert_eq(send->operator_l, NULL);
-    assert_range(send->expression_l, 0, 15);
+    assert_loc(send->expression_l, 0, 15);
 
     parser_result_free(result);
 }
@@ -101,8 +101,8 @@ void test_tokens()
 #define assert_diagnostic(diagnostic, expected_level, expected_message, expected_begin, expected_end) \
     assert_eq(diagnostic.level, expected_level);                                                      \
     assert_str_eq(diagnostic.message, expected_message);                                              \
-    assert_eq(diagnostic.range->begin_pos, expected_begin);                                           \
-    assert_eq(diagnostic.range->end_pos, expected_end);
+    assert_eq(diagnostic.loc->begin, expected_begin);                                                 \
+    assert_eq(diagnostic.loc->end, expected_end);
 
 void test_diagnostics()
 {
@@ -124,8 +124,8 @@ void test_comments()
 
     assert_eq(comments->len, 2);
 
-    assert_range(comments->list[0].location, 0, 6);
-    assert_range(comments->list[1].location, 6, 12);
+    assert_loc(comments->list[0].location, 0, 6);
+    assert_loc(comments->list[1].location, 6, 12);
 
     parser_result_free(result);
 }
@@ -136,31 +136,31 @@ void test_magic_comments()
     struct MagicCommentList *magic_comments = result->magic_comments;
 
     assert_eq(magic_comments->list[0].kind, WARN_INDENT);
-    assert_range(magic_comments->list[0].key_l, 2, 13);
-    assert_range(magic_comments->list[0].value_l, 15, 19);
+    assert_loc(magic_comments->list[0].key_l, 2, 13);
+    assert_loc(magic_comments->list[0].value_l, 15, 19);
 
     assert_eq(magic_comments->list[1].kind, FROZEN_STRING_LITERAL);
-    assert_range(magic_comments->list[1].key_l, 22, 43);
-    assert_range(magic_comments->list[1].value_l, 45, 49);
+    assert_loc(magic_comments->list[1].key_l, 22, 43);
+    assert_loc(magic_comments->list[1].value_l, 45, 49);
 
     assert_eq(magic_comments->list[2].kind, ENCODING);
-    assert_range(magic_comments->list[2].key_l, 52, 60);
-    assert_range(magic_comments->list[2].value_l, 62, 67);
+    assert_loc(magic_comments->list[2].key_l, 52, 60);
+    assert_loc(magic_comments->list[2].value_l, 62, 67);
 
     parser_result_free(result);
 }
 
-void test_range()
+void test_loc()
 {
     struct ParserResult *result = parse_code(NULL, "2 + 2");
-    struct Range *expression_l = result->ast->inner->_send->expression_l;
+    struct Loc *expression_l = result->ast->inner->_send->expression_l;
 
-    assert_eq(range_size(expression_l), 5);
-    char *source = range_source(expression_l, result->input);
+    assert_eq(loc_size(expression_l), 5);
+    char *source = loc_source(expression_l, result->input);
     assert_str_eq(source, "2 + 2");
 
-    struct Range invalid = {.begin_pos = 0, .end_pos = 10000};
-    assert_eq(range_source(&invalid, result->input), NULL);
+    struct Loc invalid = {.begin = 0, .end = 10000};
+    assert_eq(loc_source(&invalid, result->input), NULL);
 
     free(source);
     parser_result_free(result);
@@ -302,7 +302,7 @@ int main()
     test(comments);
     test(magic_comments);
 
-    test(range);
+    test(loc);
 
     test(all_nodes);
 

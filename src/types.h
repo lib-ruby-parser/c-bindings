@@ -2,7 +2,6 @@
 #define LIB_RUBY_PARSER_TYPES_H
 
 #include "loc.h"
-#include "range.h"
 #include "token.h"
 #include "diagnostic.h"
 #include "comment.h"
