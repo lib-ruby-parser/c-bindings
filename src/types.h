@@ -12,5 +12,6 @@
 #include "token_rewriter.h"
 #include "parser_result.h"
 #include "node.h"
+#include "diagnostic_message.h"
 
 #endif // LIB_RUBY_PARSER_TYPES_H

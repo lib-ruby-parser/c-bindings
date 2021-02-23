@@ -10,7 +10,7 @@ void diagnostics_free(struct Diagnostics *diagnostics)
         for (uint32_t i = 0; i < diagnostics->len; i++)
         {
             struct Diagnostic diagnostic = diagnostics->list[i];
-            free(diagnostic.message);
+            diagnostic_message_free(diagnostic.message);
             loc_free(diagnostic.loc);
         }
         free(diagnostics->list);

@@ -9,19 +9,20 @@ mod gen;
 #[cfg(feature = "generate-bindings")]
 fn build_c_files() {
     let nodes = lib_ruby_parser_nodes::nodes();
+    let messages = lib_ruby_parser_nodes::messages();
 
     gen::NodeH::new(&nodes).write();
     gen::NodeC::new(&nodes).write();
+    gen::DiagnosticMessageH::new(&messages).write();
 }
 
 #[cfg(feature = "generate-bindings")]
 fn build_rs_files() {
     let nodes = lib_ruby_parser_nodes::nodes();
+    let messages = lib_ruby_parser_nodes::messages();
 
     gen::NodeGenRs::new(&nodes).write();
-    // let contents = RustFile::new(nodes).code();
-
-    // std::fs::write("src/node_gen.rs", contents).unwrap();
+    gen::DiagnosticMessageRs::new(&messages).write();
 }
 
 #[cfg(feature = "generate-bindings")]
@@ -42,11 +43,13 @@ fn build_bindings() {
         .header("../src/types.h")
         .whitelist_type("ParserOptions")
         .whitelist_type("ParserResult")
+        .whitelist_type("DiagnosticMessage")
         .rustified_enum("LexStateActionKind")
         .rustified_enum("TokenRewriteAction")
         .rustified_enum("DecodingStatus")
         .rustified_enum("MagicCommentKind")
         .rustified_enum("ErrorLevel")
+        .rustified_enum("DiagnosticMessageType")
         .layout_tests(false)
         .generate()
         .expect("Unable to generate bindings");

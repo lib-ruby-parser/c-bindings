@@ -15,6 +15,8 @@ pub(crate) use string_ptr::StringPtr;
 mod comment;
 mod custom_decoder;
 mod diagnostic;
+mod diagnostic_message;
+pub mod diagnostic_payload;
 mod list;
 mod loc;
 mod magic_comment;
@@ -45,7 +47,58 @@ pub fn ptr_value<T>(value: T) -> *mut T {
 }
 
 #[no_mangle]
+pub extern "C" fn input_free(input: *mut lib_ruby_parser::source::Input) {
+    drop(unsafe { Box::from_raw(input) })
+}
+
+#[no_mangle]
 pub extern "C" fn token_name(id: i32) -> *mut i8 {
     let token_name = lib_ruby_parser::token_name(id).to_owned();
     StringPtr::from(token_name).unwrap()
+}
+
+#[no_mangle]
+pub extern "C" fn diagnostic_render(
+    diagnostic: bindings::Diagnostic,
+    input: *mut lib_ruby_parser::source::Input,
+) -> *mut i8 {
+    if let Some(input) = unsafe { input.as_ref() } {
+        let rendered = lib_ruby_parser::Diagnostic::from(diagnostic).render(input);
+        StringPtr::from(rendered).unwrap()
+    } else {
+        std::ptr::null_mut()
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn diagnostic_render_message(diagnostic: bindings::Diagnostic) -> *mut i8 {
+    let rendered = lib_ruby_parser::Diagnostic::from(diagnostic).render_message();
+
+    StringPtr::from(rendered).unwrap()
+}
+
+#[no_mangle]
+pub extern "C" fn loc_source(
+    loc: *mut bindings::Loc,
+    input: *mut lib_ruby_parser::source::Input,
+) -> *mut i8 {
+    let loc = if let Some(loc) = unsafe { loc.as_ref() } {
+        loc
+    } else {
+        return std::ptr::null_mut();
+    };
+    let loc = lib_ruby_parser::Loc::from(loc.to_owned());
+
+    let input = if let Some(input) = unsafe { input.as_ref() } {
+        input
+    } else {
+        return std::ptr::null_mut();
+    };
+
+    StringPtr::from(loc.source(input)).unwrap()
+}
+
+#[no_mangle]
+pub extern "C" fn diagnostic_message_free(message: bindings::DiagnosticMessage) {
+    diagnostic_message::inner_diagnostic_message_free(message);
 }

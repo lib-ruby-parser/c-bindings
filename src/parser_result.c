@@ -16,6 +16,6 @@ void parser_result_free(struct ParserResult *parser_result)
     diagnostics_free(parser_result->diagnostics);
     comments_free(parser_result->comments);
     magic_comments_free(parser_result->magic_comments);
-    free(parser_result->input);
+    input_free(parser_result->input);
     free(parser_result);
 }

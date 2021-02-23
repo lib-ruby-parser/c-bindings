@@ -99,10 +99,14 @@ void test_tokens()
 }
 
 #define assert_diagnostic(diagnostic, expected_level, expected_message, expected_begin, expected_end) \
-    assert_eq(diagnostic.level, expected_level);                                                      \
-    assert_str_eq(diagnostic.message, expected_message);                                              \
-    assert_eq(diagnostic.loc->begin, expected_begin);                                                 \
-    assert_eq(diagnostic.loc->end, expected_end);
+    {                                                                                                 \
+        assert_eq(diagnostic.level, expected_level);                                                  \
+        char *message = diagnostic_render_message(diagnostic);                                        \
+        assert_str_eq(message, expected_message);                                                     \
+        free(message);                                                                                \
+        assert_eq(diagnostic.loc->begin, expected_begin);                                             \
+        assert_eq(diagnostic.loc->end, expected_end);                                                 \
+    }
 
 void test_diagnostics()
 {
@@ -239,7 +243,9 @@ void test_custom_decoder_err()
 
     assert_eq(result->ast, NULL);
     assert_eq(result->diagnostics->len, 1);
-    assert_str_eq("encoding error: DecodingError(\"only US-ASCII is supported\")", result->diagnostics->list[0].message);
+    char *message = diagnostic_render_message(result->diagnostics->list[0]);
+    assert_str_eq("encoding error: DecodingError(\"only US-ASCII is supported\")", message);
+    free(message);
 
     parser_result_free(result);
 }

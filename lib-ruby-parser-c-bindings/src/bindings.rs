@@ -23,15 +23,256 @@ pub struct TokenList {
 }
 #[repr(u32)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+pub enum DiagnosticMessageType {
+    FRACTION_AFTER_NUMERIC = 0,
+    NO_DIGITS_AFTER_DOT = 1,
+    UNKNOWN_TYPE_OF_PERCENT_STRING = 2,
+    NUMERIC_LITERAL_WITHOUT_DIGITS = 3,
+    UNTERMINATED_LIST = 4,
+    UNTERMINATED_REGEXP = 5,
+    UNTERMINATED_STRING = 6,
+    UNTERMINATED_QUOTED_STRING = 7,
+    INVALID_UNICODE_ESCAPE = 8,
+    TOO_LARGE_UNICODE_CODEPOINT = 9,
+    INVALID_UNICODE_CODEPOINT = 10,
+    MULTIPLE_CODEPOINT_AT_SINGLE_CHAR = 11,
+    INVALID_ESCAPE_CHARACTER = 12,
+    INVALID_HEX_ESCAPE = 13,
+    UNTERMINATED_HEREDOC = 14,
+    UNTERMINATED_HEREDOC_ID = 15,
+    SLASH_R_AT_MIDDLE_OF_LINE = 16,
+    D_STAR_INTERPRETED_AS_ARG_PREFIX = 17,
+    STAR_INTERPRETED_AS_ARG_PREFIX = 18,
+    AMPERSAND_INTERPRETED_AS_ARG_PREFIX = 19,
+    TRIPLE_DOT_AT_EOL = 20,
+    PARENTHESES_ITERPRETED_AS_ARGLIST = 21,
+    AMBIGUOUS_FIRST_ARGUMENT = 22,
+    AMBIGUOUS_OPERATOR = 23,
+    INVALID_CHARACTER_SYNTAX = 24,
+    INVALID_OCTAL_DIGIT = 25,
+    TRAILING_CHAR_IN_NUMBER = 26,
+    EMBEDDED_DOCUMENT_MEETS_EOF = 27,
+    INVALID_CHAR = 28,
+    INCOMPLETE_CHARACTER_SYNTAX = 29,
+    GVAR_WITHOUT_ID = 30,
+    INVALID_GVAR_NAME = 31,
+    IVAR_WITHOUT_ID = 32,
+    INVALID_IVAR_NAME = 33,
+    CVAR_WITHOUT_ID = 34,
+    INVALID_CVAR_NAME = 35,
+    UNKNOWN_REGEX_OPTIONS = 36,
+    UNTERMINATED_UNICODE_ESCAPE = 37,
+    ENCODING_ERROR = 38,
+    AMBIGUOUS_TERNARY_OPERATOR = 39,
+    AMBIGUOUS_REGEXP = 40,
+    ELSE_WITHOUT_RESCUE = 41,
+    BEGIN_NOT_AT_TOP_LEVEL = 42,
+    ALIAS_NTH_REF = 43,
+    CSEND_INSIDE_MASGN = 44,
+    CLASS_OR_MODULE_NAME_MUST_BE_CONSTANT = 45,
+    ENDLESS_SETTER_DEFINITION = 46,
+    UNEXPECTED_TOKEN = 47,
+    CLASS_DEFINITION_IN_METHOD_BODY = 48,
+    MODULE_DEFINITION_IN_METHOD_BODY = 49,
+    INVALID_RETURN_IN_CLASS_OR_MODULE_BODY = 50,
+    CONST_ARGUMENT = 51,
+    IVAR_ARGUMENT = 52,
+    GVAR_ARGUMENT = 53,
+    CVAR_ARGUMENT = 54,
+    NO_SUCH_LOCAL_VARIABLE = 55,
+    ORDINARY_PARAM_DEFINED = 56,
+    NUMPARAM_USED = 57,
+    TOK_AT_EOL_WITHOUT_EXPRESSION = 58,
+    END_IN_METHOD = 59,
+    COMPARISON_AFTER_COMPARISON = 60,
+    CIRCULAR_ARGUMENT_REFERENCE = 61,
+    DYNAMIC_CONSTANT_ASSIGNMENT = 62,
+    CANT_ASSIGN_TO_SELF = 63,
+    CANT_ASSIGN_TO_NIL = 64,
+    CANT_ASSIGN_TO_TRUE = 65,
+    CANT_ASSIGN_TO_FALSE = 66,
+    CANT_ASSIGN_TO_FILE = 67,
+    CANT_ASSIGN_TO_LINE = 68,
+    CANT_ASSIGN_TO_ENCODING = 69,
+    CANT_ASSIGN_TO_NUMPARAM = 70,
+    CANT_SET_VARIABLE = 71,
+    BLOCK_GIVEN_TO_YIELD = 72,
+    BLOCK_AND_BLOCK_ARG_GIVEN = 73,
+    SYMBOL_LITERAL_WITH_INTERPOLATION = 74,
+    RESERVED_FOR_NUMPARAM = 75,
+    KEY_MUST_BE_VALID_AS_LOCAL_VARIABLE = 76,
+    DUPLICATE_VARIABLE_NAME = 77,
+    DUPLICATE_KEY_NAME = 78,
+    SINGLETON_LITERAL = 79,
+    NTH_REF_IS_TOO_BIG = 80,
+    DUPLICATED_ARGUMENT_NAME = 81,
+    REGEX_ERROR = 82,
+    INVALID_SYMBOL = 83,
+    VOID_VALUE_EXPRESSION = 84,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct UnterminatedHeredoc {
+    pub heredoc_id: *mut ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct AmbiguousFirstArgument {
+    pub operator_: ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct AmbiguousOperator {
+    pub operator_: *mut ::std::os::raw::c_char,
+    pub interpreted_as: *mut ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct InvalidCharacterSyntax {
+    pub suggestion: *mut ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct TrailingCharInNumber {
+    pub c: ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct InvalidChar {
+    pub c: ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct InvalidGvarName {
+    pub c: ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct InvalidIvarName {
+    pub c: ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct InvalidCvarName {
+    pub c: ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct UnknownRegexOptions {
+    pub options: *mut ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct EncodingError {
+    pub error: *mut ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct AmbiguousTernaryOperator {
+    pub condition: *mut ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct UnexpectedToken {
+    pub token_name: *mut ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct NoSuchLocalVariable {
+    pub var_name: *mut ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct TokAtEolWithoutExpression {
+    pub token_name: *mut ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct ComparisonAfterComparison {
+    pub comparison: *mut ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct CircularArgumentReference {
+    pub arg_name: *mut ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct CantAssignToNumparam {
+    pub numparam: *mut ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct CantSetVariable {
+    pub var_name: *mut ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct ReservedForNumparam {
+    pub numparam: *mut ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct NthRefIsTooBig {
+    pub nth_ref: *mut ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct RegexError {
+    pub error: *mut ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct InvalidSymbol {
+    pub symbol: *mut ::std::os::raw::c_char,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union DiagnosticMessageData {
+    pub unterminated_heredoc: UnterminatedHeredoc,
+    pub ambiguous_first_argument: AmbiguousFirstArgument,
+    pub ambiguous_operator: AmbiguousOperator,
+    pub invalid_character_syntax: InvalidCharacterSyntax,
+    pub trailing_char_in_number: TrailingCharInNumber,
+    pub invalid_char: InvalidChar,
+    pub invalid_gvar_name: InvalidGvarName,
+    pub invalid_ivar_name: InvalidIvarName,
+    pub invalid_cvar_name: InvalidCvarName,
+    pub unknown_regex_options: UnknownRegexOptions,
+    pub encoding_error: EncodingError,
+    pub ambiguous_ternary_operator: AmbiguousTernaryOperator,
+    pub unexpected_token: UnexpectedToken,
+    pub no_such_local_variable: NoSuchLocalVariable,
+    pub tok_at_eol_without_expression: TokAtEolWithoutExpression,
+    pub comparison_after_comparison: ComparisonAfterComparison,
+    pub circular_argument_reference: CircularArgumentReference,
+    pub cant_assign_to_numparam: CantAssignToNumparam,
+    pub cant_set_variable: CantSetVariable,
+    pub reserved_for_numparam: ReservedForNumparam,
+    pub nth_ref_is_too_big: NthRefIsTooBig,
+    pub regex_error: RegexError,
+    pub invalid_symbol: InvalidSymbol,
+    pub other: u32,
+    _bindgen_union_align: [u64; 2usize],
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct DiagnosticMessage {
+    pub type_: DiagnosticMessageType,
+    pub data: DiagnosticMessageData,
+}
+pub type Input = ::std::os::raw::c_void;
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum ErrorLevel {
     ERROR_LEVEL_WARNING = 0,
     ERROR_LEVEL_ERROR = 1,
 }
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Copy, Clone)]
 pub struct Diagnostic {
     pub level: ErrorLevel,
-    pub message: *mut ::std::os::raw::c_char,
+    pub message: DiagnosticMessage,
     pub loc: *mut Loc,
 }
 #[repr(C)]
@@ -194,8 +435,7 @@ pub struct ParserResult {
     pub diagnostics: *mut Diagnostics,
     pub comments: *mut CommentList,
     pub magic_comments: *mut MagicCommentList,
-    pub input: *mut ::std::os::raw::c_char,
-    pub input_len: u32,
+    pub input: *mut Input,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]

@@ -123,8 +123,10 @@ LIB_RUBY_PARSER_H = target/lib-ruby-parser.h
 $(LIB_RUBY_PARSER_H):
 	cat src/node.h > $(LIB_RUBY_PARSER_TMP_H)
 
+	cat src/input.h >> $(LIB_RUBY_PARSER_TMP_H)
 	cat src/loc.h >> $(LIB_RUBY_PARSER_TMP_H)
 	cat src/token.h >> $(LIB_RUBY_PARSER_TMP_H)
+	cat src/diagnostic_message.h >> $(LIB_RUBY_PARSER_TMP_H)
 	cat src/diagnostic.h >> $(LIB_RUBY_PARSER_TMP_H)
 	cat src/comment.h >> $(LIB_RUBY_PARSER_TMP_H)
 	cat src/magic_comment.h >> $(LIB_RUBY_PARSER_TMP_H)

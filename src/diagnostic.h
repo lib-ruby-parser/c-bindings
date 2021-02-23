@@ -4,6 +4,8 @@
 #include <stddef.h>
 #include <stdint.h>
 #include "loc.h"
+#include "diagnostic_message.h"
+#include "input.h"
 
 enum ErrorLevel
 {
@@ -14,7 +16,7 @@ enum ErrorLevel
 struct Diagnostic
 {
     enum ErrorLevel level;
-    char *message;
+    struct DiagnosticMessage message;
     struct Loc *loc;
 };
 
@@ -25,5 +27,7 @@ struct Diagnostics
 };
 
 void diagnostics_free(struct Diagnostics *diagnostics);
+char *diagnostic_render(struct Diagnostic diagnostic, Input *input);
+char *diagnostic_render_message(struct Diagnostic diagnostic);
 
 #endif // LIB_RUBY_PARSER_DIAGNOSTIC_H

@@ -21,5 +21,6 @@ struct TokenList
 };
 
 void tokens_free(struct TokenList *tokens);
+char *token_name(int token_type);
 
 #endif // LIB_RUBY_PARSER_TOKEN_H
