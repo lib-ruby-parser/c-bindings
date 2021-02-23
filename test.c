@@ -139,15 +139,15 @@ void test_magic_comments()
     struct ParserResult *result = parse_code(NULL, "# warn-indent: true\n# frozen-string-literal: true\n# encoding: utf-8\n");
     struct MagicCommentList *magic_comments = result->magic_comments;
 
-    assert_eq(magic_comments->list[0].kind, WARN_INDENT);
+    assert_eq(magic_comments->list[0].kind, MAGIC_COMMENT_KIND_WARN_INDENT);
     assert_loc(magic_comments->list[0].key_l, 2, 13);
     assert_loc(magic_comments->list[0].value_l, 15, 19);
 
-    assert_eq(magic_comments->list[1].kind, FROZEN_STRING_LITERAL);
+    assert_eq(magic_comments->list[1].kind, MAGIC_COMMENT_KIND_FROZEN_STRING_LITERAL);
     assert_loc(magic_comments->list[1].key_l, 22, 43);
     assert_loc(magic_comments->list[1].value_l, 45, 49);
 
-    assert_eq(magic_comments->list[2].kind, ENCODING);
+    assert_eq(magic_comments->list[2].kind, MAGIC_COMMENT_KIND_ENCODING);
     assert_loc(magic_comments->list[2].key_l, 52, 60);
     assert_loc(magic_comments->list[2].value_l, 62, 67);
 

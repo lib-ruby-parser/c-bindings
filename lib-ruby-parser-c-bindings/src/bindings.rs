@@ -295,10 +295,10 @@ pub struct CommentList {
 #[repr(u32)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum MagicCommentKind {
-    ENCODING = 0,
-    FROZEN_STRING_LITERAL = 1,
-    WARN_INDENT = 2,
-    SHAREABLE_CONSTANT_VALUE = 3,
+    MAGIC_COMMENT_KIND_ENCODING = 0,
+    MAGIC_COMMENT_KIND_FROZEN_STRING_LITERAL = 1,
+    MAGIC_COMMENT_KIND_WARN_INDENT = 2,
+    MAGIC_COMMENT_KIND_SHAREABLE_CONSTANT_VALUE = 3,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]

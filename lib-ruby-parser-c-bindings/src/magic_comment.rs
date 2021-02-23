@@ -10,16 +10,16 @@ impl From<lib_ruby_parser::source::MagicComment> for bindings::MagicComment {
         } = magic_comment;
         let kind = match kind {
             lib_ruby_parser::source::MagicCommentKind::Encoding => {
-                bindings::MagicCommentKind::ENCODING
+                bindings::MagicCommentKind::MAGIC_COMMENT_KIND_ENCODING
             }
             lib_ruby_parser::source::MagicCommentKind::FrozenStringLiteral => {
-                bindings::MagicCommentKind::FROZEN_STRING_LITERAL
+                bindings::MagicCommentKind::MAGIC_COMMENT_KIND_FROZEN_STRING_LITERAL
             }
             lib_ruby_parser::source::MagicCommentKind::WarnIndent => {
-                bindings::MagicCommentKind::WARN_INDENT
+                bindings::MagicCommentKind::MAGIC_COMMENT_KIND_WARN_INDENT
             }
             lib_ruby_parser::source::MagicCommentKind::ShareableContstantValue => {
-                bindings::MagicCommentKind::SHAREABLE_CONSTANT_VALUE
+                bindings::MagicCommentKind::MAGIC_COMMENT_KIND_SHAREABLE_CONSTANT_VALUE
             }
         };
         Self {
