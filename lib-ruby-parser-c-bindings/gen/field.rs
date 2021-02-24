@@ -55,7 +55,17 @@ impl<'a> Field<'a> {
         }
     }
 
-    pub fn declaration(&self) -> String {
-        format!("{}{};", self.c_type(), self.c_name())
+    pub fn declaration(&self) -> Vec<String> {
+        let mut lines = self.comment();
+        lines.push(format!("{}{};", self.c_type(), self.c_name()));
+        lines
+    }
+
+    fn comment(&self) -> Vec<String> {
+        self.field
+            .comment
+            .lines()
+            .map(|l| format!("// {}", l).trim_end().to_owned())
+            .collect()
     }
 }

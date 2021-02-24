@@ -92,23 +92,34 @@ impl<'a> Node<'a> {
     fn code(&self) -> String {
         format!(
             "
+{comment}
 struct {struct_name}
 {{
     {fields_declaration}
 }};
 
 void {name_lower}_node_free(struct {struct_name} *node);",
+            comment = self.comment(),
             struct_name = self.node.struct_name,
             fields_declaration = self.fields().join("\n    "),
             name_lower = self.node.filename.to_lowercase(),
         )
     }
 
+    fn comment(&self) -> String {
+        self.node
+            .comment
+            .lines()
+            .map(|l| format!("// {}", l).trim_end().to_owned())
+            .collect::<Vec<_>>()
+            .join("\n")
+    }
+
     fn fields(&self) -> Vec<String> {
         self.node
             .fields
             .iter()
-            .map(|f| Field::new(f).declaration())
+            .flat_map(|f| Field::new(f).declaration())
             .collect()
     }
 }
