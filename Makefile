@@ -228,7 +228,7 @@ test-valgrind: $(TARGET_DIR)/test-runner
 	valgrind --leak-check=full --error-exitcode=1 $(TARGET_DIR)/test-runner
 
 clean:
-	rm -rf $(TARGET_DIR)
+	rm -rf target
 	mkdir -p $(TARGET_DIR)
 	rm -f $(LIB_RUBY_PARSER_H)
 
@@ -251,3 +251,11 @@ build-static: $(STATIC_RELEASE_LIB) $(TEST_O)
 	$(CC) $(TEST_O) $(STATIC_RELEASE_LIB) $(CCFLAGS) $(CCEXECFLAGS) $(CC_SET_OUT_FILE)$(TARGET_DIR)/static-test-runner
 	$(LIST_DEPS) $(TARGET_DIR)/static-test-runner
 	$(TARGET_DIR)/static-test-runner
+
+# fuzzer
+
+target/fuzzer: $(LIB_RUBY_PARSER_STATIC) $(LIB_RUBY_PARSER_H) fuzzer/parse.c
+	$(CC) fuzzer/parse.c -fsanitize=fuzzer,address $(LIB_RUBY_PARSER_STATIC) $(CCFLAGS) $(CCEXECFLAGS) $(CC_SET_OUT_FILE)target/fuzzer
+
+fuzz: target/fuzzer
+	./target/fuzzer -max_len=50 -timeout=10
