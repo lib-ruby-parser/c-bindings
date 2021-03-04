@@ -432,7 +432,7 @@ impl From<lib_ruby_parser::nodes::CSend> for Node {
         let method_name = StringPtr::from(node.method_name).unwrap();
         let args = ptr_value(NodeList::from(node.args));
         let dot_l = ptr_value(Loc::from(node.dot_l));
-        let selector_l = ptr_value(Loc::from(node.selector_l));
+        let selector_l = if let Some(v) = node.selector_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
         let begin_l = if let Some(v) = node.begin_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
         let end_l = if let Some(v) = node.end_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };
         let operator_l = if let Some(v) = node.operator_l { ptr_value(Loc::from(v)) } else { std::ptr::null_mut() };

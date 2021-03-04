@@ -45,7 +45,9 @@ impl From<lib_ruby_parser::StringValue> for StringPtr {
 }
 
 pub fn string_to_ptr(s: String) -> *mut i8 {
-    let mut bytes = std::ffi::CString::new(s).unwrap().into_bytes_with_nul();
+    let mut bytes = std::ffi::CString::new(s)
+        .map(|s| s.into_bytes_with_nul())
+        .unwrap_or_else(|_| vec![0]);
     let ptr = bytes.as_mut_ptr();
     std::mem::forget(bytes);
     ptr as *mut i8

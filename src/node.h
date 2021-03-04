@@ -791,6 +791,8 @@ struct CSend
     // foo&.bar(42)
     //      ~~~
     // ```
+    //
+    // `None` in a very special case when method call is implicit (i.e. `foo&.()`)
     struct Loc *selector_l;
     // Location of the open parenthesis
     //

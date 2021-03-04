@@ -316,6 +316,14 @@ impl From<lib_ruby_parser::DiagnosticMessage> for bindings::DiagnosticMessage {
                     },
                 }
             },
+            lib_ruby_parser::DiagnosticMessage::InvalidMultibyteChar {  } => {
+                bindings::DiagnosticMessage {
+                    type_: bindings::DiagnosticMessageType::INVALID_MULTIBYTE_CHAR,
+                    data: bindings::DiagnosticMessageData {
+                        other: 42
+                    },
+                }
+            },
             lib_ruby_parser::DiagnosticMessage::AmbiguousTernaryOperator { condition } => {
                 bindings::DiagnosticMessage {
                     type_: bindings::DiagnosticMessageType::AMBIGUOUS_TERNARY_OPERATOR,
@@ -847,6 +855,10 @@ impl From<bindings::DiagnosticMessage> for lib_ruby_parser::DiagnosticMessage {
             bindings::DiagnosticMessageType::ENCODING_ERROR => {
                 let error = unsafe { message.data.encoding_error }.error;
                 lib_ruby_parser::DiagnosticMessage::EncodingError { error: DiagnosticPayload::new(error).unwrap() }
+            },
+            bindings::DiagnosticMessageType::INVALID_MULTIBYTE_CHAR => {
+                
+                lib_ruby_parser::DiagnosticMessage::InvalidMultibyteChar {  }
             },
             bindings::DiagnosticMessageType::AMBIGUOUS_TERNARY_OPERATOR => {
                 let condition = unsafe { message.data.ambiguous_ternary_operator }.condition;
