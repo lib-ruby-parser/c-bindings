@@ -123,6 +123,14 @@ add_executable(test-runner "test.c")
 add_dependencies(test-runner header)
 target_link_libraries(test-runner lib_ruby_parser_full)
 
+# fuzzer
+
+add_executable(fuzzer "fuzzer/parse.c")
+set_target_properties(fuzzer PROPERTIES COMPILE_FLAGS "-fsanitize=fuzzer,address")
+set_target_properties(fuzzer PROPERTIES LINK_FLAGS "-fsanitize=fuzzer,address")
+add_dependencies(fuzzer header)
+target_link_libraries(fuzzer lib_ruby_parser_full)
+
 # print env
 
 function(printVar)

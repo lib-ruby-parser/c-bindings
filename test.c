@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <assert.h>
-#include "target/lib-ruby-parser.h"
+#include "build/lib-ruby-parser.h"
 
 struct ParserResult *parse_code(struct ParserOptions *options, const char *code)
 {

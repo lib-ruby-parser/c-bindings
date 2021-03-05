@@ -8,3 +8,4 @@ Testing
 *.h
 Makefile
 test-runner
+fuzzer

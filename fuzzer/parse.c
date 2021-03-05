@@ -1,4 +1,4 @@
-#include "../target/lib-ruby-parser.h"
+#include "../build/lib-ruby-parser.h"
 
 int LLVMFuzzerTestOneInput(const char *Data, size_t Size)
 {
