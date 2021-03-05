@@ -176,7 +176,7 @@ void test_all_nodes()
     int fsize = 0;
     FILE *fp;
 
-    fp = fopen("all_nodes.rb", "r");
+    fp = fopen("../all_nodes.rb", "r");
 
     assert_not_null(fp);
 

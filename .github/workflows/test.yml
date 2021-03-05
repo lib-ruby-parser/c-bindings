@@ -11,47 +11,51 @@ env:
 
 jobs:
   test:
-    name: run tests
+    name: ${{ matrix.build.name }}
     runs-on: ${{ matrix.build.os }}
     env:
-      CARGO_BUILD_TARGET: ${{ matrix.build.target }}
-      CC: ${{ matrix.build.cc }}
-      CXX: ${{ matrix.build.cxx }}
-      LD: ${{ matrix.build.ld }}
+      # CC: ${{ matrix.build.cc }}
+      # CXX: ${{ matrix.build.cxx }}
+      # LD: ${{ matrix.build.ld }}
       CARGOFLAGS: ${{ matrix.build.cargoflags }}
     strategy:
       fail-fast: false
       matrix:
         build:
           - os: ubuntu-latest
-            target: x86_64-unknown-linux-gnu
-            cc: clang-9
-            cxx: clang++-9
-            ld: ld.lld-9
+            name: ASAN on ubuntu
+            run: |
+              cd build
+              CC=clang CCFLAGS="-fsanitize=address" cmake ..
+              make test-runner
+              ./test-runner
+
+          - os: ubuntu-latest
+            name: Valgrind on ubuntu
             cargoflags: --features="generate-bindings,onig"
             run: |
-              make build-static test-valgrind
-              make clean
-              CCFLAGS="-fsanitize=address" make test
+              cd build
+              CC=clang cmake ..
+              make test-runner
+              valgrind ./test-runner
 
           - os: macos-latest
-            target: x86_64-apple-darwin
-            cc: clang
-            cxx: clang++
-            ld: ld
+            name: Run tests on MacOS
             cargoflags: --features="generate-bindings,onig"
             run: |
-              make build-static
-              make clean
-              CCFLAGS="-fsanitize=address" make test
+              cd build
+              CC=clang cmake ..
+              make test-runner
+              ./test-runner
 
           - os: windows-latest
-            target: x86_64-pc-windows-msvc
-            cc: cl.exe
-            cxx: cl.exe
-            ld: link.exe
+            name: Run tests on Windows
             cargoflags: ""
-            run: make build-static
+            run: |
+              cd build
+              CC=clang cmake ..
+              make test-runner
+              ./test-runner
 
     steps:
       - name: setup msvc on windows
@@ -83,6 +87,4 @@ jobs:
 
       - name: run tests
         shell: bash
-        run: |
-          make setup
-          ${{ matrix.build.run }}
+        run: ${{ matrix.build.run }}

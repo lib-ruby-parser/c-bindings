@@ -1,0 +1,10 @@
+CMakeFiles
+Testing
+*.cmake
+*.txt
+*.o
+*.a
+*.lib
+*.h
+Makefile
+test-runner

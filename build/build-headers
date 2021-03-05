@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+TMP=lib-ruby-parser-tmp.h
+OUT=lib-ruby-parser.h
+
+rm -f $TMP $OUT
+touch $TMP
+
+cat ../src/node.h >> $TMP
+
+cat ../src/input.h >> $TMP
+cat ../src/loc.h >> $TMP
+cat ../src/token.h >> $TMP
+cat ../src/diagnostic_message.h >> $TMP
+cat ../src/diagnostic.h >> $TMP
+cat ../src/comment.h >> $TMP
+cat ../src/magic_comment.h >> $TMP
+cat ../src/node_list.h >> $TMP
+cat ../src/custom_decoder.h >> $TMP
+cat ../src/token_rewriter.h >> $TMP
+cat ../src/parser_options.h >> $TMP
+cat ../src/parser_result.h >> $TMP
+
+echo "#ifndef LIB_RUBY_PARSER_H" > $OUT
+echo "#define LIB_RUBY_PARSER_H" >> $OUT
+
+cat $TMP | \
+    grep -v "#include \"" | \
+    grep -v "#ifndef LIB_RUBY_PARSER_" | \
+    grep -v "#define LIB_RUBY_PARSER_" | \
+    grep -v "#endif // LIB_RUBY_PARSER_" \
+    >> $OUT
+echo "#endif // LIB_RUBY_PARSER_H" >> $OUT
+rm $TMP
