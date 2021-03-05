@@ -116,7 +116,7 @@ target_link_libraries(test-runner lib_ruby_parser_full)
 # fuzzer
 
 if(UNIX)
-    add_executable(fuzzer "fuzzer/parse.c")
+    add_executable(fuzzer EXCLUDE_FROM_ALL "fuzzer/parse.c")
     set(USE_FUZZER "-fsanitize=fuzzer,address")
     set_target_properties(fuzzer PROPERTIES COMPILE_FLAGS ${USE_FUZZER} LINK_FLAGS ${USE_FUZZER})
     add_dependencies(fuzzer header)
