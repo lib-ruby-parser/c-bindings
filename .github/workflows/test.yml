@@ -28,7 +28,7 @@ jobs:
               mkdir -p build && cd build
               CC=clang CCFLAGS="-fsanitize=address" cmake ..
               cmake --build .
-              ./test-runner
+              ./tests/test-runner
 
           - os: ubuntu-latest
             name: Valgrind on ubuntu
@@ -37,7 +37,7 @@ jobs:
               mkdir -p build && cd build
               CC=clang cmake ..
               cmake --build .
-              valgrind ./test-runner
+              valgrind ./tests/test-runner
 
           - os: macos-latest
             name: Run tests on MacOS
@@ -46,7 +46,7 @@ jobs:
               mkdir -p build && cd build
               CC=clang cmake ..
               cmake --build .
-              ./test-runner
+              ./tests/test-runner
 
           - os: windows-latest
             name: Run tests on Windows
@@ -55,7 +55,7 @@ jobs:
               mkdir -p build && cd build
               CC=clang cmake ..
               cmake --build .
-              ./test-runner
+              ./tests/test-runner
 
     steps:
       - name: setup msvc on windows
