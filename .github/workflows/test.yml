@@ -25,7 +25,7 @@ jobs:
           - os: ubuntu-latest
             name: ASAN on ubuntu
             run: |
-              cd build
+              mkdir -p build && cd build
               CC=clang CCFLAGS="-fsanitize=address" cmake ..
               cmake --build .
               ./test-runner
@@ -34,7 +34,7 @@ jobs:
             name: Valgrind on ubuntu
             cargoflags: --features="generate-bindings,onig"
             run: |
-              cd build
+              mkdir -p build && cd build
               CC=clang cmake ..
               cmake --build .
               valgrind ./test-runner
@@ -43,7 +43,7 @@ jobs:
             name: Run tests on MacOS
             cargoflags: --features="generate-bindings,onig"
             run: |
-              cd build
+              mkdir -p build && cd build
               CC=clang cmake ..
               cmake --build .
               ./test-runner
@@ -52,7 +52,7 @@ jobs:
             name: Run tests on Windows
             cargoflags: ""
             run: |
-              cd build
+              mkdir -p build && cd build
               CC=clang cmake ..
               cmake --build .
               ./test-runner
