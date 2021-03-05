@@ -27,7 +27,7 @@ jobs:
             run: |
               cd build
               CC=clang CCFLAGS="-fsanitize=address" cmake ..
-              make test-runner
+              cmake --build .
               ./test-runner
 
           - os: ubuntu-latest
@@ -36,7 +36,7 @@ jobs:
             run: |
               cd build
               CC=clang cmake ..
-              make test-runner
+              cmake --build .
               valgrind ./test-runner
 
           - os: macos-latest
@@ -45,7 +45,7 @@ jobs:
             run: |
               cd build
               CC=clang cmake ..
-              make test-runner
+              cmake --build .
               ./test-runner
 
           - os: windows-latest
@@ -54,7 +54,7 @@ jobs:
             run: |
               cd build
               CC=clang cmake ..
-              make test-runner
+              cmake --build .
               ./test-runner
 
     steps:
