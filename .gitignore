@@ -1,3 +1,3 @@
 lib-ruby-parser-c-bindings/target
-target
 lib-ruby-parser-c-bindings/Cargo.lock
+build/
