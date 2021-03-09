@@ -24,16 +24,23 @@ elseif(UNIX)
 else()
     message(ERROR "Unable to recognize platform")
 endif()
-add_custom_command(
-    OUTPUT ${LIB_RUBY_PARSER_FULL}
-    COMMAND
-        ${CMAKE_COMMAND} -E env
-        "CLIB=$<TARGET_FILE:c_obj_files>"
-        "RUSTLIB=$<TARGET_FILE:lib_ruby_parser_rust_static>"
-        "OUTFILE=${LIB_RUBY_PARSER_FULL}"
-        bash ${CMAKE_SOURCE_DIR}/scripts/merge-static-libs-${PLATFORM}.sh
-    DEPENDS ${RUST_SRC_FILES}
-    COMMENT "merging static libs")
+if(WIN32)
+    add_custom_command(
+        OUTPUT ${LIB_RUBY_PARSER_FULL}
+        COMMAND lib.exe $<TARGET_FILE:lib_ruby_parser_rust_static> $<TARGET_FILE:c_obj_files> /OUT:${LIB_RUBY_PARSER_FULL}
+        COMMENT "merging static libs")
+else()
+    add_custom_command(
+        OUTPUT ${LIB_RUBY_PARSER_FULL}
+        COMMAND
+            ${CMAKE_COMMAND} -E env
+            "CLIB=$<TARGET_FILE:c_obj_files>"
+            "RUSTLIB=$<TARGET_FILE:lib_ruby_parser_rust_static>"
+            "OUTFILE=${LIB_RUBY_PARSER_FULL}"
+            bash ${CMAKE_SOURCE_DIR}/scripts/merge-static-libs-${PLATFORM}.sh
+        DEPENDS ${RUST_SRC_FILES}
+        COMMENT "merging static libs")
+endif()
 add_custom_target(lib_ruby_parser_full_target ALL DEPENDS ${LIB_RUBY_PARSER_FULL} COMMENT lib_ruby_parser_full_target)
 add_library(lib_ruby_parser_full STATIC IMPORTED GLOBAL)
 add_dependencies(lib_ruby_parser_full lib_ruby_parser_full_target)
