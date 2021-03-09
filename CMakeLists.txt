@@ -12,25 +12,38 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/src)
 add_subdirectory(${CMAKE_SOURCE_DIR}/tests)
 add_subdirectory(${CMAKE_SOURCE_DIR}/fuzzer)
 
-# Mark Rust obj as generated here,
-# otherwise $<TARGET_FILE:lib_ruby_parser_rust_obj> it not visible in this file;
-# It will be fixed in 3.20: https://gitlab.kitware.com/cmake/cmake/-/issues/18399#note_ad47edaeb097e80453e660e157730850235f7849
-set_source_files_properties(${RUST_OBJ_FILE} PROPERTIES GENERATED 1)
-
 # C + Rust static lib
-add_library(lib_ruby_parser_full STATIC
-    $<TARGET_OBJECTS:c_obj_files> $<TARGET_FILE:lib_ruby_parser_rust_obj>)
 
-# this it also required because Rust obj is "generated out of nowhere"
-# by marking it as "generated" manually above
-add_dependencies(lib_ruby_parser_full lib_ruby_parser_rust_obj_target)
+set(LIB_RUBY_PARSER_FULL "lib_ruby_parser_full${CMAKE_STATIC_LIBRARY_SUFFIX}")
+if(WIN32)
+    set(PLATFORM "windows")
+elseif(APPLE)
+    set(PLATFORM "darwin")
+elseif(UNIX)
+    set(PLATFORM "linux")
+else()
+    message(ERROR "Unable to recognize platform")
+endif()
+add_custom_command(
+    OUTPUT ${LIB_RUBY_PARSER_FULL}
+    COMMAND
+        CLIB=$<TARGET_FILE:c_obj_files>
+        RUSTLIB=$<TARGET_FILE:lib_ruby_parser_rust_static>
+        OUTFILE=${LIB_RUBY_PARSER_FULL}
+        bash ${CMAKE_SOURCE_DIR}/scripts/merge-static-libs-${PLATFORM}.sh
+    DEPENDS ${RUST_SRC_FILES}
+    COMMENT "merging static libs")
+add_custom_target(lib_ruby_parser_full_target ALL DEPENDS ${LIB_RUBY_PARSER_FULL} COMMENT lib_ruby_parser_full_target)
+add_library(lib_ruby_parser_full STATIC IMPORTED GLOBAL)
+add_dependencies(lib_ruby_parser_full lib_ruby_parser_full_target)
+set_target_properties(lib_ruby_parser_full PROPERTIES IMPORTED_LOCATION ${LIB_RUBY_PARSER_FULL})
 
 # lib-ruby-parser.h
 
 file(GLOB H_FILES "src/*.h")
 add_custom_command(
     OUTPUT lib-ruby-parser.h
-    COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/scripts/build-headers
-    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/scripts/build-headers ${H_FILES}
+    COMMAND bash ${CMAKE_SOURCE_DIR}/scripts/build-headers
+    DEPENDS ${CMAKE_SOURCE_DIR}/scripts/build-headers ${H_FILES}
     COMMENT Creating lib-ruby-parser.h)
 add_custom_target(header ALL DEPENDS lib-ruby-parser.h)

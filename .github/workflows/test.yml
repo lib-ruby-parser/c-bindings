@@ -53,7 +53,7 @@ jobs:
             cargoflags: ""
             run: |
               mkdir -p build && cd build
-              CC=clang cmake ..
+              cmake ..
               cmake --build .
               ./tests/test-runner
 
