@@ -27,9 +27,10 @@ endif()
 add_custom_command(
     OUTPUT ${LIB_RUBY_PARSER_FULL}
     COMMAND
-        CLIB=$<TARGET_FILE:c_obj_files>
-        RUSTLIB=$<TARGET_FILE:lib_ruby_parser_rust_static>
-        OUTFILE=${LIB_RUBY_PARSER_FULL}
+        ${CMAKE_COMMAND} -E env
+        "CLIB=$<TARGET_FILE:c_obj_files>"
+        "RUSTLIB=$<TARGET_FILE:lib_ruby_parser_rust_static>"
+        "OUTFILE=${LIB_RUBY_PARSER_FULL}"
         bash ${CMAKE_SOURCE_DIR}/scripts/merge-static-libs-${PLATFORM}.sh
     DEPENDS ${RUST_SRC_FILES}
     COMMENT "merging static libs")
