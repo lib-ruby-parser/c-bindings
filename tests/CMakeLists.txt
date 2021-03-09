@@ -1,7 +1,7 @@
 project(tests)
 
 if(UNIX)
-    link_libraries(pthread dl)
+    link_libraries(pthread dl m)
 endif()
 
 add_executable(test-runner test.c)
