@@ -14,7 +14,7 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/fuzzer)
 
 # C + Rust static lib
 
-set(LIB_RUBY_PARSER_FULL "lib_ruby_parser_full${CMAKE_STATIC_LIBRARY_SUFFIX}")
+set(LIB_RUBY_PARSER_FULL "${CMAKE_BINARY_DIR}/lib_ruby_parser_full${CMAKE_STATIC_LIBRARY_SUFFIX}")
 if(WIN32)
     set(PLATFORM "windows")
 elseif(APPLE)
