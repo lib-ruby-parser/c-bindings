@@ -55,7 +55,7 @@ jobs:
               mkdir -p build && cd build
               cmake ..
               cmake --build .
-              ./tests/test-runner
+              ./tests/Debug/test-runner
 
     steps:
       - name: setup msvc on windows

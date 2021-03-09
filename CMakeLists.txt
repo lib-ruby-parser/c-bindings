@@ -27,7 +27,11 @@ endif()
 if(WIN32)
     add_custom_command(
         OUTPUT ${LIB_RUBY_PARSER_FULL}
-        COMMAND lib.exe $<TARGET_FILE:lib_ruby_parser_rust_static> $<TARGET_FILE:c_obj_files> /OUT:${LIB_RUBY_PARSER_FULL}
+        COMMAND lib.exe
+            ws2_32.lib advapi32.lib userenv.lib
+            $<TARGET_FILE:lib_ruby_parser_rust_static>
+            $<TARGET_FILE:c_obj_files>
+            /OUT:${LIB_RUBY_PARSER_FULL}
         COMMENT "merging static libs")
 else()
     add_custom_command(

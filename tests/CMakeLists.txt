@@ -6,4 +6,4 @@ endif()
 
 add_executable(test-runner test.c)
 add_dependencies(test-runner header)
-target_link_libraries(test-runner ${CMAKE_BINARY_DIR}/lib_ruby_parser_full.a)
+target_link_libraries(test-runner ${CMAKE_BINARY_DIR}/lib_ruby_parser_full${CMAKE_STATIC_LIBRARY_SUFFIX})
