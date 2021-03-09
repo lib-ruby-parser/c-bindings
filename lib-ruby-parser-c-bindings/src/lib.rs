@@ -107,3 +107,18 @@ pub extern "C" fn diagnostic_message_free(message: bindings::DiagnosticMessage) 
 pub extern "C" fn str_ptr_free(s: *mut i8) {
     drop(unsafe { std::ffi::CString::from_raw(s) })
 }
+
+#[no_mangle]
+pub extern "C" fn inner_node_ptr_free(ptr: *mut bindings::InnerNode) {
+    drop(unsafe { Box::from_raw(ptr) })
+}
+
+#[no_mangle]
+pub extern "C" fn node_ptr_free(ptr: *mut bindings::Node) {
+    drop(unsafe { Box::from_raw(ptr) })
+}
+
+#[no_mangle]
+pub extern "C" fn loc_free(ptr: *mut bindings::Loc) {
+    drop(unsafe { Box::from_raw(ptr) })
+}

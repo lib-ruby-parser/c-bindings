@@ -133,6 +133,503 @@ impl From<lib_ruby_parser::Node> for Node {
     }
 }
 
+#[no_mangle]
+pub extern "C" fn alias_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn and_asgn_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn and_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn arg_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn args_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn array_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn array_pattern_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn array_pattern_with_tail_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn back_ref_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn begin_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn block_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn block_pass_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn blockarg_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn break__node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn case_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn case_match_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn casgn_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn cbase_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn class_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn complex_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn const__node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn const_pattern_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn csend_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn cvar_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn cvasgn_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn def_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn defined_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn defs_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn dstr_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn dsym_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn eflipflop_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn empty_else_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn encoding__node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn ensure_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn erange_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn false__node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn file_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn find_pattern_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn float_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn for__node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn forward_arg_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn forwarded_args_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn gvar_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn gvasgn_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn hash_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn kwargs_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn hash_pattern_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn heredoc_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn if__node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn if_guard_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn if_mod_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn if_ternary_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn iflipflop_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn match_pattern_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn match_pattern_p_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn in_pattern_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn index_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn index_asgn_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn int_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn irange_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn ivar_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn ivasgn_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn kwarg_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn kwbegin_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn kwnilarg_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn kwoptarg_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn kwrestarg_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn kwsplat_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn lambda_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn line_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn lvar_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn lvasgn_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn masgn_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn match_alt_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn match_as_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn match_current_line_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn match_nil_pattern_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn match_rest_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn match_var_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn match_with_lvasgn_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn mlhs_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn module_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn next_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn nil_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn nth_ref_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn numblock_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn op_asgn_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn optarg_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn or_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn or_asgn_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn pair_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn pin_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn postexe_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn preexe_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn procarg0_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn rational_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn redo_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn reg_opt_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn regexp_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn rescue_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn rescue_body_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn restarg_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn retry_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn return__node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn sclass_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn self__node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn send_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn shadowarg_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn splat_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn str__node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn super__node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn sym_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn true__node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn undef_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn unless_guard_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn until_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn until_post_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn when_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn while__node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn while_post_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn x_heredoc_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn xstr_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn yield__node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+#[no_mangle]
+pub extern "C" fn zsuper_node_ptr_free(ptr: *mut Node) {
+    drop(unsafe { Box::from_raw(ptr) });
+}
+
 impl From<lib_ruby_parser::nodes::Alias> for Node {
     fn from(node: lib_ruby_parser::nodes::Alias) -> Self {
         let node_type = NodeType_NODE_ALIAS;

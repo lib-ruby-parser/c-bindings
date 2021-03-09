@@ -19,6 +19,8 @@ impl<'a> NodeC<'a> {
 #include \"node.h\"
 
 void str_ptr_free(char *);
+void inner_node_ptr_free(union InnerNode *);
+void node_ptr_free(struct Node *);
 
 void maybe_node_free(struct Node *node)
 {{
@@ -49,13 +51,13 @@ void inner_node_free(union InnerNode *inner_node, enum NodeType node_type)
     {{
     {inner_node_free_branches}
     }}
-    free(inner_node);
+    inner_node_ptr_free(inner_node);
 }}
 
 void node_free(struct Node *node)
 {{
     inner_node_free(node->inner, node->node_type);
-    free(node);
+    node_ptr_free(node);
 }}
 ",
             node_free_fns = self.node_free_fns().join("\n"),
@@ -95,10 +97,11 @@ impl<'a> FreeFn<'a> {
     fn code(&self) -> String {
         format!(
             "
+void {name_lower}_node_ptr_free(struct {struct_name} *node);
 void {name_lower}_node_free(struct {struct_name} *node)
 {{
     {free_fields}
-    free(node);
+    {name_lower}_node_ptr_free(node);
 }}",
             struct_name = self.node.struct_name,
             name_lower = self.node.filename.to_lowercase(),

@@ -27,9 +27,12 @@ impl From<lib_ruby_parser::Node> for Node {{
     }}
 }}
 
+{free_ptr_fns}
+
 {from_impls}
 ",
             branches = self.match_node_branches().join(",\n            "),
+            free_ptr_fns = self.free_ptr_fns().join("\n"),
             from_impls = self.from_impls().join("\n\n"),
         )
     }
@@ -41,6 +44,21 @@ impl From<lib_ruby_parser::Node> for Node {{
                 format!(
                     "lib_ruby_parser::Node::{}(inner) => Node::from(inner)",
                     node.struct_name
+                )
+            })
+            .collect()
+    }
+
+    fn free_ptr_fns(&self) -> Vec<String> {
+        self.nodes
+            .iter()
+            .map(|node| {
+                format!(
+                    "#[no_mangle]
+pub extern \"C\" fn {}_node_ptr_free(ptr: *mut Node) {{
+    drop(unsafe {{ Box::from_raw(ptr) }});
+}}",
+                    node.filename.to_lowercase()
                 )
             })
             .collect()
