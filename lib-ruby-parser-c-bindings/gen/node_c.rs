@@ -18,6 +18,8 @@ impl<'a> NodeC<'a> {
             "#include <stdlib.h>
 #include \"node.h\"
 
+void str_ptr_free(char *);
+
 void maybe_node_free(struct Node *node)
 {{
     if (node != NULL) {{

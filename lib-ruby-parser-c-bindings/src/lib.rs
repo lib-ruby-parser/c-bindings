@@ -102,3 +102,8 @@ pub extern "C" fn loc_source(
 pub extern "C" fn diagnostic_message_free(message: bindings::DiagnosticMessage) {
     diagnostic_message::inner_diagnostic_message_free(message);
 }
+
+#[no_mangle]
+pub extern "C" fn str_ptr_free(s: *mut i8) {
+    drop(unsafe { std::ffi::CString::from_raw(s) })
+}

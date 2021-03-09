@@ -49,7 +49,7 @@ impl<'a> Field<'a> {
             | FieldType::MaybeStr
             | FieldType::Chars
             | FieldType::StringValue
-            | FieldType::RawString => Some("free"),
+            | FieldType::RawString => Some("str_ptr_free"),
 
             FieldType::U8 | FieldType::Usize => None,
         }

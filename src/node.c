@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include "node.h"
 
+void str_ptr_free(char *);
+
 void maybe_node_free(struct Node *node)
 {
     if (node != NULL) {
@@ -52,7 +54,7 @@ void and_node_free(struct And *node)
 
 void arg_node_free(struct Arg *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_loc_free(node->expression_l);
     free(node);
 }
@@ -95,7 +97,7 @@ void array_pattern_with_tail_node_free(struct ArrayPatternWithTail *node)
 
 void back_ref_node_free(struct BackRef *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_loc_free(node->expression_l);
     free(node);
 }
@@ -130,7 +132,7 @@ void block_pass_node_free(struct BlockPass *node)
 
 void blockarg_node_free(struct Blockarg *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->expression_l);
@@ -172,7 +174,7 @@ void case_match_node_free(struct CaseMatch *node)
 void casgn_node_free(struct Casgn *node)
 {
     maybe_node_free(node->scope);
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_node_free(node->value);
     maybe_loc_free(node->double_colon_l);
     maybe_loc_free(node->name_l);
@@ -201,7 +203,7 @@ void class_node_free(struct Class *node)
 
 void complex_node_free(struct Complex *node)
 {
-    free(node->value);
+    str_ptr_free(node->value);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
     free(node);
@@ -210,7 +212,7 @@ void complex_node_free(struct Complex *node)
 void const__node_free(struct Const *node)
 {
     maybe_node_free(node->scope);
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_loc_free(node->double_colon_l);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->expression_l);
@@ -230,7 +232,7 @@ void const_pattern_node_free(struct ConstPattern *node)
 void csend_node_free(struct CSend *node)
 {
     maybe_node_free(node->recv);
-    free(node->method_name);
+    str_ptr_free(node->method_name);
     maybe_node_list_free(node->args);
     maybe_loc_free(node->dot_l);
     maybe_loc_free(node->selector_l);
@@ -243,14 +245,14 @@ void csend_node_free(struct CSend *node)
 
 void cvar_node_free(struct Cvar *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_loc_free(node->expression_l);
     free(node);
 }
 
 void cvasgn_node_free(struct Cvasgn *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_node_free(node->value);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->operator_l);
@@ -260,7 +262,7 @@ void cvasgn_node_free(struct Cvasgn *node)
 
 void def_node_free(struct Def *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_node_free(node->args);
     maybe_node_free(node->body);
     maybe_loc_free(node->keyword_l);
@@ -284,7 +286,7 @@ void defined_node_free(struct Defined *node)
 void defs_node_free(struct Defs *node)
 {
     maybe_node_free(node->definee);
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_node_free(node->args);
     maybe_node_free(node->body);
     maybe_loc_free(node->keyword_l);
@@ -376,7 +378,7 @@ void find_pattern_node_free(struct FindPattern *node)
 
 void float_node_free(struct Float *node)
 {
-    free(node->value);
+    str_ptr_free(node->value);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
     free(node);
@@ -409,14 +411,14 @@ void forwarded_args_node_free(struct ForwardedArgs *node)
 
 void gvar_node_free(struct Gvar *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_loc_free(node->expression_l);
     free(node);
 }
 
 void gvasgn_node_free(struct Gvasgn *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_node_free(node->value);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->operator_l);
@@ -562,7 +564,7 @@ void index_asgn_node_free(struct IndexAsgn *node)
 
 void int_node_free(struct Int *node)
 {
-    free(node->value);
+    str_ptr_free(node->value);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
     free(node);
@@ -579,14 +581,14 @@ void irange_node_free(struct Irange *node)
 
 void ivar_node_free(struct Ivar *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_loc_free(node->expression_l);
     free(node);
 }
 
 void ivasgn_node_free(struct Ivasgn *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_node_free(node->value);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->operator_l);
@@ -596,7 +598,7 @@ void ivasgn_node_free(struct Ivasgn *node)
 
 void kwarg_node_free(struct Kwarg *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->expression_l);
     free(node);
@@ -620,7 +622,7 @@ void kwnilarg_node_free(struct Kwnilarg *node)
 
 void kwoptarg_node_free(struct Kwoptarg *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_node_free(node->default_);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->expression_l);
@@ -629,7 +631,7 @@ void kwoptarg_node_free(struct Kwoptarg *node)
 
 void kwrestarg_node_free(struct Kwrestarg *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->expression_l);
@@ -658,14 +660,14 @@ void line_node_free(struct Line *node)
 
 void lvar_node_free(struct Lvar *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_loc_free(node->expression_l);
     free(node);
 }
 
 void lvasgn_node_free(struct Lvasgn *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_node_free(node->value);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->operator_l);
@@ -725,7 +727,7 @@ void match_rest_node_free(struct MatchRest *node)
 
 void match_var_node_free(struct MatchVar *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->expression_l);
     free(node);
@@ -775,7 +777,7 @@ void nil_node_free(struct Nil *node)
 
 void nth_ref_node_free(struct NthRef *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_loc_free(node->expression_l);
     free(node);
 }
@@ -793,7 +795,7 @@ void numblock_node_free(struct Numblock *node)
 void op_asgn_node_free(struct OpAsgn *node)
 {
     maybe_node_free(node->recv);
-    free(node->operator);
+    str_ptr_free(node->operator);
     maybe_node_free(node->value);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
@@ -802,7 +804,7 @@ void op_asgn_node_free(struct OpAsgn *node)
 
 void optarg_node_free(struct Optarg *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_node_free(node->default_);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->operator_l);
@@ -876,7 +878,7 @@ void procarg0_node_free(struct Procarg0 *node)
 
 void rational_node_free(struct Rational *node)
 {
-    free(node->value);
+    str_ptr_free(node->value);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
     free(node);
@@ -890,7 +892,7 @@ void redo_node_free(struct Redo *node)
 
 void reg_opt_node_free(struct RegOpt *node)
 {
-    free(node->options);
+    str_ptr_free(node->options);
     maybe_loc_free(node->expression_l);
     free(node);
 }
@@ -929,7 +931,7 @@ void rescue_body_node_free(struct RescueBody *node)
 
 void restarg_node_free(struct Restarg *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->expression_l);
@@ -970,7 +972,7 @@ void self__node_free(struct Self_ *node)
 void send_node_free(struct Send *node)
 {
     maybe_node_free(node->recv);
-    free(node->method_name);
+    str_ptr_free(node->method_name);
     maybe_node_list_free(node->args);
     maybe_loc_free(node->dot_l);
     maybe_loc_free(node->selector_l);
@@ -983,7 +985,7 @@ void send_node_free(struct Send *node)
 
 void shadowarg_node_free(struct Shadowarg *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_loc_free(node->expression_l);
     free(node);
 }
@@ -998,7 +1000,7 @@ void splat_node_free(struct Splat *node)
 
 void str__node_free(struct Str *node)
 {
-    free(node->value);
+    str_ptr_free(node->value);
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
@@ -1017,7 +1019,7 @@ void super__node_free(struct Super *node)
 
 void sym_node_free(struct Sym *node)
 {
-    free(node->name);
+    str_ptr_free(node->name);
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
