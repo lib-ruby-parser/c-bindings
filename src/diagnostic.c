@@ -3,6 +3,9 @@
 #include "diagnostic.h"
 #include "loc.h"
 
+void diagnostics_ptr_free(struct Diagnostic *);
+void diagnostics_list_free(struct Diagnostics *);
+
 void diagnostics_free(struct Diagnostics *diagnostics)
 {
     if (diagnostics->len > 0)
@@ -13,7 +16,7 @@ void diagnostics_free(struct Diagnostics *diagnostics)
             diagnostic_message_free(diagnostic.message);
             loc_free(diagnostic.loc);
         }
-        free(diagnostics->list);
+        diagnostics_ptr_free(diagnostics->list);
     }
-    free(diagnostics);
+    diagnostics_list_free(diagnostics);
 }

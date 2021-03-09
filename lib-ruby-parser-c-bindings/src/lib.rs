@@ -122,3 +122,58 @@ pub extern "C" fn node_ptr_free(ptr: *mut bindings::Node) {
 pub extern "C" fn loc_free(ptr: *mut bindings::Loc) {
     drop(unsafe { Box::from_raw(ptr) })
 }
+
+#[no_mangle]
+pub extern "C" fn tokens_ptr_free(ptr: *mut bindings::Token) {
+    drop(unsafe { Box::from_raw(ptr) })
+}
+
+#[no_mangle]
+pub extern "C" fn token_list_free(ptr: *mut bindings::TokenList) {
+    drop(unsafe { Box::from_raw(ptr) })
+}
+
+#[no_mangle]
+pub extern "C" fn diagnostics_ptr_free(ptr: *mut bindings::Diagnostic) {
+    drop(unsafe { Box::from_raw(ptr) })
+}
+
+#[no_mangle]
+pub extern "C" fn diagnostics_list_free(ptr: *mut bindings::Diagnostics) {
+    drop(unsafe { Box::from_raw(ptr) })
+}
+
+#[no_mangle]
+pub extern "C" fn comments_ptr_free(ptr: *mut bindings::Comment) {
+    drop(unsafe { Box::from_raw(ptr) })
+}
+
+#[no_mangle]
+pub extern "C" fn comment_list_free(ptr: *mut bindings::CommentList) {
+    drop(unsafe { Box::from_raw(ptr) })
+}
+
+#[no_mangle]
+pub extern "C" fn magic_comments_ptr_free(ptr: *mut bindings::MagicComment) {
+    drop(unsafe { Box::from_raw(ptr) })
+}
+
+#[no_mangle]
+pub extern "C" fn magic_comment_list_free(ptr: *mut bindings::MagicCommentList) {
+    drop(unsafe { Box::from_raw(ptr) })
+}
+
+#[no_mangle]
+pub extern "C" fn nodes_ptr_free(ptr: *mut bindings::Node) {
+    drop(unsafe { Box::from_raw(ptr) })
+}
+
+#[no_mangle]
+pub extern "C" fn node_list_free_(ptr: *mut bindings::NodeList) {
+    drop(unsafe { Box::from_raw(ptr) })
+}
+
+#[no_mangle]
+pub extern "C" fn parser_result_free_(ptr: *mut ParserResult) {
+    drop(unsafe { Box::from_raw(ptr) })
+}

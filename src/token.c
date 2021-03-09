@@ -4,6 +4,9 @@
 void str_ptr_free(char *);
 void loc_free(struct Loc *loc);
 
+void tokens_ptr_free(struct Token *);
+void token_list_free(struct TokenList *);
+
 void tokens_free(struct TokenList *tokens)
 {
     if (tokens->len > 0)
@@ -14,7 +17,7 @@ void tokens_free(struct TokenList *tokens)
             str_ptr_free(token.token_value);
             loc_free(token.loc);
         }
-        free(tokens->list);
+        tokens_ptr_free(tokens->list);
     }
-    free(tokens);
+    token_list_free(tokens);
 }

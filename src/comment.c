@@ -2,6 +2,9 @@
 #include "comment.h"
 #include "loc.h"
 
+void comments_ptr_free(struct Comment *);
+void comment_list_free(struct CommentList *);
+
 void comments_free(struct CommentList *comments)
 {
     if (comments->len > 0)
@@ -11,7 +14,7 @@ void comments_free(struct CommentList *comments)
             struct Comment comment = comments->list[i];
             loc_free(comment.location);
         }
-        free(comments->list);
+        comments_ptr_free(comments->list);
     }
-    free(comments);
+    comment_list_free(comments);
 }

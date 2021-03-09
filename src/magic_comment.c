@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include "magic_comment.h"
 
+void magic_comments_ptr_free(struct MagicComment *);
+void magic_comment_list_free(struct MagicCommentList *);
+
 void magic_comments_free(struct MagicCommentList *magic_comments)
 {
     if (magic_comments->len > 0)
@@ -12,7 +15,7 @@ void magic_comments_free(struct MagicCommentList *magic_comments)
             loc_free(magic_comment.key_l);
             loc_free(magic_comment.value_l);
         }
-        free(magic_comments->list);
+        magic_comments_ptr_free(magic_comments->list);
     }
-    free(magic_comments);
+    magic_comment_list_free(magic_comments);
 }

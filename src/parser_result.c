@@ -7,6 +7,8 @@
 #include "magic_comment.h"
 #include "node.h"
 
+void parser_result_free_(struct ParserResult *);
+
 void parser_result_free(struct ParserResult *parser_result)
 {
     printf("parser_result_free(1)\n");
@@ -26,6 +28,6 @@ void parser_result_free(struct ParserResult *parser_result)
     printf("parser_result_free(7)\n");
     input_free(parser_result->input);
     printf("parser_result_free(8)\n");
-    free(parser_result);
+    parser_result_free_(parser_result);
     printf("parser_result_free(9)\n");
 }
