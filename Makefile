@@ -15,15 +15,8 @@ ifeq ($(DETECTED_OS), Darwin)
 	LIST_DEPS = otool -L
 endif
 
-setup:
-	mkdir -p target/debug
-	mkdir -p target/release
-
 # Rust
 include lib-ruby-parser-c-bindings/build.mk
-
-rust-object: $(RUST_OBJ)
-gen-headers: $(RUST_OBJ)
 
 # Header
 include header/build.mk
@@ -45,6 +38,7 @@ endif
 
 $(STATIC_LIB): $(RUST_OBJ) $(OBJECTS)
 	$(BUILD_STATIC)
+build-static: $(STATIC_LIB)
 
 # tests
 include test/build.mk

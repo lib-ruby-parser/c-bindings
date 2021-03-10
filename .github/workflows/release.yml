@@ -112,9 +112,7 @@ jobs:
 
       - name: build
         shell: bash
-        run: |
-          make setup
-          make build-static
+        run: make clean build-static
 
       - name: show asset
         shell: bash
