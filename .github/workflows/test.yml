@@ -11,7 +11,7 @@ env:
 
 jobs:
   test:
-    name: run tests
+    name: ${{ matrix.build.name }}
     runs-on: ${{ matrix.build.os }}
     env:
       CARGO_BUILD_TARGET: ${{ matrix.build.target }}
@@ -23,35 +23,50 @@ jobs:
       fail-fast: false
       matrix:
         build:
-          - os: ubuntu-latest
+          - name: test on linux
+            os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             cc: clang-9
             cxx: clang++-9
             ld: ld.lld-9
             cargoflags: --features="generate-bindings,onig"
-            run: |
-              make build-static test-valgrind
-              make clean
-              CCFLAGS="-fsanitize=address" make test
+            run: make clean test
 
-          - os: macos-latest
+          - name: test on mac
+            os: macos-latest
             target: x86_64-apple-darwin
             cc: clang
             cxx: clang++
             ld: ld
             cargoflags: --features="generate-bindings,onig"
-            run: |
-              make build-static
-              make clean
-              CCFLAGS="-fsanitize=address" make test
+            run: make clean test
 
-          - os: windows-latest
+          - name: test on windows
+            os: windows-latest
             target: x86_64-pc-windows-msvc
             cc: cl.exe
             cxx: cl.exe
             ld: link.exe
             cargoflags: ""
-            run: make build-static
+            run: make clean test
+
+          - name: valgrind
+            os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            cc: clang-9
+            cxx: clang++-9
+            ld: ld.lld-9
+            cargoflags: ""
+            run: make clean test-valgrind
+
+          - name: asan
+            os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            cc: clang-9
+            cxx: clang++-9
+            ld: ld.lld-9
+            cargoflags: ""
+            run: CCFLAGS="-fsanitize=address" make clean test
 
     steps:
       - name: setup msvc on windows
@@ -83,6 +98,4 @@ jobs:
 
       - name: run tests
         shell: bash
-        run: |
-          make setup
-          ${{ matrix.build.run }}
+        run: ${{ matrix.build.run }}

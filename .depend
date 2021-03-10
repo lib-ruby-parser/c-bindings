@@ -1,0 +1,25 @@
+target/debug/comment.o: src/comment.c src/comment.h src/loc.h
+
+target/debug/custom_decoder.o: src/custom_decoder.c src/custom_decoder.h
+
+target/debug/diagnostic.o: src/diagnostic.c src/diagnostic.h src/loc.h \
+  src/diagnostic_message.h src/input.h
+
+target/debug/loc.o: src/loc.c src/loc.h
+
+target/debug/magic_comment.o: src/magic_comment.c src/magic_comment.h \
+  src/loc.h
+
+target/debug/node.o: src/node.c src/node.h src/node_list.h src/loc.h
+
+target/debug/node_list.o: src/node_list.c src/node_list.h src/node.h \
+  src/loc.h
+
+target/debug/parser_result.o: src/parser_result.c src/parser_result.h \
+  src/parser_options.h src/custom_decoder.h src/token_rewriter.h \
+  src/token.h src/loc.h src/input.h src/diagnostic.h \
+  src/diagnostic_message.h src/comment.h src/magic_comment.h src/node.h \
+  src/node_list.h
+
+target/debug/token.o: src/token.c src/token.h src/loc.h
+
