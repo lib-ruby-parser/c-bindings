@@ -1,6 +1,6 @@
 # c bindings for `lib-ruby-parser`
 
-You can find some examples in `main.c` and `test.c`.
+You can find some examples in `test/test.c`.
 
 ## API
 
@@ -89,7 +89,7 @@ You can find some examples in `main.c` and `test.c`.
 3. `node->node_type` and `node->inner`
 
     Generic `Node` struct has only two fields: `node_type` and `inner`.
-    `node_type` is an enum that can be used to identifier which variant of the `inner` union should be used.
+    `node_type` is an enum that can be used to identify which variant of the `inner` union should be used.
 
     ```c
     assert(node->node_type == NODE_SEND);
