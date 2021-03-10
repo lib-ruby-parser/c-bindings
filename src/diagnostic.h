@@ -7,6 +7,7 @@
 #include "diagnostic_message.h"
 #include "input.h"
 
+// Enum of the error level of the diagnostic (warning or error)
 enum ErrorLevel
 {
     ERROR_LEVEL_WARNING,
@@ -15,19 +16,33 @@ enum ErrorLevel
 
 struct Diagnostic
 {
+    // Error level (i.e. warning or error)
     enum ErrorLevel level;
+
+    // Message of the diagnostic
     struct DiagnosticMessage message;
+
+    // Location of the diagnostic
     struct Loc *loc;
 };
 
-struct Diagnostics
+// A list of diagnostics
+struct DiagnosticList
 {
+    // Length of the list
     uint32_t len;
+
+    // Pointer to array of diagnostics
     struct Diagnostic *list;
 };
 
-void diagnostics_free(struct Diagnostics *diagnostics);
+// Destructor of the diagnostics list
+void diagnostics_free(struct DiagnosticList *diagnostics);
+
+// Renders given diagnostic into a string
 char *diagnostic_render(struct Diagnostic diagnostic, Input *input);
+
+// Renders a message of the given diagnostic into a string
 char *diagnostic_render_message(struct Diagnostic diagnostic);
 
 #endif // LIB_RUBY_PARSER_DIAGNOSTIC_H

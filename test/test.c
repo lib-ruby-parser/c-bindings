@@ -111,7 +111,7 @@ void test_tokens()
 void test_diagnostics()
 {
     struct ParserResult *result = parse_code(NULL, "self = 1; nil = 2");
-    struct Diagnostics *diagnostics = result->diagnostics;
+    struct DiagnosticList *diagnostics = result->diagnostics;
 
     assert_eq(diagnostics->len, 2);
 

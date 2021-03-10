@@ -3,7 +3,7 @@
 #include "diagnostic.h"
 #include "loc.h"
 
-void diagnostics_free(struct Diagnostics *diagnostics)
+void diagnostics_free(struct DiagnosticList *diagnostics)
 {
     if (diagnostics->len > 0)
     {

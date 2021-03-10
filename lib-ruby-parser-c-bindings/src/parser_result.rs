@@ -19,7 +19,7 @@ impl From<lib_ruby_parser::ParserResult> for bindings::ParserResult {
                 std::ptr::null_mut()
             },
             tokens: ptr_value(bindings::TokenList::from(tokens)),
-            diagnostics: ptr_value(bindings::Diagnostics::from(diagnostics)),
+            diagnostics: ptr_value(bindings::DiagnosticList::from(diagnostics)),
             comments: ptr_value(bindings::CommentList::from(comments)),
             magic_comments: ptr_value(bindings::MagicCommentList::from(magic_comments)),
             input: ptr_value(input) as *mut std::ffi::c_void,

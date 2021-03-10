@@ -19,7 +19,7 @@ impl From<Vec<lib_ruby_parser::Token>> for bindings::TokenList {
     }
 }
 
-impl From<Vec<lib_ruby_parser::Diagnostic>> for bindings::Diagnostics {
+impl From<Vec<lib_ruby_parser::Diagnostic>> for bindings::DiagnosticList {
     fn from(diagnostics: Vec<lib_ruby_parser::Diagnostic>) -> Self {
         let (list, len) = vec_to_c_list(diagnostics, From::from);
         Self { list, len }
