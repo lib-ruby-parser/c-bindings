@@ -19,9 +19,9 @@ struct Loc
 void loc_free(struct Loc *loc);
 
 // Returns the size of the location (loc->end - loc->begin)
-uint32_t loc_size(struct Loc *loc);
+uint32_t loc_size(const struct Loc *loc);
 
 // Returns the source code of the location (i.e. code from `begin` to `end`)
-char *loc_source(struct Loc *loc, Input *input);
+char *loc_source(const struct Loc *loc, const Input *input);
 
 #endif // LIB_RUBY_PARSER_LOC_H

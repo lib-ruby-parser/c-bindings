@@ -14,9 +14,9 @@ typedef void Input;
 void input_free(Input *input);
 
 // Returns the length of the input
-uint32_t input_len(Input *input);
+uint32_t input_len(const Input *input);
 
 // Returns a char* pointer to a given input. It shouldn't be changed.
-const char *input_ptr(Input *input);
+const char *input_ptr(const Input *input);
 
 #endif // LIB_RUBY_PARSER_INPUT_H
