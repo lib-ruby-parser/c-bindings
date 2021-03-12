@@ -18,21 +18,21 @@ impl<'a> NodeC<'a> {
             "#include <stdlib.h>
 #include \"node.h\"
 
-void maybe_node_free(struct Node *node)
+void maybe_node_free(Node *node)
 {{
     if (node != NULL) {{
         node_free(node);
     }}
 }}
 
-void maybe_node_list_free(struct NodeList *list)
+void maybe_node_list_free(NodeList *list)
 {{
     if (list != NULL) {{
         node_list_free(list);
     }}
 }}
 
-void maybe_loc_free(struct Loc *loc)
+void maybe_loc_free(Loc *loc)
 {{
     if (loc != NULL) {{
         loc_free(loc);
@@ -41,7 +41,7 @@ void maybe_loc_free(struct Loc *loc)
 
 {node_free_fns}
 
-void inner_node_free(union InnerNode *inner_node, enum NodeType node_type)
+void inner_node_free(InnerNode *inner_node, NodeType node_type)
 {{
     switch (node_type)
     {{
@@ -50,7 +50,7 @@ void inner_node_free(union InnerNode *inner_node, enum NodeType node_type)
     free(inner_node);
 }}
 
-void node_free(struct Node *node)
+void node_free(Node *node)
 {{
     inner_node_free(node->inner, node->node_type);
     free(node);
@@ -93,7 +93,7 @@ impl<'a> FreeFn<'a> {
     fn code(&self) -> String {
         format!(
             "
-void {name_lower}_node_free(struct {struct_name} *node)
+void {name_lower}_node_free({struct_name} *node)
 {{
     {free_fields}
     free(node);

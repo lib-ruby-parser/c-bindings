@@ -3,19 +3,19 @@
 
 #include "token.h"
 
-enum TokenRewriteAction
+typedef enum TokenRewriteAction
 {
     REWRITE_ACTION_DROP,
     REWRITE_ACTION_KEEP,
-};
+} TokenRewriteAction;
 
-enum LexStateActionKind
+typedef enum LexStateActionKind
 {
     LEX_STATE_ACTION_SET,
     LEX_STATE_ACTION_KEEP,
-};
+} LexStateActionKind;
 
-union LexStateActionValue
+typedef union LexStateActionValue
 {
     struct
     {
@@ -26,29 +26,29 @@ union LexStateActionValue
     {
         int dummy;
     } keep;
-};
+} LexStateActionValue;
 
-struct LexStateAction
+typedef struct LexStateAction
 {
-    enum LexStateActionKind kind;
-    union LexStateActionValue value;
-};
+    LexStateActionKind kind;
+    LexStateActionValue value;
+} LexStateAction;
 
-struct TokenRewriterOutput
+typedef struct TokenRewriterOutput
 {
-    struct Token token;
-    enum TokenRewriteAction token_rewriter_action;
-    struct LexStateAction lex_state_action;
-};
+    Token token;
+    TokenRewriteAction token_rewriter_action;
+    LexStateAction lex_state_action;
+} TokenRewriterOutput;
 
-struct TokenRewriter;
+typedef struct TokenRewriter TokenRewriter;
 
-typedef struct TokenRewriterOutput TokenRewriterFn(void *state, struct Token token, const char *input);
+typedef struct TokenRewriterOutput TokenRewriterFn(void *state, Token token, const char *input);
 
-struct TokenRewriter
+typedef struct TokenRewriter
 {
     void *state;
     TokenRewriterFn *rewriter;
-};
+} TokenRewriter;
 
 #endif // LIB_RUBY_PARSER_TOKEN_REWRITER_H

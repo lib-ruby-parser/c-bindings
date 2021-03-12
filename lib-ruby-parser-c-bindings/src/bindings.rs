@@ -430,16 +430,6 @@ pub struct ParserOptions {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
-pub struct ParserResult {
-    pub ast: *mut Node,
-    pub tokens: *mut TokenList,
-    pub diagnostics: *mut DiagnosticList,
-    pub comments: *mut CommentList,
-    pub magic_comments: *mut MagicCommentList,
-    pub input: *mut Input,
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
 pub struct Alias {
     pub to: *mut Node,
     pub from: *mut Node,
@@ -1681,4 +1671,14 @@ pub union InnerNode {
 pub struct Node {
     pub node_type: NodeType,
     pub inner: *mut InnerNode,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct ParserResult {
+    pub ast: *mut Node,
+    pub tokens: *mut TokenList,
+    pub diagnostics: *mut DiagnosticList,
+    pub comments: *mut CommentList,
+    pub magic_comments: *mut MagicCommentList,
+    pub input: *mut Input,
 }

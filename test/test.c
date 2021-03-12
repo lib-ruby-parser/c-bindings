@@ -5,7 +5,7 @@
 #include <assert.h>
 #include "../target/lib-ruby-parser.h"
 
-struct ParserResult *parse_code(struct ParserOptions *options, const char *code)
+ParserResult *parse_code(ParserOptions *options, const char *code)
 {
     return parse(options, code, strlen(code));
 }
@@ -25,38 +25,38 @@ struct ParserResult *parse_code(struct ParserOptions *options, const char *code)
     assert_not_null(actual);            \
     assert(strcmp(actual, expected) == 0);
 
-struct Node *WatchNode = NULL;
+Node *WatchNode = NULL;
 
 void test_parse()
 {
-    struct ParserResult *result = parse_code(NULL, "foo(100, 'baz')");
+    ParserResult *result = parse_code(NULL, "foo(100, 'baz')");
     assert_not_null(result);
 
-    struct Node *node;
+    Node *node;
 
     node = assert_not_null(result->ast);
     assert_eq(node->node_type, NODE_SEND);
 
-    struct Send *send = assert_not_null(node->inner->_send);
+    Send *send = assert_not_null(node->inner->_send);
 
     assert_eq(send->recv, NULL);
 
     char *mid = send->method_name;
     assert_str_eq(mid, "foo");
 
-    struct NodeList *args = send->args;
+    NodeList *args = send->args;
     assert_eq(args->len, 2);
 
-    struct Node arg1 = args->list[0];
+    Node arg1 = args->list[0];
     assert_eq(arg1.node_type, NODE_INT);
-    struct Int *_int = assert_not_null(arg1.inner->_int);
+    Int *_int = assert_not_null(arg1.inner->_int);
     assert_str_eq(_int->value, "100");
     assert_loc(_int->expression_l, 4, 7);
     assert_eq(_int->operator_l, NULL);
 
-    struct Node arg2 = args->list[1];
+    Node arg2 = args->list[1];
     assert_eq(arg2.node_type, NODE_STR_);
-    struct Str *str = assert_not_null(arg2.inner->_str_);
+    Str *str = assert_not_null(arg2.inner->_str_);
     assert_str_eq(str->value, "baz");
     assert_loc(str->begin_l, 9, 10);
     assert_loc(str->end_l, 13, 14);
@@ -85,8 +85,8 @@ void test_parse()
 
 void test_tokens()
 {
-    struct ParserResult *result = parse_code(NULL, "2 + 3");
-    struct TokenList *tokens = result->tokens;
+    ParserResult *result = parse_code(NULL, "2 + 3");
+    TokenList *tokens = result->tokens;
 
     assert_eq(tokens->len, 4);
 
@@ -110,8 +110,8 @@ void test_tokens()
 
 void test_diagnostics()
 {
-    struct ParserResult *result = parse_code(NULL, "self = 1; nil = 2");
-    struct DiagnosticList *diagnostics = result->diagnostics;
+    ParserResult *result = parse_code(NULL, "self = 1; nil = 2");
+    DiagnosticList *diagnostics = result->diagnostics;
 
     assert_eq(diagnostics->len, 2);
 
@@ -123,8 +123,8 @@ void test_diagnostics()
 
 void test_comments()
 {
-    struct ParserResult *result = parse_code(NULL, "# foo\n# bar\nbaz");
-    struct CommentList *comments = result->comments;
+    ParserResult *result = parse_code(NULL, "# foo\n# bar\nbaz");
+    CommentList *comments = result->comments;
 
     assert_eq(comments->len, 2);
 
@@ -136,8 +136,8 @@ void test_comments()
 
 void test_magic_comments()
 {
-    struct ParserResult *result = parse_code(NULL, "# warn-indent: true\n# frozen-string-literal: true\n# encoding: utf-8\n");
-    struct MagicCommentList *magic_comments = result->magic_comments;
+    ParserResult *result = parse_code(NULL, "# warn-indent: true\n# frozen-string-literal: true\n# encoding: utf-8\n");
+    MagicCommentList *magic_comments = result->magic_comments;
 
     assert_eq(magic_comments->list[0].kind, MAGIC_COMMENT_KIND_WARN_INDENT);
     assert_loc(magic_comments->list[0].key_l, 2, 13);
@@ -156,14 +156,14 @@ void test_magic_comments()
 
 void test_loc()
 {
-    struct ParserResult *result = parse_code(NULL, "2 + 2");
-    struct Loc *expression_l = result->ast->inner->_send->expression_l;
+    ParserResult *result = parse_code(NULL, "2 + 2");
+    Loc *expression_l = result->ast->inner->_send->expression_l;
 
     assert_eq(loc_size(expression_l), 5);
     char *source = loc_source(expression_l, result->input);
     assert_str_eq(source, "2 + 2");
 
-    struct Loc invalid = {.begin = 0, .end = 10000};
+    Loc invalid = {.begin = 0, .end = 10000};
     assert_eq(loc_source(&invalid, result->input), NULL);
 
     free(source);
@@ -188,7 +188,7 @@ void test_all_nodes()
     fread(fcontent, 1, fsize, fp);
     fcontent[fsize] = '\0';
 
-    struct ParserResult *result = parse_code(NULL, fcontent);
+    ParserResult *result = parse_code(NULL, fcontent);
     assert_not_null(result->ast);
 
     parser_result_free(result);
@@ -207,7 +207,7 @@ char *copy_string(const char *source)
     return out;
 }
 
-struct DecoderOutput do_decode(void *state, const char *encoding, const char *input, uint32_t len)
+DecoderOutput do_decode(void *state, const char *encoding, const char *input, uint32_t len)
 {
     (void)state;
     (void)encoding;
@@ -224,11 +224,11 @@ struct DecoderOutput do_decode(void *state, const char *encoding, const char *in
 
 void test_custom_decoder_ok()
 {
-    struct CustomDecoder decoder = {.state = (void *)"foo", .decoder = do_decode};
-    struct ParserOptions options = {.buffer_name = "(test_custom_decoder_ok)", .debug = false, .decoder = &decoder};
-    struct ParserResult *result = parse_code(&options, "# encoding: us-ascii\n2");
+    CustomDecoder decoder = {.state = (void *)"foo", .decoder = do_decode};
+    ParserOptions options = {.buffer_name = "(test_custom_decoder_ok)", .debug = false, .decoder = &decoder};
+    ParserResult *result = parse_code(&options, "# encoding: us-ascii\n2");
 
-    struct Node *node = assert_not_null(result->ast);
+    Node *node = assert_not_null(result->ast);
     assert_eq(node->node_type, NODE_INT);
     assert_str_eq(node->inner->_int->value, "3");
 
@@ -237,9 +237,9 @@ void test_custom_decoder_ok()
 
 void test_custom_decoder_err()
 {
-    struct CustomDecoder decoder = {.state = (void *)"foo", .decoder = do_decode};
-    struct ParserOptions options = {.buffer_name = "(test_custom_decoder_err)", .debug = false, .decoder = &decoder};
-    struct ParserResult *result = parse_code(&options, "# encoding: koi8-r\n2");
+    CustomDecoder decoder = {.state = (void *)"foo", .decoder = do_decode};
+    ParserOptions options = {.buffer_name = "(test_custom_decoder_err)", .debug = false, .decoder = &decoder};
+    ParserResult *result = parse_code(&options, "# encoding: koi8-r\n2");
 
     assert_eq(result->ast, NULL);
     assert_eq(result->diagnostics->len, 1);
@@ -251,7 +251,7 @@ void test_custom_decoder_err()
 }
 
 const char *three = "3";
-struct TokenRewriterOutput rewrite_token(void *state, struct Token token, const char *input)
+TokenRewriterOutput rewrite_token(void *state, Token token, const char *input)
 {
     (void)state;
     (void)input;
@@ -262,7 +262,7 @@ struct TokenRewriterOutput rewrite_token(void *state, struct Token token, const 
         token.token_value = copy_string(three);
     }
 
-    struct TokenRewriterOutput output = {
+    TokenRewriterOutput output = {
         .token = token,
         .token_rewriter_action = REWRITE_ACTION_KEEP,
         .lex_state_action = {
@@ -272,18 +272,18 @@ struct TokenRewriterOutput rewrite_token(void *state, struct Token token, const 
 
 void test_token_rewriter()
 {
-    struct TokenRewriter token_rewriter = {
+    TokenRewriter token_rewriter = {
         .rewriter = rewrite_token,
         .state = NULL,
     };
-    struct ParserOptions options = {
+    ParserOptions options = {
         .buffer_name = "(test_token_rewriter)",
         .debug = false,
         .token_rewriter = &token_rewriter,
         .record_tokens = true};
-    struct ParserResult *result = parse_code(&options, "1 + 2");
+    ParserResult *result = parse_code(&options, "1 + 2");
 
-    struct TokenList *tokens = result->tokens;
+    TokenList *tokens = result->tokens;
 
     assert_eq(tokens->len, 4);
 

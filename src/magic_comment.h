@@ -6,44 +6,44 @@
 #include "loc.h"
 
 // Type of the magic comment
-enum MagicCommentKind
+typedef enum MagicCommentKind
 {
     MAGIC_COMMENT_KIND_ENCODING,
     MAGIC_COMMENT_KIND_FROZEN_STRING_LITERAL,
     MAGIC_COMMENT_KIND_WARN_INDENT,
     MAGIC_COMMENT_KIND_SHAREABLE_CONSTANT_VALUE,
-};
+} MagicCommentKind;
 
 // Representation of a magic comment (i.e. a special comment at the top of the file)
-struct MagicComment
+typedef struct MagicComment
 {
     // Magic comment kind
-    enum MagicCommentKind kind;
+    MagicCommentKind kind;
 
     // Location of the key
     //
     // # encoding: foo
     //   ~~~~~~~~
-    struct Loc *key_l;
+    Loc *key_l;
 
     // Location of the value
     //
     // # encoding: foo
     //             ~~~
-    struct Loc *value_l;
-};
+    Loc *value_l;
+} MagicComment;
 
 // List of the magic comments
-struct MagicCommentList
+typedef struct MagicCommentList
 {
     // Length of the list
     uint32_t len;
 
     // Pointer to array of magic comments
-    struct MagicComment *list;
-};
+    MagicComment *list;
+} MagicCommentList;
 
 // Destructor of the list of magic comments
-void magic_comments_free(struct MagicCommentList *magic_comments);
+void magic_comments_free(MagicCommentList *magic_comments);
 
 #endif // LIB_RUBY_PARSER_MAGIC_COMMENT_H

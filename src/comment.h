@@ -6,23 +6,23 @@
 #include "loc.h"
 
 // Representation of the comment in source code
-struct Comment
+typedef struct Comment
 {
     // Location of the comment
-    struct Loc *location;
-};
+    Loc *location;
+} Comment;
 
 // A list of comments
-struct CommentList
+typedef struct CommentList
 {
     // Length of the list
     uint32_t len;
 
     // Pointer to array of comments
-    struct Comment *list;
-};
+    Comment *list;
+} CommentList;
 
 // Destructor of the comments list
-void comments_free(struct CommentList *comments);
+void comments_free(CommentList *comments);
 
 #endif // LIB_RUBY_PARSER_COMMENT_H

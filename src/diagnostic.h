@@ -8,41 +8,41 @@
 #include "input.h"
 
 // Enum of the error level of the diagnostic (warning or error)
-enum ErrorLevel
+typedef enum ErrorLevel
 {
     ERROR_LEVEL_WARNING,
     ERROR_LEVEL_ERROR
-};
+} ErrorLevel;
 
-struct Diagnostic
+typedef struct Diagnostic
 {
     // Error level (i.e. warning or error)
-    enum ErrorLevel level;
+    ErrorLevel level;
 
     // Message of the diagnostic
-    struct DiagnosticMessage message;
+    DiagnosticMessage message;
 
     // Location of the diagnostic
-    struct Loc *loc;
-};
+    Loc *loc;
+} Diagnostic;
 
 // A list of diagnostics
-struct DiagnosticList
+typedef struct DiagnosticList
 {
     // Length of the list
     uint32_t len;
 
     // Pointer to array of diagnostics
-    struct Diagnostic *list;
-};
+    Diagnostic *list;
+} DiagnosticList;
 
 // Destructor of the diagnostics list
-void diagnostics_free(struct DiagnosticList *diagnostics);
+void diagnostics_free(DiagnosticList *diagnostics);
 
 // Renders given diagnostic into a string
-char *diagnostic_render(struct Diagnostic diagnostic, Input *input);
+char *diagnostic_render(Diagnostic diagnostic, Input *input);
 
 // Renders a message of the given diagnostic into a string
-char *diagnostic_render_message(struct Diagnostic diagnostic);
+char *diagnostic_render_message(Diagnostic diagnostic);
 
 #endif // LIB_RUBY_PARSER_DIAGNOSTIC_H

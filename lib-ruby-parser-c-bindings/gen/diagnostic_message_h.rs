@@ -26,23 +26,23 @@ impl DiagnosticMessageH {
 
 #include <stdint.h>
 
-enum DiagnosticMessageType {{
+typedef enum DiagnosticMessageType {{
     {enum_values}
-}};
+}} DiagnosticMessageType;
 
 {structs}
 
-union DiagnosticMessageData {{
+typedef union DiagnosticMessageData {{
     {union_variants}
     uint32_t other;
-}};
+}} DiagnosticMessageData;
 
-struct DiagnosticMessage {{
-    enum DiagnosticMessageType type;
-    union DiagnosticMessageData data;
-}};
+typedef struct DiagnosticMessage {{
+    DiagnosticMessageType type;
+    DiagnosticMessageData data;
+}} DiagnosticMessage;
 
-void diagnostic_message_free(struct DiagnosticMessage);
+void diagnostic_message_free(DiagnosticMessage);
 
 #endif // LIB_RUBY_PARSER_DIAGNOSTIC_MESSAGE_H",
             enum_values = self.enum_values().join(",\n    "),

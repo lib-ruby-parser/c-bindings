@@ -5,7 +5,7 @@
 #include "loc.h"
 
 // Token emitted from the lexer
-struct Token
+typedef struct Token
 {
     // Internal representation of the token type.
     // It's uniq for different token types, but don't rely on it to
@@ -18,27 +18,27 @@ struct Token
     char *token_value;
 
     // Location of the token
-    struct Loc *loc;
+    Loc *loc;
 
     // Lex state before reading a token, used by token rewriters.
     int lex_state_before;
 
     // Lex state after reading a token, used by token rewriters.
     int lex_state_after;
-};
+} Token;
 
 // A list of tokens
-struct TokenList
+typedef struct TokenList
 {
     // Length of the list
     uint32_t len;
 
     // Pointer to array of tokens
-    struct Token *list;
-};
+    Token *list;
+} TokenList;
 
 // Destructor of the TokenList
-void tokens_free(struct TokenList *tokens);
+void tokens_free(TokenList *tokens);
 
 // Returns a human-readable name of the given token_type.
 // `token_type` must be take from the `Token` struct.

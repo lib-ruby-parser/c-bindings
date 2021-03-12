@@ -20,13 +20,16 @@ impl<'a> Message<'a> {
             .collect::<Vec<_>>();
 
         if fields.is_empty() {
-            return format!("struct {} {{}};", self.message.name);
+            return format!(
+                "typedef struct {name} {{}} {name};",
+                name = self.message.name
+            );
         }
 
         format!(
-            "struct {struct_name} {{
+            "typedef struct {struct_name} {{
     {fields}
-}};",
+}} {struct_name};",
             struct_name = self.message.name,
             fields = fields.join("\n    ")
         )
@@ -34,7 +37,7 @@ impl<'a> Message<'a> {
 
     pub fn union_definition(&self) -> String {
         format!(
-            "struct {} {};",
+            "{} {};",
             self.message.name,
             camel_case_to_underscored(&self.message.name).to_lowercase()
         )

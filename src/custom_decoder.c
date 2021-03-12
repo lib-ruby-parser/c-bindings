@@ -1,9 +1,9 @@
 #include <stddef.h>
 #include "custom_decoder.h"
 
-struct DecoderOutput decode_ok(char *bytes, uint32_t len)
+DecoderOutput decode_ok(char *bytes, uint32_t len)
 {
-    return (struct DecoderOutput){
+    return (DecoderOutput){
         .status = DECODING_STATUS_OK,
         .value = {
             .success = {
@@ -11,9 +11,9 @@ struct DecoderOutput decode_ok(char *bytes, uint32_t len)
                 .len = len}}};
 }
 
-struct DecoderOutput decode_err(char *error_message)
+DecoderOutput decode_err(char *error_message)
 {
-    return (struct DecoderOutput){
+    return (DecoderOutput){
         .status = DECODING_STATUS_ERROR,
         .value = {
             .error = {

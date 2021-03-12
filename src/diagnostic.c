@@ -3,13 +3,13 @@
 #include "diagnostic.h"
 #include "loc.h"
 
-void diagnostics_free(struct DiagnosticList *diagnostics)
+void diagnostics_free(DiagnosticList *diagnostics)
 {
     if (diagnostics->len > 0)
     {
         for (uint32_t i = 0; i < diagnostics->len; i++)
         {
-            struct Diagnostic diagnostic = diagnostics->list[i];
+            Diagnostic diagnostic = diagnostics->list[i];
             diagnostic_message_free(diagnostic.message);
             loc_free(diagnostic.loc);
         }

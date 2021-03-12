@@ -19,11 +19,11 @@ impl<'a> Field<'a> {
 
     pub fn c_type(&self) -> &str {
         match self.field.field_type {
-            FieldType::Node | FieldType::MaybeNode | FieldType::RegexOptions => "struct Node *",
+            FieldType::Node | FieldType::MaybeNode | FieldType::RegexOptions => "Node *",
 
-            FieldType::Nodes => "struct NodeList *",
+            FieldType::Nodes => "NodeList *",
 
-            FieldType::Loc | FieldType::MaybeLoc => "struct Loc *",
+            FieldType::Loc | FieldType::MaybeLoc => "Loc *",
 
             FieldType::Str
             | FieldType::MaybeStr

@@ -6,7 +6,7 @@
 #include "magic_comment.h"
 #include "node.h"
 
-void parser_result_free(struct ParserResult *parser_result)
+void parser_result_free(ParserResult *parser_result)
 {
     if (parser_result->ast != NULL)
     {

@@ -6,7 +6,7 @@
 #include "token_rewriter.h"
 
 // Options that affect the process of parsing
-struct ParserOptions
+typedef struct ParserOptions
 {
     // Null-terminated name of the file you parse
     char *buffer_name;
@@ -15,13 +15,13 @@ struct ParserOptions
     bool debug;
 
     // Custom decoder that is used when given input has encoding different from ascii-8bit/utf-8
-    struct CustomDecoder *decoder;
+    CustomDecoder *decoder;
 
     // Flag that enables parser to record tokens. When set to false `ParserResult->tokens` is always empty.
     bool record_tokens;
 
     // Custom token rewriter.
-    struct TokenRewriter *token_rewriter;
-};
+    TokenRewriter *token_rewriter;
+} ParserOptions;
 
 #endif // LIB_RUBY_PARSER_OPTIONS_H

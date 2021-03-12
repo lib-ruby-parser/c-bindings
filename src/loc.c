@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include "loc.h"
 
-void loc_free(struct Loc *loc)
+void loc_free(Loc *loc)
 {
     free(loc);
 }
 
-uint32_t loc_size(const struct Loc *loc)
+uint32_t loc_size(const Loc *loc)
 {
     return loc->end - loc->begin;
 }

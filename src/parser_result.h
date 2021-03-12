@@ -3,35 +3,39 @@
 
 #include <stdint.h>
 #include "parser_options.h"
+#include "node.h"
+#include "token.h"
+#include "diagnostic.h"
+#include "comment.h"
+#include "magic_comment.h"
 #include "input.h"
 
 // Output of the parser
-struct ParserResult
+typedef struct ParserResult
 {
     // AST
-    struct Node *ast;
+    Node *ast;
 
     // List of tokens, empty if ParserOptions->record_tokens was set to false.
-    struct TokenList *tokens;
+    TokenList *tokens;
 
     // List of diagnostic messages (warnings or errors)
-    struct DiagnosticList *diagnostics;
+    DiagnosticList *diagnostics;
 
     // List of all comments
-    struct CommentList *comments;
+    CommentList *comments;
 
     // List of all magic comments
-    struct MagicCommentList *magic_comments;
+    MagicCommentList *magic_comments;
 
     // Decoded input, should be used to get source of locations and to render diagnostic messages
     Input *input;
-};
+} ParserResult;
 
 // Destructor of the ParserResult
-void parser_result_free(struct ParserResult *parser_result);
+void parser_result_free(ParserResult *parser_result);
 
 // Parses given `input` according to given `options`
-extern struct ParserResult *parse(
-    struct ParserOptions *options, const char *input, uint32_t length);
+extern ParserResult *parse(ParserOptions *options, const char *input, uint32_t length);
 
 #endif // LIB_RUBY_PARSER_RESULT_H

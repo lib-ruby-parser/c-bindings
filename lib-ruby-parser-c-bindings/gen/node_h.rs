@@ -23,29 +23,31 @@ impl<'a> NodeH<'a> {
 #include \"node_list.h\"
 #include \"loc.h\"
 
-struct Node;
-void node_free(struct Node *node);
+typedef struct Node Node;
+typedef struct Loc Loc;
+typedef struct NodeList NodeList;
+void node_free(Node *node);
 
 {node_structs}
 
-enum NodeType
+typedef enum NodeType
 {{
     {enum_values}
-}};
+}} NodeType;
 
-union InnerNode
+typedef union InnerNode
 {{
     {variants}
-}};
+}} InnerNode;
 
-struct Node
+typedef struct Node
 {{
-    enum NodeType node_type;
-    union InnerNode *inner;
-}};
+    NodeType node_type;
+    InnerNode *inner;
+}} Node;
 
-void inner_node_free(union InnerNode *inner_node, enum NodeType node_type);
-void node_free(struct Node *node);
+void inner_node_free(InnerNode *inner_node, NodeType node_type);
+void node_free(Node *node);
 
 #endif // LIB_RUBY_PARSER_GEN_H
 ",
@@ -65,13 +67,7 @@ void node_free(struct Node *node);
     fn union_variants(&self) -> Vec<String> {
         self.nodes
             .iter()
-            .map(|node| {
-                format!(
-                    "struct {} *_{};",
-                    node.struct_name,
-                    node.filename.to_lowercase()
-                )
-            })
+            .map(|node| format!("{} *_{};", node.struct_name, node.filename.to_lowercase()))
             .collect()
     }
 
@@ -93,12 +89,12 @@ impl<'a> Node<'a> {
         format!(
             "
 {comment}
-struct {struct_name}
+typedef struct {struct_name}
 {{
     {fields_declaration}
-}};
+}} {struct_name};
 
-void {name_lower}_node_free(struct {struct_name} *node);",
+void {name_lower}_node_free({struct_name} *node);",
             comment = self.comment(),
             struct_name = self.node.struct_name,
             fields_declaration = self.fields().join("\n    "),

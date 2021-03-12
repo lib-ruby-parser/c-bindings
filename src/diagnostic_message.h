@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-enum DiagnosticMessageType {
+typedef enum DiagnosticMessageType {
     FRACTION_AFTER_NUMERIC,
     NO_DIGITS_AFTER_DOT,
     UNKNOWN_TYPE_OF_PERCENT_STRING,
@@ -90,133 +90,133 @@ enum DiagnosticMessageType {
     REGEX_ERROR,
     INVALID_SYMBOL,
     VOID_VALUE_EXPRESSION
-};
+} DiagnosticMessageType;
 
-struct UnterminatedHeredoc {
+typedef struct UnterminatedHeredoc {
     char *heredoc_id;
-};
+} UnterminatedHeredoc;
 
-struct AmbiguousFirstArgument {
+typedef struct AmbiguousFirstArgument {
     char operator_;
-};
+} AmbiguousFirstArgument;
 
-struct AmbiguousOperator {
+typedef struct AmbiguousOperator {
     char *operator_;
     char *interpreted_as;
-};
+} AmbiguousOperator;
 
-struct InvalidCharacterSyntax {
+typedef struct InvalidCharacterSyntax {
     char *suggestion;
-};
+} InvalidCharacterSyntax;
 
-struct TrailingCharInNumber {
+typedef struct TrailingCharInNumber {
     char c;
-};
+} TrailingCharInNumber;
 
-struct InvalidChar {
+typedef struct InvalidChar {
     char c;
-};
+} InvalidChar;
 
-struct InvalidGvarName {
+typedef struct InvalidGvarName {
     char c;
-};
+} InvalidGvarName;
 
-struct InvalidIvarName {
+typedef struct InvalidIvarName {
     char c;
-};
+} InvalidIvarName;
 
-struct InvalidCvarName {
+typedef struct InvalidCvarName {
     char c;
-};
+} InvalidCvarName;
 
-struct UnknownRegexOptions {
+typedef struct UnknownRegexOptions {
     char *options;
-};
+} UnknownRegexOptions;
 
-struct EncodingError {
+typedef struct EncodingError {
     char *error;
-};
+} EncodingError;
 
-struct AmbiguousTernaryOperator {
+typedef struct AmbiguousTernaryOperator {
     char *condition;
-};
+} AmbiguousTernaryOperator;
 
-struct UnexpectedToken {
+typedef struct UnexpectedToken {
     char *token_name;
-};
+} UnexpectedToken;
 
-struct NoSuchLocalVariable {
+typedef struct NoSuchLocalVariable {
     char *var_name;
-};
+} NoSuchLocalVariable;
 
-struct TokAtEolWithoutExpression {
+typedef struct TokAtEolWithoutExpression {
     char *token_name;
-};
+} TokAtEolWithoutExpression;
 
-struct ComparisonAfterComparison {
+typedef struct ComparisonAfterComparison {
     char *comparison;
-};
+} ComparisonAfterComparison;
 
-struct CircularArgumentReference {
+typedef struct CircularArgumentReference {
     char *arg_name;
-};
+} CircularArgumentReference;
 
-struct CantAssignToNumparam {
+typedef struct CantAssignToNumparam {
     char *numparam;
-};
+} CantAssignToNumparam;
 
-struct CantSetVariable {
+typedef struct CantSetVariable {
     char *var_name;
-};
+} CantSetVariable;
 
-struct ReservedForNumparam {
+typedef struct ReservedForNumparam {
     char *numparam;
-};
+} ReservedForNumparam;
 
-struct NthRefIsTooBig {
+typedef struct NthRefIsTooBig {
     char *nth_ref;
-};
+} NthRefIsTooBig;
 
-struct RegexError {
+typedef struct RegexError {
     char *error;
-};
+} RegexError;
 
-struct InvalidSymbol {
+typedef struct InvalidSymbol {
     char *symbol;
-};
+} InvalidSymbol;
 
-union DiagnosticMessageData {
-    struct UnterminatedHeredoc unterminated_heredoc;
-    struct AmbiguousFirstArgument ambiguous_first_argument;
-    struct AmbiguousOperator ambiguous_operator;
-    struct InvalidCharacterSyntax invalid_character_syntax;
-    struct TrailingCharInNumber trailing_char_in_number;
-    struct InvalidChar invalid_char;
-    struct InvalidGvarName invalid_gvar_name;
-    struct InvalidIvarName invalid_ivar_name;
-    struct InvalidCvarName invalid_cvar_name;
-    struct UnknownRegexOptions unknown_regex_options;
-    struct EncodingError encoding_error;
-    struct AmbiguousTernaryOperator ambiguous_ternary_operator;
-    struct UnexpectedToken unexpected_token;
-    struct NoSuchLocalVariable no_such_local_variable;
-    struct TokAtEolWithoutExpression tok_at_eol_without_expression;
-    struct ComparisonAfterComparison comparison_after_comparison;
-    struct CircularArgumentReference circular_argument_reference;
-    struct CantAssignToNumparam cant_assign_to_numparam;
-    struct CantSetVariable cant_set_variable;
-    struct ReservedForNumparam reserved_for_numparam;
-    struct NthRefIsTooBig nth_ref_is_too_big;
-    struct RegexError regex_error;
-    struct InvalidSymbol invalid_symbol;
+typedef union DiagnosticMessageData {
+    UnterminatedHeredoc unterminated_heredoc;
+    AmbiguousFirstArgument ambiguous_first_argument;
+    AmbiguousOperator ambiguous_operator;
+    InvalidCharacterSyntax invalid_character_syntax;
+    TrailingCharInNumber trailing_char_in_number;
+    InvalidChar invalid_char;
+    InvalidGvarName invalid_gvar_name;
+    InvalidIvarName invalid_ivar_name;
+    InvalidCvarName invalid_cvar_name;
+    UnknownRegexOptions unknown_regex_options;
+    EncodingError encoding_error;
+    AmbiguousTernaryOperator ambiguous_ternary_operator;
+    UnexpectedToken unexpected_token;
+    NoSuchLocalVariable no_such_local_variable;
+    TokAtEolWithoutExpression tok_at_eol_without_expression;
+    ComparisonAfterComparison comparison_after_comparison;
+    CircularArgumentReference circular_argument_reference;
+    CantAssignToNumparam cant_assign_to_numparam;
+    CantSetVariable cant_set_variable;
+    ReservedForNumparam reserved_for_numparam;
+    NthRefIsTooBig nth_ref_is_too_big;
+    RegexError regex_error;
+    InvalidSymbol invalid_symbol;
     uint32_t other;
-};
+} DiagnosticMessageData;
 
-struct DiagnosticMessage {
-    enum DiagnosticMessageType type;
-    union DiagnosticMessageData data;
-};
+typedef struct DiagnosticMessage {
+    DiagnosticMessageType type;
+    DiagnosticMessageData data;
+} DiagnosticMessage;
 
-void diagnostic_message_free(struct DiagnosticMessage);
+void diagnostic_message_free(DiagnosticMessage);
 
 #endif // LIB_RUBY_PARSER_DIAGNOSTIC_MESSAGE_H
