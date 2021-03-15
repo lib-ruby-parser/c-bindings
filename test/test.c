@@ -72,6 +72,14 @@ void test_parse()
     parser_result_free(result);
 }
 
+void test_input()
+{
+    ParserResult *result = parse_code(NULL, "2 + 3");
+    assert_eq(input_len(result->input), 5);
+    assert(strncmp(input_ptr(result->input), "2 + 3", 5) == 0);
+    parser_result_free(result);
+}
+
 #define assert_token(tok, expected_tok_name, expected_tok_value, expected_begin, expected_end) \
     {                                                                                          \
         char *tok_name = token_name(tok.token_type);                                           \
@@ -303,6 +311,7 @@ int main()
     printf("... OK\n");
 
     test(parse);
+    test(input);
     test(tokens);
     test(diagnostics);
     test(comments);

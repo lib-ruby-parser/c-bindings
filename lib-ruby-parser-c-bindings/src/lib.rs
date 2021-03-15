@@ -52,6 +52,24 @@ pub extern "C" fn input_free(input: *mut lib_ruby_parser::source::Input) {
 }
 
 #[no_mangle]
+pub extern "C" fn input_len(input: *mut lib_ruby_parser::source::Input) -> u32 {
+    if let Some(input) = unsafe { input.as_ref() } {
+        input.as_bytes().len() as u32
+    } else {
+        0
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn input_ptr(input: *mut lib_ruby_parser::source::Input) -> *const u8 {
+    if let Some(input) = unsafe { input.as_ref() } {
+        input.as_bytes().as_ptr()
+    } else {
+        std::ptr::null()
+    }
+}
+
+#[no_mangle]
 pub extern "C" fn token_name(id: i32) -> *mut i8 {
     let token_name = lib_ruby_parser::token_name(id).to_owned();
     StringPtr::from(token_name).unwrap()
