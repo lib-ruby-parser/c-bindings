@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "token.h"
+#include "rust_free.h"
 
 void tokens_free(TokenList *tokens)
 {
@@ -8,10 +9,10 @@ void tokens_free(TokenList *tokens)
         for (uint32_t i = 0; i < tokens->len; i++)
         {
             Token token = tokens->list[i];
-            free(token.token_value);
-            free(token.loc);
+            rust_string_free(token.token_value);
+            rust_loc_free(token.loc);
         }
-        free(tokens->list);
+        rust_tokens_free(tokens->list);
     }
-    free(tokens);
+    rust_token_list_free(tokens);
 }

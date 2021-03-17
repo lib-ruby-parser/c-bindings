@@ -16,17 +16,11 @@ else
 	CARGOFLAGS += --release
 endif
 
-ifeq ($(DETECTED_OS), Windows)
+ifeq ($(CARGO_BUILD_TARGET), x86_64-pc-windows-msvc)
 	RUST_OBJ_FILE = lib_ruby_parser_c_bindings.lib
 	STATIC_LIB_EXT = lib
-endif
-
-ifeq ($(DETECTED_OS), Linux)
-	RUST_OBJ_FILE = liblib_ruby_parser_c_bindings.a
-	STATIC_LIB_EXT = a
-endif
-
-ifeq ($(DETECTED_OS), Darwin)
+else
+	# GCC-like compiler (GCC/Clang/MinGW)
 	RUST_OBJ_FILE = liblib_ruby_parser_c_bindings.a
 	STATIC_LIB_EXT = a
 endif

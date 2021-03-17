@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "comment.h"
 #include "loc.h"
+#include "rust_free.h"
 
 void comments_free(CommentList *comments)
 {
@@ -11,7 +12,7 @@ void comments_free(CommentList *comments)
             Comment comment = comments->list[i];
             loc_free(comment.location);
         }
-        free(comments->list);
+        rust_comments_free(comments->list);
     }
-    free(comments);
+    rust_comment_list_free(comments);
 }

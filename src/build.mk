@@ -1,4 +1,4 @@
-ifeq ($(DETECTED_OS), Windows)
+ifeq ($(CARGO_BUILD_TARGET), x86_64-pc-windows-msvc)
 	CCFLAGS += /std:c++17 /nologo
 	CCOBJFLAGS += /c /Fo
 	CCFLAGS += /MT /Zi
@@ -10,9 +10,8 @@ ifeq ($(DETECTED_OS), Windows)
 	endif
 
 	OBJ_FILE_EXT = obj
-endif
-
-ifeq ($(DETECTED_OS), Linux)
+else
+	# GCC-like compiler (GCC/Clang/MinGW)
 	CCFLAGS += -Wall -Wextra
 	CCOBJFLAGS += -fPIC -c
 
@@ -22,18 +21,6 @@ ifeq ($(DETECTED_OS), Linux)
 		CCFLAGS += -O2
 	endif
 
-	OBJ_FILE_EXT = o
-endif
-
-ifeq ($(DETECTED_OS), Darwin)
-	CCFLAGS += -Wall -Wextra
-	CCOBJFLAGS += -fPIC -c
-
-	ifeq ($(BUILD_ENV), debug)
-		CCFLAGS += -g -O0
-	else
-		CCFLAGS += -O2
-	endif
 	OBJ_FILE_EXT = o
 endif
 

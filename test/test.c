@@ -7,11 +7,11 @@
 
 ParserResult *parse_code(ParserOptions *options, const char *code)
 {
-    return parse(options, code, strlen(code));
+    return parse(options, code);
 }
 
 #define assert_not_null(obj) \
-    (assert((obj) != NULL), (obj))
+    assert((obj) != NULL)
 
 #define assert_eq(actual, expected) \
     assert((actual) == (expected))
@@ -25,7 +25,13 @@ ParserResult *parse_code(ParserOptions *options, const char *code)
     assert_not_null(actual);            \
     assert(strcmp(actual, expected) == 0);
 
-Node *WatchNode = NULL;
+char *copy_string(const char *source)
+{
+    uint32_t len = strlen(source);
+    char *out = (char *)malloc(len + 1);
+    strcpy(out, source);
+    return out;
+}
 
 void test_parse()
 {
@@ -34,10 +40,12 @@ void test_parse()
 
     Node *node;
 
-    node = assert_not_null(result->ast);
+    assert_not_null(result->ast);
+    node = result->ast;
     assert_eq(node->node_type, NODE_SEND);
 
-    Send *send = assert_not_null(node->inner->_send);
+    assert_not_null(node->inner->_send);
+    Send *send = node->inner->_send;
 
     assert_eq(send->recv, NULL);
 
@@ -49,14 +57,18 @@ void test_parse()
 
     Node arg1 = args->list[0];
     assert_eq(arg1.node_type, NODE_INT);
-    Int *_int = assert_not_null(arg1.inner->_int);
+
+    assert_not_null(arg1.inner->_int);
+    Int *_int = arg1.inner->_int;
     assert_str_eq(_int->value, "100");
     assert_loc(_int->expression_l, 4, 7);
     assert_eq(_int->operator_l, NULL);
 
     Node arg2 = args->list[1];
     assert_eq(arg2.node_type, NODE_STR_);
-    Str *str = assert_not_null(arg2.inner->_str_);
+
+    assert_not_null(arg2.inner->_str_);
+    Str *str = arg2.inner->_str_;
     assert_str_eq(str->value, "baz");
     assert_loc(str->begin_l, 9, 10);
     assert_loc(str->end_l, 13, 14);
@@ -84,7 +96,7 @@ void test_input()
     {                                                                                          \
         char *tok_name = token_name(tok.token_type);                                           \
         assert_str_eq(tok_name, expected_tok_name);                                            \
-        free(tok_name);                                                                        \
+        free_token_name(tok_name);                                                             \
         assert_str_eq(tok.token_value, expected_tok_value);                                    \
         assert_not_null(tok.loc);                                                              \
         assert_eq(tok.loc->begin, expected_begin);                                             \
@@ -111,7 +123,7 @@ void test_tokens()
         assert_eq(diagnostic.level, expected_level);                                                  \
         char *message = diagnostic_render_message(diagnostic);                                        \
         assert_str_eq(message, expected_message);                                                     \
-        free(message);                                                                                \
+        free_diagnostic_message(message);                                                             \
         assert_eq(diagnostic.loc->begin, expected_begin);                                             \
         assert_eq(diagnostic.loc->end, expected_end);                                                 \
     }
@@ -174,46 +186,31 @@ void test_loc()
     Loc invalid = {.begin = 0, .end = 10000};
     assert_eq(loc_source(&invalid, result->input), NULL);
 
-    free(source);
+    free_loc_source(source);
     parser_result_free(result);
 }
 
 void test_all_nodes()
 {
-    char *fcontent = NULL;
-    int fsize = 0;
-    FILE *fp;
+    FILE *f = fopen("all_nodes.rb", "rb");
+    fseek(f, 0, SEEK_END);
+    long fsize = ftell(f);
+    fseek(f, 0, SEEK_SET);
 
-    fp = fopen("all_nodes.rb", "r");
+    char *fcontent = malloc(fsize + 1);
+    fread(fcontent, 1, fsize, f);
+    fclose(f);
+    fcontent[fsize] = 0;
 
-    assert_not_null(fp);
-
-    fseek(fp, 0, SEEK_END);
-    fsize = ftell(fp);
-    fseek(fp, 0, SEEK_SET);
-
-    fcontent = malloc(fsize + 1);
-    fread(fcontent, 1, fsize, fp);
-    fcontent[fsize] = '\0';
-
-    ParserResult *result = parse_code(NULL, fcontent);
+    ParserResult *result = parse(NULL, fcontent);
     assert_not_null(result->ast);
-
     parser_result_free(result);
+
     free(fcontent);
-    fclose(fp);
 }
 
 char *decoded_source = "# encoding: us-ascii\n3";
 const char *decoding_error = "only US-ASCII is supported";
-
-char *copy_string(const char *source)
-{
-    uint32_t len = strlen(source);
-    char *out = (char *)malloc(len + 1);
-    strcpy(out, source);
-    return out;
-}
 
 DecoderOutput do_decode(void *state, const char *encoding, const char *input, uint32_t len)
 {
@@ -236,7 +233,8 @@ void test_custom_decoder_ok()
     ParserOptions options = {.buffer_name = "(test_custom_decoder_ok)", .debug = false, .decoder = &decoder};
     ParserResult *result = parse_code(&options, "# encoding: us-ascii\n2");
 
-    Node *node = assert_not_null(result->ast);
+    assert_not_null(result->ast);
+    Node *node = result->ast;
     assert_eq(node->node_type, NODE_INT);
     assert_str_eq(node->inner->_int->value, "3");
 
@@ -253,7 +251,7 @@ void test_custom_decoder_err()
     assert_eq(result->diagnostics->len, 1);
     char *message = diagnostic_render_message(result->diagnostics->list[0]);
     assert_str_eq("encoding error: DecodingError(\"only US-ASCII is supported\")", message);
-    free(message);
+    free_diagnostic_message(message);
 
     parser_result_free(result);
 }
@@ -263,6 +261,11 @@ TokenRewriterOutput rewrite_token(void *state, Token token, const char *input)
 {
     (void)state;
     (void)input;
+
+    char *token_value = copy_string(token.token_value);
+    free_token_value(token.token_value);
+    token.token_value = token_value;
+
     if (strcmp(token.token_value, "2") == 0)
     {
         // rewrite "2" to "3"
@@ -305,6 +308,8 @@ void test_token_rewriter()
 
 int main()
 {
+    printf("Statring test suite\n");
+
 #define test(name)                    \
     printf("Running test_%s", #name); \
     test_##name();                    \

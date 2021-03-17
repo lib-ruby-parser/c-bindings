@@ -5,6 +5,7 @@
 #include "comment.h"
 #include "magic_comment.h"
 #include "node.h"
+#include "rust_free.h"
 
 void parser_result_free(ParserResult *parser_result)
 {
@@ -17,5 +18,5 @@ void parser_result_free(ParserResult *parser_result)
     comments_free(parser_result->comments);
     magic_comments_free(parser_result->magic_comments);
     input_free(parser_result->input);
-    free(parser_result);
+    rust_parser_result_free(parser_result);
 }

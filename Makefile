@@ -1,17 +1,14 @@
 include scripts/setup.mk
 
 ifeq ($(DETECTED_OS), Windows)
-	CC_SET_OUT_FILE = /link /OUT:
 	LIST_DEPS = dumpbin /dependents
 endif
 
 ifeq ($(DETECTED_OS), Linux)
-	CC_SET_OUT_FILE = -o #
 	LIST_DEPS = ldd
 endif
 
 ifeq ($(DETECTED_OS), Darwin)
-	CC_SET_OUT_FILE = -o #
 	LIST_DEPS = otool -L
 endif
 
@@ -26,7 +23,7 @@ include src/build.mk
 
 STATIC_LIB = $(TARGET_DIR)/lib-ruby-parser.$(STATIC_LIB_EXT)
 
-ifeq ($(DETECTED_OS), Windows)
+ifeq ($(CARGO_BUILD_TARGET), x86_64-pc-windows-msvc)
 	BUILD_STATIC = lib.exe ws2_32.lib advapi32.lib userenv.lib $(RUST_OBJ) $(OBJECTS) /OUT:$(STATIC_LIB)
 else
 	LIB_RUBY_PARSER_O = $(TARGET_DIR)/lib-ruby-parser.$(OBJ_FILE_EXT)

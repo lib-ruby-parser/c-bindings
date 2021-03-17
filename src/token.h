@@ -42,6 +42,18 @@ void tokens_free(TokenList *tokens);
 
 // Returns a human-readable name of the given token_type.
 // `token_type` must be take from the `Token` struct.
+//
+// To free its output better use platform-independent `free_token_name`.
 char *token_name(int token_type);
+
+// Destructor of the token name.
+// On some platforms it's possible to use `free` instead of this method,
+// however, Rust allocator is not always compatible with C allocator.
+void free_token_name(char *token_name);
+
+// Destructor of the token value.
+// On some platforms it's possible to use `free` instead of this method,
+// however, Rust allocator is not always compatible with C allocator.
+void free_token_value(char *token_value);
 
 #endif // LIB_RUBY_PARSER_TOKEN_H

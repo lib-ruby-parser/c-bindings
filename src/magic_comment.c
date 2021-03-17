@@ -1,6 +1,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include "magic_comment.h"
+#include "rust_free.h"
 
 void magic_comments_free(MagicCommentList *magic_comments)
 {
@@ -12,7 +13,7 @@ void magic_comments_free(MagicCommentList *magic_comments)
             loc_free(magic_comment.key_l);
             loc_free(magic_comment.value_l);
         }
-        free(magic_comments->list);
+        rust_magic_comments_free(magic_comments->list);
     }
-    free(magic_comments);
+    rust_magic_comment_list_free(magic_comments);
 }

@@ -19,6 +19,7 @@ jobs:
       CXX: ${{ matrix.build.cxx }}
       LD: ${{ matrix.build.ld }}
       CARGOFLAGS: ${{ matrix.build.cargoflags }}
+      ASAN_OPTIONS: detect_leaks=0
     strategy:
       fail-fast: false
       matrix:
@@ -41,7 +42,7 @@ jobs:
             cargoflags: --features="generate-bindings,onig"
             run: make clean test
 
-          - name: test on windows
+          - name: test on windows (msvc)
             os: windows-latest
             target: x86_64-pc-windows-msvc
             cc: cl.exe
@@ -49,6 +50,15 @@ jobs:
             ld: link.exe
             cargoflags: ""
             run: make clean test
+
+          - name: test on windows (mingw)
+            os: windows-latest
+            target: x86_64-pc-windows-gnu
+            cc: gcc
+            cxx: g++
+            ld: ld
+            cargoflags: ""
+            run: gcc --version && make clean test
 
           - name: valgrind
             os: ubuntu-latest

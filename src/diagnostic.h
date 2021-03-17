@@ -40,9 +40,23 @@ typedef struct DiagnosticList
 void diagnostics_free(DiagnosticList *diagnostics);
 
 // Renders given diagnostic into a string
+//
+// To free its output better use platform-independent `free_rendered_diagnostic`.
 char *diagnostic_render(Diagnostic diagnostic, Input *input);
 
 // Renders a message of the given diagnostic into a string
+//
+// To free its output better use platform-independent `free_diagnostic_message`.
 char *diagnostic_render_message(Diagnostic diagnostic);
+
+// Destructor of the rendered diagnostic.
+// On some platforms it's possible to use `free` instead of this method,
+// however, Rust allocator is not always compatible with C allocator.
+void free_rendered_diagnostic(char *rendered);
+
+// Destructor of the diagnostic message.
+// On some platforms it's possible to use `free` instead of this method,
+// however, Rust allocator is not always compatible with C allocator.
+void free_diagnostic_message(char *message);
 
 #endif // LIB_RUBY_PARSER_DIAGNOSTIC_H

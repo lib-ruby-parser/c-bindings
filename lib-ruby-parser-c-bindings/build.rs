@@ -14,6 +14,8 @@ fn build_c_files() {
     gen::NodeH::new(&nodes).write();
     gen::NodeC::new(&nodes).write();
     gen::DiagnosticMessageH::new(&messages).write();
+    gen::RustFreeH::new(&nodes).write();
+    gen::FreeRs::new(&nodes).write();
 }
 
 #[cfg(feature = "generate-bindings")]

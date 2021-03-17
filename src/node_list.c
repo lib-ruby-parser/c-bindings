@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "node_list.h"
 #include "node.h"
+#include "rust_free.h"
 
 void node_list_free(NodeList *node_list)
 {
@@ -12,7 +13,7 @@ void node_list_free(NodeList *node_list)
             Node *node = &node_list->list[i];
             inner_node_free(node->inner, node->node_type);
         }
-        free(node_list->list);
+        rust_nodes_free(node_list->list);
     }
-    free(node_list);
+    rust_node_list_free(node_list);
 }

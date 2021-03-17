@@ -17,6 +17,7 @@ mod custom_decoder;
 mod diagnostic;
 mod diagnostic_message;
 pub mod diagnostic_payload;
+mod free;
 mod list;
 mod loc;
 mod magic_comment;
@@ -28,12 +29,8 @@ mod token;
 mod token_rewriter;
 
 #[no_mangle]
-pub extern "C" fn parse(
-    options: *mut ParserOptions,
-    input: *const u8,
-    length: usize,
-) -> *const ParserResult {
-    let input = unsafe { std::slice::from_raw_parts(input, length) };
+pub extern "C" fn parse(options: *mut ParserOptions, input: *const i8) -> *const ParserResult {
+    let input = unsafe { std::ffi::CStr::from_ptr(input) }.to_bytes();
 
     let options = lib_ruby_parser::ParserOptions::from(Ptr::new(options));
     let parser_result = lib_ruby_parser::Parser::new(input, options).do_parse();
@@ -42,13 +39,12 @@ pub extern "C" fn parse(
     ptr_value(parser_result)
 }
 
-pub fn ptr_value<T>(value: T) -> *mut T {
+pub(crate) fn ptr_value<T>(value: T) -> *mut T {
     Box::into_raw(Box::new(value))
 }
 
-#[no_mangle]
-pub extern "C" fn input_free(input: *mut lib_ruby_parser::source::Input) {
-    drop(unsafe { Box::from_raw(input) })
+pub(crate) fn ptr_free<T>(ptr: *mut T) {
+    drop(unsafe { Box::from_raw(ptr) })
 }
 
 #[no_mangle]

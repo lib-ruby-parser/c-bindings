@@ -17,6 +17,7 @@ impl<'a> NodeC<'a> {
         format!(
             "#include <stdlib.h>
 #include \"node.h\"
+#include \"rust_free.h\"
 
 void maybe_node_free(Node *node)
 {{
@@ -47,13 +48,13 @@ void inner_node_free(InnerNode *inner_node, NodeType node_type)
     {{
     {inner_node_free_branches}
     }}
-    free(inner_node);
+    rust_inner_node_free(inner_node);
 }}
 
 void node_free(Node *node)
 {{
     inner_node_free(node->inner, node->node_type);
-    free(node);
+    rust_node_free(node);
 }}
 ",
             node_free_fns = self.node_free_fns().join("\n"),
@@ -96,7 +97,7 @@ impl<'a> FreeFn<'a> {
 void {name_lower}_node_free({struct_name} *node)
 {{
     {free_fields}
-    free(node);
+    rust_{name_lower}_node_free(node);
 }}",
             struct_name = self.node.struct_name,
             name_lower = self.node.filename.to_lowercase(),

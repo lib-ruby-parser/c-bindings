@@ -1,15 +1,16 @@
-ifeq ($(DETECTED_OS), Windows)
+ifeq ($(CARGO_BUILD_TARGET), x86_64-pc-windows-msvc)
 	CC_SET_OUT_FILE = /link /OUT:
+else
+	# GCC-like compiler (GCC/Clang/MinGW)
+	CC_SET_OUT_FILE = -o #
 endif
 
 ifeq ($(DETECTED_OS), Linux)
-	CC_SET_OUT_FILE = -o #
 	CCEXECFLAGS = -lpthread -ldl
 endif
 
-ifeq ($(DETECTED_OS), Darwin)
-	CC_SET_OUT_FILE = -o #
-	CCEXECFLAGS = -lpthread -ldl
+ifeq ($(CARGO_BUILD_TARGET), x86_64-pc-windows-gnu)
+	CCEXECFLAGS += -lws2_32 -luserenv
 endif
 
 TEST_O = $(TARGET_DIR)/test.$(OBJ_FILE_EXT)

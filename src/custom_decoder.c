@@ -1,4 +1,5 @@
 #include <stddef.h>
+#include <stdlib.h>
 #include "custom_decoder.h"
 
 DecoderOutput decode_ok(char *bytes, uint32_t len)
@@ -18,4 +19,9 @@ DecoderOutput decode_err(char *error_message)
         .value = {
             .error = {
                 .error_message = error_message}}};
+}
+
+void cstring_ptr_free(char *ptr)
+{
+    free(ptr);
 }

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "diagnostic.h"
 #include "loc.h"
+#include "rust_free.h"
 
 void diagnostics_free(DiagnosticList *diagnostics)
 {
@@ -13,7 +14,7 @@ void diagnostics_free(DiagnosticList *diagnostics)
             diagnostic_message_free(diagnostic.message);
             loc_free(diagnostic.loc);
         }
-        free(diagnostics->list);
+        rust_diagnostics_free(diagnostics->list);
     }
-    free(diagnostics);
+    rust_diagnostic_list_free(diagnostics);
 }

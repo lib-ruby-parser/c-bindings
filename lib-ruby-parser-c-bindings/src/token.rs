@@ -2,6 +2,10 @@ use crate::bindings;
 use crate::ptr_value;
 use crate::StringPtr;
 
+extern "C" {
+    fn cstring_ptr_free(bytes: *mut i8);
+}
+
 impl From<bindings::Token> for lib_ruby_parser::Token {
     fn from(token: bindings::Token) -> Self {
         let bindings::Token {
@@ -11,13 +15,14 @@ impl From<bindings::Token> for lib_ruby_parser::Token {
             ..
         } = token;
         let loc = unsafe { Box::from_raw(loc) };
-        let token_value: String = unsafe { std::ffi::CString::from_raw(token_value) }
-            .into_string()
-            .unwrap();
+        let token_value_bytes = unsafe { std::ffi::CStr::from_ptr(token_value) }
+            .to_bytes()
+            .to_vec();
+        unsafe { cstring_ptr_free(token_value) };
 
         lib_ruby_parser::Token {
             token_type,
-            token_value: lib_ruby_parser::Bytes::new(token_value.into_bytes()),
+            token_value: lib_ruby_parser::Bytes::new(token_value_bytes),
             loc: lib_ruby_parser::Loc {
                 begin: loc.begin as usize,
                 end: loc.end as usize,

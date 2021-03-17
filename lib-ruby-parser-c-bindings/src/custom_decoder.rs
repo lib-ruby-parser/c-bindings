@@ -60,16 +60,23 @@ impl From<Ptr<bindings::CustomDecoder>>
     }
 }
 
+extern "C" {
+    fn cstring_ptr_free(bytes: *mut i8);
+}
+
 impl From<bindings::DecoderOutputError> for Result<Vec<u8>, lib_ruby_parser::source::InputError> {
     fn from(value: bindings::DecoderOutputError) -> Self {
-        let error_message = unsafe { std::ffi::CString::from_raw(value.error_message) }
-            .into_string()
+        let error_message = unsafe { std::ffi::CStr::from_ptr(value.error_message) }
+            .to_str()
+            .map(|s| s.to_owned())
             .map_err(|e| {
                 lib_ruby_parser::source::InputError::DecodingError(format!(
                     "conversion error {}",
                     e
                 ))
             })?;
+
+        unsafe { cstring_ptr_free(value.error_message) };
         Err(lib_ruby_parser::source::InputError::DecodingError(
             error_message,
         ))
@@ -78,13 +85,11 @@ impl From<bindings::DecoderOutputError> for Result<Vec<u8>, lib_ruby_parser::sou
 
 impl From<bindings::DecoderOutputSuccess> for Result<Vec<u8>, lib_ruby_parser::source::InputError> {
     fn from(value: bindings::DecoderOutputSuccess) -> Self {
-        let bytes = unsafe {
-            Vec::from_raw_parts(
-                value.bytes as *mut u8,
-                value.len as usize,
-                value.len as usize,
-            )
-        };
+        let bytes =
+            unsafe { std::slice::from_raw_parts(value.bytes as *mut u8, value.len as usize) }
+                .to_vec();
+
+        unsafe { cstring_ptr_free(value.bytes) };
         Ok(bytes)
     }
 }

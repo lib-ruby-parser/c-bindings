@@ -20,3 +20,9 @@ pub use diagnostic_message_h::DiagnosticMessageH;
 
 mod diagnostic_message_rs;
 pub use diagnostic_message_rs::DiagnosticMessageRs;
+
+mod rust_free_h;
+pub use rust_free_h::RustFreeH;
+
+mod free_rs;
+pub use free_rs::FreeRs;

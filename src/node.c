@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "node.h"
+#include "rust_free.h"
 
 void maybe_node_free(Node *node)
 {
@@ -29,7 +30,7 @@ void alias_node_free(Alias *node)
     maybe_node_free(node->from);
     maybe_loc_free(node->keyword_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_alias_node_free(node);
 }
 
 void and_asgn_node_free(AndAsgn *node)
@@ -38,7 +39,7 @@ void and_asgn_node_free(AndAsgn *node)
     maybe_node_free(node->value);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_and_asgn_node_free(node);
 }
 
 void and_node_free(And *node)
@@ -47,14 +48,14 @@ void and_node_free(And *node)
     maybe_node_free(node->rhs);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_and_node_free(node);
 }
 
 void arg_node_free(Arg *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_arg_node_free(node);
 }
 
 void args_node_free(Args *node)
@@ -63,7 +64,7 @@ void args_node_free(Args *node)
     maybe_loc_free(node->expression_l);
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
-    free(node);
+    rust_args_node_free(node);
 }
 
 void array_node_free(Array *node)
@@ -72,7 +73,7 @@ void array_node_free(Array *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_array_node_free(node);
 }
 
 void array_pattern_node_free(ArrayPattern *node)
@@ -81,7 +82,7 @@ void array_pattern_node_free(ArrayPattern *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_array_pattern_node_free(node);
 }
 
 void array_pattern_with_tail_node_free(ArrayPatternWithTail *node)
@@ -90,14 +91,14 @@ void array_pattern_with_tail_node_free(ArrayPatternWithTail *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_array_pattern_with_tail_node_free(node);
 }
 
 void back_ref_node_free(BackRef *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_back_ref_node_free(node);
 }
 
 void begin_node_free(Begin *node)
@@ -106,7 +107,7 @@ void begin_node_free(Begin *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_begin_node_free(node);
 }
 
 void block_node_free(Block *node)
@@ -117,7 +118,7 @@ void block_node_free(Block *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_block_node_free(node);
 }
 
 void block_pass_node_free(BlockPass *node)
@@ -125,16 +126,16 @@ void block_pass_node_free(BlockPass *node)
     maybe_node_free(node->value);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_block_pass_node_free(node);
 }
 
 void blockarg_node_free(Blockarg *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_blockarg_node_free(node);
 }
 
 void break__node_free(Break *node)
@@ -142,7 +143,7 @@ void break__node_free(Break *node)
     maybe_node_list_free(node->args);
     maybe_loc_free(node->keyword_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_break__node_free(node);
 }
 
 void case_node_free(Case *node)
@@ -154,7 +155,7 @@ void case_node_free(Case *node)
     maybe_loc_free(node->else_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_case_node_free(node);
 }
 
 void case_match_node_free(CaseMatch *node)
@@ -166,25 +167,25 @@ void case_match_node_free(CaseMatch *node)
     maybe_loc_free(node->else_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_case_match_node_free(node);
 }
 
 void casgn_node_free(Casgn *node)
 {
     maybe_node_free(node->scope);
-    free(node->name);
+    rust_string_free(node->name);
     maybe_node_free(node->value);
     maybe_loc_free(node->double_colon_l);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_casgn_node_free(node);
 }
 
 void cbase_node_free(Cbase *node)
 {
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_cbase_node_free(node);
 }
 
 void class_node_free(Class *node)
@@ -196,25 +197,25 @@ void class_node_free(Class *node)
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_class_node_free(node);
 }
 
 void complex_node_free(Complex *node)
 {
-    free(node->value);
+    rust_string_free(node->value);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_complex_node_free(node);
 }
 
 void const__node_free(Const *node)
 {
     maybe_node_free(node->scope);
-    free(node->name);
+    rust_string_free(node->name);
     maybe_loc_free(node->double_colon_l);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_const__node_free(node);
 }
 
 void const_pattern_node_free(ConstPattern *node)
@@ -224,13 +225,13 @@ void const_pattern_node_free(ConstPattern *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_const_pattern_node_free(node);
 }
 
 void csend_node_free(CSend *node)
 {
     maybe_node_free(node->recv);
-    free(node->method_name);
+    rust_string_free(node->method_name);
     maybe_node_list_free(node->args);
     maybe_loc_free(node->dot_l);
     maybe_loc_free(node->selector_l);
@@ -238,29 +239,29 @@ void csend_node_free(CSend *node)
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_csend_node_free(node);
 }
 
 void cvar_node_free(Cvar *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_cvar_node_free(node);
 }
 
 void cvasgn_node_free(Cvasgn *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_node_free(node->value);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_cvasgn_node_free(node);
 }
 
 void def_node_free(Def *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_node_free(node->args);
     maybe_node_free(node->body);
     maybe_loc_free(node->keyword_l);
@@ -268,7 +269,7 @@ void def_node_free(Def *node)
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->assignment_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_def_node_free(node);
 }
 
 void defined_node_free(Defined *node)
@@ -278,13 +279,13 @@ void defined_node_free(Defined *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_defined_node_free(node);
 }
 
 void defs_node_free(Defs *node)
 {
     maybe_node_free(node->definee);
-    free(node->name);
+    rust_string_free(node->name);
     maybe_node_free(node->args);
     maybe_node_free(node->body);
     maybe_loc_free(node->keyword_l);
@@ -293,7 +294,7 @@ void defs_node_free(Defs *node)
     maybe_loc_free(node->assignment_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_defs_node_free(node);
 }
 
 void dstr_node_free(Dstr *node)
@@ -302,7 +303,7 @@ void dstr_node_free(Dstr *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_dstr_node_free(node);
 }
 
 void dsym_node_free(Dsym *node)
@@ -311,7 +312,7 @@ void dsym_node_free(Dsym *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_dsym_node_free(node);
 }
 
 void eflipflop_node_free(EFlipFlop *node)
@@ -320,19 +321,19 @@ void eflipflop_node_free(EFlipFlop *node)
     maybe_node_free(node->right);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_eflipflop_node_free(node);
 }
 
 void empty_else_node_free(EmptyElse *node)
 {
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_empty_else_node_free(node);
 }
 
 void encoding__node_free(Encoding *node)
 {
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_encoding__node_free(node);
 }
 
 void ensure_node_free(Ensure *node)
@@ -341,7 +342,7 @@ void ensure_node_free(Ensure *node)
     maybe_node_free(node->ensure);
     maybe_loc_free(node->keyword_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_ensure_node_free(node);
 }
 
 void erange_node_free(Erange *node)
@@ -350,19 +351,19 @@ void erange_node_free(Erange *node)
     maybe_node_free(node->right);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_erange_node_free(node);
 }
 
 void false__node_free(False *node)
 {
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_false__node_free(node);
 }
 
 void file_node_free(File *node)
 {
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_file_node_free(node);
 }
 
 void find_pattern_node_free(FindPattern *node)
@@ -371,15 +372,15 @@ void find_pattern_node_free(FindPattern *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_find_pattern_node_free(node);
 }
 
 void float_node_free(Float *node)
 {
-    free(node->value);
+    rust_string_free(node->value);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_float_node_free(node);
 }
 
 void for__node_free(For *node)
@@ -392,36 +393,36 @@ void for__node_free(For *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_for__node_free(node);
 }
 
 void forward_arg_node_free(ForwardArg *node)
 {
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_forward_arg_node_free(node);
 }
 
 void forwarded_args_node_free(ForwardedArgs *node)
 {
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_forwarded_args_node_free(node);
 }
 
 void gvar_node_free(Gvar *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_gvar_node_free(node);
 }
 
 void gvasgn_node_free(Gvasgn *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_node_free(node->value);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_gvasgn_node_free(node);
 }
 
 void hash_node_free(Hash *node)
@@ -430,14 +431,14 @@ void hash_node_free(Hash *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_hash_node_free(node);
 }
 
 void kwargs_node_free(Kwargs *node)
 {
     maybe_node_list_free(node->pairs);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_kwargs_node_free(node);
 }
 
 void hash_pattern_node_free(HashPattern *node)
@@ -446,7 +447,7 @@ void hash_pattern_node_free(HashPattern *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_hash_pattern_node_free(node);
 }
 
 void heredoc_node_free(Heredoc *node)
@@ -455,7 +456,7 @@ void heredoc_node_free(Heredoc *node)
     maybe_loc_free(node->heredoc_body_l);
     maybe_loc_free(node->heredoc_end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_heredoc_node_free(node);
 }
 
 void if__node_free(If *node)
@@ -468,7 +469,7 @@ void if__node_free(If *node)
     maybe_loc_free(node->else_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_if__node_free(node);
 }
 
 void if_guard_node_free(IfGuard *node)
@@ -476,7 +477,7 @@ void if_guard_node_free(IfGuard *node)
     maybe_node_free(node->cond);
     maybe_loc_free(node->keyword_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_if_guard_node_free(node);
 }
 
 void if_mod_node_free(IfMod *node)
@@ -486,7 +487,7 @@ void if_mod_node_free(IfMod *node)
     maybe_node_free(node->if_false);
     maybe_loc_free(node->keyword_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_if_mod_node_free(node);
 }
 
 void if_ternary_node_free(IfTernary *node)
@@ -497,7 +498,7 @@ void if_ternary_node_free(IfTernary *node)
     maybe_loc_free(node->question_l);
     maybe_loc_free(node->colon_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_if_ternary_node_free(node);
 }
 
 void iflipflop_node_free(IFlipFlop *node)
@@ -506,7 +507,7 @@ void iflipflop_node_free(IFlipFlop *node)
     maybe_node_free(node->right);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_iflipflop_node_free(node);
 }
 
 void match_pattern_node_free(MatchPattern *node)
@@ -515,7 +516,7 @@ void match_pattern_node_free(MatchPattern *node)
     maybe_node_free(node->pattern);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_match_pattern_node_free(node);
 }
 
 void match_pattern_p_node_free(MatchPatternP *node)
@@ -524,7 +525,7 @@ void match_pattern_p_node_free(MatchPatternP *node)
     maybe_node_free(node->pattern);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_match_pattern_p_node_free(node);
 }
 
 void in_pattern_node_free(InPattern *node)
@@ -535,7 +536,7 @@ void in_pattern_node_free(InPattern *node)
     maybe_loc_free(node->keyword_l);
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_in_pattern_node_free(node);
 }
 
 void index_node_free(Index *node)
@@ -545,7 +546,7 @@ void index_node_free(Index *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_index_node_free(node);
 }
 
 void index_asgn_node_free(IndexAsgn *node)
@@ -557,15 +558,15 @@ void index_asgn_node_free(IndexAsgn *node)
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_index_asgn_node_free(node);
 }
 
 void int_node_free(Int *node)
 {
-    free(node->value);
+    rust_string_free(node->value);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_int_node_free(node);
 }
 
 void irange_node_free(Irange *node)
@@ -574,32 +575,32 @@ void irange_node_free(Irange *node)
     maybe_node_free(node->right);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_irange_node_free(node);
 }
 
 void ivar_node_free(Ivar *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_ivar_node_free(node);
 }
 
 void ivasgn_node_free(Ivasgn *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_node_free(node->value);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_ivasgn_node_free(node);
 }
 
 void kwarg_node_free(Kwarg *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_kwarg_node_free(node);
 }
 
 void kwbegin_node_free(KwBegin *node)
@@ -608,32 +609,32 @@ void kwbegin_node_free(KwBegin *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_kwbegin_node_free(node);
 }
 
 void kwnilarg_node_free(Kwnilarg *node)
 {
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_kwnilarg_node_free(node);
 }
 
 void kwoptarg_node_free(Kwoptarg *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_node_free(node->default_);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_kwoptarg_node_free(node);
 }
 
 void kwrestarg_node_free(Kwrestarg *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_kwrestarg_node_free(node);
 }
 
 void kwsplat_node_free(Kwsplat *node)
@@ -641,36 +642,36 @@ void kwsplat_node_free(Kwsplat *node)
     maybe_node_free(node->value);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_kwsplat_node_free(node);
 }
 
 void lambda_node_free(Lambda *node)
 {
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_lambda_node_free(node);
 }
 
 void line_node_free(Line *node)
 {
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_line_node_free(node);
 }
 
 void lvar_node_free(Lvar *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_lvar_node_free(node);
 }
 
 void lvasgn_node_free(Lvasgn *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_node_free(node->value);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_lvasgn_node_free(node);
 }
 
 void masgn_node_free(Masgn *node)
@@ -679,7 +680,7 @@ void masgn_node_free(Masgn *node)
     maybe_node_free(node->rhs);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_masgn_node_free(node);
 }
 
 void match_alt_node_free(MatchAlt *node)
@@ -688,7 +689,7 @@ void match_alt_node_free(MatchAlt *node)
     maybe_node_free(node->rhs);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_match_alt_node_free(node);
 }
 
 void match_as_node_free(MatchAs *node)
@@ -697,14 +698,14 @@ void match_as_node_free(MatchAs *node)
     maybe_node_free(node->as_);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_match_as_node_free(node);
 }
 
 void match_current_line_node_free(MatchCurrentLine *node)
 {
     maybe_node_free(node->re);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_match_current_line_node_free(node);
 }
 
 void match_nil_pattern_node_free(MatchNilPattern *node)
@@ -712,7 +713,7 @@ void match_nil_pattern_node_free(MatchNilPattern *node)
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_match_nil_pattern_node_free(node);
 }
 
 void match_rest_node_free(MatchRest *node)
@@ -720,15 +721,15 @@ void match_rest_node_free(MatchRest *node)
     maybe_node_free(node->name);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_match_rest_node_free(node);
 }
 
 void match_var_node_free(MatchVar *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_match_var_node_free(node);
 }
 
 void match_with_lvasgn_node_free(MatchWithLvasgn *node)
@@ -737,7 +738,7 @@ void match_with_lvasgn_node_free(MatchWithLvasgn *node)
     maybe_node_free(node->value);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_match_with_lvasgn_node_free(node);
 }
 
 void mlhs_node_free(Mlhs *node)
@@ -746,7 +747,7 @@ void mlhs_node_free(Mlhs *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_mlhs_node_free(node);
 }
 
 void module_node_free(Module *node)
@@ -756,7 +757,7 @@ void module_node_free(Module *node)
     maybe_loc_free(node->keyword_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_module_node_free(node);
 }
 
 void next_node_free(Next *node)
@@ -764,20 +765,20 @@ void next_node_free(Next *node)
     maybe_node_list_free(node->args);
     maybe_loc_free(node->keyword_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_next_node_free(node);
 }
 
 void nil_node_free(Nil *node)
 {
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_nil_node_free(node);
 }
 
 void nth_ref_node_free(NthRef *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_nth_ref_node_free(node);
 }
 
 void numblock_node_free(Numblock *node)
@@ -787,27 +788,27 @@ void numblock_node_free(Numblock *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_numblock_node_free(node);
 }
 
 void op_asgn_node_free(OpAsgn *node)
 {
     maybe_node_free(node->recv);
-    free(node->operator);
+    rust_string_free(node->operator);
     maybe_node_free(node->value);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_op_asgn_node_free(node);
 }
 
 void optarg_node_free(Optarg *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_node_free(node->default_);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_optarg_node_free(node);
 }
 
 void or_node_free(Or *node)
@@ -816,7 +817,7 @@ void or_node_free(Or *node)
     maybe_node_free(node->rhs);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_or_node_free(node);
 }
 
 void or_asgn_node_free(OrAsgn *node)
@@ -825,7 +826,7 @@ void or_asgn_node_free(OrAsgn *node)
     maybe_node_free(node->value);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_or_asgn_node_free(node);
 }
 
 void pair_node_free(Pair *node)
@@ -834,7 +835,7 @@ void pair_node_free(Pair *node)
     maybe_node_free(node->value);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_pair_node_free(node);
 }
 
 void pin_node_free(Pin *node)
@@ -842,7 +843,7 @@ void pin_node_free(Pin *node)
     maybe_node_free(node->var);
     maybe_loc_free(node->selector_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_pin_node_free(node);
 }
 
 void postexe_node_free(Postexe *node)
@@ -852,7 +853,7 @@ void postexe_node_free(Postexe *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_postexe_node_free(node);
 }
 
 void preexe_node_free(Preexe *node)
@@ -862,7 +863,7 @@ void preexe_node_free(Preexe *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_preexe_node_free(node);
 }
 
 void procarg0_node_free(Procarg0 *node)
@@ -871,28 +872,28 @@ void procarg0_node_free(Procarg0 *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_procarg0_node_free(node);
 }
 
 void rational_node_free(Rational *node)
 {
-    free(node->value);
+    rust_string_free(node->value);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_rational_node_free(node);
 }
 
 void redo_node_free(Redo *node)
 {
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_redo_node_free(node);
 }
 
 void reg_opt_node_free(RegOpt *node)
 {
-    free(node->options);
+    rust_string_free(node->options);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_reg_opt_node_free(node);
 }
 
 void regexp_node_free(Regexp *node)
@@ -902,7 +903,7 @@ void regexp_node_free(Regexp *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_regexp_node_free(node);
 }
 
 void rescue_node_free(Rescue *node)
@@ -912,7 +913,7 @@ void rescue_node_free(Rescue *node)
     maybe_node_free(node->else_);
     maybe_loc_free(node->else_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_rescue_node_free(node);
 }
 
 void rescue_body_node_free(RescueBody *node)
@@ -924,22 +925,22 @@ void rescue_body_node_free(RescueBody *node)
     maybe_loc_free(node->assoc_l);
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_rescue_body_node_free(node);
 }
 
 void restarg_node_free(Restarg *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->name_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_restarg_node_free(node);
 }
 
 void retry_node_free(Retry *node)
 {
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_retry_node_free(node);
 }
 
 void return__node_free(Return *node)
@@ -947,7 +948,7 @@ void return__node_free(Return *node)
     maybe_node_list_free(node->args);
     maybe_loc_free(node->keyword_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_return__node_free(node);
 }
 
 void sclass_node_free(SClass *node)
@@ -958,19 +959,19 @@ void sclass_node_free(SClass *node)
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_sclass_node_free(node);
 }
 
 void self__node_free(Self_ *node)
 {
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_self__node_free(node);
 }
 
 void send_node_free(Send *node)
 {
     maybe_node_free(node->recv);
-    free(node->method_name);
+    rust_string_free(node->method_name);
     maybe_node_list_free(node->args);
     maybe_loc_free(node->dot_l);
     maybe_loc_free(node->selector_l);
@@ -978,14 +979,14 @@ void send_node_free(Send *node)
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_send_node_free(node);
 }
 
 void shadowarg_node_free(Shadowarg *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_shadowarg_node_free(node);
 }
 
 void splat_node_free(Splat *node)
@@ -993,16 +994,16 @@ void splat_node_free(Splat *node)
     maybe_node_free(node->value);
     maybe_loc_free(node->operator_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_splat_node_free(node);
 }
 
 void str__node_free(Str *node)
 {
-    free(node->value);
+    rust_string_free(node->value);
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_str__node_free(node);
 }
 
 void super__node_free(Super *node)
@@ -1012,22 +1013,22 @@ void super__node_free(Super *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_super__node_free(node);
 }
 
 void sym_node_free(Sym *node)
 {
-    free(node->name);
+    rust_string_free(node->name);
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_sym_node_free(node);
 }
 
 void true__node_free(True *node)
 {
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_true__node_free(node);
 }
 
 void undef_node_free(Undef *node)
@@ -1035,7 +1036,7 @@ void undef_node_free(Undef *node)
     maybe_node_list_free(node->names);
     maybe_loc_free(node->keyword_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_undef_node_free(node);
 }
 
 void unless_guard_node_free(UnlessGuard *node)
@@ -1043,7 +1044,7 @@ void unless_guard_node_free(UnlessGuard *node)
     maybe_node_free(node->cond);
     maybe_loc_free(node->keyword_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_unless_guard_node_free(node);
 }
 
 void until_node_free(Until *node)
@@ -1054,7 +1055,7 @@ void until_node_free(Until *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_until_node_free(node);
 }
 
 void until_post_node_free(UntilPost *node)
@@ -1063,7 +1064,7 @@ void until_post_node_free(UntilPost *node)
     maybe_node_free(node->body);
     maybe_loc_free(node->keyword_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_until_post_node_free(node);
 }
 
 void when_node_free(When *node)
@@ -1073,7 +1074,7 @@ void when_node_free(When *node)
     maybe_loc_free(node->keyword_l);
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_when_node_free(node);
 }
 
 void while__node_free(While *node)
@@ -1084,7 +1085,7 @@ void while__node_free(While *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_while__node_free(node);
 }
 
 void while_post_node_free(WhilePost *node)
@@ -1093,7 +1094,7 @@ void while_post_node_free(WhilePost *node)
     maybe_node_free(node->body);
     maybe_loc_free(node->keyword_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_while_post_node_free(node);
 }
 
 void x_heredoc_node_free(XHeredoc *node)
@@ -1102,7 +1103,7 @@ void x_heredoc_node_free(XHeredoc *node)
     maybe_loc_free(node->heredoc_body_l);
     maybe_loc_free(node->heredoc_end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_x_heredoc_node_free(node);
 }
 
 void xstr_node_free(Xstr *node)
@@ -1111,7 +1112,7 @@ void xstr_node_free(Xstr *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_xstr_node_free(node);
 }
 
 void yield__node_free(Yield *node)
@@ -1121,13 +1122,13 @@ void yield__node_free(Yield *node)
     maybe_loc_free(node->begin_l);
     maybe_loc_free(node->end_l);
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_yield__node_free(node);
 }
 
 void zsuper_node_free(ZSuper *node)
 {
     maybe_loc_free(node->expression_l);
-    free(node);
+    rust_zsuper_node_free(node);
 }
 
 void inner_node_free(InnerNode *inner_node, NodeType node_type)
@@ -1507,11 +1508,11 @@ void inner_node_free(InnerNode *inner_node, NodeType node_type)
         zsuper_node_free(inner_node->_zsuper);
         break;
     }
-    free(inner_node);
+    rust_inner_node_free(inner_node);
 }
 
 void node_free(Node *node)
 {
     inner_node_free(node->inner, node->node_type);
-    free(node);
+    rust_node_free(node);
 }

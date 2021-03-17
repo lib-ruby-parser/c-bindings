@@ -36,6 +36,6 @@ typedef struct ParserResult
 void parser_result_free(ParserResult *parser_result);
 
 // Parses given `input` according to given `options`
-extern ParserResult *parse(ParserOptions *options, const char *input, uint32_t length);
+extern ParserResult *parse(ParserOptions *options, const char *input);
 
 #endif // LIB_RUBY_PARSER_RESULT_H

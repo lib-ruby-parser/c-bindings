@@ -22,6 +22,13 @@ void loc_free(Loc *loc);
 uint32_t loc_size(const Loc *loc);
 
 // Returns the source code of the location (i.e. code from `begin` to `end`)
+//
+// To free its output better use platform-independent `free_loc_source`.
 char *loc_source(const Loc *loc, const Input *input);
+
+// Destructor of the location source.
+// On some platforms it's possible to use `free` instead of this method,
+// however, Rust allocator is not always compatible with C allocator.
+void free_loc_source(char *source);
 
 #endif // LIB_RUBY_PARSER_LOC_H
