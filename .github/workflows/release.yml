@@ -38,7 +38,7 @@ jobs:
           path: artifact-env
 
   upload-release:
-    name: build ${{ matrix.build.target }}
+    name: ${{ matrix.build.target }}
     needs: ['create-release']
     runs-on: ${{ matrix.build.os }}
     env:
@@ -85,8 +85,8 @@ jobs:
             cxx: g++
             ld: ld
             cargoflags: ""
-            output: lib-ruby-parser.lib
-            upload_as: lib-ruby-parser-x86_64-pc-windows-gnu.lib
+            output: lib-ruby-parser.a
+            upload_as: lib-ruby-parser-x86_64-pc-windows-gnu.a
 
     steps:
       - name: setup msvc on windows
