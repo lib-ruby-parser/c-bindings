@@ -47,3 +47,6 @@ clean:
 
 # fuzzer
 include fuzzer/build.mk
+
+# benchmark
+include benchmark/build.mk
