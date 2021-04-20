@@ -142,8 +142,6 @@ jobs:
     name: upload-headers
     needs: ['create-release']
     runs-on: ubuntu-latest
-    env:
-      BUILD_ENV: release
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -157,25 +155,12 @@ jobs:
       - name: load env artifact
         run: cat artifact-env/artifact-env >> $GITHUB_ENV
 
-      - name: install rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly
-          profile: minimal
-          override: true
-
-      - name: generate lib-ruby-parser.h
-        run: make clean target/lib-ruby-parser.h
-
-      - name: show asset
-        run: ls -l target/lib-ruby-parser.h
-
       - name: upload assets
         uses: actions/upload-release-asset@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ env.RELEASE_UPLOAD_URL }}
-          asset_path: target/lib-ruby-parser.h
+          asset_path: src/lib-ruby-parser.h
           asset_name: lib-ruby-parser.h
           asset_content_type: application/octet-stream
