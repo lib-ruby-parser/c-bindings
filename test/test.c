@@ -57,7 +57,7 @@ void test_parse()
 
     LIB_RUBY_PARSER_Send send = node->send;
     assert_eq(send.recv, NULL);
-    byte_list = lib_ruby_parser_string_ptr_to_list(send.method_name);
+    byte_list = lib_ruby_parser_byte_list_from_string_ptr(send.method_name);
     assert_str_eq((char *)(byte_list.ptr), "foo", 3);
     lib_ruby_parser_free_byte_list(byte_list);
 
@@ -67,7 +67,7 @@ void test_parse()
     LIB_RUBY_PARSER_Node arg1 = args.ptr[0];
     assert_eq(arg1.tag, NODE_INT);
     LIB_RUBY_PARSER_Int int_ = arg1.int_;
-    byte_list = lib_ruby_parser_string_ptr_to_list(int_.value);
+    byte_list = lib_ruby_parser_byte_list_from_string_ptr(int_.value);
     assert_str_eq((char *)byte_list.ptr, "100", 3);
     lib_ruby_parser_free_byte_list(byte_list);
     assert_loc(int_.expression_l, 4, 7);
@@ -77,7 +77,7 @@ void test_parse()
     assert_eq(arg2.tag, NODE_STR);
 
     LIB_RUBY_PARSER_Str str = arg2.str;
-    byte_list = lib_ruby_parser_string_value_to_list(str.value);
+    byte_list = lib_ruby_parser_byte_list_from_string_value(str.value);
     assert_str_eq((char *)byte_list.ptr, "baz", 3);
     lib_ruby_parser_free_byte_list(byte_list);
     assert_maybe_loc(str.begin_l, 9, 10);
@@ -262,7 +262,7 @@ void test_custom_decoder_ok()
     LIB_RUBY_PARSER_MaybeNodePtr node = result.ast;
     assert_eq(node->tag, NODE_INT);
 
-    LIB_RUBY_PARSER_ByteList int_value = lib_ruby_parser_string_ptr_to_list(node->int_.value);
+    LIB_RUBY_PARSER_ByteList int_value = lib_ruby_parser_byte_list_from_string_ptr(node->int_.value);
     assert_str_eq((char *)(int_value.ptr), "3", 1);
     lib_ruby_parser_free_byte_list(int_value);
 

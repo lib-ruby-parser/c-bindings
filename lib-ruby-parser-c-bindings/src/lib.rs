@@ -3,11 +3,12 @@
 extern crate lib_ruby_parser;
 
 mod allocator;
-mod containers;
+mod byte_list;
 mod diagnostic;
 mod loc;
 mod parser_options;
 mod parser_result;
+mod string_ptr;
 mod token;
 
 use lib_ruby_parser::c_parse::ForeignParserOptions;
