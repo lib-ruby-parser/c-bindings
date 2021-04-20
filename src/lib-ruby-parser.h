@@ -12,8 +12,8 @@
 #include <stdlib.h>
 
 struct LIB_RUBY_PARSER_Node;
-typedef struct LIB_RUBY_PARSER_Node* LIB_RUBY_PARSER_MaybePtr_Node;
-typedef struct LIB_RUBY_PARSER_Node* LIB_RUBY_PARSER_Ptr_Node;
+typedef struct LIB_RUBY_PARSER_Node* LIB_RUBY_PARSER_MaybeNodePtr;
+typedef struct LIB_RUBY_PARSER_Node* LIB_RUBY_PARSER_NodePtr;
 
 
 // Token `` "end-of-input" ``, to be returned by the scanner.
@@ -683,9 +683,9 @@ typedef struct LIB_RUBY_PARSER_Token {
 } LIB_RUBY_PARSER_Token;
 
 // C-compatible not-null pointer
-typedef struct LIB_RUBY_PARSER_Ptr_Token {
+typedef struct LIB_RUBY_PARSER_TokenPtr {
   struct LIB_RUBY_PARSER_Token *ptr;
-} LIB_RUBY_PARSER_Ptr_Token;
+} LIB_RUBY_PARSER_TokenPtr;
 
 // Enum of what token rewriter should do with the state of the lexer
 typedef enum LIB_RUBY_PARSER_LexStateAction_Tag {
@@ -707,7 +707,7 @@ typedef struct LIB_RUBY_PARSER_LexStateAction {
 // Output of the token rewriter
 typedef struct LIB_RUBY_PARSER_TokenRewriterResult {
   // Rewritten token. Can be input token if no rewriting expected
-  struct LIB_RUBY_PARSER_Ptr_Token rewritten_token;
+  struct LIB_RUBY_PARSER_TokenPtr rewritten_token;
   // Action to be applied on a token (keep or drop)
   enum LIB_RUBY_PARSER_RewriteAction token_action;
   // Action to be applied on lexer's state (keep as is or change)
@@ -720,7 +720,7 @@ typedef struct LIB_RUBY_PARSER_SharedByteList {
   size_t len;
 } LIB_RUBY_PARSER_SharedByteList;
 
-typedef struct LIB_RUBY_PARSER_TokenRewriterResult (*LIB_RUBY_PARSER_ForeignTokenRewriterFn)(struct LIB_RUBY_PARSER_Ptr_Token, struct LIB_RUBY_PARSER_SharedByteList);
+typedef struct LIB_RUBY_PARSER_TokenRewriterResult (*LIB_RUBY_PARSER_ForeignTokenRewriterFn)(struct LIB_RUBY_PARSER_TokenPtr, struct LIB_RUBY_PARSER_SharedByteList);
 
 // C-compatible token rewriter struct
 typedef struct LIB_RUBY_PARSER_ForeignTokenRewriter {
@@ -1499,7 +1499,7 @@ typedef struct LIB_RUBY_PARSER_DecodedInput {
 typedef struct LIB_RUBY_PARSER_ParserResult {
   // Abstract Syntax Tree that was constructed from you code.
   // Contains `None` if the code gives no AST nodes
-  LIB_RUBY_PARSER_MaybePtr_Node ast;
+  LIB_RUBY_PARSER_MaybeNodePtr ast;
   // List of tokens returned by a Lexer and consumed by a Parser.
   // Empty unless ParserOptions::record_tokens is set to true.
   struct LIB_RUBY_PARSER_TokenList tokens;
@@ -1557,12 +1557,12 @@ typedef struct LIB_RUBY_PARSER_Alias {
   //
   // `Sym("foo")` node for `alias :foo :bar`
   //
-  LIB_RUBY_PARSER_Ptr_Node to;
+  LIB_RUBY_PARSER_NodePtr to;
   // Source of the `alias`.
   //
   // `Sym("bar")` node for `alias :foo :bar`
   //
-  LIB_RUBY_PARSER_Ptr_Node from;
+  LIB_RUBY_PARSER_NodePtr from;
   // Location of the `alias` keyword
   //
   // ```text
@@ -1588,12 +1588,12 @@ typedef struct LIB_RUBY_PARSER_AndAsgn {
   //
   // `Lvasgn("a")` node for `a &&= 1`
   //
-  LIB_RUBY_PARSER_Ptr_Node recv;
+  LIB_RUBY_PARSER_NodePtr recv;
   // Right hand statement of assignment
   //
   // `Int("1")` node for `a &&= 1`
   //
-  LIB_RUBY_PARSER_Ptr_Node value;
+  LIB_RUBY_PARSER_NodePtr value;
   // Location of the `&&=` operator
   //
   // ```text
@@ -1619,12 +1619,12 @@ typedef struct LIB_RUBY_PARSER_And {
   //
   // `Lvar("foo")` node for `foo && bar`
   //
-  LIB_RUBY_PARSER_Ptr_Node lhs;
+  LIB_RUBY_PARSER_NodePtr lhs;
   // Right hand statement of the `&&` operation.
   //
   // `Lvar("bar")` node for `foo && bar`
   //
-  LIB_RUBY_PARSER_Ptr_Node rhs;
+  LIB_RUBY_PARSER_NodePtr rhs;
   // Location of the `&&` (or `and`) operator
   //
   // ```text
@@ -1885,17 +1885,17 @@ typedef struct LIB_RUBY_PARSER_Block {
   //
   // `Send("foo")` in `foo {}`
   //
-  LIB_RUBY_PARSER_Ptr_Node call;
+  LIB_RUBY_PARSER_NodePtr call;
   // A list of argument that block takes
   //
   // `vec![ Arg("a"), Optarg("b", Int("1")) ]` for `proc { |a, b = 1| }`
   //
   // `None` if the block takes no arguments
   //
-  LIB_RUBY_PARSER_MaybePtr_Node args;
+  LIB_RUBY_PARSER_MaybeNodePtr args;
   // Block body, `None` if block has no body.
   //
-  LIB_RUBY_PARSER_MaybePtr_Node body;
+  LIB_RUBY_PARSER_MaybeNodePtr body;
   // Location of the open brace
   //
   // ```text
@@ -1929,7 +1929,7 @@ typedef struct LIB_RUBY_PARSER_BlockPass {
   //
   // `Int("1")` in `foo(&1)` (yes, it's possible)
   //
-  LIB_RUBY_PARSER_Ptr_Node value;
+  LIB_RUBY_PARSER_NodePtr value;
   // Location of the `&` operator
   //
   // ```text
@@ -2016,13 +2016,13 @@ typedef struct LIB_RUBY_PARSER_Case {
   // end
   // ```
   //
-  LIB_RUBY_PARSER_MaybePtr_Node expr;
+  LIB_RUBY_PARSER_MaybeNodePtr expr;
   // A list of `When` nodes (each has `patterns` and `body`)
   //
   struct LIB_RUBY_PARSER_NodeList when_bodies;
   // Body of the `else` branch, `None` if there's no `else` branch
   //
-  LIB_RUBY_PARSER_MaybePtr_Node else_body;
+  LIB_RUBY_PARSER_MaybeNodePtr else_body;
   // Location of the `case` keyword
   //
   // ```text
@@ -2071,13 +2071,13 @@ typedef struct LIB_RUBY_PARSER_CaseMatch {
   // end
   // ```
   //
-  LIB_RUBY_PARSER_Ptr_Node expr;
+  LIB_RUBY_PARSER_NodePtr expr;
   // A list of `InPattern` nodes (each has `pattern`, `guard` and `body`)
   //
   struct LIB_RUBY_PARSER_NodeList in_bodies;
   // Body of the `else` branch, `None` if there's no `else` branch
   //
-  LIB_RUBY_PARSER_MaybePtr_Node else_body;
+  LIB_RUBY_PARSER_MaybeNodePtr else_body;
   // Location of the `case` keyword
   //
   // ```text
@@ -2122,7 +2122,7 @@ typedef struct LIB_RUBY_PARSER_Casgn {
   //     2. `None` if it's defined in the current scope (i.e. `A = 1`)
   //     3. `Some(Cbase)` if it's defined in the global scope (i.e. `::A = 1`)
   //
-  LIB_RUBY_PARSER_MaybePtr_Node scope;
+  LIB_RUBY_PARSER_MaybeNodePtr scope;
   // Name of the constant, `String("A")` for `A = 1`
   //
   struct LIB_RUBY_PARSER_StringPtr name;
@@ -2131,7 +2131,7 @@ typedef struct LIB_RUBY_PARSER_Casgn {
   // **Note**: `None` if constant assignment is a part of the multi-assignment.
   // In such case `value` belongs to `Masgn` node of the multi-assignment.
   //
-  LIB_RUBY_PARSER_MaybePtr_Node value;
+  LIB_RUBY_PARSER_MaybeNodePtr value;
   // Location of the `::` operator
   //
   // ```text
@@ -2192,15 +2192,15 @@ typedef struct LIB_RUBY_PARSER_Cbase {
 typedef struct LIB_RUBY_PARSER_Class {
   // Name of the class, `String("Foo")` for `class Foo; end`
   //
-  LIB_RUBY_PARSER_Ptr_Node name;
+  LIB_RUBY_PARSER_NodePtr name;
   // Superclass. Can be an expression in cases like `class A < (obj.foo + 1); end`
   //
   // `None` if no explicit superclass given (i.e. `class Foo; end`)
   //
-  LIB_RUBY_PARSER_MaybePtr_Node superclass;
+  LIB_RUBY_PARSER_MaybeNodePtr superclass;
   // Body of the method, `None` if there's no body.
   //
-  LIB_RUBY_PARSER_MaybePtr_Node body;
+  LIB_RUBY_PARSER_MaybeNodePtr body;
   // Location of the `class` keyword.
   //
   // ```text
@@ -2271,7 +2271,7 @@ typedef struct LIB_RUBY_PARSER_Const {
   //     2. `None` if it's taken from the current scope (i.e. `A`)
   //     3. `Some(Cbase)` if it's taken from the global scope (i.e. `::A`)
   //
-  LIB_RUBY_PARSER_MaybePtr_Node scope;
+  LIB_RUBY_PARSER_MaybeNodePtr scope;
   // Name of the constant, `String("Foo")` for `Foo`
   //
   struct LIB_RUBY_PARSER_StringPtr name;
@@ -2306,12 +2306,12 @@ typedef struct LIB_RUBY_PARSER_Const {
 typedef struct LIB_RUBY_PARSER_ConstPattern {
   // Constant that is used, `Const("Foo")` for `in For(42)`
   //
-  LIB_RUBY_PARSER_Ptr_Node const_;
+  LIB_RUBY_PARSER_NodePtr const_;
   // Inner part of the constant pattern
   //
   // `ArrayPattern(vec![ Int("1") ])` for `Foo(1)`
   //
-  LIB_RUBY_PARSER_Ptr_Node pattern;
+  LIB_RUBY_PARSER_NodePtr pattern;
   // Location of the open parenthesis
   //
   // ```text
@@ -2343,7 +2343,7 @@ typedef struct LIB_RUBY_PARSER_ConstPattern {
 typedef struct LIB_RUBY_PARSER_CSend {
   // Receiver of the method call, `Int("1")` for `1&.foo`
   //
-  LIB_RUBY_PARSER_Ptr_Node recv;
+  LIB_RUBY_PARSER_NodePtr recv;
   // Name of the method, `String("foo")` for `1&.foo`
   //
   struct LIB_RUBY_PARSER_StringPtr method_name;
@@ -2438,7 +2438,7 @@ typedef struct LIB_RUBY_PARSER_Cvasgn {
   struct LIB_RUBY_PARSER_StringPtr name;
   // Value that is assigned to class variable, `Int("1")` for `@@foo = 1`
   //
-  LIB_RUBY_PARSER_MaybePtr_Node value;
+  LIB_RUBY_PARSER_MaybeNodePtr value;
   // Location of the class variable name
   //
   // ```text
@@ -2475,10 +2475,10 @@ typedef struct LIB_RUBY_PARSER_Def {
   //
   // All information about parentheses around arguments is stored in this node.
   //
-  LIB_RUBY_PARSER_MaybePtr_Node args;
+  LIB_RUBY_PARSER_MaybeNodePtr args;
   // Body of a method, `None` if there's no body.
   //
-  LIB_RUBY_PARSER_MaybePtr_Node body;
+  LIB_RUBY_PARSER_MaybeNodePtr body;
   // Location of the `def` keyword.
   //
   // ```text
@@ -2530,7 +2530,7 @@ typedef struct LIB_RUBY_PARSER_Def {
 typedef struct LIB_RUBY_PARSER_Defined {
   // Value given to `defined?`
   //
-  LIB_RUBY_PARSER_Ptr_Node value;
+  LIB_RUBY_PARSER_NodePtr value;
   // Location of the `defined?` keyword
   //
   // ```text
@@ -2574,7 +2574,7 @@ typedef struct LIB_RUBY_PARSER_Defined {
 typedef struct LIB_RUBY_PARSER_Defs {
   // Definee of a method definition, `Lvar("x")` for `def x.foo; end
   //
-  LIB_RUBY_PARSER_Ptr_Node definee;
+  LIB_RUBY_PARSER_NodePtr definee;
   // Name of the method, `String("foo")` for `def x.foo; end`
   //
   struct LIB_RUBY_PARSER_StringPtr name;
@@ -2582,10 +2582,10 @@ typedef struct LIB_RUBY_PARSER_Defs {
   //
   // All information about parentheses around arguments is stored in this node.
   //
-  LIB_RUBY_PARSER_MaybePtr_Node args;
+  LIB_RUBY_PARSER_MaybeNodePtr args;
   // Body of the method, `None` if there's no body.
   //
-  LIB_RUBY_PARSER_MaybePtr_Node body;
+  LIB_RUBY_PARSER_MaybeNodePtr body;
   // Location of the `def` keyword
   //
   // ```text
@@ -2730,10 +2730,10 @@ typedef struct LIB_RUBY_PARSER_Dsym {
 typedef struct LIB_RUBY_PARSER_EFlipFlop {
   // Left part of the flip-flop. `None` if based on a range without begin (`...bar`)
   //
-  LIB_RUBY_PARSER_MaybePtr_Node left;
+  LIB_RUBY_PARSER_MaybeNodePtr left;
   // Right part of the flip-flop. `None` if based on a range without end (`foo...`)
   //
-  LIB_RUBY_PARSER_MaybePtr_Node right;
+  LIB_RUBY_PARSER_MaybeNodePtr right;
   // Location of the `...` operator
   //
   // ```text
@@ -2791,12 +2791,12 @@ typedef struct LIB_RUBY_PARSER_Ensure {
   //
   // `Int("1")` for `begin; 1; ensure; 2; end`
   //
-  LIB_RUBY_PARSER_MaybePtr_Node body;
+  LIB_RUBY_PARSER_MaybeNodePtr body;
   // Body of the `ensure` block
   //
   // `Int("2")` for `begin; 1; ensure; 2; end`
   //
-  LIB_RUBY_PARSER_MaybePtr_Node ensure;
+  LIB_RUBY_PARSER_MaybeNodePtr ensure;
   // Location of the `ensure` keyword
   //
   // ```text
@@ -2821,10 +2821,10 @@ typedef struct LIB_RUBY_PARSER_Ensure {
 typedef struct LIB_RUBY_PARSER_Erange {
   // Begin of the range, `None` if range has no begin (i.e `...42`)
   //
-  LIB_RUBY_PARSER_MaybePtr_Node left;
+  LIB_RUBY_PARSER_MaybeNodePtr left;
   // End of the range, `None` if range has no end (i.e `42...`)
   //
-  LIB_RUBY_PARSER_MaybePtr_Node right;
+  LIB_RUBY_PARSER_MaybeNodePtr right;
   // Location of the `...` operator
   //
   // ```text
@@ -2936,13 +2936,13 @@ typedef struct LIB_RUBY_PARSER_Float {
 typedef struct LIB_RUBY_PARSER_For {
   // Variable that is used in loop, `Lvasgn("a")` in `for a in b; end`
   //
-  LIB_RUBY_PARSER_Ptr_Node iterator;
+  LIB_RUBY_PARSER_NodePtr iterator;
   // Collection that is for iteration. `Lvar("b")` in `for a in b; end`
   //
-  LIB_RUBY_PARSER_Ptr_Node iteratee;
+  LIB_RUBY_PARSER_NodePtr iteratee;
   // Body of the loop. `None` if there's no body
   //
-  LIB_RUBY_PARSER_MaybePtr_Node body;
+  LIB_RUBY_PARSER_MaybeNodePtr body;
   // Location of the `for` keyword
   //
   // ```text
@@ -3040,7 +3040,7 @@ typedef struct LIB_RUBY_PARSER_Gvasgn {
   // `None` if global variable assignment is a part of the multi-assignment.
   // In such case `value` is a part of the `Masgn` node.
   //
-  LIB_RUBY_PARSER_MaybePtr_Node value;
+  LIB_RUBY_PARSER_MaybeNodePtr value;
   // Location of the global variable name
   //
   // ```text
@@ -3206,13 +3206,13 @@ typedef struct LIB_RUBY_PARSER_Heredoc {
 typedef struct LIB_RUBY_PARSER_If {
   // Condition given to the `if` statement, `Lvar("a")` for `if a; b; else; c; end`
   //
-  LIB_RUBY_PARSER_Ptr_Node cond;
+  LIB_RUBY_PARSER_NodePtr cond;
   // True-branch of the `if` statement, `Lvar("b")` for `if a; b; else; c; end`
   //
-  LIB_RUBY_PARSER_MaybePtr_Node if_true;
+  LIB_RUBY_PARSER_MaybeNodePtr if_true;
   // False-branch of the `if` statement, `Lvar("c")` for `if a; b; else; c; end`
   //
-  LIB_RUBY_PARSER_MaybePtr_Node if_false;
+  LIB_RUBY_PARSER_MaybeNodePtr if_false;
   // Location of the `if` keyword
   //
   // ```text
@@ -3264,7 +3264,7 @@ typedef struct LIB_RUBY_PARSER_If {
 typedef struct LIB_RUBY_PARSER_IfGuard {
   // Condition of the guard, `Lvar("foo")` in `in pattern if guard`
   //
-  LIB_RUBY_PARSER_Ptr_Node cond;
+  LIB_RUBY_PARSER_NodePtr cond;
   // Location of the `if` keyword
   //
   // ```text
@@ -3288,19 +3288,19 @@ typedef struct LIB_RUBY_PARSER_IfGuard {
 typedef struct LIB_RUBY_PARSER_IfMod {
   // Condition of the modifier
   //
-  LIB_RUBY_PARSER_Ptr_Node cond;
+  LIB_RUBY_PARSER_NodePtr cond;
   // True-branch of the modifier.
   //
   // Always set for `if` modifier.
   // Always `None` for `unless` modifier.
   //
-  LIB_RUBY_PARSER_MaybePtr_Node if_true;
+  LIB_RUBY_PARSER_MaybeNodePtr if_true;
   // False-branch of the modifier.
   //
   // Always set for `unless` modifier.
   // Always `None` for `if` modifier.
   //
-  LIB_RUBY_PARSER_MaybePtr_Node if_false;
+  LIB_RUBY_PARSER_MaybeNodePtr if_false;
   // Location of the `if`/`unless` keyword
   //
   // ```text
@@ -3330,13 +3330,13 @@ typedef struct LIB_RUBY_PARSER_IfMod {
 typedef struct LIB_RUBY_PARSER_IfTernary {
   // Condition of the `if` statement
   //
-  LIB_RUBY_PARSER_Ptr_Node cond;
+  LIB_RUBY_PARSER_NodePtr cond;
   // True-branch
   //
-  LIB_RUBY_PARSER_Ptr_Node if_true;
+  LIB_RUBY_PARSER_NodePtr if_true;
   // True-branch
   //
-  LIB_RUBY_PARSER_Ptr_Node if_false;
+  LIB_RUBY_PARSER_NodePtr if_false;
   // Location of the `?` operator
   //
   // ```text
@@ -3368,10 +3368,10 @@ typedef struct LIB_RUBY_PARSER_IfTernary {
 typedef struct LIB_RUBY_PARSER_IFlipFlop {
   // Left part of the flip-flop. `None` if based on a range without begin (`..bar`)
   //
-  LIB_RUBY_PARSER_MaybePtr_Node left;
+  LIB_RUBY_PARSER_MaybeNodePtr left;
   // Right part of the flip-flop. `None` if based on a range without end (`foo..`)
   //
-  LIB_RUBY_PARSER_MaybePtr_Node right;
+  LIB_RUBY_PARSER_MaybeNodePtr right;
   // Location of the `..` operator
   //
   // ```text
@@ -3395,10 +3395,10 @@ typedef struct LIB_RUBY_PARSER_IFlipFlop {
 typedef struct LIB_RUBY_PARSER_MatchPattern {
   // Value that is used for matching
   //
-  LIB_RUBY_PARSER_Ptr_Node value;
+  LIB_RUBY_PARSER_NodePtr value;
   // Pattern that is used for matching
   //
-  LIB_RUBY_PARSER_Ptr_Node pattern;
+  LIB_RUBY_PARSER_NodePtr pattern;
   // Location of the `=>` operator
   //
   // ```text
@@ -3422,10 +3422,10 @@ typedef struct LIB_RUBY_PARSER_MatchPattern {
 typedef struct LIB_RUBY_PARSER_MatchPatternP {
   // Value that is used for matching
   //
-  LIB_RUBY_PARSER_Ptr_Node value;
+  LIB_RUBY_PARSER_NodePtr value;
   // Pattern that is used for matching
   //
-  LIB_RUBY_PARSER_Ptr_Node pattern;
+  LIB_RUBY_PARSER_NodePtr pattern;
   // Location of the `in` operator
   //
   // ```text
@@ -3449,15 +3449,15 @@ typedef struct LIB_RUBY_PARSER_MatchPatternP {
 typedef struct LIB_RUBY_PARSER_InPattern {
   // Value that is used for matching
   //
-  LIB_RUBY_PARSER_Ptr_Node pattern;
+  LIB_RUBY_PARSER_NodePtr pattern;
   // Guard that is used for matching
   //
   // Optional, so can be `None`
   //
-  LIB_RUBY_PARSER_MaybePtr_Node guard;
+  LIB_RUBY_PARSER_MaybeNodePtr guard;
   // Body of the branch that is invoked if value matches pattern
   //
-  LIB_RUBY_PARSER_MaybePtr_Node body;
+  LIB_RUBY_PARSER_MaybeNodePtr body;
   // Location of the `in` keyword
   //
   // ```text
@@ -3489,7 +3489,7 @@ typedef struct LIB_RUBY_PARSER_InPattern {
 typedef struct LIB_RUBY_PARSER_Index {
   // Receiver of indexing
   //
-  LIB_RUBY_PARSER_Ptr_Node recv;
+  LIB_RUBY_PARSER_NodePtr recv;
   // A list of indexes
   //
   struct LIB_RUBY_PARSER_NodeList indexes;
@@ -3524,7 +3524,7 @@ typedef struct LIB_RUBY_PARSER_Index {
 typedef struct LIB_RUBY_PARSER_IndexAsgn {
   // Receiver of the indexing
   //
-  LIB_RUBY_PARSER_Ptr_Node recv;
+  LIB_RUBY_PARSER_NodePtr recv;
   // A list of indexes
   //
   struct LIB_RUBY_PARSER_NodeList indexes;
@@ -3533,7 +3533,7 @@ typedef struct LIB_RUBY_PARSER_IndexAsgn {
   // `None` if assignment is a part of the multi-assignment.
   // In such case `value` belongs to `Masgn` node.
   //
-  LIB_RUBY_PARSER_MaybePtr_Node value;
+  LIB_RUBY_PARSER_MaybeNodePtr value;
   // Location of open bracket
   //
   // ```text
@@ -3600,10 +3600,10 @@ typedef struct LIB_RUBY_PARSER_Int {
 typedef struct LIB_RUBY_PARSER_Irange {
   // Begin of the range, `None` if range has no `begin` (i.e. `..4`)
   //
-  LIB_RUBY_PARSER_MaybePtr_Node left;
+  LIB_RUBY_PARSER_MaybeNodePtr left;
   // End of the range, `None` if range has no `end` (i.e. `2..`)
   //
-  LIB_RUBY_PARSER_MaybePtr_Node right;
+  LIB_RUBY_PARSER_MaybeNodePtr right;
   // Location of the `..` operator
   //
   // ```text
@@ -3649,7 +3649,7 @@ typedef struct LIB_RUBY_PARSER_Ivasgn {
   // `None` if instance variable assignment is a part of the multi-assignment.
   // In such case `value` is a part of the `Masgn` node.
   //
-  LIB_RUBY_PARSER_MaybePtr_Node value;
+  LIB_RUBY_PARSER_MaybeNodePtr value;
   // Location of the instance variable name.
   //
   // ```text
@@ -3770,7 +3770,7 @@ typedef struct LIB_RUBY_PARSER_Kwoptarg {
   struct LIB_RUBY_PARSER_StringPtr name;
   // Default value of the optional keyword argument
   //
-  LIB_RUBY_PARSER_Ptr_Node default_;
+  LIB_RUBY_PARSER_NodePtr default_;
   // Location of the argument name
   //
   // ```text
@@ -3836,7 +3836,7 @@ typedef struct LIB_RUBY_PARSER_Kwrestarg {
 typedef struct LIB_RUBY_PARSER_Kwsplat {
   // Value that is converted into a `Hash` using `**`
   //
-  LIB_RUBY_PARSER_Ptr_Node value;
+  LIB_RUBY_PARSER_NodePtr value;
   // Location of the `**` operator
   //
   // ```text
@@ -3914,7 +3914,7 @@ typedef struct LIB_RUBY_PARSER_Lvasgn {
   struct LIB_RUBY_PARSER_StringPtr name;
   // Value that is assigned to a local variable
   //
-  LIB_RUBY_PARSER_MaybePtr_Node value;
+  LIB_RUBY_PARSER_MaybeNodePtr value;
   // Location of the local variable name
   //
   // ```text
@@ -3949,10 +3949,10 @@ typedef struct LIB_RUBY_PARSER_Lvasgn {
 typedef struct LIB_RUBY_PARSER_Masgn {
   // Left hand statement of the assignment
   //
-  LIB_RUBY_PARSER_Ptr_Node lhs;
+  LIB_RUBY_PARSER_NodePtr lhs;
   // Left hand statement of the assignment
   //
-  LIB_RUBY_PARSER_Ptr_Node rhs;
+  LIB_RUBY_PARSER_NodePtr rhs;
   // Location of the `=` operator
   //
   // ```text
@@ -3976,10 +3976,10 @@ typedef struct LIB_RUBY_PARSER_Masgn {
 typedef struct LIB_RUBY_PARSER_MatchAlt {
   // Left pattern
   //
-  LIB_RUBY_PARSER_Ptr_Node lhs;
+  LIB_RUBY_PARSER_NodePtr lhs;
   // Right pattern
   //
-  LIB_RUBY_PARSER_Ptr_Node rhs;
+  LIB_RUBY_PARSER_NodePtr rhs;
   // Location of the `|` operator
   //
   // ```text
@@ -4003,10 +4003,10 @@ typedef struct LIB_RUBY_PARSER_MatchAlt {
 typedef struct LIB_RUBY_PARSER_MatchAs {
   // Pattern that is used for matching
   //
-  LIB_RUBY_PARSER_Ptr_Node value;
+  LIB_RUBY_PARSER_NodePtr value;
   // Variable that is assigned if matched (see `MatchVar` node)
   //
-  LIB_RUBY_PARSER_Ptr_Node as_;
+  LIB_RUBY_PARSER_NodePtr as_;
   // Location of the `=>` operator
   //
   // ```text
@@ -4050,7 +4050,7 @@ typedef struct LIB_RUBY_PARSER_MatchAs {
 typedef struct LIB_RUBY_PARSER_MatchCurrentLine {
   // Given regex
   //
-  LIB_RUBY_PARSER_Ptr_Node re;
+  LIB_RUBY_PARSER_NodePtr re;
   // Location of the regex
   //
   // ```text
@@ -4100,7 +4100,7 @@ typedef struct LIB_RUBY_PARSER_MatchRest {
   //
   // `None` if there's no name (i.e. `in *`)
   //
-  LIB_RUBY_PARSER_MaybePtr_Node name;
+  LIB_RUBY_PARSER_MaybeNodePtr name;
   // Location of the `*` operator
   //
   // ```text
@@ -4164,10 +4164,10 @@ typedef struct LIB_RUBY_PARSER_MatchVar {
 typedef struct LIB_RUBY_PARSER_MatchWithLvasgn {
   // Regex that is used for matching
   //
-  LIB_RUBY_PARSER_Ptr_Node re;
+  LIB_RUBY_PARSER_NodePtr re;
   // Value that is used for matching
   //
-  LIB_RUBY_PARSER_Ptr_Node value;
+  LIB_RUBY_PARSER_NodePtr value;
   // Location of the `=~` operatir
   //
   // ```text
@@ -4227,12 +4227,12 @@ typedef struct LIB_RUBY_PARSER_Mlhs {
 typedef struct LIB_RUBY_PARSER_Module {
   // Name of the module
   //
-  LIB_RUBY_PARSER_Ptr_Node name;
+  LIB_RUBY_PARSER_NodePtr name;
   // Body of the module
   //
   // `None` if module has no body
   //
-  LIB_RUBY_PARSER_MaybePtr_Node body;
+  LIB_RUBY_PARSER_MaybeNodePtr body;
   // Location of the `module` keyword
   //
   // ```text
@@ -4316,13 +4316,13 @@ typedef struct LIB_RUBY_PARSER_NthRef {
 typedef struct LIB_RUBY_PARSER_Numblock {
   // Method call that takes a block
   //
-  LIB_RUBY_PARSER_Ptr_Node call;
+  LIB_RUBY_PARSER_NodePtr call;
   // Number of parameters that block takes
   //
   uint8_t numargs;
   // Block body
   //
-  LIB_RUBY_PARSER_Ptr_Node body;
+  LIB_RUBY_PARSER_NodePtr body;
   // Location of the open brace
   //
   // ```text
@@ -4354,7 +4354,7 @@ typedef struct LIB_RUBY_PARSER_Numblock {
 typedef struct LIB_RUBY_PARSER_OpAsgn {
   // Left hand statement of the assignment
   //
-  LIB_RUBY_PARSER_Ptr_Node recv;
+  LIB_RUBY_PARSER_NodePtr recv;
   // Operator, can be one of:
   //     1. `+=`
   //     2. `-=`
@@ -4371,7 +4371,7 @@ typedef struct LIB_RUBY_PARSER_OpAsgn {
   struct LIB_RUBY_PARSER_StringPtr operator_;
   // Right hand statement of the assignment
   //
-  LIB_RUBY_PARSER_Ptr_Node value;
+  LIB_RUBY_PARSER_NodePtr value;
   // Location of the operator
   //
   // ```text
@@ -4398,7 +4398,7 @@ typedef struct LIB_RUBY_PARSER_Optarg {
   struct LIB_RUBY_PARSER_StringPtr name;
   // Default value of the argument
   //
-  LIB_RUBY_PARSER_Ptr_Node default_;
+  LIB_RUBY_PARSER_NodePtr default_;
   // Location of the argument name
   //
   // ```text
@@ -4430,10 +4430,10 @@ typedef struct LIB_RUBY_PARSER_Optarg {
 typedef struct LIB_RUBY_PARSER_Or {
   // Left hand statement
   //
-  LIB_RUBY_PARSER_Ptr_Node lhs;
+  LIB_RUBY_PARSER_NodePtr lhs;
   // Right hand statement
   //
-  LIB_RUBY_PARSER_Ptr_Node rhs;
+  LIB_RUBY_PARSER_NodePtr rhs;
   // Location of the `||`/`or` operator
   //
   // ```text
@@ -4457,10 +4457,10 @@ typedef struct LIB_RUBY_PARSER_Or {
 typedef struct LIB_RUBY_PARSER_OrAsgn {
   // Left hand statement
   //
-  LIB_RUBY_PARSER_Ptr_Node recv;
+  LIB_RUBY_PARSER_NodePtr recv;
   // Right hand statement
   //
-  LIB_RUBY_PARSER_Ptr_Node value;
+  LIB_RUBY_PARSER_NodePtr value;
   // Location of the `||=` operator
   //
   // ```text
@@ -4484,10 +4484,10 @@ typedef struct LIB_RUBY_PARSER_OrAsgn {
 typedef struct LIB_RUBY_PARSER_Pair {
   // Key of the pair
   //
-  LIB_RUBY_PARSER_Ptr_Node key;
+  LIB_RUBY_PARSER_NodePtr key;
   // Value of the pair
   //
-  LIB_RUBY_PARSER_Ptr_Node value;
+  LIB_RUBY_PARSER_NodePtr value;
   // Location of the `:` or `=>` operator
   //
   // ```text
@@ -4517,7 +4517,7 @@ typedef struct LIB_RUBY_PARSER_Pair {
 typedef struct LIB_RUBY_PARSER_Pin {
   // Variable that is pinned
   //
-  LIB_RUBY_PARSER_Ptr_Node var;
+  LIB_RUBY_PARSER_NodePtr var;
   // Location of the `^` operator
   //
   // ```text
@@ -4541,7 +4541,7 @@ typedef struct LIB_RUBY_PARSER_Pin {
 typedef struct LIB_RUBY_PARSER_Postexe {
   // Body of the block
   //
-  LIB_RUBY_PARSER_MaybePtr_Node body;
+  LIB_RUBY_PARSER_MaybeNodePtr body;
   // Location of the `END` keyword
   //
   // ```text
@@ -4581,7 +4581,7 @@ typedef struct LIB_RUBY_PARSER_Postexe {
 typedef struct LIB_RUBY_PARSER_Preexe {
   // Body of the block
   //
-  LIB_RUBY_PARSER_MaybePtr_Node body;
+  LIB_RUBY_PARSER_MaybeNodePtr body;
   // Location of the `BEGIN` keyword
   //
   // ```text
@@ -4722,7 +4722,7 @@ typedef struct LIB_RUBY_PARSER_Regexp {
   //
   // `None` if regex has no explicit flags
   //
-  LIB_RUBY_PARSER_MaybePtr_Node options;
+  LIB_RUBY_PARSER_MaybeNodePtr options;
   // Location of the regex begin
   //
   // ```text
@@ -4760,7 +4760,7 @@ typedef struct LIB_RUBY_PARSER_Regexp {
 typedef struct LIB_RUBY_PARSER_Rescue {
   // Body of the block that is wrapped into `rescue` (i.e. the part that may throw an error)
   //
-  LIB_RUBY_PARSER_MaybePtr_Node body;
+  LIB_RUBY_PARSER_MaybeNodePtr body;
   // A list of `rescue` handlers (see `RescueBody` node)
   //
   struct LIB_RUBY_PARSER_NodeList rescue_bodies;
@@ -4768,7 +4768,7 @@ typedef struct LIB_RUBY_PARSER_Rescue {
   //
   // `None` if there's no `else` branch
   //
-  LIB_RUBY_PARSER_MaybePtr_Node else_;
+  LIB_RUBY_PARSER_MaybeNodePtr else_;
   // Location of the `else` keyword
   //
   // ```text
@@ -4798,15 +4798,15 @@ typedef struct LIB_RUBY_PARSER_RescueBody {
   //
   // `None` if no classes specified (i.e. `rescue => e; ...` or just `rescue; ...`)
   //
-  LIB_RUBY_PARSER_MaybePtr_Node exc_list;
+  LIB_RUBY_PARSER_MaybeNodePtr exc_list;
   // Variable that captures exception
   //
   // `None` if no variable specified (i.e. `rescue E; ...` or just `rescue; ... `)
   //
-  LIB_RUBY_PARSER_MaybePtr_Node exc_var;
+  LIB_RUBY_PARSER_MaybeNodePtr exc_var;
   // Body of the handler
   //
-  LIB_RUBY_PARSER_MaybePtr_Node body;
+  LIB_RUBY_PARSER_MaybeNodePtr body;
   // Location of the `rescue` keyword
   //
   // ```text
@@ -4923,10 +4923,10 @@ typedef struct LIB_RUBY_PARSER_SClass {
   //
   // `Lvar("foo")` for `class << foo; end`
   //
-  LIB_RUBY_PARSER_Ptr_Node expr;
+  LIB_RUBY_PARSER_NodePtr expr;
   // Body of the block
   //
-  LIB_RUBY_PARSER_MaybePtr_Node body;
+  LIB_RUBY_PARSER_MaybeNodePtr body;
   // Location of the `class` keyword
   //
   // ```text
@@ -4981,7 +4981,7 @@ typedef struct LIB_RUBY_PARSER_Send {
   //
   // `None` for implicit method call (e.g. `foo(42)`)
   //
-  LIB_RUBY_PARSER_MaybePtr_Node recv;
+  LIB_RUBY_PARSER_MaybeNodePtr recv;
   // Name of the method that is called
   //
   struct LIB_RUBY_PARSER_StringPtr method_name;
@@ -5069,7 +5069,7 @@ typedef struct LIB_RUBY_PARSER_Shadowarg {
 typedef struct LIB_RUBY_PARSER_Splat {
   // Value that is converted to array
   //
-  LIB_RUBY_PARSER_MaybePtr_Node value;
+  LIB_RUBY_PARSER_MaybeNodePtr value;
   // Location of the `*` operator
   //
   // ```text
@@ -5272,7 +5272,7 @@ typedef struct LIB_RUBY_PARSER_Undef {
 typedef struct LIB_RUBY_PARSER_UnlessGuard {
   // Condition of the guard, `Lvar("foo")` in `in pattern unless guard`
   //
-  LIB_RUBY_PARSER_Ptr_Node cond;
+  LIB_RUBY_PARSER_NodePtr cond;
   // Location of the `unless` keyword
   //
   // ```text
@@ -5296,12 +5296,12 @@ typedef struct LIB_RUBY_PARSER_UnlessGuard {
 typedef struct LIB_RUBY_PARSER_Until {
   // Condition of the loop
   //
-  LIB_RUBY_PARSER_Ptr_Node cond;
+  LIB_RUBY_PARSER_NodePtr cond;
   // Body of the loop.
   //
   // `None` if body is empty
   //
-  LIB_RUBY_PARSER_MaybePtr_Node body;
+  LIB_RUBY_PARSER_MaybeNodePtr body;
   // Location of the `until` keyword
   //
   // ```text
@@ -5354,10 +5354,10 @@ typedef struct LIB_RUBY_PARSER_Until {
 typedef struct LIB_RUBY_PARSER_UntilPost {
   // Condition of the loop
   //
-  LIB_RUBY_PARSER_Ptr_Node cond;
+  LIB_RUBY_PARSER_NodePtr cond;
   // Body of the loop
   //
-  LIB_RUBY_PARSER_Ptr_Node body;
+  LIB_RUBY_PARSER_NodePtr body;
   // Location of the `until` keyword
   //
   // ```text
@@ -5384,7 +5384,7 @@ typedef struct LIB_RUBY_PARSER_When {
   struct LIB_RUBY_PARSER_NodeList patterns;
   // Body of the `when` branch
   //
-  LIB_RUBY_PARSER_MaybePtr_Node body;
+  LIB_RUBY_PARSER_MaybeNodePtr body;
   // Location of the `when` keyword
   //
   // ```text
@@ -5418,12 +5418,12 @@ typedef struct LIB_RUBY_PARSER_When {
 typedef struct LIB_RUBY_PARSER_While {
   // Condition of the loop
   //
-  LIB_RUBY_PARSER_Ptr_Node cond;
+  LIB_RUBY_PARSER_NodePtr cond;
   // Body of the loop.
   //
   // `None` if body is empty
   //
-  LIB_RUBY_PARSER_MaybePtr_Node body;
+  LIB_RUBY_PARSER_MaybeNodePtr body;
   // Location of the `while` keyword
   //
   // ```text
@@ -5476,10 +5476,10 @@ typedef struct LIB_RUBY_PARSER_While {
 typedef struct LIB_RUBY_PARSER_WhilePost {
   // Condition of the loop
   //
-  LIB_RUBY_PARSER_Ptr_Node cond;
+  LIB_RUBY_PARSER_NodePtr cond;
   // Body of the loop
   //
-  LIB_RUBY_PARSER_Ptr_Node body;
+  LIB_RUBY_PARSER_NodePtr body;
   // Location of the `while` keyword
   //
   // ```text

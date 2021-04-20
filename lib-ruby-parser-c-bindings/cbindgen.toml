@@ -18,8 +18,8 @@ include_version = false
 after_includes = """
 
 struct LIB_RUBY_PARSER_Node;
-typedef struct LIB_RUBY_PARSER_Node* LIB_RUBY_PARSER_MaybePtr_Node;
-typedef struct LIB_RUBY_PARSER_Node* LIB_RUBY_PARSER_Ptr_Node;
+typedef struct LIB_RUBY_PARSER_Node* LIB_RUBY_PARSER_MaybeNodePtr;
+typedef struct LIB_RUBY_PARSER_Node* LIB_RUBY_PARSER_NodePtr;
 """
 includes = []
 namespaces = []
@@ -70,6 +70,9 @@ renaming_overrides_prefixing = false
 "List_SourceLine" = "SourceLineList"
 "List_Token" = "TokenList"
 "List_u8" = "ByteList"
+"MaybePtr_Node" = "MaybeNodePtr"
+"Ptr_Node" = "NodePtr"
+"Ptr_Token" = "TokenPtr"
 "SharedList_u8" = "SharedByteList"
 
 [export.body]

@@ -259,7 +259,7 @@ void test_custom_decoder_ok()
     LIB_RUBY_PARSER_ParserResult result = parse_code(options, "# encoding: us-ascii\n2");
 
     assert_not_null(result.ast);
-    LIB_RUBY_PARSER_MaybePtr_Node node = result.ast;
+    LIB_RUBY_PARSER_MaybeNodePtr node = result.ast;
     assert_eq(node->tag, NODE_INT);
 
     LIB_RUBY_PARSER_ByteList int_value = lib_ruby_parser_string_ptr_to_list(node->int_.value);
@@ -286,7 +286,7 @@ void test_custom_decoder_err()
     lib_ruby_parser_free_parser_result(result);
 }
 
-LIB_RUBY_PARSER_TokenRewriterResult rewrite_token(LIB_RUBY_PARSER_Ptr_Token token, LIB_RUBY_PARSER_SharedByteList input)
+LIB_RUBY_PARSER_TokenRewriterResult rewrite_token(LIB_RUBY_PARSER_TokenPtr token, LIB_RUBY_PARSER_SharedByteList input)
 {
     (void)input;
 
