@@ -1,19 +1,36 @@
-use crate::bindings;
+use lib_ruby_parser::{
+    containers::{Loc, MaybeLoc},
+    source::DecodedInput,
+};
 
-impl From<lib_ruby_parser::Loc> for bindings::Loc {
-    fn from(loc: lib_ruby_parser::Loc) -> Self {
-        Self {
-            begin: loc.begin as u32,
-            end: loc.end as u32,
-        }
-    }
+#[no_mangle]
+pub extern "C" fn lib_ruby_parser_loc_size(loc: Loc) -> u32 {
+    let size = loc.size() as u32;
+    std::mem::forget(loc);
+    size
 }
 
-impl From<bindings::Loc> for lib_ruby_parser::Loc {
-    fn from(loc: bindings::Loc) -> Self {
-        Self {
-            begin: loc.begin as usize,
-            end: loc.end as usize,
-        }
+#[no_mangle]
+pub extern "C" fn lib_ruby_parser_loc_source(
+    loc: Loc,
+    input: DecodedInput,
+) -> *mut std::os::raw::c_char {
+    let source = loc.source(&input);
+    let mut source_ptr = std::ptr::null_mut();
+
+    if let Some(source) = source {
+        source_ptr = std::ffi::CString::new(source).unwrap().into_raw();
     }
+
+    std::mem::forget(loc);
+    std::mem::forget(input);
+
+    source_ptr
+}
+
+#[no_mangle]
+pub extern "C" fn lib_ruby_parser_maybe_loc_ptr_to_loc_ptr(maybe_loc: MaybeLoc) -> Loc {
+    let loc = maybe_loc.clone().unwrap();
+    std::mem::forget(maybe_loc);
+    loc
 }

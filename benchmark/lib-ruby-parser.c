@@ -1,6 +1,6 @@
 #include <time.h>
 #include "benchmark/rb_filelist.h"
-#include "target/lib-ruby-parser.h"
+#include "src/lib-ruby-parser.h"
 
 int main()
 {
@@ -15,8 +15,10 @@ int main()
     clock_t start = clock();
     for (size_t i = 0; i < filelist->size; i++)
     {
-        ParserOptions options = {.buffer_name = filelist->list[i].path};
-        parse(&options, filelist->list[i].content);
+        LIB_RUBY_PARSER_ParserOptions options = lib_ruby_parser_default_parser_options();
+        options.buffer_name = lib_ruby_parser_make_string_ptr(filelist->list[i].path);
+        LIB_RUBY_PARSER_ByteList input = lib_ruby_parser_make_byte_list(filelist->list[i].content);
+        lib_ruby_parser_parse(input, options);
     }
     clock_t end = clock();
 

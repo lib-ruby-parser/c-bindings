@@ -25,8 +25,14 @@ else
 	STATIC_LIB_EXT = a
 endif
 
+RUST_SRCS = $(wildcard $(BINDINGS_DIR)/src/*.rs)
+
 RUST_OBJ = $(TARGET_DIR)/lib-ruby-parser-rust-static.$(STATIC_LIB_EXT)
-$(RUST_OBJ):
+$(RUST_OBJ): $(RUST_SRCS)
 	cd $(BINDINGS_DIR) && cargo build $(CARGOFLAGS)
 	ls -l $(BINDINGS_DIR)/$(RUST_TARGET_DIR)/$(RUST_ENV)/
 	cp $(BINDINGS_DIR)/$(RUST_TARGET_DIR)/$(RUST_ENV)/$(RUST_OBJ_FILE) $(RUST_OBJ)
+
+header: $(RUST_SRCS) $(BINDINGS_DIR)/cbindgen.toml
+	cd $(BINDINGS_DIR) && \
+		cbindgen --config cbindgen.toml --crate lib-ruby-parser-c-bindings -d --output ../src/lib-ruby-parser.h -q

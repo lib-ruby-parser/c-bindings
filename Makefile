@@ -15,9 +15,6 @@ endif
 # Rust
 include lib-ruby-parser-c-bindings/build.mk
 
-# Header
-include header/build.mk
-
 # C
 include src/build.mk
 
@@ -43,7 +40,6 @@ include test/build.mk
 clean:
 	rm -rf target
 	mkdir -p $(TARGET_DIR)
-	rm -f $(HEADER)
 
 # fuzzer
 include fuzzer/build.mk

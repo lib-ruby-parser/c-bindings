@@ -14,7 +14,7 @@ ifeq ($(CARGO_BUILD_TARGET), x86_64-pc-windows-gnu)
 endif
 
 TEST_O = $(TARGET_DIR)/test.$(OBJ_FILE_EXT)
-$(TEST_O): test/test.c $(HEADER)
+$(TEST_O): test/test.c
 	$(CC) test/test.c $(CCFLAGS) $(CCOBJFLAGS)
 	mv test.$(OBJ_FILE_EXT) $(TEST_O)
 

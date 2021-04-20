@@ -30,7 +30,7 @@ jobs:
             cc: clang-9
             cxx: clang++-9
             ld: ld.lld-9
-            cargoflags: --features="generate-bindings,onig"
+            cargoflags: --features="onig"
             run: make clean test
 
           - name: test on mac (clang)
@@ -39,7 +39,7 @@ jobs:
             cc: clang
             cxx: clang++
             ld: ld
-            cargoflags: --features="generate-bindings,onig"
+            cargoflags: --features="onig"
             run: make clean test
 
           - name: test on windows (msvc)
@@ -76,7 +76,7 @@ jobs:
             cxx: clang++-9
             ld: ld.lld-9
             cargoflags: ""
-            run: CCFLAGS="-fsanitize=address" make clean test
+            run: ASAN_OPTIONS=detect_leaks=1 CCFLAGS="-fsanitize=address" make clean test
 
     steps:
       - name: setup msvc on windows
@@ -93,7 +93,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: stable
+          toolchain: nightly
           target: ${{ matrix.build.target }}
           override: true
 

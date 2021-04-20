@@ -1,28 +1,17 @@
-use crate::bindings;
-use crate::ptr_value;
+use lib_ruby_parser::ParserResult;
 
-impl From<lib_ruby_parser::ParserResult> for bindings::ParserResult {
-    fn from(parser_result: lib_ruby_parser::ParserResult) -> Self {
-        let lib_ruby_parser::ParserResult {
-            ast,
-            tokens,
-            diagnostics,
-            comments,
-            magic_comments,
-            input,
-        } = parser_result;
+#[no_mangle]
+pub extern "C" fn lib_ruby_parser_inspect_parser_result(
+    parser_result: ParserResult,
+) -> *mut std::os::raw::c_char {
+    let ptr = std::ffi::CString::new(format!("{:#?}", parser_result))
+        .unwrap()
+        .into_raw();
+    std::mem::forget(parser_result);
+    ptr
+}
 
-        Self {
-            ast: if let Some(ast) = ast {
-                ptr_value(bindings::Node::from(Box::new(ast)))
-            } else {
-                std::ptr::null_mut()
-            },
-            tokens: ptr_value(bindings::TokenList::from(tokens)),
-            diagnostics: ptr_value(bindings::DiagnosticList::from(diagnostics)),
-            comments: ptr_value(bindings::CommentList::from(comments)),
-            magic_comments: ptr_value(bindings::MagicCommentList::from(magic_comments)),
-            input: ptr_value(input) as *mut std::ffi::c_void,
-        }
-    }
+#[no_mangle]
+pub extern "C" fn lib_ruby_parser_free_parser_result(parser_result: ParserResult) {
+    drop(parser_result)
 }

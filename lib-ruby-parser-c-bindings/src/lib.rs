@@ -1,118 +1,23 @@
-#![allow(non_upper_case_globals)]
-#![allow(non_camel_case_types)]
-#![allow(non_snake_case)]
+#![feature(allocator_api)]
 
 extern crate lib_ruby_parser;
 
-pub mod bindings;
-use bindings::{ParserOptions, ParserResult};
-
-mod ptr;
-pub(crate) use ptr::Ptr;
-mod string_ptr;
-pub(crate) use string_ptr::StringPtr;
-
-mod comment;
-mod custom_decoder;
+mod allocator;
+mod containers;
 mod diagnostic;
-mod diagnostic_message;
-pub mod diagnostic_payload;
-mod free;
-mod list;
 mod loc;
-mod magic_comment;
-mod node;
-mod node_gen;
 mod parser_options;
 mod parser_result;
 mod token;
-mod token_rewriter;
+
+use lib_ruby_parser::c_parse::ForeignParserOptions;
+use lib_ruby_parser::{containers::List, Parser, ParserOptions, ParserResult};
 
 #[no_mangle]
-pub extern "C" fn parse(options: *mut ParserOptions, input: *const i8) -> *const ParserResult {
-    let input = unsafe { std::ffi::CStr::from_ptr(input) }.to_bytes();
-
-    let options = lib_ruby_parser::ParserOptions::from(Ptr::new(options));
-    let parser_result = lib_ruby_parser::Parser::new(input, options).do_parse();
-
-    let parser_result = ParserResult::from(parser_result);
-    ptr_value(parser_result)
-}
-
-pub(crate) fn ptr_value<T>(value: T) -> *mut T {
-    Box::into_raw(Box::new(value))
-}
-
-pub(crate) fn ptr_free<T>(ptr: *mut T) {
-    drop(unsafe { Box::from_raw(ptr) })
-}
-
-#[no_mangle]
-pub extern "C" fn input_len(input: *mut lib_ruby_parser::source::Input) -> u32 {
-    if let Some(input) = unsafe { input.as_ref() } {
-        input.as_bytes().len() as u32
-    } else {
-        0
-    }
-}
-
-#[no_mangle]
-pub extern "C" fn input_ptr(input: *mut lib_ruby_parser::source::Input) -> *const u8 {
-    if let Some(input) = unsafe { input.as_ref() } {
-        input.as_bytes().as_ptr()
-    } else {
-        std::ptr::null()
-    }
-}
-
-#[no_mangle]
-pub extern "C" fn token_name(id: i32) -> *mut i8 {
-    let token_name = lib_ruby_parser::token_name(id).to_owned();
-    StringPtr::from(token_name).unwrap()
-}
-
-#[no_mangle]
-pub extern "C" fn diagnostic_render(
-    diagnostic: bindings::Diagnostic,
-    input: *mut lib_ruby_parser::source::Input,
-) -> *mut i8 {
-    if let Some(input) = unsafe { input.as_ref() } {
-        let rendered = lib_ruby_parser::Diagnostic::from(diagnostic).render(input);
-        StringPtr::from(rendered).unwrap()
-    } else {
-        std::ptr::null_mut()
-    }
-}
-
-#[no_mangle]
-pub extern "C" fn diagnostic_render_message(diagnostic: bindings::Diagnostic) -> *mut i8 {
-    let rendered = lib_ruby_parser::Diagnostic::from(diagnostic).render_message();
-
-    StringPtr::from(rendered).unwrap()
-}
-
-#[no_mangle]
-pub extern "C" fn loc_source(
-    loc: *mut bindings::Loc,
-    input: *mut lib_ruby_parser::source::Input,
-) -> *mut i8 {
-    let loc = if let Some(loc) = unsafe { loc.as_ref() } {
-        loc
-    } else {
-        return std::ptr::null_mut();
-    };
-    let loc = lib_ruby_parser::Loc::from(loc.to_owned());
-
-    let input = if let Some(input) = unsafe { input.as_ref() } {
-        input
-    } else {
-        return std::ptr::null_mut();
-    };
-
-    StringPtr::from(loc.source(input)).unwrap()
-}
-
-#[no_mangle]
-pub extern "C" fn diagnostic_message_free(message: bindings::DiagnosticMessage) {
-    diagnostic_message::inner_diagnostic_message_free(message);
+pub extern "C" fn lib_ruby_parser_parse(
+    input: List<u8>,
+    options: ForeignParserOptions,
+) -> ParserResult {
+    let options = ParserOptions::from(options);
+    Parser::new(input, options).do_parse()
 }

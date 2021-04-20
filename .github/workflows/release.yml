@@ -115,7 +115,7 @@ jobs:
       - name: install rust
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: nightly
           profile: minimal
           override: true
           target: ${{ matrix.build.target }}
@@ -160,7 +160,7 @@ jobs:
       - name: install rust
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: nightly
           profile: minimal
           override: true
 
