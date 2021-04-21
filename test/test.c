@@ -221,8 +221,10 @@ void test_all_nodes()
 char *decoded_source = "# encoding: us-ascii\n3";
 const char *decoding_error = "only US-ASCII is supported";
 
-LIB_RUBY_PARSER_CustomDecoderResult do_decode(LIB_RUBY_PARSER_StringPtr encoding, LIB_RUBY_PARSER_ByteList input)
+LIB_RUBY_PARSER_CustomDecoderResult do_decode(LIB_RUBY_PARSER_StringPtr encoding, LIB_RUBY_PARSER_ByteList input, void *state)
 {
+    (void)state;
+
     lib_ruby_parser_free_byte_list(input);
 
     char *encoding_ptr = (char *)encoding.ptr;
@@ -254,7 +256,10 @@ void test_custom_decoder_ok()
     lib_ruby_parser_free_string_ptr(options.buffer_name);
     options.buffer_name = lib_ruby_parser_make_string_ptr("(test_custom_decoder_ok)");
     options.debug = LIB_RUBY_PARSER_NONE;
-    LIB_RUBY_PARSER_ForeignCustomDecoder decoder = {.dummy = false, .f = do_decode};
+    LIB_RUBY_PARSER_ForeignCustomDecoder decoder = {
+        .dummy = false,
+        .f = do_decode,
+        .state = NULL};
     options.decoder = decoder;
     LIB_RUBY_PARSER_ParserResult result = parse_code(options, "# encoding: us-ascii\n2");
 
@@ -275,7 +280,10 @@ void test_custom_decoder_err()
     lib_ruby_parser_free_string_ptr(options.buffer_name);
     options.buffer_name = lib_ruby_parser_make_string_ptr("(test_custom_decoder_err)");
     options.debug = LIB_RUBY_PARSER_NONE;
-    LIB_RUBY_PARSER_ForeignCustomDecoder decoder = {.dummy = false, .f = do_decode};
+    LIB_RUBY_PARSER_ForeignCustomDecoder decoder = {
+        .dummy = false,
+        .f = do_decode,
+        .state = NULL};
     options.decoder = decoder;
     LIB_RUBY_PARSER_ParserResult result = parse_code(options, "# encoding: koi8-r\n2");
 
@@ -286,9 +294,10 @@ void test_custom_decoder_err()
     lib_ruby_parser_free_parser_result(result);
 }
 
-LIB_RUBY_PARSER_TokenRewriterResult rewrite_token(LIB_RUBY_PARSER_TokenPtr token, LIB_RUBY_PARSER_SharedByteList input)
+LIB_RUBY_PARSER_TokenRewriterResult rewrite_token(LIB_RUBY_PARSER_TokenPtr token, LIB_RUBY_PARSER_SharedByteList input, void *state)
 {
     (void)input;
+    (void)state;
 
     LIB_RUBY_PARSER_ByteList token_bytes = token.ptr->token_value.raw;
     char *token_ptr = (char *)token_bytes.ptr;
@@ -314,7 +323,7 @@ void test_token_rewriter()
     LIB_RUBY_PARSER_ForeignTokenRewriter token_rewriter = {
         .f = rewrite_token,
         .dummy = false,
-    };
+        .state = NULL};
     LIB_RUBY_PARSER_ParserOptions options = lib_ruby_parser_default_parser_options();
     lib_ruby_parser_free_string_ptr(options.buffer_name);
     options.buffer_name = lib_ruby_parser_make_string_ptr("(test_token_rewriter)");

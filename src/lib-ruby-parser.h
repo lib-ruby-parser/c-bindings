@@ -1465,12 +1465,16 @@ typedef struct LIB_RUBY_PARSER_CustomDecoderResult {
   };
 } LIB_RUBY_PARSER_CustomDecoderResult;
 
-typedef struct LIB_RUBY_PARSER_CustomDecoderResult (*LIB_RUBY_PARSER_ForeignCustomDecoderFn)(struct LIB_RUBY_PARSER_StringPtr, struct LIB_RUBY_PARSER_ByteList);
+typedef struct LIB_RUBY_PARSER_CustomDecoderResult (*LIB_RUBY_PARSER_ForeignCustomDecoderFn)(struct LIB_RUBY_PARSER_StringPtr, struct LIB_RUBY_PARSER_ByteList, void*);
 
 // C-compatible custom decoder
 typedef struct LIB_RUBY_PARSER_ForeignCustomDecoder {
+  // Foreign function that does decoding
   LIB_RUBY_PARSER_ForeignCustomDecoderFn f;
+  // Indicator that decoder is dummy
   bool dummy;
+  // Shared state that is passed to external function
+  void *state;
 } LIB_RUBY_PARSER_ForeignCustomDecoder;
 
 // C-compatible not-null pointer
@@ -1511,12 +1515,16 @@ typedef struct LIB_RUBY_PARSER_SharedByteList {
   size_t len;
 } LIB_RUBY_PARSER_SharedByteList;
 
-typedef struct LIB_RUBY_PARSER_TokenRewriterResult (*LIB_RUBY_PARSER_ForeignTokenRewriterFn)(struct LIB_RUBY_PARSER_TokenPtr, struct LIB_RUBY_PARSER_SharedByteList);
+typedef struct LIB_RUBY_PARSER_TokenRewriterResult (*LIB_RUBY_PARSER_ForeignTokenRewriterFn)(struct LIB_RUBY_PARSER_TokenPtr, struct LIB_RUBY_PARSER_SharedByteList, void*);
 
 // C-compatible token rewriter struct
 typedef struct LIB_RUBY_PARSER_ForeignTokenRewriter {
+  // External function that rewrites tokens
   LIB_RUBY_PARSER_ForeignTokenRewriterFn f;
+  // Indicator that token rewriter is dummy
   bool dummy;
+  // Shared state that is passed to external function
+  void *state;
 } LIB_RUBY_PARSER_ForeignTokenRewriter;
 
 // Foreign parser options, can be casted to Rust ParserOptions

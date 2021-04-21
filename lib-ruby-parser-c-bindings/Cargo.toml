@@ -14,7 +14,7 @@ default = []
 onig = ["lib-ruby-parser/onig"]
 
 [dependencies]
-lib-ruby-parser = {version = "3.0.3", features = ["c-structures"]}
+lib-ruby-parser = {version = "3.0.4", features = ["c-structures"]}
 
 [profile.dev]
 panic = "abort"
