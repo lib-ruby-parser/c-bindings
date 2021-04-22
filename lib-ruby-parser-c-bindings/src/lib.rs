@@ -11,6 +11,9 @@ mod parser_result;
 mod string_ptr;
 mod token;
 
+mod clone;
+mod fmt;
+
 use lib_ruby_parser::c_parse::ForeignParserOptions;
 use lib_ruby_parser::{containers::List, Parser, ParserOptions, ParserResult};
 

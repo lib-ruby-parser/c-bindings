@@ -588,6 +588,8 @@ typedef struct LIB_RUBY_PARSER_ByteList {
   size_t capacity;
 } LIB_RUBY_PARSER_ByteList;
 
+typedef struct LIB_RUBY_PARSER_ByteList LIB_RUBY_PARSER_ByteList;
+
 // C-compatible not nullable String container
 typedef struct LIB_RUBY_PARSER_StringPtr {
   // Raw ponter
@@ -621,33 +623,13 @@ typedef struct LIB_RUBY_PARSER_Loc {
   size_t end;
 } LIB_RUBY_PARSER_Loc;
 
-// State of the lexer
-typedef struct LIB_RUBY_PARSER_LexState {
-  int32_t value;
-} LIB_RUBY_PARSER_LexState;
-
-// A token that is emitted by a lexer and consumed by a parser
-typedef struct LIB_RUBY_PARSER_Token {
-  // Numeric representation of the token type,
-  // e.g. 42 (for example) for tINTEGER
-  int32_t token_type;
-  // Value of the token,
-  // e.g "42" for 42
-  struct LIB_RUBY_PARSER_Bytes token_value;
-  // Location of the token
-  struct LIB_RUBY_PARSER_Loc loc;
-  // Lex state **before** reading the token
-  struct LIB_RUBY_PARSER_LexState lex_state_before;
-  // Lex state **after** reading the token
-  struct LIB_RUBY_PARSER_LexState lex_state_after;
-} LIB_RUBY_PARSER_Token;
-
-// C-compatible list
-typedef struct LIB_RUBY_PARSER_TokenList {
-  struct LIB_RUBY_PARSER_Token *ptr;
-  size_t len;
-  size_t capacity;
-} LIB_RUBY_PARSER_TokenList;
+// A struct that represents a comment in Ruby
+typedef struct LIB_RUBY_PARSER_Comment {
+  // Location of the comment (starts with `#` and ends with the last char)
+  struct LIB_RUBY_PARSER_Loc location;
+  // Kind of the comment
+  enum LIB_RUBY_PARSER_CommentType kind;
+} LIB_RUBY_PARSER_Comment;
 
 // Enum of all possible diagnostic message (both warnings and errors)
 typedef enum LIB_RUBY_PARSER_DiagnosticMessage_Tag {
@@ -1323,28 +1305,6 @@ typedef struct LIB_RUBY_PARSER_Diagnostic {
   struct LIB_RUBY_PARSER_Loc loc;
 } LIB_RUBY_PARSER_Diagnostic;
 
-// C-compatible list
-typedef struct LIB_RUBY_PARSER_DiagnosticList {
-  struct LIB_RUBY_PARSER_Diagnostic *ptr;
-  size_t len;
-  size_t capacity;
-} LIB_RUBY_PARSER_DiagnosticList;
-
-// A struct that represents a comment in Ruby
-typedef struct LIB_RUBY_PARSER_Comment {
-  // Location of the comment (starts with `#` and ends with the last char)
-  struct LIB_RUBY_PARSER_Loc location;
-  // Kind of the comment
-  enum LIB_RUBY_PARSER_CommentType kind;
-} LIB_RUBY_PARSER_Comment;
-
-// C-compatible list
-typedef struct LIB_RUBY_PARSER_CommentList {
-  struct LIB_RUBY_PARSER_Comment *ptr;
-  size_t len;
-  size_t capacity;
-} LIB_RUBY_PARSER_CommentList;
-
 // Representation of a magic comment in Ruby
 typedef struct LIB_RUBY_PARSER_MagicComment {
   // Kind of a magic comment
@@ -1364,197 +1324,6 @@ typedef struct LIB_RUBY_PARSER_MagicComment {
   // ```
   struct LIB_RUBY_PARSER_Loc value_l;
 } LIB_RUBY_PARSER_MagicComment;
-
-// C-compatible list
-typedef struct LIB_RUBY_PARSER_MagicCommentList {
-  struct LIB_RUBY_PARSER_MagicComment *ptr;
-  size_t len;
-  size_t capacity;
-} LIB_RUBY_PARSER_MagicCommentList;
-
-typedef struct LIB_RUBY_PARSER_SourceLine {
-  size_t start;
-  size_t end;
-  bool ends_with_eof;
-} LIB_RUBY_PARSER_SourceLine;
-
-// C-compatible list
-typedef struct LIB_RUBY_PARSER_SourceLineList {
-  struct LIB_RUBY_PARSER_SourceLine *ptr;
-  size_t len;
-  size_t capacity;
-} LIB_RUBY_PARSER_SourceLineList;
-
-// Decoded input
-typedef struct LIB_RUBY_PARSER_DecodedInput {
-  // Name of the input
-  struct LIB_RUBY_PARSER_StringPtr name;
-  // Lines list
-  struct LIB_RUBY_PARSER_SourceLineList lines;
-  // Decoded bytes
-  struct LIB_RUBY_PARSER_ByteList bytes;
-} LIB_RUBY_PARSER_DecodedInput;
-
-// Combination of all data that `Parser` can give you
-typedef struct LIB_RUBY_PARSER_ParserResult {
-  // Abstract Syntax Tree that was constructed from you code.
-  // Contains `None` if the code gives no AST nodes
-  LIB_RUBY_PARSER_MaybeNodePtr ast;
-  // List of tokens returned by a Lexer and consumed by a Parser.
-  // Empty unless ParserOptions::record_tokens is set to true.
-  struct LIB_RUBY_PARSER_TokenList tokens;
-  // List of all diagnostics (errors and warings) that have been
-  // recorded during lexing and parsing
-  struct LIB_RUBY_PARSER_DiagnosticList diagnostics;
-  // List of comments extracted from the source code.
-  struct LIB_RUBY_PARSER_CommentList comments;
-  // List of magic comments extracted from the source code.
-  struct LIB_RUBY_PARSER_MagicCommentList magic_comments;
-  // Input that was used for parsing.
-  //
-  // Note: this input is not necessary the same byte array that
-  // you passed to Parser::parse. If encoding of the input is
-  // not `UTF-8` or `ASCII-8BIT/BINARY` Parser invokes `decoder`
-  // that usually produces a different sequence of bytes.
-  //
-  // Pass **this** data to `Loc::source`, otherwise you'll get
-  // incorrect source ranges.
-  struct LIB_RUBY_PARSER_DecodedInput input;
-} LIB_RUBY_PARSER_ParserResult;
-
-// A type of the debug level
-typedef int8_t LIB_RUBY_PARSER_Type;
-
-// An enum with all possible kinds of errors that can be returned
-// from a decoder
-typedef enum LIB_RUBY_PARSER_InputError_Tag {
-  // Emitted when no custom decoder provided but input has custom encoding.
-  //
-  // You can return this error from your custom decoder if you don't support given encoding.
-  INPUT_ERROR_UNSUPPORTED_ENCODING,
-  // Generic error that can be emitted from a custom decoder
-  INPUT_ERROR_DECODING_ERROR,
-} LIB_RUBY_PARSER_InputError_Tag;
-
-typedef struct LIB_RUBY_PARSER_InputError {
-  LIB_RUBY_PARSER_InputError_Tag tag;
-  union {
-    struct {
-      struct LIB_RUBY_PARSER_StringPtr unsupported_encoding;
-    };
-    struct {
-      struct LIB_RUBY_PARSER_StringPtr decoding_error;
-    };
-  };
-} LIB_RUBY_PARSER_InputError;
-
-// Result that is returned from decoding function
-typedef enum LIB_RUBY_PARSER_CustomDecoderResult_Tag {
-  // Ok + decoded bytes
-  CUSTOM_DECODER_RESULT_OK,
-  // Err + reason
-  CUSTOM_DECODER_RESULT_ERR,
-} LIB_RUBY_PARSER_CustomDecoderResult_Tag;
-
-typedef struct LIB_RUBY_PARSER_CustomDecoderResult {
-  LIB_RUBY_PARSER_CustomDecoderResult_Tag tag;
-  union {
-    struct {
-      struct LIB_RUBY_PARSER_ByteList ok;
-    };
-    struct {
-      struct LIB_RUBY_PARSER_InputError err;
-    };
-  };
-} LIB_RUBY_PARSER_CustomDecoderResult;
-
-typedef struct LIB_RUBY_PARSER_CustomDecoderResult (*LIB_RUBY_PARSER_ForeignCustomDecoderFn)(struct LIB_RUBY_PARSER_StringPtr, struct LIB_RUBY_PARSER_ByteList, void*);
-
-// C-compatible custom decoder
-typedef struct LIB_RUBY_PARSER_ForeignCustomDecoder {
-  // Foreign function that does decoding
-  LIB_RUBY_PARSER_ForeignCustomDecoderFn f;
-  // Indicator that decoder is dummy
-  bool dummy;
-  // Shared state that is passed to external function
-  void *state;
-} LIB_RUBY_PARSER_ForeignCustomDecoder;
-
-// Enum of what token rewriter should do with the state of the lexer
-typedef enum LIB_RUBY_PARSER_LexStateAction_Tag {
-  // Means "set the state to X"
-  LEX_STATE_ACTION_SET,
-  // Means "keep the state unchanged"
-  LEX_STATE_ACTION_KEEP,
-} LIB_RUBY_PARSER_LexStateAction_Tag;
-
-typedef struct LIB_RUBY_PARSER_LexStateAction {
-  LIB_RUBY_PARSER_LexStateAction_Tag tag;
-  union {
-    struct {
-      int32_t set;
-    };
-  };
-} LIB_RUBY_PARSER_LexStateAction;
-
-// Output of the token rewriter
-typedef struct LIB_RUBY_PARSER_TokenRewriterResult {
-  // Rewritten token. Can be input token if no rewriting expected
-  LIB_RUBY_PARSER_TokenPtr rewritten_token;
-  // Action to be applied on a token (keep or drop)
-  enum LIB_RUBY_PARSER_RewriteAction token_action;
-  // Action to be applied on lexer's state (keep as is or change)
-  struct LIB_RUBY_PARSER_LexStateAction lex_state_action;
-} LIB_RUBY_PARSER_TokenRewriterResult;
-
-// C-compatible shared list
-typedef struct LIB_RUBY_PARSER_SharedByteList {
-  uint8_t *ptr;
-  size_t len;
-} LIB_RUBY_PARSER_SharedByteList;
-
-typedef struct LIB_RUBY_PARSER_TokenRewriterResult (*LIB_RUBY_PARSER_ForeignTokenRewriterFn)(LIB_RUBY_PARSER_TokenPtr, struct LIB_RUBY_PARSER_SharedByteList, void*);
-
-// C-compatible token rewriter struct
-typedef struct LIB_RUBY_PARSER_ForeignTokenRewriter {
-  // External function that rewrites tokens
-  LIB_RUBY_PARSER_ForeignTokenRewriterFn f;
-  // Indicator that token rewriter is dummy
-  bool dummy;
-  // Shared state that is passed to external function
-  void *state;
-} LIB_RUBY_PARSER_ForeignTokenRewriter;
-
-// Foreign parser options, can be casted to Rust ParserOptions
-typedef struct LIB_RUBY_PARSER_ParserOptions {
-  // Equivalent of ParserOptions.buffer_name
-  struct LIB_RUBY_PARSER_StringPtr buffer_name;
-  // Equivalent of ParserOptions.debug
-  LIB_RUBY_PARSER_Type debug;
-  // Equivalent of ParserOptions.decoder
-  struct LIB_RUBY_PARSER_ForeignCustomDecoder decoder;
-  // Equivalent of ParserOptions.token_rewriter
-  struct LIB_RUBY_PARSER_ForeignTokenRewriter token_rewriter;
-  // Equivalent of ParserOptions.record_tokens
-  bool record_tokens;
-} LIB_RUBY_PARSER_ParserOptions;
-
-// C-compatible Option<Loc>
-typedef enum LIB_RUBY_PARSER_MaybeLoc_Tag {
-  // Equivalent of Option::Some
-  MAYBE_LOC_SOME,
-  // Equivalent of Option::None
-  MAYBE_LOC_NONE,
-} LIB_RUBY_PARSER_MaybeLoc_Tag;
-
-typedef struct LIB_RUBY_PARSER_MaybeLoc {
-  LIB_RUBY_PARSER_MaybeLoc_Tag tag;
-  union {
-    struct {
-      struct LIB_RUBY_PARSER_Loc some;
-    };
-  };
-} LIB_RUBY_PARSER_MaybeLoc;
 
 // Represents `alias to from` statement.
 //
@@ -1673,6 +1442,23 @@ typedef struct LIB_RUBY_PARSER_NodeList {
   size_t len;
   size_t capacity;
 } LIB_RUBY_PARSER_NodeList;
+
+// C-compatible Option<Loc>
+typedef enum LIB_RUBY_PARSER_MaybeLoc_Tag {
+  // Equivalent of Option::Some
+  MAYBE_LOC_SOME,
+  // Equivalent of Option::None
+  MAYBE_LOC_NONE,
+} LIB_RUBY_PARSER_MaybeLoc_Tag;
+
+typedef struct LIB_RUBY_PARSER_MaybeLoc {
+  LIB_RUBY_PARSER_MaybeLoc_Tag tag;
+  union {
+    struct {
+      struct LIB_RUBY_PARSER_Loc some;
+    };
+  };
+} LIB_RUBY_PARSER_MaybeLoc;
 
 // Represents an arguments list
 //
@@ -6153,6 +5939,222 @@ typedef struct LIB_RUBY_PARSER_Node {
   };
 } LIB_RUBY_PARSER_Node;
 
+// State of the lexer
+typedef struct LIB_RUBY_PARSER_LexState {
+  int32_t value;
+} LIB_RUBY_PARSER_LexState;
+
+// A token that is emitted by a lexer and consumed by a parser
+typedef struct LIB_RUBY_PARSER_Token {
+  // Numeric representation of the token type,
+  // e.g. 42 (for example) for tINTEGER
+  int32_t token_type;
+  // Value of the token,
+  // e.g "42" for 42
+  struct LIB_RUBY_PARSER_Bytes token_value;
+  // Location of the token
+  struct LIB_RUBY_PARSER_Loc loc;
+  // Lex state **before** reading the token
+  struct LIB_RUBY_PARSER_LexState lex_state_before;
+  // Lex state **after** reading the token
+  struct LIB_RUBY_PARSER_LexState lex_state_after;
+} LIB_RUBY_PARSER_Token;
+
+// A type of the debug level
+typedef int8_t LIB_RUBY_PARSER_Type;
+
+// An enum with all possible kinds of errors that can be returned
+// from a decoder
+typedef enum LIB_RUBY_PARSER_InputError_Tag {
+  // Emitted when no custom decoder provided but input has custom encoding.
+  //
+  // You can return this error from your custom decoder if you don't support given encoding.
+  INPUT_ERROR_UNSUPPORTED_ENCODING,
+  // Generic error that can be emitted from a custom decoder
+  INPUT_ERROR_DECODING_ERROR,
+} LIB_RUBY_PARSER_InputError_Tag;
+
+typedef struct LIB_RUBY_PARSER_InputError {
+  LIB_RUBY_PARSER_InputError_Tag tag;
+  union {
+    struct {
+      struct LIB_RUBY_PARSER_StringPtr unsupported_encoding;
+    };
+    struct {
+      struct LIB_RUBY_PARSER_StringPtr decoding_error;
+    };
+  };
+} LIB_RUBY_PARSER_InputError;
+
+// Result that is returned from decoding function
+typedef enum LIB_RUBY_PARSER_CustomDecoderResult_Tag {
+  // Ok + decoded bytes
+  CUSTOM_DECODER_RESULT_OK,
+  // Err + reason
+  CUSTOM_DECODER_RESULT_ERR,
+} LIB_RUBY_PARSER_CustomDecoderResult_Tag;
+
+typedef struct LIB_RUBY_PARSER_CustomDecoderResult {
+  LIB_RUBY_PARSER_CustomDecoderResult_Tag tag;
+  union {
+    struct {
+      struct LIB_RUBY_PARSER_ByteList ok;
+    };
+    struct {
+      struct LIB_RUBY_PARSER_InputError err;
+    };
+  };
+} LIB_RUBY_PARSER_CustomDecoderResult;
+
+typedef struct LIB_RUBY_PARSER_CustomDecoderResult (*LIB_RUBY_PARSER_ForeignCustomDecoderFn)(struct LIB_RUBY_PARSER_StringPtr, struct LIB_RUBY_PARSER_ByteList, void*);
+
+// C-compatible custom decoder
+typedef struct LIB_RUBY_PARSER_ForeignCustomDecoder {
+  // Foreign function that does decoding
+  LIB_RUBY_PARSER_ForeignCustomDecoderFn f;
+  // Indicator that decoder is dummy
+  bool dummy;
+  // Shared state that is passed to external function
+  void *state;
+} LIB_RUBY_PARSER_ForeignCustomDecoder;
+
+// Enum of what token rewriter should do with the state of the lexer
+typedef enum LIB_RUBY_PARSER_LexStateAction_Tag {
+  // Means "set the state to X"
+  LEX_STATE_ACTION_SET,
+  // Means "keep the state unchanged"
+  LEX_STATE_ACTION_KEEP,
+} LIB_RUBY_PARSER_LexStateAction_Tag;
+
+typedef struct LIB_RUBY_PARSER_LexStateAction {
+  LIB_RUBY_PARSER_LexStateAction_Tag tag;
+  union {
+    struct {
+      int32_t set;
+    };
+  };
+} LIB_RUBY_PARSER_LexStateAction;
+
+// Output of the token rewriter
+typedef struct LIB_RUBY_PARSER_TokenRewriterResult {
+  // Rewritten token. Can be input token if no rewriting expected
+  LIB_RUBY_PARSER_TokenPtr rewritten_token;
+  // Action to be applied on a token (keep or drop)
+  enum LIB_RUBY_PARSER_RewriteAction token_action;
+  // Action to be applied on lexer's state (keep as is or change)
+  struct LIB_RUBY_PARSER_LexStateAction lex_state_action;
+} LIB_RUBY_PARSER_TokenRewriterResult;
+
+// C-compatible shared list
+typedef struct LIB_RUBY_PARSER_SharedByteList {
+  uint8_t *ptr;
+  size_t len;
+} LIB_RUBY_PARSER_SharedByteList;
+
+typedef struct LIB_RUBY_PARSER_TokenRewriterResult (*LIB_RUBY_PARSER_ForeignTokenRewriterFn)(LIB_RUBY_PARSER_TokenPtr, struct LIB_RUBY_PARSER_SharedByteList, void*);
+
+// C-compatible token rewriter struct
+typedef struct LIB_RUBY_PARSER_ForeignTokenRewriter {
+  // External function that rewrites tokens
+  LIB_RUBY_PARSER_ForeignTokenRewriterFn f;
+  // Indicator that token rewriter is dummy
+  bool dummy;
+  // Shared state that is passed to external function
+  void *state;
+} LIB_RUBY_PARSER_ForeignTokenRewriter;
+
+// Foreign parser options, can be casted to Rust ParserOptions
+typedef struct LIB_RUBY_PARSER_ParserOptions {
+  // Equivalent of ParserOptions.buffer_name
+  struct LIB_RUBY_PARSER_StringPtr buffer_name;
+  // Equivalent of ParserOptions.debug
+  LIB_RUBY_PARSER_Type debug;
+  // Equivalent of ParserOptions.decoder
+  struct LIB_RUBY_PARSER_ForeignCustomDecoder decoder;
+  // Equivalent of ParserOptions.token_rewriter
+  struct LIB_RUBY_PARSER_ForeignTokenRewriter token_rewriter;
+  // Equivalent of ParserOptions.record_tokens
+  bool record_tokens;
+} LIB_RUBY_PARSER_ParserOptions;
+
+typedef struct LIB_RUBY_PARSER_SourceLine {
+  size_t start;
+  size_t end;
+  bool ends_with_eof;
+} LIB_RUBY_PARSER_SourceLine;
+
+// C-compatible list
+typedef struct LIB_RUBY_PARSER_SourceLineList {
+  struct LIB_RUBY_PARSER_SourceLine *ptr;
+  size_t len;
+  size_t capacity;
+} LIB_RUBY_PARSER_SourceLineList;
+
+// Decoded input
+typedef struct LIB_RUBY_PARSER_DecodedInput {
+  // Name of the input
+  struct LIB_RUBY_PARSER_StringPtr name;
+  // Lines list
+  struct LIB_RUBY_PARSER_SourceLineList lines;
+  // Decoded bytes
+  struct LIB_RUBY_PARSER_ByteList bytes;
+} LIB_RUBY_PARSER_DecodedInput;
+
+// C-compatible list
+typedef struct LIB_RUBY_PARSER_TokenList {
+  struct LIB_RUBY_PARSER_Token *ptr;
+  size_t len;
+  size_t capacity;
+} LIB_RUBY_PARSER_TokenList;
+
+// C-compatible list
+typedef struct LIB_RUBY_PARSER_DiagnosticList {
+  struct LIB_RUBY_PARSER_Diagnostic *ptr;
+  size_t len;
+  size_t capacity;
+} LIB_RUBY_PARSER_DiagnosticList;
+
+// C-compatible list
+typedef struct LIB_RUBY_PARSER_CommentList {
+  struct LIB_RUBY_PARSER_Comment *ptr;
+  size_t len;
+  size_t capacity;
+} LIB_RUBY_PARSER_CommentList;
+
+// C-compatible list
+typedef struct LIB_RUBY_PARSER_MagicCommentList {
+  struct LIB_RUBY_PARSER_MagicComment *ptr;
+  size_t len;
+  size_t capacity;
+} LIB_RUBY_PARSER_MagicCommentList;
+
+// Combination of all data that `Parser` can give you
+typedef struct LIB_RUBY_PARSER_ParserResult {
+  // Abstract Syntax Tree that was constructed from you code.
+  // Contains `None` if the code gives no AST nodes
+  LIB_RUBY_PARSER_MaybeNodePtr ast;
+  // List of tokens returned by a Lexer and consumed by a Parser.
+  // Empty unless ParserOptions::record_tokens is set to true.
+  struct LIB_RUBY_PARSER_TokenList tokens;
+  // List of all diagnostics (errors and warings) that have been
+  // recorded during lexing and parsing
+  struct LIB_RUBY_PARSER_DiagnosticList diagnostics;
+  // List of comments extracted from the source code.
+  struct LIB_RUBY_PARSER_CommentList comments;
+  // List of magic comments extracted from the source code.
+  struct LIB_RUBY_PARSER_MagicCommentList magic_comments;
+  // Input that was used for parsing.
+  //
+  // Note: this input is not necessary the same byte array that
+  // you passed to Parser::parse. If encoding of the input is
+  // not `UTF-8` or `ASCII-8BIT/BINARY` Parser invokes `decoder`
+  // that usually produces a different sequence of bytes.
+  //
+  // Pass **this** data to `Loc::source`, otherwise you'll get
+  // incorrect source ranges.
+  struct LIB_RUBY_PARSER_DecodedInput input;
+} LIB_RUBY_PARSER_ParserResult;
+
 // Print everything
 #define LIB_RUBY_PARSER_ALL ((LIB_RUBY_PARSER_PARSER | LIB_RUBY_PARSER_LEXER) | LIB_RUBY_PARSER_BUFFER)
 
@@ -6168,13 +6170,27 @@ typedef struct LIB_RUBY_PARSER_Node {
 // Print only debug information of the parser
 #define LIB_RUBY_PARSER_PARSER (1 << 0)
 
-struct LIB_RUBY_PARSER_ByteList lib_ruby_parser_byte_list_from_string_ptr(struct LIB_RUBY_PARSER_StringPtr ptr);
+LIB_RUBY_PARSER_ByteList lib_ruby_parser_byte_list_from_string_ptr(struct LIB_RUBY_PARSER_StringPtr ptr);
 
-struct LIB_RUBY_PARSER_ByteList lib_ruby_parser_byte_list_from_string_value(struct LIB_RUBY_PARSER_StringValue s);
+LIB_RUBY_PARSER_ByteList lib_ruby_parser_byte_list_from_string_value(struct LIB_RUBY_PARSER_StringValue s);
+
+struct LIB_RUBY_PARSER_ByteList lib_ruby_parser_clone_byte_list(struct LIB_RUBY_PARSER_ByteList byte_list);
+
+struct LIB_RUBY_PARSER_Comment lib_ruby_parser_clone_comment(struct LIB_RUBY_PARSER_Comment comment);
+
+struct LIB_RUBY_PARSER_Diagnostic lib_ruby_parser_clone_diagnostic(struct LIB_RUBY_PARSER_Diagnostic diagnostic);
+
+struct LIB_RUBY_PARSER_Loc lib_ruby_parser_clone_loc(struct LIB_RUBY_PARSER_Loc loc);
+
+struct LIB_RUBY_PARSER_MagicComment lib_ruby_parser_clone_magic_comment(struct LIB_RUBY_PARSER_MagicComment magic_comment);
+
+struct LIB_RUBY_PARSER_Node lib_ruby_parser_clone_node(struct LIB_RUBY_PARSER_Node node);
+
+struct LIB_RUBY_PARSER_StringPtr lib_ruby_parser_clone_string_ptr(struct LIB_RUBY_PARSER_StringPtr string_ptr);
 
 struct LIB_RUBY_PARSER_Token lib_ruby_parser_clone_token(struct LIB_RUBY_PARSER_Token token);
 
-char *lib_ruby_parser_debug_fmt_parser_result(struct LIB_RUBY_PARSER_ParserResult parser_result);
+struct LIB_RUBY_PARSER_Token lib_ruby_parser_clone_token(struct LIB_RUBY_PARSER_Token token);
 
 struct LIB_RUBY_PARSER_ParserOptions lib_ruby_parser_default_parser_options(void);
 
@@ -6183,9 +6199,7 @@ char *lib_ruby_parser_diagnostic_render(struct LIB_RUBY_PARSER_Diagnostic diagno
 
 char *lib_ruby_parser_diagnostic_render_message(struct LIB_RUBY_PARSER_Diagnostic diagnostic);
 
-char *lib_ruby_parser_display_fmt_parser_result(struct LIB_RUBY_PARSER_ParserResult parser_result);
-
-void lib_ruby_parser_free_byte_list(struct LIB_RUBY_PARSER_ByteList list);
+void lib_ruby_parser_free_byte_list(LIB_RUBY_PARSER_ByteList list);
 
 void lib_ruby_parser_free_parser_options(struct LIB_RUBY_PARSER_ParserOptions options);
 
@@ -6198,14 +6212,54 @@ uint32_t lib_ruby_parser_loc_size(struct LIB_RUBY_PARSER_Loc loc);
 char *lib_ruby_parser_loc_source(struct LIB_RUBY_PARSER_Loc loc,
                                  struct LIB_RUBY_PARSER_DecodedInput input);
 
-struct LIB_RUBY_PARSER_ByteList lib_ruby_parser_make_byte_list(const char *input);
+LIB_RUBY_PARSER_ByteList lib_ruby_parser_make_byte_list(const char *input);
 
 struct LIB_RUBY_PARSER_StringPtr lib_ruby_parser_make_string_ptr(const char *input);
 
 struct LIB_RUBY_PARSER_Loc lib_ruby_parser_maybe_loc_ptr_to_loc_ptr(struct LIB_RUBY_PARSER_MaybeLoc maybe_loc);
 
+char *lib_ruby_parser_multiline_fmt_byte_list(struct LIB_RUBY_PARSER_ByteList byte_list);
+
+char *lib_ruby_parser_multiline_fmt_comment(struct LIB_RUBY_PARSER_Comment comment);
+
+char *lib_ruby_parser_multiline_fmt_diagnostic(struct LIB_RUBY_PARSER_Diagnostic diagnostic);
+
+char *lib_ruby_parser_multiline_fmt_loc(struct LIB_RUBY_PARSER_Loc loc);
+
+char *lib_ruby_parser_multiline_fmt_magic_comment(struct LIB_RUBY_PARSER_MagicComment magic_comment);
+
+char *lib_ruby_parser_multiline_fmt_node(struct LIB_RUBY_PARSER_Node node);
+
+char *lib_ruby_parser_multiline_fmt_parser_options(struct LIB_RUBY_PARSER_ParserOptions parser_options);
+
+char *lib_ruby_parser_multiline_fmt_parser_result(struct LIB_RUBY_PARSER_ParserResult parser_result);
+
+char *lib_ruby_parser_multiline_fmt_string_ptr(struct LIB_RUBY_PARSER_StringPtr string_ptr);
+
+char *lib_ruby_parser_multiline_fmt_token(struct LIB_RUBY_PARSER_Token token);
+
 struct LIB_RUBY_PARSER_ParserResult lib_ruby_parser_parse(struct LIB_RUBY_PARSER_ByteList input,
                                                           struct LIB_RUBY_PARSER_ParserOptions options);
+
+char *lib_ruby_parser_singleline_fmt_byte_list(struct LIB_RUBY_PARSER_ByteList byte_list);
+
+char *lib_ruby_parser_singleline_fmt_comment(struct LIB_RUBY_PARSER_Comment comment);
+
+char *lib_ruby_parser_singleline_fmt_diagnostic(struct LIB_RUBY_PARSER_Diagnostic diagnostic);
+
+char *lib_ruby_parser_singleline_fmt_loc(struct LIB_RUBY_PARSER_Loc loc);
+
+char *lib_ruby_parser_singleline_fmt_magic_comment(struct LIB_RUBY_PARSER_MagicComment magic_comment);
+
+char *lib_ruby_parser_singleline_fmt_node(struct LIB_RUBY_PARSER_Node node);
+
+char *lib_ruby_parser_singleline_fmt_parser_options(struct LIB_RUBY_PARSER_ParserOptions parser_options);
+
+char *lib_ruby_parser_singleline_fmt_parser_result(struct LIB_RUBY_PARSER_ParserResult parser_result);
+
+char *lib_ruby_parser_singleline_fmt_string_ptr(struct LIB_RUBY_PARSER_StringPtr string_ptr);
+
+char *lib_ruby_parser_singleline_fmt_token(struct LIB_RUBY_PARSER_Token token);
 
 char *lib_ruby_parser_token_name(int32_t token_id);
 
