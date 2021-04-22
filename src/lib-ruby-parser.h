@@ -15,6 +15,9 @@ struct LIB_RUBY_PARSER_Node;
 typedef struct LIB_RUBY_PARSER_Node* LIB_RUBY_PARSER_MaybeNodePtr;
 typedef struct LIB_RUBY_PARSER_Node* LIB_RUBY_PARSER_NodePtr;
 
+struct LIB_RUBY_PARSER_Token;
+typedef struct LIB_RUBY_PARSER_Token* LIB_RUBY_PARSER_TokenPtr;
+
 
 // Token `` "end-of-input" ``, to be returned by the scanner.
 #define LIB_RUBY_PARSER_Lexer_END_OF_INPUT 0
@@ -1477,11 +1480,6 @@ typedef struct LIB_RUBY_PARSER_ForeignCustomDecoder {
   void *state;
 } LIB_RUBY_PARSER_ForeignCustomDecoder;
 
-// C-compatible not-null pointer
-typedef struct LIB_RUBY_PARSER_TokenPtr {
-  struct LIB_RUBY_PARSER_Token *ptr;
-} LIB_RUBY_PARSER_TokenPtr;
-
 // Enum of what token rewriter should do with the state of the lexer
 typedef enum LIB_RUBY_PARSER_LexStateAction_Tag {
   // Means "set the state to X"
@@ -1502,7 +1500,7 @@ typedef struct LIB_RUBY_PARSER_LexStateAction {
 // Output of the token rewriter
 typedef struct LIB_RUBY_PARSER_TokenRewriterResult {
   // Rewritten token. Can be input token if no rewriting expected
-  struct LIB_RUBY_PARSER_TokenPtr rewritten_token;
+  LIB_RUBY_PARSER_TokenPtr rewritten_token;
   // Action to be applied on a token (keep or drop)
   enum LIB_RUBY_PARSER_RewriteAction token_action;
   // Action to be applied on lexer's state (keep as is or change)
@@ -1515,7 +1513,7 @@ typedef struct LIB_RUBY_PARSER_SharedByteList {
   size_t len;
 } LIB_RUBY_PARSER_SharedByteList;
 
-typedef struct LIB_RUBY_PARSER_TokenRewriterResult (*LIB_RUBY_PARSER_ForeignTokenRewriterFn)(struct LIB_RUBY_PARSER_TokenPtr, struct LIB_RUBY_PARSER_SharedByteList, void*);
+typedef struct LIB_RUBY_PARSER_TokenRewriterResult (*LIB_RUBY_PARSER_ForeignTokenRewriterFn)(LIB_RUBY_PARSER_TokenPtr, struct LIB_RUBY_PARSER_SharedByteList, void*);
 
 // C-compatible token rewriter struct
 typedef struct LIB_RUBY_PARSER_ForeignTokenRewriter {

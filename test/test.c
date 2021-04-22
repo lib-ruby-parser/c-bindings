@@ -299,7 +299,7 @@ LIB_RUBY_PARSER_TokenRewriterResult rewrite_token(LIB_RUBY_PARSER_TokenPtr token
     (void)input;
     (void)state;
 
-    LIB_RUBY_PARSER_ByteList token_bytes = token.ptr->token_value.raw;
+    LIB_RUBY_PARSER_ByteList token_bytes = token->token_value.raw;
     char *token_ptr = (char *)token_bytes.ptr;
     bool is_two = (token_bytes.len == strlen("2")) && (strncmp(token_ptr, "2", 1) == 0);
 
@@ -307,7 +307,7 @@ LIB_RUBY_PARSER_TokenRewriterResult rewrite_token(LIB_RUBY_PARSER_TokenPtr token
     {
         // rewrite "2" to "3"
         lib_ruby_parser_free_byte_list(token_bytes);
-        token.ptr->token_value.raw = lib_ruby_parser_make_byte_list("3");
+        token->token_value.raw = lib_ruby_parser_make_byte_list("3");
     }
 
     LIB_RUBY_PARSER_LexStateAction lex_state_action = {.tag = LEX_STATE_ACTION_KEEP};

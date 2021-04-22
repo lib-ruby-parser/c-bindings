@@ -20,6 +20,9 @@ after_includes = """
 struct LIB_RUBY_PARSER_Node;
 typedef struct LIB_RUBY_PARSER_Node* LIB_RUBY_PARSER_MaybeNodePtr;
 typedef struct LIB_RUBY_PARSER_Node* LIB_RUBY_PARSER_NodePtr;
+
+struct LIB_RUBY_PARSER_Token;
+typedef struct LIB_RUBY_PARSER_Token* LIB_RUBY_PARSER_TokenPtr;
 """
 includes = []
 namespaces = []
@@ -52,6 +55,7 @@ exclude = [
   "Ptr_Node",
   "lib_ruby_parser_allocate",
   "lib_ruby_parser_free",
+  "Ptr_Token",
   "parse",
 ]
 include = [
