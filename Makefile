@@ -46,7 +46,7 @@ $(STATIC_LIB): $(wildcard $(RUST_DIR)/src/*.rs) $(O_FILES) sizes-out
 		cargo build $(CARGOFLAGS) --manifest-path $(RUST_DIR)/Cargo.toml
 	ls -l $(RUST_TARGET_DIR)
 	ls -l $(RUST_TARGET_DIR)/$(RUST_ENV)
-	cp $(RUST_TARGET_DIR)/$(RUST_ENV)/$(STATIC_LIB) .
+	cp $(RUST_TARGET_DIR)/$(RUST_ENV)/$(STATIC_LIB_FILE) ./$(STATIC_LIB)
 	$(call add_to_lib,$(STATIC_LIB),$(O_FILES))
 
 # Sizes
