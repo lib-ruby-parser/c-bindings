@@ -55,25 +55,22 @@ pub(crate) fn codegen() {
 }
 
 fn struct_definition(message: &lib_ruby_parser_nodes::Message) -> String {
-    let fields_declaration = {
-        let decls = message.fields.map(|field| {
-            let type_name = helpers::messages::fields::field_type(field);
-            format!("{t} {name};", t = type_name, name = field_name(field))
-        });
+    let mut fields = message.fields.map(|field| {
+        let type_name = helpers::messages::fields::field_type(field);
+        format!("{t} {name};", t = type_name, name = field_name(field))
+    });
 
-        if decls.is_empty() {
-            String::from("")
-        } else {
-            format!("\n    {}", decls.join("\n    "))
-        }
-    };
+    if fields.is_empty() {
+        fields = vec![String::from("uint8_t dummy;")];
+    }
 
     format!(
         "typedef struct LIB_RUBY_PARSER_{struct_name}
-{{{fields_declaration}
+{{
+    {fields_declaration}
 }} LIB_RUBY_PARSER_{struct_name};",
         struct_name = message.camelcase_name,
-        fields_declaration = fields_declaration
+        fields_declaration = fields.join("\n    ")
     )
 }
 fn enum_variant(message: &lib_ruby_parser_nodes::Message) -> String {

@@ -51,7 +51,7 @@ pub(crate) fn codegen(options: &Options) {
 }
 
 fn constructor(message: &Message, options: &Options) -> String {
-    let initializer_list = message
+    let mut initializer_list = message
         .fields
         .map(|field| {
             let unpack = match field.field_type {
@@ -65,6 +65,10 @@ fn constructor(message: &Message, options: &Options) -> String {
             )
         })
         .join(", ");
+
+    if initializer_list.is_empty() {
+        initializer_list = String::from(".dummy = 42");
+    }
 
     format!(
             "{signature}
