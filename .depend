@@ -1,2 +1,35 @@
-target/debug/free.o: src/free.c
+
+alloc.o: alloc.c
+
+api.o: api.c api.h structs.h messages.h nodes.h blobs.h declare_blob.h \
+  blobs_gen.h
+
+benchmark.o: benchmark.c api.h structs.h messages.h nodes.h \
+  utils/rb_filelist.h utils/measure.h
+
+bindings.o: bindings.c bindings.h structs.h messages.h nodes.h blobs.h \
+  declare_blob.h blobs_gen.h
+
+bindings_messages.o: bindings_messages.c bindings.h structs.h messages.h \
+  nodes.h blobs.h declare_blob.h blobs_gen.h
+
+bindings_nodes.o: bindings_nodes.c bindings.h structs.h messages.h \
+  nodes.h blobs.h declare_blob.h blobs_gen.h
+
+messages.o: messages.c structs.h messages.h nodes.h
+
+nodes.o: nodes.c structs.h messages.h nodes.h
+
+sizes.o: sizes.c structs.h messages.h nodes.h sizes_gen.h
+
+structs.o: structs.c structs.h messages.h nodes.h
+
+test.o: test.c api.h structs.h messages.h nodes.h
+
+sizes: sizes.c structs.h messages.h nodes.h sizes_gen.h
+
+test-runner: test.c api.h structs.h messages.h nodes.h
+
+benchmark-runner: benchmark.c api.h structs.h messages.h nodes.h \
+  utils/rb_filelist.h utils/measure.h
 

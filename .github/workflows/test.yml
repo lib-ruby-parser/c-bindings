@@ -9,17 +9,18 @@ on:
 env:
   CARGO_TERM_COLOR: always
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   test:
     name: ${{ matrix.build.name }}
     runs-on: ${{ matrix.build.os }}
     env:
-      CARGO_BUILD_TARGET: ${{ matrix.build.target }}
+      TARGET: ${{ matrix.build.target }}
       CC: ${{ matrix.build.cc }}
-      CXX: ${{ matrix.build.cxx }}
       LD: ${{ matrix.build.ld }}
-      CARGOFLAGS: ${{ matrix.build.cargoflags }}
-      ASAN_OPTIONS: detect_leaks=0
     strategy:
       fail-fast: false
       matrix:
@@ -27,67 +28,55 @@ jobs:
           - name: test on linux (clang)
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            cc: clang-9
-            cxx: clang++-9
-            ld: ld.lld-9
-            cargoflags: --features="onig"
-            run: make clean test
+            cc: clang-12
+            ld: ld.lld-12
+            run: make test
 
           - name: test on mac (clang)
             os: macos-latest
             target: x86_64-apple-darwin
             cc: clang
-            cxx: clang++
             ld: ld
-            cargoflags: --features="onig"
-            run: make clean test
+            run: make test
 
           - name: test on windows (msvc)
             os: windows-latest
             target: x86_64-pc-windows-msvc
             cc: cl.exe
-            cxx: cl.exe
             ld: link.exe
-            cargoflags: ""
-            run: make clean test
+            run: make test
 
           - name: test on windows (mingw)
             os: windows-latest
             target: x86_64-pc-windows-gnu
             cc: gcc
-            cxx: g++
             ld: ld
-            cargoflags: ""
-            run: gcc --version && make clean test
+            run: gcc --version && make test
 
           - name: valgrind
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            cc: clang-9
-            cxx: clang++-9
-            ld: ld.lld-9
-            cargoflags: ""
-            run: make clean test-valgrind
+            cc: clang-12
+            ld: ld.lld-12
+            run: make test-valgrind
 
           - name: asan
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            cc: clang-9
-            cxx: clang++-9
-            ld: ld.lld-9
-            cargoflags: ""
-            run: ASAN_OPTIONS=detect_leaks=1 CCFLAGS="-fsanitize=address" make clean test
+            cc: clang-12
+            ld: ld.lld-12
+            run: ASAN_OPTIONS=detect_leaks=1 CFLAGS="-fsanitize=address" make test
 
     steps:
       - name: setup msvc on windows
         if: runner.os == 'Windows'
         uses: ilammy/msvc-dev-cmd@v1
 
-      - name: fix linker on windows
-        if: runner.os == 'Windows'
-        run: |
-          rm "C:\\Program Files\\Git\\usr\\bin\\link.exe"
-          which -a link.exe
+      # - name: fix linker on windows
+      #   if: runner.os == 'Windows'
+      #   run: |
+      #     rm "C:\\Program Files\\Git\\usr\\bin\\link.exe"
+      #     which -a link.exe
 
       - name: install rust
         uses: actions-rs/toolchain@v1
@@ -107,5 +96,4 @@ jobs:
           sudo apt-get install -y valgrind libtool-bin
 
       - name: run tests
-        shell: bash
         run: ${{ matrix.build.run }}
