@@ -24,11 +24,12 @@ sizes.o: sizes.c structs.h messages.h nodes.h sizes_gen.h
 
 structs.o: structs.c structs.h messages.h nodes.h
 
-test.o: test.c api.h structs.h messages.h nodes.h
+test.o: test.c api.h structs.h messages.h nodes.h utils/copy_string.h
 
 sizes: sizes.c structs.h messages.h nodes.h sizes_gen.h
 
-test-runner: test.c api.h structs.h messages.h nodes.h
+test-runner: test.c api.h structs.h messages.h nodes.h \
+  utils/copy_string.h
 
 benchmark-runner: benchmark.c api.h structs.h messages.h nodes.h \
   utils/rb_filelist.h utils/measure.h

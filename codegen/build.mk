@@ -41,3 +41,7 @@ CODEGEN_H = \
 
 CLEAN += $(CODEGEN_C)
 CLEAN += $(CODEGEN_H)
+
+# manual codegen task
+do-codegen:
+	$(DO_CODEGEN)

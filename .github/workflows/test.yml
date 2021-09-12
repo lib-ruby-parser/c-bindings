@@ -37,14 +37,14 @@ jobs:
             target: x86_64-apple-darwin
             cc: clang
             ld: ld
-            run: make test
+            run: make do-codegen && make test
 
           - name: test on windows (msvc)
             os: windows-latest
             target: x86_64-pc-windows-msvc
             cc: cl.exe
             ld: link.exe
-            run: make test
+            run: make do-codegen && make test
 
           - name: test on windows (mingw)
             os: windows-latest
