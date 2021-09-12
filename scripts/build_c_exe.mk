@@ -2,7 +2,7 @@ ifeq ($(DETECTED_OS), Windows)
 	LIST_DEPS = dumpbin /dependents
 
 define build_c_exe
-	$(CC) $(1) $(CCFLAGS) /link /OUT:$(2)
+	$(CC) ws2_32.lib advapi32.lib userenv.lib $(1) $(CCFLAGS) /link /OUT:$(2)
 endef
 endif
 
