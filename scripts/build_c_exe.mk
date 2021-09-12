@@ -10,7 +10,7 @@ ifeq ($(DETECTED_OS), Linux)
 	LIST_DEPS = ldd
 
 define build_c_exe
-	$(CC) $(1) $(CCFLAGS) -lpthread -ldl -o $(2)
+	$(CC) $(1) $(CCFLAGS) -lpthread -ldl -lm -o $(2)
 endef
 endif
 
