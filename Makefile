@@ -44,6 +44,8 @@ $(STATIC_LIB): $(wildcard $(RUST_DIR)/src/*.rs) $(O_FILES) sizes-out
 	LIB_RUBY_PARSER_SIZES_FILEPATH=$(shell pwd)/sizes-out \
 		RUSTFLAGS=$(RUSTFLAGS) \
 		cargo build $(CARGOFLAGS) --manifest-path $(RUST_DIR)/Cargo.toml
+	ls -l $(RUST_TARGET_DIR)
+	ls -l $(RUST_TARGET_DIR)/$(RUST_ENV)
 	cp $(RUST_TARGET_DIR)/$(RUST_ENV)/$(STATIC_LIB) .
 	$(call add_to_lib,$(STATIC_LIB),$(O_FILES))
 

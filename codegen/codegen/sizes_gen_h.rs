@@ -35,7 +35,7 @@ void print_messages_sizes()
 
 fn node_size(node: &lib_ruby_parser_nodes::Node) -> String {
     format!(
-        "printf(\"LIB_RUBY_PARSER_NODE_{upper}_SIZE=%lu\\n\", sizeof(LIB_RUBY_PARSER_{struct_name}));",
+        "printf(\"LIB_RUBY_PARSER_NODE_{upper}_SIZE=%zu\\n\", sizeof(LIB_RUBY_PARSER_{struct_name}));",
         upper = node.upper_name(),
         struct_name = node.camelcase_name
     )
@@ -43,7 +43,7 @@ fn node_size(node: &lib_ruby_parser_nodes::Node) -> String {
 
 fn message_size(message: &lib_ruby_parser_nodes::Message) -> String {
     format!(
-        "printf(\"LIB_RUBY_PARSER_MESSAGE_{upper}_SIZE=%lu\\n\", sizeof(LIB_RUBY_PARSER_{struct_name}));",
+        "printf(\"LIB_RUBY_PARSER_MESSAGE_{upper}_SIZE=%zu\\n\", sizeof(LIB_RUBY_PARSER_{struct_name}));",
         upper = message.upper_name(),
         struct_name = message.camelcase_name
     )
