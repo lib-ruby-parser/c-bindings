@@ -58,7 +58,7 @@ jobs:
             target: x86_64-unknown-linux-gnu
             cc: clang-12
             ld: ld.lld-12
-            run: make test-valgrind
+            run: make test-runner && valgrind ./test-runner
 
           - name: asan
             os: ubuntu-latest
