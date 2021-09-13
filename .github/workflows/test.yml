@@ -28,37 +28,47 @@ jobs:
           - name: test on linux (clang)
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            cc: clang-13
-            ld: ld.lld-13
-            run: make test
+            cc: clang-12
+            ld: ld.lld-12
+            run: |
+              $CC --version
+              make test
 
           - name: test on mac (clang)
             os: macos-latest
             target: x86_64-apple-darwin
             cc: clang
             ld: ld
-            run: make do-codegen && make test
+            run: |
+              $CC --version
+              make do-codegen && make test
 
           - name: test on windows (msvc)
             os: windows-latest
             target: x86_64-pc-windows-msvc
             cc: cl.exe
             ld: link.exe
-            run: make do-codegen && make test
+            run: |
+              make do-codegen
+              make test
 
           - name: test on windows (mingw)
             os: windows-latest
             target: x86_64-pc-windows-gnu
             cc: gcc
             ld: ld
-            run: gcc --version && make test
+            run: |
+              gcc --version
+              make test
 
           - name: valgrind
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             cc: clang-12
             ld: ld.lld-12
-            run: make test-runner && valgrind ./test-runner
+            run: |
+              make test-runner
+              valgrind ./test-runner
 
           - name: asan
             os: ubuntu-latest
@@ -72,12 +82,6 @@ jobs:
         if: runner.os == 'Windows'
         uses: ilammy/msvc-dev-cmd@v1
 
-      # - name: fix linker on windows
-      #   if: runner.os == 'Windows'
-      #   run: |
-      #     rm "C:\\Program Files\\Git\\usr\\bin\\link.exe"
-      #     which -a link.exe
-
       - name: install rust
         uses: actions-rs/toolchain@v1
         with:
@@ -85,6 +89,9 @@ jobs:
           toolchain: nightly
           target: ${{ matrix.build.target }}
           override: true
+
+      - name: print rustc detailed version
+        run: rustc --version --verbose
 
       - name: checkout
         uses: actions/checkout@v2
