@@ -41,6 +41,9 @@ $(STATIC_LIB): $(wildcard $(RUST_DIR)/src/*.rs) $(O_FILES) sizes-out
 	cp $(RUST_TARGET_DIR)/$(RUST_ENV)/$(STATIC_LIB_FILE) ./$(STATIC_LIB)
 	$(call add_to_lib,$(STATIC_LIB),$(O_FILES))
 
+rebuild-static-lib:
+	./scripts/rebuild-static-lib.sh
+
 # Sizes
 sizes:
 	$(call build_c_exe,sizes.c,sizes)
