@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eu
+set -eux
 
 mkdir -p objects && cd objects
 $AR x ../libruby_parser_c.a

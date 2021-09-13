@@ -42,10 +42,10 @@ jobs:
             cc: clang-12
             ld: ld.lld-12
             ar: llvm-ar-12
-            cflags: -flto=thin -fuse-ld=lld-12
+            cflags: -fuse-ld=lld-12
             rustflags: -Clinker-plugin-lto -Clinker=clang-12 -Clink-arg=-fuse-ld=lld-12
             run: |
-              make libruby_parser_c.a
+              CFLAGS="$CFLAGS -flto=thin" make libruby_parser_c.a
               make rebuild-static-lib
               make test
 
