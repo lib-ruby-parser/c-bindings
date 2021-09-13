@@ -44,7 +44,12 @@ jobs:
             ar: llvm-ar-12
             cflags: -flto=thin -fuse-ld=lld-12
             rustflags: -Clinker-plugin-lto -Clinker=clang-12 -Clink-arg=-fuse-ld=lld-12
-            run: make test
+            run: |
+              make libruby_parser_c.a
+              $LD --relocatable libruby_parser_c.a --whole-archive -o merged.o
+              rm libruby_parser_c.a
+              $(AR) crus libruby_parser_c.a merged.o
+              make test
 
           # - name: test on mac (clang)
           #   os: macos-latest
