@@ -41,7 +41,7 @@ jobs:
             ld: ld.lld-12
             run: |
               $CC --version
-              export CFLAGS="-flto=thin"
+              export CFLAGS="-flto=thin -fuse-ld=lld-12"
               export RUSTFLAGS="-Clinker-plugin-lto -Clinker=clang-12 -Clink-arg=-fuse-ld=lld-12"
               make test
 

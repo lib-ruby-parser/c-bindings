@@ -20,6 +20,7 @@ endef
 
 define build_c_obj
 $(CC) $(1) $(CFLAGS) -c -o $(2)
+file $(2)
 endef
 
 define build_c_exe
