@@ -4,7 +4,7 @@ O = o
 A = a
 
 STATIC_LIB_FILE = libruby_parser_c.$(A)
-LIST_DEPS = otool -L
+LIST_DEPS = ldd
 
 CFLAGS += -Wall -Wextra -g
 

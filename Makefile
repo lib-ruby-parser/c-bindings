@@ -51,6 +51,7 @@ CLEAN += sizes sizes-out
 # test
 test-runner: $(STATIC_LIB)
 	$(call build_c_exe,test.c $(STATIC_LIB),test-runner)
+	$(LIST_DEPS) test-runner
 test: test-runner
 	./test-runner
 CLEAN += test-runner
