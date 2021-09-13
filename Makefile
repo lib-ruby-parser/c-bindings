@@ -1,17 +1,9 @@
-ifndef TARGET
-$(error TARGET variable is required)
-endif
-
-include scripts/detect_os.mk
 include scripts/detect_build_env.mk
+include scripts/setup_target.mk
 CODEGEN_DIR = codegen
 RUST_DIR = ruby-parser-c
 CLEAN =
-include scripts/setup_ccflags.mk
 include scripts/setup_rustflags.mk
-include scripts/build_c_obj.mk
-include scripts/add_to_lib.mk
-include scripts/build_c_exe.mk
 
 SOURCES = \
 	alloc \
@@ -83,4 +75,4 @@ clean:
 	rm -f *.$(A)
 	rm -rf *.dSYM
 
-# RUST_TARGET=x86_64-unknown-linux-gnu CCFLAGS="-flto" BUILD_ENV=release make test-runner
+# RUST_TARGET=x86_64-unknown-linux-gnu CFLAGS="-flto" BUILD_ENV=release make test-runner
