@@ -1,0 +1,10 @@
+[package]
+edition = "2018"
+name = "codegen"
+version = "0.1.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+lib-ruby-parser-bindings = {version = "0.6.0"}
+lib-ruby-parser-nodes = {version = "0.26.0"}

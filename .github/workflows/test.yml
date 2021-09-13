@@ -9,17 +9,21 @@ on:
 env:
   CARGO_TERM_COLOR: always
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   test:
     name: ${{ matrix.build.name }}
     runs-on: ${{ matrix.build.os }}
     env:
-      CARGO_BUILD_TARGET: ${{ matrix.build.target }}
+      TARGET: ${{ matrix.build.target }}
       CC: ${{ matrix.build.cc }}
-      CXX: ${{ matrix.build.cxx }}
       LD: ${{ matrix.build.ld }}
-      CARGOFLAGS: ${{ matrix.build.cargoflags }}
-      ASAN_OPTIONS: detect_leaks=0
+      AR: ${{ matrix.build.ar }}
+      CFLAGS: ${{ matrix.build.cflags }}
+      RUSTFLAGS: ${{ matrix.build.rustflags }}
     strategy:
       fail-fast: false
       matrix:
@@ -27,85 +31,107 @@ jobs:
           - name: test on linux (clang)
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            cc: clang-9
-            cxx: clang++-9
-            ld: ld.lld-9
-            cargoflags: --features="onig"
-            run: make clean test
+            cc: clang-12
+            ld: ld.lld-12
+            ar: llvm-ar-12
+            run: make test
+
+          - name: test on linux (clang, LTO)
+            os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            cc: clang-12
+            ld: ld.lld-12
+            ar: llvm-ar-12
+            cflags: -fuse-ld=lld-12
+            rustflags: -Clinker-plugin-lto -Clinker=clang-12 -Clink-arg=-fuse-ld=lld-12
+            run: |
+              CFLAGS="$CFLAGS -flto=thin" make libruby_parser_c.a
+              make rebuild-static-lib
+              make test
 
           - name: test on mac (clang)
             os: macos-latest
             target: x86_64-apple-darwin
             cc: clang
-            cxx: clang++
             ld: ld
-            cargoflags: --features="onig"
-            run: make clean test
+            ar: ar
+            run: |
+              $CC --version
+              make test
+
+          # - name: test on mac (clang LTO)
+          #   os: macos-latest
+          #   target: x86_64-apple-darwin
+          #   cc: clang-12
+          #   ld: ld64.lld.darwinnew
+          #   ar: llvm-ar
+          #   cflags: -fuse-ld=lld.darwinnew
+          #   rustflags: -Clinker-plugin-lto -Clinker=clang -Clink-arg=-fuse-ld=lld.darwinnew
+          #   run: |
+          #     brew info llvm
+          #     echo "/usr/local/opt/llvm/bin" >> $GITHUB_PATH
+
+          #     CFLAGS="$CFLAGS -flto=thin" make libruby_parser_c.a
+          #     make rebuild-static-lib
+          #     make test
 
           - name: test on windows (msvc)
             os: windows-latest
             target: x86_64-pc-windows-msvc
             cc: cl.exe
-            cxx: cl.exe
             ld: link.exe
-            cargoflags: ""
-            run: make clean test
+            run: |
+              make do-codegen
+              make test
 
           - name: test on windows (mingw)
             os: windows-latest
             target: x86_64-pc-windows-gnu
             cc: gcc
-            cxx: g++
             ld: ld
-            cargoflags: ""
-            run: gcc --version && make clean test
+            ar: ar
+            run: |
+              gcc --version
+              make test
 
           - name: valgrind
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            cc: clang-9
-            cxx: clang++-9
-            ld: ld.lld-9
-            cargoflags: ""
-            run: make clean test-valgrind
+            cc: clang-12
+            ld: ld.lld-12
+            ar: llvm-ar-12
+            run: |
+              sudo apt-get update
+              sudo apt-get install -y valgrind libtool-bin
+              make test-runner
+              valgrind ./test-runner
 
           - name: asan
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            cc: clang-9
-            cxx: clang++-9
-            ld: ld.lld-9
-            cargoflags: ""
-            run: ASAN_OPTIONS=detect_leaks=1 CCFLAGS="-fsanitize=address" make clean test
+            cc: clang-12
+            ld: ld.lld-12
+            ar: llvm-ar-12
+            run: ASAN_OPTIONS=detect_leaks=1 CFLAGS="-fsanitize=address" make test
 
     steps:
       - name: setup msvc on windows
         if: runner.os == 'Windows'
         uses: ilammy/msvc-dev-cmd@v1
 
-      - name: fix linker on windows
-        if: runner.os == 'Windows'
-        run: |
-          rm "C:\\Program Files\\Git\\usr\\bin\\link.exe"
-          which -a link.exe
-
       - name: install rust
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: nightly
+          toolchain: stable
           target: ${{ matrix.build.target }}
           override: true
+
+      - name: print rustc detailed version
+        run: rustc --version --verbose
 
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: install valgrind
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y valgrind libtool-bin
-
       - name: run tests
-        shell: bash
         run: ${{ matrix.build.run }}

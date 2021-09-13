@@ -1,48 +1,82 @@
-include scripts/setup.mk
+include scripts/detect_build_env.mk
+include scripts/setup_target.mk
+CODEGEN_DIR = codegen
+RUST_DIR = ruby-parser-c
+CLEAN =
+include scripts/setup_rustflags.mk
 
-ifeq ($(DETECTED_OS), Windows)
-	LIST_DEPS = dumpbin /dependents
-endif
+SOURCES = \
+	alloc \
+	api \
+	bindings \
+	bindings_messages \
+	bindings_nodes \
+	messages \
+	nodes \
+	structs
 
-ifeq ($(DETECTED_OS), Linux)
-	LIST_DEPS = ldd
-endif
+C_FILES = $(foreach source,$(SOURCES),$(source).c)
+H_FILES = $(foreach source,$(SOURCES),$(source).h)
+O_FILES = $(foreach source,$(SOURCES),$(source).$(O))
+STATIC_LIB = libruby_parser_c.$(A)
 
-ifeq ($(DETECTED_OS), Darwin)
-	LIST_DEPS = otool -L
-endif
+# Codegen
+include codegen/build.mk
+
+# CXX
+%.$(O): %.c %.h
+	$(call build_c_obj,$<,$@)
 
 # Rust
-include lib-ruby-parser-c-bindings/build.mk
+CLEAN += $(RUST_TARGET_DIR)
+# RUSTFLAGS += -Clinker-plugin-lto -Clinker=clang-13 -Clink-arg=-fuse-ld=lld-13
+# RUSTFLAGS += -Clinker-plugin-lto -Clinker=clang -Clink-arg=-fuse-ld=lld.darwinnew
 
-# C
-include src/build.mk
+$(STATIC_LIB): $(wildcard $(RUST_DIR)/src/*.rs) $(O_FILES) sizes-out
+	LIB_RUBY_PARSER_SIZES_FILEPATH=$(shell pwd)/sizes-out \
+		RUSTFLAGS="$(RUSTFLAGS)" \
+		cargo build $(CARGOFLAGS) --manifest-path $(RUST_DIR)/Cargo.toml
+	ls -l $(RUST_TARGET_DIR)
+	ls -l $(RUST_TARGET_DIR)/$(RUST_ENV)
+	cp $(RUST_TARGET_DIR)/$(RUST_ENV)/$(STATIC_LIB_FILE) ./$(STATIC_LIB)
+	$(call add_to_lib,$(STATIC_LIB),$(O_FILES))
 
-STATIC_LIB = $(TARGET_DIR)/lib-ruby-parser.$(STATIC_LIB_EXT)
+rebuild-static-lib:
+	./scripts/rebuild-static-lib.sh
 
-ifeq ($(CARGO_BUILD_TARGET), x86_64-pc-windows-msvc)
-	BUILD_STATIC = lib.exe ws2_32.lib advapi32.lib userenv.lib $(RUST_OBJ) $(OBJECTS) /OUT:$(STATIC_LIB)
-else
-	LIB_RUBY_PARSER_O = $(TARGET_DIR)/lib-ruby-parser.$(OBJ_FILE_EXT)
-	BUILD_STATIC = cp $(TARGET_DIR)/lib-ruby-parser-rust-static.a $(TARGET_DIR)/lib-ruby-parser.a && \
-					rm -f $(LIB_RUBY_PARSER_O) && \
-					$(LD) $(OBJECTS) -r -o $(LIB_RUBY_PARSER_O) && \
-					ar -rv $(TARGET_DIR)/lib-ruby-parser.a $(LIB_RUBY_PARSER_O)
-endif
+# Sizes
+sizes:
+	$(call build_c_exe,sizes.c,sizes)
+sizes-out: sizes
+	./sizes > sizes-out
+CLEAN += sizes sizes-out
 
-$(STATIC_LIB): $(RUST_OBJ) $(OBJECTS)
-	$(BUILD_STATIC)
-build-static: $(STATIC_LIB)
-
-# tests
-include test/build.mk
-
-clean:
-	rm -rf target
-	mkdir -p $(TARGET_DIR)
-
-# fuzzer
-include fuzzer/build.mk
+# test
+test-runner: $(STATIC_LIB)
+	$(call build_c_exe,test.c $(STATIC_LIB),test-runner)
+	$(LIST_DEPS) test-runner
+test: test-runner
+	./test-runner
+CLEAN += test-runner
 
 # benchmark
-include benchmark/build.mk
+benchmark-runner: $(STATIC_LIB)
+	$(call build_c_exe,benchmark.c $(STATIC_LIB),benchmark-runner)
+benchmark: benchmark-runner
+	./benchmark-runner
+CLEAN += benchmark-runner
+
+# deps
+update-depend: $(C_FILES) $(H_FILES)
+	CC=$(CC) ./scripts/update-depend.sh
+
+include .depend
+
+# clean
+clean:
+	rm -rf $(CLEAN)
+	rm -f *.$(O)
+	rm -f *.$(A)
+	rm -rf *.dSYM
+
+# RUST_TARGET=x86_64-unknown-linux-gnu CFLAGS="-flto" BUILD_ENV=release make test-runner
