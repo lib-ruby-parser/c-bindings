@@ -19,11 +19,10 @@ $(AR) r $(1) $(2)
 endef
 
 define build_c_obj
-$(CC) $(1) $(CFLAGS) -flto=thin -c -o $(2)
-llvm-nm-12 $(2)
+$(CC) $(1) $(CFLAGS) -c -o $(2)
 endef
 
 define build_c_exe
-$(CC) $(1) $(CFLAGS) -fuse-ld=lld-12 -flto -lpthread -ldl -lm -o $(2)
+$(CC) $(1) $(CFLAGS) -lpthread -ldl -lm -o $(2)
 endef
 
