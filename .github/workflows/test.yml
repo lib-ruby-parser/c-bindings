@@ -49,48 +49,50 @@ jobs:
               make rebuild-static-lib
               make test
 
-          # - name: test on mac (clang)
-          #   os: macos-latest
-          #   target: x86_64-apple-darwin
-          #   cc: clang
-          #   ld: ld
-          #   run: |
-          #     $CC --version
-          #     make do-codegen && make test
+          - name: test on mac (clang)
+            os: macos-latest
+            target: x86_64-apple-darwin
+            cc: clang
+            ld: ld
+            run: |
+              $CC --version
+              make test
 
-          # - name: test on windows (msvc)
-          #   os: windows-latest
-          #   target: x86_64-pc-windows-msvc
-          #   cc: cl.exe
-          #   ld: link.exe
-          #   run: |
-          #     make do-codegen
-          #     make test
+          - name: test on windows (msvc)
+            os: windows-latest
+            target: x86_64-pc-windows-msvc
+            cc: cl.exe
+            ld: link.exe
+            run: |
+              make do-codegen
+              make test
 
-          # - name: test on windows (mingw)
-          #   os: windows-latest
-          #   target: x86_64-pc-windows-gnu
-          #   cc: gcc
-          #   ld: ld
-          #   run: |
-          #     gcc --version
-          #     make test
+          - name: test on windows (mingw)
+            os: windows-latest
+            target: x86_64-pc-windows-gnu
+            cc: gcc
+            ld: ld
+            run: |
+              gcc --version
+              make test
 
-          # - name: valgrind
-          #   os: ubuntu-latest
-          #   target: x86_64-unknown-linux-gnu
-          #   cc: clang-12
-          #   ld: ld.lld-12
-          #   run: |
-          #     make test-runner
-          #     valgrind ./test-runner
+          - name: valgrind
+            os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            cc: clang-12
+            ld: ld.lld-12
+            run: |
+              sudo apt-get update
+              sudo apt-get install -y valgrind libtool-bin
+              make test-runner
+              valgrind ./test-runner
 
-          # - name: asan
-          #   os: ubuntu-latest
-          #   target: x86_64-unknown-linux-gnu
-          #   cc: clang-12
-          #   ld: ld.lld-12
-          #   run: ASAN_OPTIONS=detect_leaks=1 CFLAGS="-fsanitize=address" make test
+          - name: asan
+            os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            cc: clang-12
+            ld: ld.lld-12
+            run: ASAN_OPTIONS=detect_leaks=1 CFLAGS="-fsanitize=address" make test
 
     steps:
       - name: setup msvc on windows
@@ -110,12 +112,6 @@ jobs:
 
       - name: checkout
         uses: actions/checkout@v2
-
-      # - name: install valgrind
-      #   if: runner.os == 'Linux'
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install -y valgrind libtool-bin
 
       - name: run tests
         run: ${{ matrix.build.run }}
