@@ -54,6 +54,7 @@ jobs:
             target: x86_64-apple-darwin
             cc: clang
             ld: ld
+            ar: ar
             run: |
               $CC --version
               make test
@@ -72,6 +73,7 @@ jobs:
             target: x86_64-pc-windows-gnu
             cc: gcc
             ld: ld
+            ar: ar
             run: |
               gcc --version
               make test
@@ -81,6 +83,7 @@ jobs:
             target: x86_64-unknown-linux-gnu
             cc: clang-12
             ld: ld.lld-12
+            ar: llvm-ar-12
             run: |
               sudo apt-get update
               sudo apt-get install -y valgrind libtool-bin
@@ -92,6 +95,7 @@ jobs:
             target: x86_64-unknown-linux-gnu
             cc: clang-12
             ld: ld.lld-12
+            ar: llvm-ar-12
             run: ASAN_OPTIONS=detect_leaks=1 CFLAGS="-fsanitize=address" make test
 
     steps:
