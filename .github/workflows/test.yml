@@ -59,6 +59,22 @@ jobs:
               $CC --version
               make test
 
+          # - name: test on mac (clang LTO)
+          #   os: macos-latest
+          #   target: x86_64-apple-darwin
+          #   cc: clang-12
+          #   ld: ld64.lld.darwinnew
+          #   ar: llvm-ar
+          #   cflags: -fuse-ld=lld.darwinnew
+          #   rustflags: -Clinker-plugin-lto -Clinker=clang -Clink-arg=-fuse-ld=lld.darwinnew
+          #   run: |
+          #     brew info llvm
+          #     echo "/usr/local/opt/llvm/bin" >> $GITHUB_PATH
+
+          #     CFLAGS="$CFLAGS -flto=thin" make libruby_parser_c.a
+          #     make rebuild-static-lib
+          #     make test
+
           - name: test on windows (msvc)
             os: windows-latest
             target: x86_64-pc-windows-msvc
