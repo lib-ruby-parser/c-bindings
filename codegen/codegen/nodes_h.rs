@@ -20,12 +20,16 @@ typedef LIB_RUBY_PARSER_Node* LIB_RUBY_PARSER_NodePtr;
 typedef LIB_RUBY_PARSER_Node* LIB_RUBY_PARSER_MaybeNodePtr;
 
 {{ each node }}<dnl>
+{{ helper node-comment }}
 typedef struct LIB_RUBY_PARSER_{{ helper node-camelcase-name }}
 {
 {{ each node-field }}<dnl>
+{{ helper node-field-comment }}
     {{ helper node-field-type }} {{ helper node-field-name }};
-{{ end }}
+
+{{ end }}<dnl>
 } LIB_RUBY_PARSER_{{ helper node-camelcase-name }};
+
 {{ end }}<dnl>
 
 struct LIB_RUBY_PARSER_Node {

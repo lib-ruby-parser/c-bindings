@@ -10,7 +10,7 @@ pub(crate) mod nodes {
     }
 
     pub(crate) fn comment(node: &Node) -> String {
-        node.render_comment("///", 0)
+        node.render_comment("//", 0)
     }
 
     pub(crate) fn upper_name(node: &Node) -> String {
@@ -129,7 +129,7 @@ pub(crate) mod node_fields {
     }
 
     pub(crate) fn comment(node_with_field: &NodeWithField) -> String {
-        node_with_field.field.render_comment("///", 4)
+        node_with_field.field.render_comment("//", 4)
     }
 }
 
@@ -153,7 +153,7 @@ pub(crate) mod messages {
     }
 
     pub(crate) fn comment(message: &Message) -> String {
-        message.render_comment("///", 0)
+        message.render_comment("//", 0)
     }
 }
 
@@ -205,7 +205,7 @@ pub(crate) mod message_fields {
     }
 
     pub(crate) fn comment(message_with_field: &MessageWithField) -> String {
-        message_with_field.field.render_comment("///", 4)
+        message_with_field.field.render_comment("//", 4)
     }
 }
 
@@ -233,7 +233,7 @@ pub(crate) fn build() -> TemplateFns {
     fns.register_helper("message-comment", messages::comment);
     fns.register_predicate("message-has-no-fields", messages::has_no_fields);
 
-    fns.register_helper("mesage-field-comment", message_fields::comment);
+    fns.register_helper("message-field-comment", message_fields::comment);
     fns.register_helper("message-field-name", message_fields::name);
     fns.register_helper("message-field-type", message_fields::field_type);
     fns.register_helper("message-field-blob-type", message_fields::blob_type);
