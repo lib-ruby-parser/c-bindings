@@ -9,10 +9,15 @@ const TEMPLATE: &str = "#ifndef LIB_RUBY_PARSER_EXTERNAL_C_SHARED_MESSAGES_H
 {{ helper message-comment }}
 typedef struct LIB_RUBY_PARSER_{{ helper message-camelcase-name }}
 {
+{{ if message-has-no-fields }}<dnl>
+    // dummy byte (zero-sized structs are no allowed in C)
+    uint8_t dummy;
+{{ else }}<dnl>
+{{ end }}<dnl>
+<dnl>
 {{ each message-field }}<dnl>
 {{ helper message-field-comment }}
     {{ helper message-field-type }} {{ helper message-field-name }};
-
 {{ end }}<dnl>
 } LIB_RUBY_PARSER_{{ helper message-camelcase-name }};
 
