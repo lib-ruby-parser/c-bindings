@@ -6,7 +6,7 @@ A = a
 STATIC_LIB_FILE = libruby_parser_c.$(A)
 LIST_DEPS = otool -L
 
-CFLAGS += -Wall -Wextra -g
+CFLAGS += -Wall -Wextra -Wpedantic -g
 
 ifeq ($(BUILD_ENV), debug)
 CFLAGS += -O0
