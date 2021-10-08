@@ -80,3 +80,5 @@ clean:
 	rm -rf *.dSYM
 
 # RUST_TARGET=x86_64-unknown-linux-gnu CFLAGS="-flto" BUILD_ENV=release make test-runner
+check:
+	CC=$(CC) ruby assert_defs.rb bindings.h bindings.c bindings_messages.c bindings_nodes.c

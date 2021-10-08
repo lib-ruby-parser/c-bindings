@@ -22,24 +22,71 @@ void lib_ruby_parser__external__ptr__of_token__drop(LIB_RUBY_PARSER_Ptr_BLOB *se
     LIB_RUBY_PARSER_drop_token((LIB_RUBY_PARSER_Token *)self);
     free(self);
 }
-void *lib_ruby_parser__external__ptr__get_raw(LIB_RUBY_PARSER_Ptr_BLOB *self_blob)
+const void *lib_ruby_parser__external__ptr__get_raw(const LIB_RUBY_PARSER_Ptr_BLOB *self_blob)
 {
-    LIB_RUBY_PARSER_Ptr self = *((LIB_RUBY_PARSER_Ptr *)self_blob);
+    const LIB_RUBY_PARSER_Ptr self = *((const LIB_RUBY_PARSER_Ptr *)self_blob);
     return self;
+}
+void *lib_ruby_parser__external__ptr__into_raw(LIB_RUBY_PARSER_Ptr_BLOB self_blob)
+{
+    LIB_RUBY_PARSER_Ptr self = UNPACK_Ptr(self_blob);
+    return self;
+}
+
+/*
+    LIB_RUBY_PARSER_MaybeLoc
+*/
+LIB_RUBY_PARSER_MaybeLoc_BLOB lib_ruby_parser__external__maybe__loc__new_some(LIB_RUBY_PARSER_Loc_BLOB value)
+{
+    return PACK_MaybeLoc(((LIB_RUBY_PARSER_MaybeLoc){
+        .tag = LIB_RUBY_PARSER_MAYBE_LOC_SOME,
+        .as = {.loc = UNPACK_Loc(value)}}));
+}
+LIB_RUBY_PARSER_MaybeLoc_BLOB lib_ruby_parser__external__maybe__loc__new_none()
+{
+    return PACK_MaybeLoc(((LIB_RUBY_PARSER_MaybeLoc){
+        .tag = LIB_RUBY_PARSER_MAYBE_LOC_NONE,
+        .as = {.nothing = {.dummy = 0}}}));
+}
+void lib_ruby_parser__external__maybe__loc__drop(LIB_RUBY_PARSER_MaybeLoc_BLOB *self_blob)
+{
+    (void)self_blob;
+}
+bool lib_ruby_parser__external__maybe__loc__is_some(const LIB_RUBY_PARSER_MaybeLoc_BLOB *self_blob)
+{
+    const LIB_RUBY_PARSER_MaybeLoc *self = (const LIB_RUBY_PARSER_MaybeLoc *)self_blob;
+    return self->tag == LIB_RUBY_PARSER_MAYBE_LOC_SOME;
+}
+bool lib_ruby_parser__external__maybe__loc__is_none(const LIB_RUBY_PARSER_MaybeLoc_BLOB *self_blob)
+{
+    const LIB_RUBY_PARSER_MaybeLoc *self = (const LIB_RUBY_PARSER_MaybeLoc *)self_blob;
+    return self->tag == LIB_RUBY_PARSER_MAYBE_LOC_NONE;
+}
+const LIB_RUBY_PARSER_Loc_BLOB *lib_ruby_parser__external__maybe__loc__as_value(const LIB_RUBY_PARSER_MaybeLoc_BLOB *self_blob)
+{
+    const LIB_RUBY_PARSER_MaybeLoc *self = (const LIB_RUBY_PARSER_MaybeLoc *)self_blob;
+    if (self->tag == LIB_RUBY_PARSER_MAYBE_LOC_NONE)
+        return NULL;
+    return (const LIB_RUBY_PARSER_Loc_BLOB *)(&(self->as.loc));
+}
+LIB_RUBY_PARSER_Loc_BLOB lib_ruby_parser__external__maybe__loc__into_value(LIB_RUBY_PARSER_MaybeLoc_BLOB self_blob)
+{
+    return PACK_Loc(UNPACK_MaybeLoc(self_blob).as.loc);
 }
 
 /*
     LIB_RUBY_PARSER_MaybePtr
 */
-LIB_RUBY_PARSER_MaybePtr_BLOB lib_ruby_parser__external__maybe_ptr__new(void *ptr)
+LIB_RUBY_PARSER_MaybePtr_BLOB lib_ruby_parser__external__maybe__ptr__new_some(LIB_RUBY_PARSER_Ptr_BLOB value)
 {
-    return PACK_MaybePtr(ptr);
+    LIB_RUBY_PARSER_Ptr self = UNPACK_Ptr(value);
+    return PACK_MaybePtr(self);
 }
-LIB_RUBY_PARSER_MaybePtr_BLOB lib_ruby_parser__external__maybe_ptr__new_null()
+LIB_RUBY_PARSER_MaybePtr_BLOB lib_ruby_parser__external__maybe__ptr__new_none()
 {
     return PACK_MaybePtr(NULL);
 }
-void lib_ruby_parser__external__maybe_ptr__of_node__drop(LIB_RUBY_PARSER_MaybePtr_BLOB *self_blob)
+void lib_ruby_parser__external__maybe__ptr__of_node__drop(LIB_RUBY_PARSER_MaybePtr_BLOB *self_blob)
 {
     LIB_RUBY_PARSER_MaybePtr self = *((LIB_RUBY_PARSER_MaybePtr *)self_blob);
     if (self != NULL)
@@ -48,7 +95,7 @@ void lib_ruby_parser__external__maybe_ptr__of_node__drop(LIB_RUBY_PARSER_MaybePt
         free(self);
     }
 }
-void lib_ruby_parser__external__maybe_ptr__of_token__drop(LIB_RUBY_PARSER_MaybePtr_BLOB *self_blob)
+void lib_ruby_parser__external__maybe__ptr__of_token__drop(LIB_RUBY_PARSER_MaybePtr_BLOB *self_blob)
 {
     LIB_RUBY_PARSER_MaybePtr self = *((LIB_RUBY_PARSER_MaybePtr *)self_blob);
     if (self != NULL)
@@ -57,80 +104,177 @@ void lib_ruby_parser__external__maybe_ptr__of_token__drop(LIB_RUBY_PARSER_MaybeP
         free(self);
     }
 }
-void *lib_ruby_parser__external__maybe_ptr__get_raw(LIB_RUBY_PARSER_MaybePtr_BLOB *self_blob)
+bool lib_ruby_parser__external__maybe__ptr__is_some(const LIB_RUBY_PARSER_MaybePtr_BLOB *self_blob)
 {
-    LIB_RUBY_PARSER_MaybePtr self = *((LIB_RUBY_PARSER_MaybePtr *)self_blob);
-    return self;
+    const LIB_RUBY_PARSER_MaybePtr self = *((const LIB_RUBY_PARSER_MaybePtr *)self_blob);
+    return self != NULL;
+}
+bool lib_ruby_parser__external__maybe__ptr__is_none(const LIB_RUBY_PARSER_MaybePtr_BLOB *self_blob)
+{
+    const LIB_RUBY_PARSER_MaybePtr self = *((const LIB_RUBY_PARSER_MaybePtr *)self_blob);
+    return self == NULL;
+}
+const LIB_RUBY_PARSER_Ptr_BLOB *lib_ruby_parser__external__maybe__ptr__as_value(const LIB_RUBY_PARSER_MaybePtr_BLOB *self_blob)
+{
+    const LIB_RUBY_PARSER_MaybePtr *self = (const LIB_RUBY_PARSER_MaybePtr *)self_blob;
+    return (const LIB_RUBY_PARSER_Ptr_BLOB *)self;
+}
+LIB_RUBY_PARSER_Ptr_BLOB lib_ruby_parser__external__maybe__ptr__into_value(LIB_RUBY_PARSER_MaybePtr_BLOB self_blob)
+{
+    LIB_RUBY_PARSER_MaybePtr self = UNPACK_MaybePtr(self_blob);
+    return PACK_Ptr(self);
+}
+
+/*
+    LIB_RUBY_PARSER_MaybeStringPtr
+*/
+LIB_RUBY_PARSER_MaybeStringPtr_BLOB lib_ruby_parser__external__maybe__string_ptr__new_some(LIB_RUBY_PARSER_StringPtr_BLOB value)
+{
+    LIB_RUBY_PARSER_StringPtr string_ptr = UNPACK_StringPtr(value);
+    LIB_RUBY_PARSER_MaybeStringPtr maybe_string_ptr = {.ptr = string_ptr.ptr, .len = string_ptr.len};
+    return PACK_MaybeStringPtr(maybe_string_ptr);
+}
+LIB_RUBY_PARSER_MaybeStringPtr_BLOB lib_ruby_parser__external__maybe__string_ptr__new_none()
+{
+    return PACK_MaybeStringPtr(((LIB_RUBY_PARSER_MaybeStringPtr){.ptr = NULL, .len = 0}));
+}
+void lib_ruby_parser__external__maybe__string_ptr__drop(LIB_RUBY_PARSER_MaybeStringPtr_BLOB *self_blob)
+{
+    LIB_RUBY_PARSER_MaybeStringPtr *self = (LIB_RUBY_PARSER_MaybeStringPtr *)self_blob;
+    LIB_RUBY_PARSER_drop_maybe_string_ptr(self);
+}
+bool lib_ruby_parser__external__maybe__string_ptr__is_some(const LIB_RUBY_PARSER_MaybeStringPtr_BLOB *self_blob)
+{
+    const LIB_RUBY_PARSER_MaybeStringPtr *self = (const LIB_RUBY_PARSER_MaybeStringPtr *)self_blob;
+    return self->ptr != NULL;
+}
+bool lib_ruby_parser__external__maybe__string_ptr__is_none(const LIB_RUBY_PARSER_MaybeStringPtr_BLOB *self_blob)
+{
+    const LIB_RUBY_PARSER_MaybeStringPtr *self = (const LIB_RUBY_PARSER_MaybeStringPtr *)self_blob;
+    return self->ptr == NULL;
+}
+const LIB_RUBY_PARSER_StringPtr_BLOB *lib_ruby_parser__external__maybe__string_ptr__as_value(const LIB_RUBY_PARSER_MaybeStringPtr_BLOB *self_blob)
+{
+    const LIB_RUBY_PARSER_MaybeStringPtr *self = (const LIB_RUBY_PARSER_MaybeStringPtr *)self_blob;
+    // they have equal structure
+    return (const LIB_RUBY_PARSER_StringPtr_BLOB *)self;
+}
+LIB_RUBY_PARSER_StringPtr_BLOB lib_ruby_parser__external__maybe__string_ptr__into_value(LIB_RUBY_PARSER_MaybeStringPtr_BLOB self_blob)
+{
+    LIB_RUBY_PARSER_MaybeStringPtr self = UNPACK_MaybeStringPtr(self_blob);
+    LIB_RUBY_PARSER_StringPtr string_ptr = {.ptr = self.ptr, .len = self.len};
+    return PACK_StringPtr(string_ptr);
+}
+
+/*
+    LIB_RUBY_PARSER_MaybeDecoder
+*/
+LIB_RUBY_PARSER_MaybeDecoder_BLOB lib_ruby_parser__external__maybe__decoder__new_some(LIB_RUBY_PARSER_Decoder_BLOB value)
+{
+    return PACK_MaybeDecoder(((LIB_RUBY_PARSER_MaybeDecoder){
+        .tag = LIB_RUBY_PARSER_MAYBE_DECODER_SOME,
+        .as = {.decoder = UNPACK_Decoder(value)}}));
+}
+LIB_RUBY_PARSER_MaybeDecoder_BLOB lib_ruby_parser__external__maybe__decoder__new_none()
+{
+    return PACK_MaybeDecoder(((LIB_RUBY_PARSER_MaybeDecoder){
+        .tag = LIB_RUBY_PARSER_MAYBE_DECODER_NONE,
+        .as = {.nothing = {.dummy = 42}}}));
+}
+void lib_ruby_parser__external__maybe__decoder__drop(LIB_RUBY_PARSER_MaybeDecoder_BLOB *self_blob)
+{
+    (void)self_blob;
+}
+bool lib_ruby_parser__external__maybe__decoder__is_some(const LIB_RUBY_PARSER_MaybeDecoder_BLOB *self_blob)
+{
+    const LIB_RUBY_PARSER_MaybeDecoder *self = (const LIB_RUBY_PARSER_MaybeDecoder *)self_blob;
+    return self->tag == LIB_RUBY_PARSER_MAYBE_DECODER_SOME;
+}
+bool lib_ruby_parser__external__maybe__decoder__is_none(const LIB_RUBY_PARSER_MaybeDecoder_BLOB *self_blob)
+{
+    const LIB_RUBY_PARSER_MaybeDecoder *self = (const LIB_RUBY_PARSER_MaybeDecoder *)self_blob;
+    return self->tag == LIB_RUBY_PARSER_MAYBE_DECODER_NONE;
+}
+const LIB_RUBY_PARSER_Decoder_BLOB *lib_ruby_parser__external__maybe__decoder__as_value(const LIB_RUBY_PARSER_MaybeDecoder_BLOB *self_blob)
+{
+    const LIB_RUBY_PARSER_MaybeDecoder *self = (const LIB_RUBY_PARSER_MaybeDecoder *)self_blob;
+    if (self->tag == LIB_RUBY_PARSER_MAYBE_DECODER_SOME)
+        return (const LIB_RUBY_PARSER_Decoder_BLOB *)(&(self->as.decoder));
+    return NULL;
+}
+LIB_RUBY_PARSER_Decoder_BLOB lib_ruby_parser__external__maybe__decoder__into_value(LIB_RUBY_PARSER_MaybeDecoder_BLOB self_blob)
+{
+    return PACK_Decoder(UNPACK_MaybeDecoder(self_blob).as.decoder);
+}
+
+/*
+    LIB_RUBY_PARSER_MaybeTokenRewriter
+*/
+LIB_RUBY_PARSER_MaybeTokenRewriter_BLOB lib_ruby_parser__external__maybe__token_rewriter__new_some(LIB_RUBY_PARSER_TokenRewriter_BLOB value)
+{
+    return PACK_MaybeTokenRewriter(((LIB_RUBY_PARSER_MaybeTokenRewriter){
+        .tag = LIB_RUBY_PARSER_MAYBE_TOKEN_REWRITER_SOME,
+        .as = {.token_rewriter = UNPACK_TokenRewriter(value)}}));
+}
+LIB_RUBY_PARSER_MaybeTokenRewriter_BLOB lib_ruby_parser__external__maybe__token_rewriter__new_none()
+{
+    return PACK_MaybeTokenRewriter(((LIB_RUBY_PARSER_MaybeTokenRewriter){
+        .tag = LIB_RUBY_PARSER_MAYBE_TOKEN_REWRITER_NONE,
+        .as = {.nothing = {.dummy = 42}}}));
+}
+void lib_ruby_parser__external__maybe__token_rewriter__drop(LIB_RUBY_PARSER_MaybeTokenRewriter_BLOB *self_blob)
+{
+    (void)self_blob;
+}
+bool lib_ruby_parser__external__maybe__token_rewriter__is_some(const LIB_RUBY_PARSER_MaybeTokenRewriter_BLOB *self_blob)
+{
+    const LIB_RUBY_PARSER_MaybeTokenRewriter *self = (const LIB_RUBY_PARSER_MaybeTokenRewriter *)self_blob;
+    return self->tag == LIB_RUBY_PARSER_MAYBE_TOKEN_REWRITER_SOME;
+}
+bool lib_ruby_parser__external__maybe__token_rewriter__is_none(const LIB_RUBY_PARSER_MaybeTokenRewriter_BLOB *self_blob)
+{
+    const LIB_RUBY_PARSER_MaybeTokenRewriter *self = (const LIB_RUBY_PARSER_MaybeTokenRewriter *)self_blob;
+    return self->tag == LIB_RUBY_PARSER_MAYBE_TOKEN_REWRITER_NONE;
+}
+const LIB_RUBY_PARSER_TokenRewriter_BLOB *lib_ruby_parser__external__maybe__token_rewriter__as_value(const LIB_RUBY_PARSER_MaybeTokenRewriter_BLOB *self_blob)
+{
+    const LIB_RUBY_PARSER_MaybeTokenRewriter *self = (const LIB_RUBY_PARSER_MaybeTokenRewriter *)self_blob;
+    if (self->tag == LIB_RUBY_PARSER_MAYBE_TOKEN_REWRITER_SOME)
+        return (const LIB_RUBY_PARSER_TokenRewriter_BLOB *)(&(self->as.token_rewriter));
+    return NULL;
+}
+LIB_RUBY_PARSER_TokenRewriter_BLOB lib_ruby_parser__external__maybe__token_rewriter__into_value(LIB_RUBY_PARSER_MaybeTokenRewriter_BLOB self_blob)
+{
+    return PACK_TokenRewriter(UNPACK_MaybeTokenRewriter(self_blob).as.token_rewriter);
 }
 
 /*
     LIB_RUBY_PARSER_StringPtr
 */
-LIB_RUBY_PARSER_StringPtr_BLOB lib_ruby_parser__external__string_ptr__new(const uint8_t *ptr, uint64_t len)
+LIB_RUBY_PARSER_StringPtr_BLOB lib_ruby_parser__external__string_ptr__new(uint8_t *ptr, uint64_t len)
 {
-    uint8_t *new_ptr = malloc(len);
-    memcpy(new_ptr, ptr, len);
-    return PACK_StringPtr(((LIB_RUBY_PARSER_StringPtr){.ptr = new_ptr, .len = len}));
+    return PACK_StringPtr(((LIB_RUBY_PARSER_StringPtr){.ptr = ptr, .len = len}));
 }
 void lib_ruby_parser__external__string_ptr__drop(LIB_RUBY_PARSER_StringPtr_BLOB *self_blob)
 {
     LIB_RUBY_PARSER_StringPtr *self = (LIB_RUBY_PARSER_StringPtr *)self_blob;
     LIB_RUBY_PARSER_drop_string_ptr(self);
 }
-uint8_t *lib_ruby_parser__external__string_ptr__get_raw(LIB_RUBY_PARSER_StringPtr_BLOB *self_blob)
+const uint8_t *lib_ruby_parser__external__string_ptr__as_raw(const LIB_RUBY_PARSER_StringPtr_BLOB *self_blob)
 {
-    LIB_RUBY_PARSER_StringPtr *self = (LIB_RUBY_PARSER_StringPtr *)self_blob;
+    const LIB_RUBY_PARSER_StringPtr *self = (const LIB_RUBY_PARSER_StringPtr *)self_blob;
     if (self->len == 0)
         return NULL;
     return self->ptr;
 }
+uint8_t *lib_ruby_parser__external__string_ptr__into_raw(LIB_RUBY_PARSER_StringPtr_BLOB self_blob)
+{
+    LIB_RUBY_PARSER_StringPtr self = UNPACK_StringPtr(self_blob);
+    return self.ptr;
+}
 uint64_t lib_ruby_parser__external__string_ptr__get_len(const LIB_RUBY_PARSER_StringPtr_BLOB *self_blob)
 {
     LIB_RUBY_PARSER_StringPtr *self = (LIB_RUBY_PARSER_StringPtr *)self_blob;
-    return self->len;
-}
-
-/*
-    LIB_RUBY_PARSER_MaybeStringPtr
-*/
-LIB_RUBY_PARSER_MaybeStringPtr_BLOB lib_ruby_parser__external__maybe_string_ptr__new_some(const uint8_t *ptr, uint64_t len)
-{
-    LIB_RUBY_PARSER_MaybeStringPtr maybe_string_ptr = {.ptr = malloc(len), .len = len};
-    memcpy(maybe_string_ptr.ptr, ptr, len);
-    return PACK_MaybeStringPtr(maybe_string_ptr);
-}
-LIB_RUBY_PARSER_MaybeStringPtr_BLOB lib_ruby_parser__external__maybe_string_ptr__new_none()
-{
-    return PACK_MaybeStringPtr(((LIB_RUBY_PARSER_MaybeStringPtr){.ptr = NULL, .len = 0}));
-}
-void lib_ruby_parser__external__maybe_string_ptr__drop(LIB_RUBY_PARSER_MaybeStringPtr_BLOB *self_blob)
-{
-    LIB_RUBY_PARSER_MaybeStringPtr *self = (LIB_RUBY_PARSER_MaybeStringPtr *)self_blob;
-    LIB_RUBY_PARSER_drop_maybe_string_ptr(self);
-}
-bool lib_ruby_parser__external__maybe_string_ptr__is_some(const LIB_RUBY_PARSER_MaybeStringPtr_BLOB *self_blob)
-{
-    const LIB_RUBY_PARSER_MaybeStringPtr *self = (const LIB_RUBY_PARSER_MaybeStringPtr *)self_blob;
-    return self->ptr != NULL;
-}
-bool lib_ruby_parser__external__maybe_string_ptr__is_none(const LIB_RUBY_PARSER_MaybeStringPtr_BLOB *self_blob)
-{
-    const LIB_RUBY_PARSER_MaybeStringPtr *self = (const LIB_RUBY_PARSER_MaybeStringPtr *)self_blob;
-    return self->ptr == NULL;
-}
-uint8_t *lib_ruby_parser__external__maybe_string_ptr__get_raw(LIB_RUBY_PARSER_MaybeStringPtr_BLOB *self_blob)
-{
-    LIB_RUBY_PARSER_MaybeStringPtr *self = (LIB_RUBY_PARSER_MaybeStringPtr *)self_blob;
-    return self->ptr;
-}
-uint8_t *lib_ruby_parser__external__maybe_string_ptr__into_raw(LIB_RUBY_PARSER_MaybeStringPtr_BLOB self_blob)
-{
-    LIB_RUBY_PARSER_MaybeStringPtr self = UNPACK_MaybeStringPtr(self_blob);
-    return self.ptr;
-}
-uint64_t lib_ruby_parser__external__maybe_string_ptr__get_len(const LIB_RUBY_PARSER_MaybeStringPtr_BLOB *self_blob)
-{
-    const LIB_RUBY_PARSER_MaybeStringPtr *self = (const LIB_RUBY_PARSER_MaybeStringPtr *)self_blob;
     return self->len;
 }
 
@@ -215,6 +359,13 @@ uint64_t lib_ruby_parser__external__shared_byte_list__get_len(const LIB_RUBY_PAR
         self->ptr[self->len] = item;                                                                                                            \
         self->len++;                                                                                                                            \
     }                                                                                                                                           \
+    LIB_RUBY_PARSER_##ITEM##_BLOB lib_ruby_parser__external__list__##NS##__pop(LIB_RUBY_PARSER_##ITEM##List_BLOB *self_blob)                    \
+    {                                                                                                                                           \
+        LIB_RUBY_PARSER_##ITEM##List *self = (LIB_RUBY_PARSER_##ITEM##List *)self_blob;                                                         \
+        LIB_RUBY_PARSER_##ITEM item = self->ptr[self->len - 1];                                                                                 \
+        self->len -= 1;                                                                                                                         \
+        return PACK_##ITEM(item);                                                                                                               \
+    }                                                                                                                                           \
     LIB_RUBY_PARSER_##ITEM##_BLOB lib_ruby_parser__external__list__##NS##__remove(LIB_RUBY_PARSER_##ITEM##List_BLOB *self_blob, uint64_t index) \
     {                                                                                                                                           \
         LIB_RUBY_PARSER_##ITEM##List *self = (LIB_RUBY_PARSER_##ITEM##List *)self_blob;                                                         \
@@ -239,10 +390,19 @@ uint64_t lib_ruby_parser__external__shared_byte_list__get_len(const LIB_RUBY_PAR
         self->capacity = new_capacity;                                                                                                          \
         free(old_ptr);                                                                                                                          \
     }                                                                                                                                           \
-    LIB_RUBY_PARSER_##ITEM##_BLOB *lib_ruby_parser__external__list__##NS##__as_ptr(LIB_RUBY_PARSER_##ITEM##List_BLOB *self_blob)                \
+    const LIB_RUBY_PARSER_##ITEM##_BLOB *lib_ruby_parser__external__list__##NS##__as_ptr(const LIB_RUBY_PARSER_##ITEM##List_BLOB *self_blob)    \
     {                                                                                                                                           \
         LIB_RUBY_PARSER_##ITEM##List *self = (LIB_RUBY_PARSER_##ITEM##List *)self_blob;                                                         \
         return (LIB_RUBY_PARSER_##ITEM##_BLOB *)(self->ptr);                                                                                    \
+    }                                                                                                                                           \
+    LIB_RUBY_PARSER_##ITEM##_BLOB *lib_ruby_parser__external__list__##NS##__take_ptr(LIB_RUBY_PARSER_##ITEM##List_BLOB *self_blob)              \
+    {                                                                                                                                           \
+        LIB_RUBY_PARSER_##ITEM##List *self = (LIB_RUBY_PARSER_##ITEM##List *)self_blob;                                                         \
+        LIB_RUBY_PARSER_##ITEM *ptr = self->ptr;                                                                                                \
+        self->ptr = NULL;                                                                                                                       \
+        self->len = 0;                                                                                                                          \
+        self->capacity = 0;                                                                                                                     \
+        return (LIB_RUBY_PARSER_##ITEM##_BLOB *)ptr;                                                                                            \
     }                                                                                                                                           \
     uint64_t lib_ruby_parser__external__list__##NS##__get_len(const LIB_RUBY_PARSER_##ITEM##List_BLOB *self_blob)                               \
     {                                                                                                                                           \
@@ -253,6 +413,29 @@ uint64_t lib_ruby_parser__external__shared_byte_list__get_len(const LIB_RUBY_PAR
     {                                                                                                                                           \
         const LIB_RUBY_PARSER_##ITEM##List *self = (const LIB_RUBY_PARSER_##ITEM##List *)self_blob;                                             \
         return self->capacity;                                                                                                                  \
+    }                                                                                                                                           \
+    void lib_ruby_parser__external__list__##NS##__reserve(LIB_RUBY_PARSER_##ITEM##List_BLOB *self_blob, uint64_t additional)                    \
+    {                                                                                                                                           \
+        LIB_RUBY_PARSER_##ITEM##List *self = (LIB_RUBY_PARSER_##ITEM##List *)self_blob;                                                         \
+        if (self->len + additional > self->capacity)                                                                                            \
+        {                                                                                                                                       \
+            self->capacity = self->len + additional;                                                                                            \
+            LIB_RUBY_PARSER_##ITEM *old_ptr = self->ptr;                                                                                        \
+            if (self->capacity == 0)                                                                                                            \
+            {                                                                                                                                   \
+                self->ptr = NULL;                                                                                                               \
+            }                                                                                                                                   \
+            else                                                                                                                                \
+            {                                                                                                                                   \
+                LIB_RUBY_PARSER_##ITEM *new_ptr = malloc(sizeof(LIB_RUBY_PARSER_##ITEM) * self->capacity);                                      \
+                memcpy(new_ptr, old_ptr, sizeof(LIB_RUBY_PARSER_##ITEM) * self->len);                                                           \
+                self->ptr = new_ptr;                                                                                                            \
+            }                                                                                                                                   \
+            if (old_ptr != NULL)                                                                                                                \
+            {                                                                                                                                   \
+                free(old_ptr);                                                                                                                  \
+            }                                                                                                                                   \
+        }                                                                                                                                       \
     }
 
 void drop_nothing(void *byte)
@@ -481,47 +664,6 @@ uint64_t lib_ruby_parser__external__loc__get_end(const LIB_RUBY_PARSER_Loc_BLOB 
 }
 
 /*
-    LIB_RUBY_PARSER_MaybeLoc
-*/
-LIB_RUBY_PARSER_MaybeLoc_BLOB lib_ruby_parser__external__maybe_loc__new_some(LIB_RUBY_PARSER_Loc_BLOB loc_blob)
-{
-    return PACK_MaybeLoc(((LIB_RUBY_PARSER_MaybeLoc){
-        .tag = LIB_RUBY_PARSER_MAYBE_LOC_SOME,
-        .as = {.loc = UNPACK_Loc(loc_blob)}}));
-}
-LIB_RUBY_PARSER_MaybeLoc_BLOB lib_ruby_parser__external__maybe_loc__new_none()
-{
-    return PACK_MaybeLoc(((LIB_RUBY_PARSER_MaybeLoc){
-        .tag = LIB_RUBY_PARSER_MAYBE_LOC_NONE,
-        .as = {.nothing = {.dummy = 0}}}));
-}
-void lib_ruby_parser__external__maybe_loc__drop(LIB_RUBY_PARSER_MaybeLoc_BLOB *self_blob)
-{
-    (void)self_blob;
-}
-bool lib_ruby_parser__external__maybe_loc__is_some(const LIB_RUBY_PARSER_MaybeLoc_BLOB *self_blob)
-{
-    const LIB_RUBY_PARSER_MaybeLoc *self = (const LIB_RUBY_PARSER_MaybeLoc *)self_blob;
-    return self->tag == LIB_RUBY_PARSER_MAYBE_LOC_SOME;
-}
-bool lib_ruby_parser__external__maybe_loc__is_none(const LIB_RUBY_PARSER_MaybeLoc_BLOB *self_blob)
-{
-    const LIB_RUBY_PARSER_MaybeLoc *self = (const LIB_RUBY_PARSER_MaybeLoc *)self_blob;
-    return self->tag == LIB_RUBY_PARSER_MAYBE_LOC_NONE;
-}
-const LIB_RUBY_PARSER_Loc_BLOB *lib_ruby_parser__external__maybe_loc__as_loc(const LIB_RUBY_PARSER_MaybeLoc_BLOB *self_blob)
-{
-    LIB_RUBY_PARSER_MaybeLoc *self = (LIB_RUBY_PARSER_MaybeLoc *)self_blob;
-    if (self->tag == LIB_RUBY_PARSER_MAYBE_LOC_NONE)
-        return NULL;
-    return (LIB_RUBY_PARSER_Loc_BLOB *)(&(self->as.loc));
-}
-LIB_RUBY_PARSER_Loc_BLOB lib_ruby_parser__external__maybe_loc__into_loc(LIB_RUBY_PARSER_MaybeLoc_BLOB self_blob)
-{
-    return PACK_Loc(UNPACK_MaybeLoc(self_blob).as.loc);
-}
-
-/*
     LIB_RUBY_PARSER_MagicCommentKind
 */
 LIB_RUBY_PARSER_MagicCommentKind_BLOB lib_ruby_parser__external__magic_comment_kind__new_encoding()
@@ -725,30 +867,30 @@ void lib_ruby_parser__external__decoder_result__drop(LIB_RUBY_PARSER_DecoderResu
     LIB_RUBY_PARSER_DecoderResult *self = (LIB_RUBY_PARSER_DecoderResult *)self_blob;
     LIB_RUBY_PARSER_drop_decoder_result(self);
 }
-bool lib_ruby_parser__external__decoder_result_is_ok(const LIB_RUBY_PARSER_DecoderResult_BLOB *self_blob)
+bool lib_ruby_parser__external__decoder_result__is_ok(const LIB_RUBY_PARSER_DecoderResult_BLOB *self_blob)
 {
     const LIB_RUBY_PARSER_DecoderResult *self = (const LIB_RUBY_PARSER_DecoderResult *)self_blob;
     return self->tag == LIB_RUBY_PARSER_DECODER_RESULT_OK;
 }
-bool lib_ruby_parser__external__decoder_result_is_err(const LIB_RUBY_PARSER_DecoderResult_BLOB *self_blob)
+bool lib_ruby_parser__external__decoder_result__is_err(const LIB_RUBY_PARSER_DecoderResult_BLOB *self_blob)
 {
     const LIB_RUBY_PARSER_DecoderResult *self = (const LIB_RUBY_PARSER_DecoderResult *)self_blob;
     return self->tag == LIB_RUBY_PARSER_DECODER_RESULT_ERR;
 }
-LIB_RUBY_PARSER_ByteList_BLOB lib_ruby_parser__external__decoder_result_into_ok(LIB_RUBY_PARSER_DecoderResult_BLOB self_blob)
+LIB_RUBY_PARSER_ByteList_BLOB lib_ruby_parser__external__decoder_result__into_ok(LIB_RUBY_PARSER_DecoderResult_BLOB self_blob)
 {
     return PACK_ByteList(UNPACK_DecoderResult(self_blob).as.ok);
 }
-LIB_RUBY_PARSER_InputError_BLOB lib_ruby_parser__external__decoder_result_into_err(LIB_RUBY_PARSER_DecoderResult_BLOB self_blob)
+LIB_RUBY_PARSER_InputError_BLOB lib_ruby_parser__external__decoder_result__into_err(LIB_RUBY_PARSER_DecoderResult_BLOB self_blob)
 {
     return PACK_InputError(UNPACK_DecoderResult(self_blob).as.err);
 }
-const LIB_RUBY_PARSER_ByteList_BLOB *lib_ruby_parser__external__decoder_result_as_ok(const LIB_RUBY_PARSER_DecoderResult_BLOB *self_blob)
+const LIB_RUBY_PARSER_ByteList_BLOB *lib_ruby_parser__external__decoder_result__as_ok(const LIB_RUBY_PARSER_DecoderResult_BLOB *self_blob)
 {
     const LIB_RUBY_PARSER_DecoderResult *self = (const LIB_RUBY_PARSER_DecoderResult *)self_blob;
     return (const LIB_RUBY_PARSER_ByteList_BLOB *)(&(self->as.ok));
 }
-const LIB_RUBY_PARSER_InputError_BLOB *lib_ruby_parser__external__decoder_result_as_err(const LIB_RUBY_PARSER_DecoderResult_BLOB *self_blob)
+const LIB_RUBY_PARSER_InputError_BLOB *lib_ruby_parser__external__decoder_result__as_err(const LIB_RUBY_PARSER_DecoderResult_BLOB *self_blob)
 {
     const LIB_RUBY_PARSER_DecoderResult *self = (const LIB_RUBY_PARSER_DecoderResult *)self_blob;
     return (const LIB_RUBY_PARSER_InputError_BLOB *)(&(self->as.err));
@@ -769,13 +911,9 @@ LIB_RUBY_PARSER_DecoderResult_BLOB lib_ruby_parser__external__decoder__call(
     LIB_RUBY_PARSER_DecoderResult result = self->f(self, encoding, input);
     return PACK_DecoderResult(result);
 }
-void lib_ruby_parser__external__decoder_drop(LIB_RUBY_PARSER_Decoder_BLOB *self_blob)
+void lib_ruby_parser__external__decoder__drop(LIB_RUBY_PARSER_Decoder_BLOB *self_blob)
 {
     (void)self_blob;
-}
-LIB_RUBY_PARSER_Decoder_BLOB lib_ruby_parser__external__decoder__new(LIB_RUBY_PARSER_decode_t f)
-{
-    return PACK_Decoder(((LIB_RUBY_PARSER_Decoder){.f = f}));
 }
 
 /*
@@ -857,100 +995,16 @@ LIB_RUBY_PARSER_TokenRewriterResult_BLOB lib_ruby_parser__external__token_rewrit
 }
 
 /*
-    LIB_RUBY_PARSER_MaybeDecoder
-*/
-LIB_RUBY_PARSER_MaybeDecoder_BLOB lib_ruby_parser__external__maybe_decoder__new_some(LIB_RUBY_PARSER_Decoder_BLOB decoder_blob)
-{
-    return PACK_MaybeDecoder(((LIB_RUBY_PARSER_MaybeDecoder){
-        .tag = LIB_RUBY_PARSER_MAYBE_DECODER_SOME,
-        .as = {.decoder = UNPACK_Decoder(decoder_blob)}}));
-}
-LIB_RUBY_PARSER_MaybeDecoder_BLOB lib_ruby_parser__external__maybe_decoder__new_none()
-{
-    return PACK_MaybeDecoder(((LIB_RUBY_PARSER_MaybeDecoder){
-        .tag = LIB_RUBY_PARSER_MAYBE_DECODER_NONE,
-        .as = {.nothing = {.dummy = 42}}}));
-}
-void lib_ruby_parser__external__maybe_decoder__drop(LIB_RUBY_PARSER_MaybeDecoder_BLOB *self_blob)
-{
-    (void)self_blob;
-}
-bool lib_ruby_parser__external__maybe_decoder__is_some(const LIB_RUBY_PARSER_MaybeDecoder_BLOB *self_blob)
-{
-    const LIB_RUBY_PARSER_MaybeDecoder *self = (const LIB_RUBY_PARSER_MaybeDecoder *)self_blob;
-    return self->tag == LIB_RUBY_PARSER_MAYBE_DECODER_SOME;
-}
-bool lib_ruby_parser__external__maybe_decoder__is_none(const LIB_RUBY_PARSER_MaybeDecoder_BLOB *self_blob)
-{
-    const LIB_RUBY_PARSER_MaybeDecoder *self = (const LIB_RUBY_PARSER_MaybeDecoder *)self_blob;
-    return self->tag == LIB_RUBY_PARSER_MAYBE_DECODER_NONE;
-}
-const LIB_RUBY_PARSER_Decoder_BLOB *lib_ruby_parser__external__maybe_decoder__as_decoder(const LIB_RUBY_PARSER_MaybeDecoder_BLOB *self_blob)
-{
-    const LIB_RUBY_PARSER_MaybeDecoder *self = (const LIB_RUBY_PARSER_MaybeDecoder *)self_blob;
-    if (self->tag == LIB_RUBY_PARSER_MAYBE_DECODER_SOME)
-        return (const LIB_RUBY_PARSER_Decoder_BLOB *)(&(self->as.decoder));
-    return NULL;
-}
-LIB_RUBY_PARSER_Decoder_BLOB lib_ruby_parser__external__maybe_decoder__into_decoder(LIB_RUBY_PARSER_MaybeDecoder_BLOB self_blob)
-{
-    return PACK_Decoder(UNPACK_MaybeDecoder(self_blob).as.decoder);
-}
-
-/*
-    LIB_RUBY_PARSER_MaybeTokenRewriter
-*/
-LIB_RUBY_PARSER_MaybeTokenRewriter_BLOB lib_ruby_parser__external__maybe_token_rewriter__new_some(LIB_RUBY_PARSER_TokenRewriter_BLOB token_rewriter_blob)
-{
-    return PACK_MaybeTokenRewriter(((LIB_RUBY_PARSER_MaybeTokenRewriter){
-        .tag = LIB_RUBY_PARSER_MAYBE_TOKEN_REWRITER_SOME,
-        .as = {.token_rewriter = UNPACK_TokenRewriter(token_rewriter_blob)}}));
-}
-LIB_RUBY_PARSER_MaybeTokenRewriter_BLOB lib_ruby_parser__external__maybe_token_rewriter__new_none()
-{
-    return PACK_MaybeTokenRewriter(((LIB_RUBY_PARSER_MaybeTokenRewriter){
-        .tag = LIB_RUBY_PARSER_MAYBE_TOKEN_REWRITER_NONE,
-        .as = {.nothing = {.dummy = 42}}}));
-}
-void lib_ruby_parser__external__maybe_token_rewriter__drop(LIB_RUBY_PARSER_MaybeTokenRewriter_BLOB *self_blob)
-{
-    (void)self_blob;
-}
-bool lib_ruby_parser__external__maybe_token_rewriter__is_some(const LIB_RUBY_PARSER_MaybeTokenRewriter_BLOB *self_blob)
-{
-    const LIB_RUBY_PARSER_MaybeTokenRewriter *self = (const LIB_RUBY_PARSER_MaybeTokenRewriter *)self_blob;
-    return self->tag == LIB_RUBY_PARSER_MAYBE_TOKEN_REWRITER_SOME;
-}
-bool lib_ruby_parser__external__maybe_token_rewriter__is_none(const LIB_RUBY_PARSER_MaybeTokenRewriter_BLOB *self_blob)
-{
-    const LIB_RUBY_PARSER_MaybeTokenRewriter *self = (const LIB_RUBY_PARSER_MaybeTokenRewriter *)self_blob;
-    return self->tag == LIB_RUBY_PARSER_MAYBE_TOKEN_REWRITER_NONE;
-}
-const LIB_RUBY_PARSER_TokenRewriter_BLOB *lib_ruby_parser__external__maybe_token_rewriter__as_token_rewriter(const LIB_RUBY_PARSER_MaybeTokenRewriter_BLOB *self_blob)
-{
-    const LIB_RUBY_PARSER_MaybeTokenRewriter *self = (const LIB_RUBY_PARSER_MaybeTokenRewriter *)self_blob;
-    if (self->tag == LIB_RUBY_PARSER_MAYBE_TOKEN_REWRITER_SOME)
-        return (const LIB_RUBY_PARSER_TokenRewriter_BLOB *)(&(self->as.token_rewriter));
-    return NULL;
-}
-LIB_RUBY_PARSER_TokenRewriter_BLOB lib_ruby_parser__external__maybe_token_rewriter__into_token_rewriter(LIB_RUBY_PARSER_MaybeTokenRewriter_BLOB self_blob)
-{
-    return PACK_TokenRewriter(UNPACK_MaybeTokenRewriter(self_blob).as.token_rewriter);
-}
-
-/*
     LIB_RUBY_PARSER_ParserOptions
 */
 LIB_RUBY_PARSER_ParserOptions_BLOB lib_ruby_parser__external__parser_options__new(
     LIB_RUBY_PARSER_StringPtr_BLOB buffer_name_blob,
-    uint8_t debug,
     LIB_RUBY_PARSER_MaybeDecoder_BLOB decoder_blob,
     LIB_RUBY_PARSER_MaybeTokenRewriter_BLOB token_rewriter_blob,
     bool record_tokens)
 {
     return PACK_ParserOptions(((LIB_RUBY_PARSER_ParserOptions){
         .buffer_name = UNPACK_StringPtr(buffer_name_blob),
-        .debug = debug,
         .decoder = UNPACK_MaybeDecoder(decoder_blob),
         .token_rewriter = UNPACK_MaybeTokenRewriter(token_rewriter_blob),
         .record_tokens = record_tokens}));
@@ -965,7 +1019,6 @@ InternalParserOptions lib_ruby_parser__external__parser_options__into_internal(L
     LIB_RUBY_PARSER_ParserOptions self = UNPACK_ParserOptions(self_blob);
     return ((InternalParserOptions){
         .buffer_name = PACK_StringPtr(self.buffer_name),
-        .debug = self.debug,
         .decoder = PACK_MaybeDecoder(self.decoder),
         .token_rewriter = PACK_MaybeTokenRewriter(self.token_rewriter),
         .record_tokens = self.record_tokens});
@@ -974,11 +1027,6 @@ const LIB_RUBY_PARSER_StringPtr_BLOB *lib_ruby_parser__external__parser_options_
 {
     const LIB_RUBY_PARSER_ParserOptions *self = (const LIB_RUBY_PARSER_ParserOptions *)self_blob;
     return (const LIB_RUBY_PARSER_StringPtr_BLOB *)(&(self->buffer_name));
-}
-uint8_t lib_ruby_parser__external__parser_options__get_debug(const LIB_RUBY_PARSER_ParserOptions_BLOB *self_blob)
-{
-    const LIB_RUBY_PARSER_ParserOptions *self = (const LIB_RUBY_PARSER_ParserOptions *)self_blob;
-    return self->debug;
 }
 const LIB_RUBY_PARSER_MaybeDecoder_BLOB *lib_ruby_parser__external__parser_options__get_decoder(const LIB_RUBY_PARSER_ParserOptions_BLOB *self_blob)
 {
