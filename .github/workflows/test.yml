@@ -48,6 +48,7 @@ jobs:
               CFLAGS="$CFLAGS -flto=thin" make libruby_parser_c.a
               make rebuild-static-lib
               make test
+              llvm-objdump-12 -d test-runner | grep lib_ruby_parser__external__ptr__new
 
           - name: test on mac (clang)
             os: macos-latest
