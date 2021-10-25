@@ -134,5 +134,10 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
+      - name: codegen
+        env:
+          RUSTFLAGS: ""
+        run: cd codegen && cargo build
+
       - name: run tests
         run: ${{ matrix.build.run }}
