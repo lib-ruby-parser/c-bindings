@@ -26,3 +26,4 @@ define build_c_exe
 $(CC) ws2_32.lib advapi32.lib userenv.lib $(1) $(CFLAGS) /link /OUT:$(2)
 endef
 
+BENCHMARK_RUNNER_ASSET_NAME = rust-parser-x86_64-pc-windows-msvc.exe

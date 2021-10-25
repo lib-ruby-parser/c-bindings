@@ -60,11 +60,7 @@ test: test-runner
 CLEAN += test-runner
 
 # benchmark
-benchmark-runner: $(STATIC_LIB)
-	$(call build_c_exe,benchmark.c $(STATIC_LIB),benchmark-runner)
-benchmark: benchmark-runner
-	./benchmark-runner
-CLEAN += benchmark-runner
+include benchmark/build.mk
 
 # deps
 update-depend: $(C_FILES) $(H_FILES)

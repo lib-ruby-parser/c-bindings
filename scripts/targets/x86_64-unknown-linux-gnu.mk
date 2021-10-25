@@ -26,3 +26,4 @@ define build_c_exe
 $(CC) $(1) $(CFLAGS) -lpthread -ldl -lm -o $(2)
 endef
 
+BENCHMARK_RUNNER_ASSET_NAME = rust-parser-x86_64-unknown-linux-gnu

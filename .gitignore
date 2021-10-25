@@ -18,3 +18,10 @@ sizes-out
 *.dSYM
 test-runner
 sizes_gen.h
+benchmark/repos.zip
+benchmark/rust-parser
+benchmark/ruby-parser.rb
+benchmark/repos
+benchmark/c-runner
+benchmark/filelist
+benchmark/stats

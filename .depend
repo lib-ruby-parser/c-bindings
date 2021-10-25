@@ -4,9 +4,6 @@ alloc.o: alloc.c
 api.o: api.c api.h structs.h messages.h nodes.h blobs.h declare_blob.h \
   blobs_gen.h
 
-benchmark.o: benchmark.c api.h structs.h messages.h nodes.h \
-  utils/rb_filelist.h utils/measure.h
-
 bindings.o: bindings.c bindings.h structs.h messages.h nodes.h blobs.h \
   declare_blob.h blobs_gen.h
 
@@ -31,6 +28,7 @@ sizes: sizes.c structs.h messages.h nodes.h sizes_gen.h
 test-runner: test.c api.h structs.h messages.h nodes.h \
   utils/copy_string.h
 
-benchmark-runner: benchmark.c api.h structs.h messages.h nodes.h \
-  utils/rb_filelist.h utils/measure.h
+benchmark-runner: benchmark/benchmark.c benchmark/../api.h \
+  benchmark/../structs.h benchmark/../messages.h benchmark/../nodes.h \
+  benchmark/../utils/rb_filelist.h benchmark/../utils/measure.h
 

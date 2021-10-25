@@ -18,5 +18,5 @@ echo "" >> .depend
 $CC -MT "test-runner" -MM "test.c" >> .depend
 echo "" >> .depend
 
-$CC -MT "benchmark-runner" -MM "benchmark.c" >> .depend
+$CC -MT "benchmark-runner" -MM "benchmark/benchmark.c" >> .depend
 echo "" >> .depend

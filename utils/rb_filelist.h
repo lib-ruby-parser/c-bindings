@@ -101,33 +101,33 @@ void list_push_file(FileList *filelist, const char *fpath)
     list_push(filelist, file);
 }
 
-bool is_rb_file(const char *path)
+FileList *read_filelist(const char *path)
 {
-    return strlen(path) > 3 && !strcmp(path + strlen(path) - 3, ".rb");
-}
+    FileList *list = list_alloc(10);
 
-FileList *current_filelist;
+    FILE *fp;
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
 
-int nftw_handler(const char *fpath, const struct stat *sb,
-                 int typeflag, struct FTW *ftwbuf)
-{
-    (void)sb;
-    (void)ftwbuf;
-    if (typeflag == FTW_F && is_rb_file(fpath))
+    fp = fopen(path, "r");
+    if (fp == NULL)
+        return NULL;
+
+    while ((read = getline(&line, &len, fp)) != -1)
     {
-        list_push_file(current_filelist, fpath);
+        if (line[read - 1] == '\n')
+        {
+            line[read - 1] = 0;
+        }
+        list_push_file(list, line);
     }
 
-    return 0;
-}
+    fclose(fp);
+    if (line)
+    {
+        free(line);
+    }
 
-FileList *get_rb_files_under(char *dir)
-{
-    current_filelist = list_alloc(10);
-
-    nftw(dir, nftw_handler, 1, 0);
-
-    FileList *result = current_filelist;
-    current_filelist = NULL;
-    return result;
+    return list;
 }
