@@ -1,4 +1,6 @@
 mod fns;
+mod fns_c;
+mod fns_shared;
 mod options;
 
 mod bindings_messages_c;

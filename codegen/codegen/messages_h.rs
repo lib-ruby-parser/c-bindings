@@ -17,7 +17,7 @@ typedef struct LIB_RUBY_PARSER_{{ helper message-camelcase-name }}
 <dnl>
 {{ each message-field }}<dnl>
 {{ helper message-field-comment }}
-    {{ helper message-field-type }} {{ helper message-field-name }};
+    {{ helper message-field-c-field-type }} {{ helper message-field-c-name }};
 {{ end }}<dnl>
 } LIB_RUBY_PARSER_{{ helper message-camelcase-name }};
 

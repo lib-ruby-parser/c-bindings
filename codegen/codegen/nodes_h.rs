@@ -25,7 +25,7 @@ typedef struct LIB_RUBY_PARSER_{{ helper node-camelcase-name }}
 {
 {{ each node-field }}<dnl>
 {{ helper node-field-comment }}
-    {{ helper node-field-type }} {{ helper node-field-name }};
+    {{ helper node-field-c-field-type }} {{ helper node-field-c-name }};
 
 {{ end }}<dnl>
 } LIB_RUBY_PARSER_{{ helper node-camelcase-name }};

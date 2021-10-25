@@ -19,7 +19,7 @@ own-structures = ["lib-ruby-parser/compile-with-external-structures"]
 
 [dependencies.lib-ruby-parser]
 features = ["compile-with-external-structures"]
-version = "3.0.10"
+version = "3.0.11"
 
 [profile.dev]
 panic = "abort"
