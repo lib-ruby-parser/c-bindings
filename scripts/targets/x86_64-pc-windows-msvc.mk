@@ -6,7 +6,8 @@ A = lib
 STATIC_LIB_FILE = ruby_parser_c.$(A)
 LIST_DEPS = dumpbin /dependents
 
-CFLAGS += /nologo /bigobj /MT /Zi
+# /nologo
+CFLAGS += /bigobj /MT /Zi
 
 ifeq ($(BUILD_ENV), debug)
 CFLAGS += /Od /DEBUG

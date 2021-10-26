@@ -1,0 +1,111 @@
+name: benchmark
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  benchmark:
+    name: benchmark ${{ matrix.build.target }}
+    runs-on: ${{ matrix.build.os }}
+    env:
+      TARGET: ${{ matrix.build.target }}
+      CC: ${{ matrix.build.cc }}
+      LD: ${{ matrix.build.ld }}
+      AR: ${{ matrix.build.ar }}
+      CFLAGS: ${{ matrix.build.cflags }}
+      RUSTFLAGS: ${{ matrix.build.rustflags }}
+      BUILD_ENV: release
+    strategy:
+      fail-fast: false
+      matrix:
+        build:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            cc: clang-13
+            ld: ld.lld-13
+            ar: llvm-ar-13
+            cflags: -fuse-ld=lld-13
+            rustflags: -Clinker-plugin-lto -Clinker=clang-13 -Clink-arg=-fuse-ld=lld-13
+            run: |
+              # Install LLVM 13
+              wget https://apt.llvm.org/llvm.sh
+              chmod +x llvm.sh
+              sudo ./llvm.sh 13
+              which -a clang
+              which -a clang-13
+
+              # Run benchmarks
+              CFLAGS="$CFLAGS -flto=thin" make libruby_parser_c.a
+              make rebuild-static-lib
+              make benchmark/compare
+
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            cc: clang
+            ld: ld
+            ar: ar
+            run: |
+              $CC --version
+              make benchmark/compare
+
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            cc: cl.exe
+            ld: link.exe
+            run: |
+              make do-codegen
+              make benchmark/compare
+
+          - os: windows-latest
+            target: x86_64-pc-windows-gnu
+            cc: gcc
+            ld: ld
+            ar: ar
+            run: |
+              gcc --version
+              make benchmark/compare
+
+    steps:
+      - name: setup msvc on windows
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: install rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          target: ${{ matrix.build.target }}
+          override: true
+
+      - name: install ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.0.0"
+
+      - name: print rustc detailed version
+        run: rustc --version --verbose
+
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: codegen
+        env:
+          RUSTFLAGS: ""
+        run: cd codegen && cargo build
+
+      - name: download benchmark artifacts
+        run: make benchmark/download
+
+      - name: run benchmark
+        run: ${{ matrix.build.run }}

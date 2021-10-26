@@ -2,15 +2,15 @@ benchmark/c-parser: $(STATIC_LIB) benchmark/benchmark.c
 	$(call build_c_exe,benchmark/benchmark.c $(STATIC_LIB),benchmark/c-parser)
 
 define download_latest_bench_asset
-curl $(CURL_ARGS) -s https://api.github.com/repos/lib-ruby-parser/bench/releases/latest \
-	| jq '.assets[] | select(.name == "$(1)") | .browser_download_url' \
-	| xargs wget -q -O "$(2)"
+ASSET_NAME=$(1) SAVE_AS=$(2) ruby benchmark/download_asset.rb
 endef
 
 benchmark/download:
 	@echo "Downloading repos.zip..."
 	$(call download_latest_bench_asset,repos.zip,benchmark/repos.zip)
 	@echo "Unpacking repos.zip..."
+	unzip --help
+	ls -l benchmark/repos.zip
 	unzip -q benchmark/repos.zip -d benchmark
 
 	@echo "Downloading Rust parser..."
