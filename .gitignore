@@ -16,12 +16,12 @@ target
 sizes
 sizes-out
 *.dSYM
-test-runner
+tests/runner
 sizes_gen.h
 benchmark/repos.zip
 benchmark/rust-parser
 benchmark/ruby-parser.rb
 benchmark/repos
-benchmark/c-runner
+benchmark/c-parser
 benchmark/filelist
 benchmark/stats

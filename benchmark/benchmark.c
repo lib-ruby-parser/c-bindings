@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "../api.h"
-#include "../utils/rb_filelist.h"
-#include "../utils/measure.h"
+#include "rb_filelist.h"
+#include "measure.h"
 
 int main()
 {

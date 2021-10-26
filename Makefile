@@ -1,8 +1,5 @@
 include scripts/detect_build_env.mk
 include scripts/setup_target.mk
-CODEGEN_DIR = codegen
-RUST_DIR = ruby-parser-c
-CLEAN =
 include scripts/setup_rustflags.mk
 
 SOURCES = \
@@ -23,22 +20,15 @@ STATIC_LIB = libruby_parser_c.$(A)
 # Codegen
 include codegen/build.mk
 
-# CXX
+# *.o
 %.$(O): %.c %.h
 	$(call build_c_obj,$<,$@)
 
 # Rust
-CLEAN += $(RUST_TARGET_DIR)
-# RUSTFLAGS += -Clinker-plugin-lto -Clinker=clang-13 -Clink-arg=-fuse-ld=lld-13
-# RUSTFLAGS += -Clinker-plugin-lto -Clinker=clang -Clink-arg=-fuse-ld=lld.darwinnew
+include ruby-parser-c/build.mk
 
-$(STATIC_LIB): $(wildcard $(RUST_DIR)/src/*.rs) $(O_FILES) sizes-out
-	LIB_RUBY_PARSER_SIZES_FILEPATH=$(shell pwd)/sizes-out \
-		RUSTFLAGS="$(RUSTFLAGS)" \
-		cargo build $(CARGOFLAGS) --manifest-path $(RUST_DIR)/Cargo.toml
-	ls -l $(RUST_TARGET_DIR)
-	ls -l $(RUST_TARGET_DIR)/$(RUST_ENV)
-	cp $(RUST_TARGET_DIR)/$(RUST_ENV)/$(STATIC_LIB_FILE) ./$(STATIC_LIB)
+$(STATIC_LIB): ruby-parser-c/lib_ruby_parser_c.$(A) $(O_FILES)
+	cp ruby-parser-c/lib_ruby_parser_c.$(A) ./$(STATIC_LIB)
 	$(call add_to_lib,$(STATIC_LIB),$(O_FILES))
 
 rebuild-static-lib:
@@ -51,13 +41,8 @@ sizes-out: sizes
 	./sizes > sizes-out
 CLEAN += sizes sizes-out
 
-# test
-test-runner: $(STATIC_LIB)
-	$(call build_c_exe,test.c $(STATIC_LIB),test-runner)
-	$(LIST_DEPS) test-runner
-test: test-runner
-	./test-runner
-CLEAN += test-runner
+# tests
+include tests/build.mk
 
 # benchmark
 include benchmark/build.mk
@@ -65,7 +50,6 @@ include benchmark/build.mk
 # deps
 update-depend: $(C_FILES) $(H_FILES)
 	CC=$(CC) ./scripts/update-depend.sh
-
 include .depend
 
 # clean
@@ -75,6 +59,5 @@ clean:
 	rm -f *.$(A)
 	rm -rf *.dSYM
 
-# RUST_TARGET=x86_64-unknown-linux-gnu CFLAGS="-flto" BUILD_ENV=release make test-runner
 check:
 	CC=$(CC) ruby assert_defs.rb bindings.h bindings.c bindings_messages.c bindings_nodes.c

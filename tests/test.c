@@ -1,7 +1,16 @@
 #include <stdio.h>
 #include <assert.h>
-#include "api.h"
-#include "utils/copy_string.h"
+#include "../api.h"
+#include <string.h>
+#include <stdlib.h>
+
+uint8_t *copy_string(const char *source)
+{
+    uint32_t len = strlen(source);
+    char *out = (char *)malloc(len + 1);
+    strcpy(out, source);
+    return (uint8_t *)out;
+}
 
 LIB_RUBY_PARSER_StringPtr new_string_ptr(const char *code)
 {
@@ -209,7 +218,7 @@ void test_magic_comments()
 
 void test_all_nodes()
 {
-    FILE *f = fopen("all_nodes.rb", "rb");
+    FILE *f = fopen("tests/all_nodes.rb", "rb");
     fseek(f, 0, SEEK_END);
     long fsize = ftell(f);
     fseek(f, 0, SEEK_SET);

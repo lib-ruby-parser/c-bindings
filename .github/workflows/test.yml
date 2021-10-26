@@ -34,7 +34,7 @@ jobs:
             cc: clang-12
             ld: ld.lld-12
             ar: llvm-ar-12
-            run: make test
+            run: make tests/run
 
           - name: test on linux (clang, LTO)
             os: ubuntu-latest
@@ -47,8 +47,8 @@ jobs:
             run: |
               CFLAGS="$CFLAGS -flto=thin" make libruby_parser_c.a
               make rebuild-static-lib
-              make test
-              llvm-objdump-12 -d test-runner | grep lib_ruby_parser__external__ptr__new
+              make tests/run
+              llvm-objdump-12 -d tests/runner | grep lib_ruby_parser__external__ptr__new
 
           - name: test on mac (clang)
             os: macos-latest
@@ -58,7 +58,7 @@ jobs:
             ar: ar
             run: |
               $CC --version
-              make test
+              make tests/run
 
           # - name: test on mac (clang LTO)
           #   os: macos-latest
@@ -74,7 +74,7 @@ jobs:
 
           #     CFLAGS="$CFLAGS -flto=thin" make libruby_parser_c.a
           #     make rebuild-static-lib
-          #     make test
+          #     make tests/run
 
           - name: test on windows (msvc)
             os: windows-latest
@@ -83,7 +83,7 @@ jobs:
             ld: link.exe
             run: |
               make do-codegen
-              make test
+              make tests/run
 
           - name: test on windows (mingw)
             os: windows-latest
@@ -93,7 +93,7 @@ jobs:
             ar: ar
             run: |
               gcc --version
-              make test
+              make tests/run
 
           - name: valgrind
             os: ubuntu-latest
@@ -104,8 +104,8 @@ jobs:
             run: |
               sudo apt-get update
               sudo apt-get install -y valgrind libtool-bin
-              make test-runner
-              valgrind ./test-runner
+              make tests/runner
+              valgrind ./tests/runner
 
           - name: asan
             os: ubuntu-latest
@@ -113,7 +113,7 @@ jobs:
             cc: clang-12
             ld: ld.lld-12
             ar: llvm-ar-12
-            run: ASAN_OPTIONS=detect_leaks=1 CFLAGS="-fsanitize=address" make test
+            run: ASAN_OPTIONS=detect_leaks=1 CFLAGS="-fsanitize=address" make tests/run
 
     steps:
       - name: setup msvc on windows
