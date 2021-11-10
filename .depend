@@ -1,32 +1,35 @@
 
-alloc.o: alloc.c
+bytes.o: bytes.c bytes.h
 
-api.o: api.c api.h structs.h messages.h nodes.h blobs.h declare_blob.h \
-  blobs_gen.h
+comment.o: comment.c comment.h loc.h
 
-bindings.o: bindings.c bindings.h structs.h messages.h nodes.h blobs.h \
-  declare_blob.h blobs_gen.h
+decoder.o: decoder.c decoder.h string.h bytes.h
 
-bindings_messages.o: bindings_messages.c bindings.h structs.h messages.h \
-  nodes.h blobs.h declare_blob.h blobs_gen.h
+diagnostic.o: diagnostic.c diagnostic.h messages.h string.h
 
-bindings_nodes.o: bindings_nodes.c bindings.h structs.h messages.h \
-  nodes.h blobs.h declare_blob.h blobs_gen.h
+loc.o: loc.c loc.h
 
-messages.o: messages.c structs.h messages.h nodes.h
+magic_comment.o: magic_comment.c magic_comment.h loc.h
 
-nodes.o: nodes.c structs.h messages.h nodes.h
+messages.o: messages.c messages.h string.h
 
-sizes.o: sizes.c structs.h messages.h nodes.h sizes_gen.h
+nodes.o: nodes.c nodes.h string.h
 
-structs.o: structs.c structs.h messages.h nodes.h
+parser_options.o: parser_options.c parser_options.h string.h decoder.h \
+  bytes.h token_rewriter.h token.h loc.h shared_byte_list.h
 
-sizes: sizes.c structs.h messages.h nodes.h sizes_gen.h
+parser_result.o: parser_result.c parser_result.h string.h source_line.h \
+  bytes.h nodes.h token.h loc.h diagnostic.h messages.h comment.h \
+  magic_comment.h
 
-tests/runner: tests/test.c tests/../api.h tests/../structs.h \
-  tests/../messages.h tests/../nodes.h
+shared_byte_list.o: shared_byte_list.c shared_byte_list.h
 
-benchmark/c-parser: benchmark/benchmark.c benchmark/../api.h \
-  benchmark/../structs.h benchmark/../messages.h benchmark/../nodes.h \
-  benchmark/rb_filelist.h benchmark/measure.h
+source_line.o: source_line.c source_line.h
+
+string.o: string.c string.h
+
+token.o: token.c token.h bytes.h loc.h
+
+token_rewriter.o: token_rewriter.c token_rewriter.h token.h bytes.h loc.h \
+  shared_byte_list.h
 

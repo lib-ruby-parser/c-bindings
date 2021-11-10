@@ -11,15 +11,8 @@ crate-type = ["staticlib"]
 [features]
 default = []
 
-onig = ["lib-ruby-parser/onig"]
-
-own-structures = ["lib-ruby-parser/compile-with-external-structures"]
-
 [dependencies]
-
-[dependencies.lib-ruby-parser]
-features = ["compile-with-external-structures"]
-version = "3.0.11"
+lib-ruby-parser = {version = "3.0.12"}
 
 [profile.dev]
 panic = "abort"

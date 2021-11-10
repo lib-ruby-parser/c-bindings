@@ -3,14 +3,21 @@ include scripts/setup_target.mk
 include scripts/setup_rustflags.mk
 
 SOURCES = \
-	alloc \
-	api \
-	bindings \
-	bindings_messages \
-	bindings_nodes \
+	bytes \
+	decoder \
+	loc \
 	messages \
+	parser_options \
+	shared_byte_list \
+	string \
+	token_rewriter \
+	comment \
+	diagnostic \
+	magic_comment \
 	nodes \
-	structs
+	parser_result \
+	source_line \
+	token
 
 C_FILES = $(foreach source,$(SOURCES),$(source).c)
 H_FILES = $(foreach source,$(SOURCES),$(source).h)
@@ -23,6 +30,7 @@ include codegen/build.mk
 # *.o
 %.$(O): %.c %.h
 	$(call build_c_obj,$<,$@)
+objects: $(O_FILES)
 
 # Rust
 include ruby-parser-c/build.mk

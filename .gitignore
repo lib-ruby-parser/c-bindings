@@ -1,11 +1,6 @@
 ruby-parser-c/target
 ruby-parser-c/Cargo.lock
 codegen/Cargo.lock
-bindings.h
-bindings_messages.c
-bindings_nodes.c
-blobs_gen.h
-blobs_gen.c
 messages.h
 messages.c
 nodes.h
@@ -13,8 +8,6 @@ nodes.c
 target
 *.o
 *.a
-sizes
-sizes-out
 *.dSYM
 tests/runner
 sizes_gen.h

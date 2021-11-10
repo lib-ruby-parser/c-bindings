@@ -14,22 +14,6 @@ DO_CODEGEN = cd codegen && cargo build
 CLEAN += codegen/target
 
 # Codegen deps
-bindings.h: $(CODEGEN_DEPS)
-	$(DO_CODEGEN)
-CLEAN += bindings.h
-
-bindings_messages.c: $(CODEGEN_DEPS)
-	$(DO_CODEGEN)
-CLEAN += bindings_messages.c
-
-bindings_nodes.c: $(CODEGEN_DEPS)
-	$(DO_CODEGEN)
-CLEAN += bindings_nodes.c
-
-blobs_gen.h: $(CODEGEN_DEPS)
-	$(DO_CODEGEN)
-CLEAN += blobs_gen.h
-
 messages.c: $(CODEGEN_DEPS)
 	$(DO_CODEGEN)
 CLEAN += messages.c
@@ -45,10 +29,6 @@ CLEAN += nodes.c
 nodes.h: $(CODEGEN_DEPS)
 	$(DO_CODEGEN)
 CLEAN += nodes.h
-
-sizes_gen.h: $(CODEGEN_DEPS)
-	$(DO_CODEGEN)
-CLEAN += sizes_gen.h
 
 # manual codegen task
 do-codegen:

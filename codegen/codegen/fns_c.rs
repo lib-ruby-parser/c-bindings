@@ -20,9 +20,15 @@ pub(crate) mod nodes {
 pub(crate) mod node_fields {
     use super::*;
 
-    #[cfg(feature = "lib-ruby-parser-bindings")]
     pub(crate) fn c_name(node_field: &NodeField) -> String {
-        lib_ruby_parser_bindings::helpers::nodes::fields::field_name(&node_field)
+        match &node_field.snakecase_name[..] {
+            "default" => "default_",
+            "operator" => "operator_",
+            "else" => "else_",
+            "const" => "const_",
+            other => other,
+        }
+        .to_owned()
     }
 
     pub(crate) fn c_pack_fn_name(node_field: &NodeField) -> String {
@@ -62,15 +68,15 @@ pub(crate) mod node_fields {
     pub(crate) fn c_field_type(node_field: &NodeField) -> String {
         use lib_ruby_parser_nodes::NodeFieldType::*;
         match node_field.field_type {
-            Node => "LIB_RUBY_PARSER_NodePtr",
+            Node => "LIB_RUBY_PARSER_Node *",
             Nodes => "LIB_RUBY_PARSER_NodeList",
-            MaybeNode { .. } => "LIB_RUBY_PARSER_MaybeNodePtr",
+            MaybeNode { .. } => "LIB_RUBY_PARSER_Node *",
             Loc => "LIB_RUBY_PARSER_Loc",
             MaybeLoc => "LIB_RUBY_PARSER_MaybeLoc",
-            Str { .. } => "LIB_RUBY_PARSER_StringPtr",
-            MaybeStr { .. } => "LIB_RUBY_PARSER_MaybeStringPtr",
+            Str { .. } => "LIB_RUBY_PARSER_String",
+            MaybeStr { .. } => "LIB_RUBY_PARSER_MaybeString",
             StringValue => "LIB_RUBY_PARSER_Bytes",
-            U8 => "LIB_RUBY_PARSER_Byte",
+            U8 => "uint8_t",
         }
         .to_string()
     }
@@ -99,14 +105,14 @@ pub(crate) mod node_fields {
             Node => "LIB_RUBY_PARSER_drop_node_ptr",
             Nodes => "LIB_RUBY_PARSER_drop_node_list",
             MaybeNode { .. } => "LIB_RUBY_PARSER_drop_maybe_node_ptr",
-            Loc => "LIB_RUBY_PARSER_drop_loc",
+            Loc => "(void)",
             MaybeLoc => "LIB_RUBY_PARSER_drop_maybe_loc",
 
             Str { .. } => "LIB_RUBY_PARSER_drop_string_ptr",
 
             MaybeStr { .. } => "LIB_RUBY_PARSER_drop_maybe_string_ptr",
             StringValue => "LIB_RUBY_PARSER_drop_bytes",
-            U8 => "LIB_RUBY_PARSER_drop_byte",
+            U8 => "(void)",
         }
         .to_string()
     }
@@ -115,16 +121,19 @@ pub(crate) mod node_fields {
 pub(crate) mod message_fields {
     use super::*;
 
-    #[cfg(feature = "lib-ruby-parser-bindings")]
     pub(crate) fn c_name(message_field: &MessageField) -> String {
-        lib_ruby_parser_bindings::helpers::messages::fields::field_name(&message_field).to_string()
+        match &message_field.snakecase_name[..] {
+            "operator" => "operator_",
+            other => other,
+        }
+        .to_owned()
     }
 
     pub(crate) fn c_field_type(message_field: &MessageField) -> String {
         use lib_ruby_parser_nodes::MessageFieldType::*;
         match message_field.field_type {
-            Str => "LIB_RUBY_PARSER_StringPtr",
-            Byte => "LIB_RUBY_PARSER_Byte",
+            Str => "LIB_RUBY_PARSER_String",
+            Byte => "uint8_t",
         }
         .to_string()
     }
@@ -166,7 +175,6 @@ pub(crate) fn build() -> TemplateFns {
     fns.register::<Node, F::Helper>("node-c-enum-variant-name", nodes::c_enum_variant_name);
     fns.register::<Node, F::Helper>("node-c-union-member-name", nodes::c_union_member_name);
 
-    #[cfg(feature = "lib-ruby-parser-bindings")]
     fns.register::<NodeField, F::Helper>("node-field-c-name", node_fields::c_name);
     fns.register::<NodeField, F::Helper>("node-field-c-field-type", node_fields::c_field_type);
     fns.register::<NodeField, F::Helper>("node-field-c-blob-type", node_fields::c_blob_type);
@@ -177,7 +185,6 @@ pub(crate) fn build() -> TemplateFns {
     );
     fns.register::<NodeField, F::Helper>("node-field-drop-fn-name", node_fields::drop_fn_name);
 
-    #[cfg(feature = "lib-ruby-parser-bindings")]
     fns.register::<MessageField, F::Helper>("message-field-c-name", message_fields::c_name);
     fns.register::<MessageField, F::Helper>(
         "message-field-c-field-type",
