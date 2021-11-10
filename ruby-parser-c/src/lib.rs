@@ -2,6 +2,7 @@ extern crate lib_ruby_parser;
 
 use lib_ruby_parser::{DiagnosticMessage, Parser, ParserOptions, ParserResult, Token};
 
+#[macro_export]
 macro_rules! blob_type {
     ($c_type:ident, $rust_type:ty) => {
         #[repr(C)]
@@ -23,7 +24,9 @@ macro_rules! blob_type {
     };
 }
 
-blob_type!(BlobString, String);
+mod string;
+use string::BlobString;
+
 blob_type!(BlobVecU8, Vec<u8>);
 blob_type!(BlobParserOptions, ParserOptions);
 blob_type!(BlobParserResult, ParserResult);

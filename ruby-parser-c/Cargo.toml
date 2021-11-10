@@ -11,6 +11,9 @@ crate-type = ["staticlib"]
 [features]
 default = []
 
+# Include test APIs to run C tests
+tests = []
+
 [dependencies]
 lib-ruby-parser = {version = "3.0.12"}
 

@@ -5,7 +5,7 @@ comment.o: comment.c comment.h loc.h
 
 decoder.o: decoder.c decoder.h string.h bytes.h
 
-diagnostic.o: diagnostic.c diagnostic.h messages.h string.h
+diagnostic.o: diagnostic.c diagnostic.h messages.h string.h loc.h
 
 loc.o: loc.c loc.h
 
@@ -13,20 +13,20 @@ magic_comment.o: magic_comment.c magic_comment.h loc.h
 
 messages.o: messages.c messages.h string.h
 
-nodes.o: nodes.c nodes.h string.h
+nodes.o: nodes.c nodes.h string.h loc.h bytes.h
 
 parser_options.o: parser_options.c parser_options.h string.h decoder.h \
   bytes.h token_rewriter.h token.h loc.h shared_byte_list.h
 
 parser_result.o: parser_result.c parser_result.h string.h source_line.h \
-  bytes.h nodes.h token.h loc.h diagnostic.h messages.h comment.h \
+  bytes.h nodes.h loc.h token.h diagnostic.h messages.h comment.h \
   magic_comment.h
 
 shared_byte_list.o: shared_byte_list.c shared_byte_list.h
 
 source_line.o: source_line.c source_line.h
 
-string.o: string.c string.h
+string.o: string.c string.h test_group.h
 
 token.o: token.c token.h bytes.h loc.h
 
