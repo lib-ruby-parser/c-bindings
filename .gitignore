@@ -10,7 +10,6 @@ target
 *.a
 *.dSYM
 tests/runner
-sizes_gen.h
 benchmark/repos.zip
 benchmark/rust-parser
 benchmark/ruby-parser.rb

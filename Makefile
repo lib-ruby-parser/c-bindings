@@ -39,16 +39,6 @@ $(STATIC_LIB): ruby-parser-c/lib_ruby_parser_c.$(A) $(O_FILES)
 	cp ruby-parser-c/lib_ruby_parser_c.$(A) ./$(STATIC_LIB)
 	$(call add_to_lib,$(STATIC_LIB),$(O_FILES))
 
-rebuild-static-lib:
-	./scripts/rebuild-static-lib.sh
-
-# Sizes
-sizes:
-	$(call build_c_exe,sizes.c,sizes)
-sizes-out: sizes
-	./sizes > sizes-out
-CLEAN += sizes sizes-out
-
 # tests
 include tests/build.mk
 
