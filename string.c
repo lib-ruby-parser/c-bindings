@@ -2,7 +2,7 @@
 
 #ifdef TEST_ENV
 
-#include "test_group.h"
+#include "test_helper.h"
 
 LIB_RUBY_PARSER_String lib_ruby_parser__test__make_string_foo();
 

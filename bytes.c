@@ -2,7 +2,7 @@
 
 #ifdef TEST_ENV
 
-#include "test_group.h"
+#include "test_helper.h"
 
 LIB_RUBY_PARSER_ByteList lib_ruby_parser__test__make_byte_list_123();
 

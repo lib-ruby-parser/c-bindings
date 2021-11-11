@@ -1,4 +1,4 @@
-#include "../test_group.h"
+#include "../test_helper.h"
 
 int main()
 {

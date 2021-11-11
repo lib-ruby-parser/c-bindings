@@ -1,5 +1,5 @@
 
-bytes.o: bytes.c bytes.h test_group.h
+bytes.o: bytes.c bytes.h test_helper.h
 
 comment.o: comment.c comment.h loc.h
 
@@ -26,12 +26,12 @@ shared_byte_list.o: shared_byte_list.c shared_byte_list.h
 
 source_line.o: source_line.c source_line.h
 
-string.o: string.c string.h test_group.h
+string.o: string.c string.h test_helper.h
 
 token.o: token.c token.h bytes.h loc.h
 
 token_rewriter.o: token_rewriter.c token_rewriter.h token.h bytes.h loc.h \
   shared_byte_list.h
 
-tests/runner: tests/test.c tests/../test_group.h
+tests/runner: tests/test.c tests/../test_helper.h
 

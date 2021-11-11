@@ -1,5 +1,5 @@
-#ifndef LIB_RUBY_PARSER_TEST_H
-#define LIB_RUBY_PARSER_TEST_H
+#ifndef LIB_RUBY_PARSER_TEST_HELPER_H
+#define LIB_RUBY_PARSER_TEST_HELPER_H
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -28,4 +28,4 @@ typedef void (*test_fn_t)();
     void run_test_group_##NAME(); \
     run_test_group_##NAME()
 
-#endif // LIB_RUBY_PARSER_TEST_H
+#endif // LIB_RUBY_PARSER_TEST_HELPER_H
