@@ -4,20 +4,20 @@ include scripts/setup_rustflags.mk
 
 SOURCES = \
 	bytes \
-	decoder \
-	loc \
-	messages \
-	parser_options \
-	shared_byte_list \
-	string \
-	token_rewriter \
 	comment \
+	decoder \
 	diagnostic \
+	loc \
 	magic_comment \
+	messages \
 	nodes \
+	parser_options \
 	parser_result \
+	shared_byte_list \
 	source_line \
-	token
+	string \
+	token \
+	token_rewriter
 
 C_FILES = $(foreach source,$(SOURCES),$(source).c)
 H_FILES = $(foreach source,$(SOURCES),$(source).h)
