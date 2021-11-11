@@ -36,4 +36,35 @@ typedef void (*test_fn_t)();
     void run_test_group_##NAME(); \
     run_test_group_##NAME()
 
+// assertion helpers
+
+#define assert_eq(a, b) assert((a) == (b))
+
+#define assert_loc(loc, _begin, _end) \
+    assert_eq((loc).begin, (_begin)); \
+    assert_eq((loc).end, (_end));
+
+#define assert_some_loc(_loc, _begin, _end)          \
+    assert_eq((_loc).tag, LIB_RUBY_PARSER_SOME_LOC); \
+    assert_loc((_loc).as.loc, _begin, _end);
+
+#define assert_none_loc(_loc) \
+    assert_eq((_loc).tag, LIB_RUBY_PARSER_NONE_LOC);
+
+#define MAKE_ARRAY(...) __VA_ARGS__
+
+#define assert_byte_list(_byte_list, _len, ...)                                          \
+    /* assert len */                                                                     \
+    assert_eq((_byte_list).len, _len);                                                   \
+    /* assert items */                                                                   \
+    {                                                                                    \
+        char _bytes[] = {__VA_ARGS__};                                                   \
+        for (size_t i = 0; i < _len; i++)                                                \
+        {                                                                                \
+            printf("comparing i = %lu: %d and %d\n", i, (_byte_list).ptr[i], _bytes[i]); \
+            assert_eq((_byte_list).ptr[i], _bytes[i]);                                   \
+        }                                                                                \
+    }                                                                                    \
+    /* ignore capacity */
+
 #endif // LIB_RUBY_PARSER_TEST_HELPER_H
