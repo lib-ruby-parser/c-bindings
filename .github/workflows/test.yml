@@ -18,6 +18,7 @@ jobs:
     name: ${{ matrix.build.name }}
     runs-on: ${{ matrix.build.os }}
     env:
+      BUILD_ENV: debug
       TARGET: ${{ matrix.build.target }}
       CC: ${{ matrix.build.cc }}
       LD: ${{ matrix.build.ld }}
@@ -36,20 +37,6 @@ jobs:
             ar: llvm-ar-12
             run: make tests/run
 
-          - name: test on linux (clang, LTO)
-            os: ubuntu-latest
-            target: x86_64-unknown-linux-gnu
-            cc: clang-12
-            ld: ld.lld-12
-            ar: llvm-ar-12
-            cflags: -fuse-ld=lld-12
-            rustflags: -Clinker-plugin-lto -Clinker=clang-12 -Clink-arg=-fuse-ld=lld-12
-            run: |
-              CFLAGS="$CFLAGS -flto=thin" make libruby_parser_c.a
-              make rebuild-static-lib
-              make tests/run
-              llvm-objdump-12 -d tests/runner | grep lib_ruby_parser__external__ptr__new
-
           - name: test on mac (clang)
             os: macos-latest
             target: x86_64-apple-darwin
@@ -60,29 +47,12 @@ jobs:
               $CC --version
               make tests/run
 
-          # - name: test on mac (clang LTO)
-          #   os: macos-latest
-          #   target: x86_64-apple-darwin
-          #   cc: clang-12
-          #   ld: ld64.lld.darwinnew
-          #   ar: llvm-ar
-          #   cflags: -fuse-ld=lld.darwinnew
-          #   rustflags: -Clinker-plugin-lto -Clinker=clang -Clink-arg=-fuse-ld=lld.darwinnew
-          #   run: |
-          #     brew info llvm
-          #     echo "/usr/local/opt/llvm/bin" >> $GITHUB_PATH
-
-          #     CFLAGS="$CFLAGS -flto=thin" make libruby_parser_c.a
-          #     make rebuild-static-lib
-          #     make tests/run
-
           - name: test on windows (msvc)
             os: windows-latest
             target: x86_64-pc-windows-msvc
             cc: cl.exe
             ld: link.exe
             run: |
-              make do-codegen
               make tests/run
 
           - name: test on windows (mingw)
