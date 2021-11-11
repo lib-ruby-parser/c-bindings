@@ -32,6 +32,8 @@ use bytes::BlobByteList;
 
 mod loc;
 
+mod token;
+
 blob_type!(BlobParserOptions, ParserOptions);
 blob_type!(BlobParserResult, ParserResult);
 

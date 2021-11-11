@@ -7,7 +7,7 @@ decoder.o: decoder.c decoder.h string.h bytes.h
 
 diagnostic.o: diagnostic.c diagnostic.h messages.h string.h loc.h
 
-loc.o: loc.c loc.h
+loc.o: loc.c loc.h test_helper.h
 
 magic_comment.o: magic_comment.c magic_comment.h loc.h
 
@@ -28,7 +28,7 @@ source_line.o: source_line.c source_line.h
 
 string.o: string.c string.h test_helper.h
 
-token.o: token.c token.h bytes.h loc.h
+token.o: token.c token.h bytes.h loc.h test_helper.h
 
 token_rewriter.o: token_rewriter.c token_rewriter.h token.h bytes.h loc.h \
   shared_byte_list.h

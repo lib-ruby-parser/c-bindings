@@ -14,6 +14,6 @@ int main()
     // run_test_group(source_line);
     run_test_group(string);
     // run_test_group(token_rewriter);
-    // run_test_group(token);
+    run_test_group(token);
     return 0;
 }

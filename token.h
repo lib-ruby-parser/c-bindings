@@ -12,6 +12,7 @@ typedef struct LIB_RUBY_PARSER_Token
     int32_t lex_state_before;
     int32_t lex_state_after;
 } LIB_RUBY_PARSER_Token;
+const char *LIB_RUBY_PARSER_token_name(LIB_RUBY_PARSER_Token *token);
 void LIB_RUBY_PARSER_drop_token(LIB_RUBY_PARSER_Token *token);
 
 typedef struct LIB_RUBY_PARSER_TokenList
