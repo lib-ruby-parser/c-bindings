@@ -11,7 +11,7 @@ int main()
     // run_test_group(parser_options);
     // run_test_group(parser_result);
     // run_test_group(shared_byte_list);
-    // run_test_group(source_line);
+    run_test_group(source_line);
     run_test_group(string);
     // run_test_group(token_rewriter);
     run_test_group(token);

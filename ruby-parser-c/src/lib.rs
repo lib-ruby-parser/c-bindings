@@ -34,6 +34,8 @@ mod loc;
 
 mod token;
 
+mod source_line;
+
 blob_type!(BlobParserOptions, ParserOptions);
 blob_type!(BlobParserResult, ParserResult);
 
