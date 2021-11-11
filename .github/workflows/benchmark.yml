@@ -1,10 +1,11 @@
 name: benchmark
 
+# TODO: fix and enable once it's done
 on:
   push:
-    branches: [ master ]
+    branches: [ disable ]
   pull_request:
-    branches: [ master ]
+    branches: [ disable ]
 
 env:
   CARGO_TERM_COLOR: always
