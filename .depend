@@ -1,5 +1,5 @@
 
-bytes.o: bytes.c bytes.h
+bytes.o: bytes.c bytes.h test_group.h
 
 comment.o: comment.c comment.h loc.h
 
@@ -32,4 +32,6 @@ token.o: token.c token.h bytes.h loc.h
 
 token_rewriter.o: token_rewriter.c token_rewriter.h token.h bytes.h loc.h \
   shared_byte_list.h
+
+tests/runner: tests/test.c tests/../test_group.h
 

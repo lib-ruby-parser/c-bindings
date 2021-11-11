@@ -27,14 +27,16 @@ macro_rules! blob_type {
 mod string;
 use string::BlobString;
 
-blob_type!(BlobVecU8, Vec<u8>);
+mod bytes;
+use bytes::BlobByteList;
+
 blob_type!(BlobParserOptions, ParserOptions);
 blob_type!(BlobParserResult, ParserResult);
 
 #[no_mangle]
 pub extern "C" fn LIB_RUBY_PARSER_parse(
     options: BlobParserOptions,
-    input: BlobVecU8,
+    input: BlobByteList,
 ) -> BlobParserResult {
     let options: ParserOptions = options.into();
     let input: Vec<u8> = input.into();
