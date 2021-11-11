@@ -30,6 +30,8 @@ use string::BlobString;
 mod bytes;
 use bytes::BlobByteList;
 
+mod loc;
+
 blob_type!(BlobParserOptions, ParserOptions);
 blob_type!(BlobParserResult, ParserResult);
 

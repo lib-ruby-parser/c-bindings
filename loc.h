@@ -14,8 +14,8 @@ typedef struct LIB_RUBY_PARSER_MaybeLoc
 {
     enum
     {
-        LIB_RUBY_PARSER_SOME_LOC,
-        LIB_RUBY_PARSER_NONE_LOC,
+        LIB_RUBY_PARSER_NONE_LOC = 0,
+        LIB_RUBY_PARSER_SOME_LOC = 1,
     } tag;
 
     union
