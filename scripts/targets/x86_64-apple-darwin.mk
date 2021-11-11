@@ -9,7 +9,7 @@ LIST_DEPS = otool -L
 CFLAGS += -Wall -Wextra -Wpedantic -g
 
 ifeq ($(BUILD_ENV), debug)
-CFLAGS += -O0
+CFLAGS += -O0 -DTEST_ENV
 else
 CFLAGS += -O3
 endif

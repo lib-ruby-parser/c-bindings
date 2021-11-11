@@ -10,7 +10,7 @@ LIST_DEPS = dumpbin /dependents
 CFLAGS += /bigobj /MT /Zi
 
 ifeq ($(BUILD_ENV), debug)
-CFLAGS += /Od /DEBUG
+CFLAGS += /Od /DEBUG /DTEST_ENV
 else
 CFLAGS += /O2
 endif

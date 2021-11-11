@@ -9,7 +9,7 @@ LIST_DEPS = ldd
 CFLAGS += -Wall -Wextra -g
 
 ifeq ($(BUILD_ENV), debug)
-CFLAGS += -O0
+CFLAGS += -O0 -DTEST_ENV
 else
 CFLAGS += -O3
 endif
