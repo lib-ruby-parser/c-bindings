@@ -6,7 +6,7 @@ int main()
     // run_test_group(comment);
     // run_test_group(decoder);
     // run_test_group(diagnostic);
-    // run_test_group(diagnostic);
+    // run_test_group(loc);
     // run_test_group(magic_comment);
     // run_test_group(parser_options);
     // run_test_group(parser_result);
