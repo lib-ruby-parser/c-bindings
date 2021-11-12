@@ -22,7 +22,7 @@ parser_result.o: parser_result.c parser_result.h string.h source_line.h \
   bytes.h nodes.h loc.h token.h diagnostic.h messages.h comment.h \
   magic_comment.h
 
-shared_byte_list.o: shared_byte_list.c shared_byte_list.h
+shared_byte_list.o: shared_byte_list.c shared_byte_list.h test_helper.h
 
 source_line.o: source_line.c source_line.h test_helper.h
 

@@ -38,6 +38,8 @@ mod source_line;
 
 mod comment;
 
+mod shared_byte_list;
+
 blob_type!(BlobParserOptions, ParserOptions);
 blob_type!(BlobParserResult, ParserResult);
 
