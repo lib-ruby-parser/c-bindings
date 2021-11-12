@@ -43,13 +43,13 @@ typedef void (*test_fn_t)();
 #define assert_str_eq(a, b, len) \
     assert_eq(strncmp(a, b, len), 0);
 
-#define assert_loc(loc, _begin, _end) \
-    assert_eq((loc).begin, (_begin)); \
-    assert_eq((loc).end, (_end));
+#define assert_loc(loc, _expected)             \
+    assert_eq((loc).begin, (_expected).begin); \
+    assert_eq((loc).end, (_expected).end);
 
-#define assert_some_loc(_loc, _begin, _end)          \
+#define assert_some_loc(_loc, _expected)             \
     assert_eq((_loc).tag, LIB_RUBY_PARSER_SOME_LOC); \
-    assert_loc((_loc).as.loc, _begin, _end);
+    assert_loc((_loc).as.loc, _expected);
 
 #define assert_none_loc(_loc) \
     assert_eq((_loc).tag, LIB_RUBY_PARSER_NONE_LOC);

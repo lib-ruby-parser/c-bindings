@@ -20,8 +20,8 @@ test(comment_type_options, {
     assert_eq(comment_type, LIB_RUBY_PARSER_COMMENT_TYPE_UNKNOWN);
 });
 
-#define assert_comment(comment, _begin, _end, _kind) \
-    assert_loc(comment.location, _begin, _end);      \
+#define assert_comment(comment, _location, _kind) \
+    assert_loc(comment.location, _location);      \
     assert_eq(comment.kind, _kind);
 
 LIB_RUBY_PARSER_Comment lib_ruby_parser__test__make_comment(LIB_RUBY_PARSER_Loc location, LIB_RUBY_PARSER_CommentType kind);
@@ -31,7 +31,7 @@ test(comment_fields, {
         loc,
         LIB_RUBY_PARSER_COMMENT_TYPE_INLINE);
 
-    assert_comment(comment, 1, 2, LIB_RUBY_PARSER_COMMENT_TYPE_INLINE);
+    assert_comment(comment, loc, LIB_RUBY_PARSER_COMMENT_TYPE_INLINE);
 });
 
 LIB_RUBY_PARSER_CommentList lib_ruby_parser__test__make_comment_list(LIB_RUBY_PARSER_Comment comment);
@@ -42,7 +42,7 @@ test(comment_list_fields, {
             loc,
             LIB_RUBY_PARSER_COMMENT_TYPE_INLINE));
     assert_eq(comment_list.len, 1);
-    assert_comment(comment_list.ptr[0], 1, 2, LIB_RUBY_PARSER_COMMENT_TYPE_INLINE);
+    assert_comment(comment_list.ptr[0], loc, LIB_RUBY_PARSER_COMMENT_TYPE_INLINE);
     LIB_RUBY_PARSER_drop_comment_list(&comment_list);
 });
 
