@@ -27,17 +27,14 @@ pub extern "C" fn lib_ruby_parser__test__make_comment_type_unknown() -> CommentT
 
 #[cfg(feature = "tests")]
 #[no_mangle]
-pub extern "C" fn lib_ruby_parser__test__make_comment_1_2_inline() -> Comment {
-    Comment {
-        location: Loc { begin: 1, end: 2 },
-        kind: CommentType::Inline,
-    }
+pub extern "C" fn lib_ruby_parser__test__make_comment(location: Loc, kind: CommentType) -> Comment {
+    Comment { location, kind }
 }
 
 #[cfg(feature = "tests")]
 #[no_mangle]
-pub extern "C" fn lib_ruby_parser__test__make_comment_list() -> BlobCommentList {
-    BlobCommentList::from(vec![lib_ruby_parser__test__make_comment_1_2_inline()])
+pub extern "C" fn lib_ruby_parser__test__make_comment_list(comment: Comment) -> BlobCommentList {
+    BlobCommentList::from(vec![comment])
 }
 
 #[no_mangle]

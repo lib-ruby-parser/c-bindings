@@ -5,18 +5,24 @@ blob_type!(BlobSourceLineList, Vec<SourceLine>);
 
 #[cfg(feature = "tests")]
 #[no_mangle]
-pub extern "C" fn lib_ruby_parser__test__make_source_line_1_2_true() -> SourceLine {
+pub extern "C" fn lib_ruby_parser__test__make_source_line(
+    start: usize,
+    end: usize,
+    ends_with_eof: bool,
+) -> SourceLine {
     SourceLine {
-        start: 1,
-        end: 2,
-        ends_with_eof: true,
+        start,
+        end,
+        ends_with_eof,
     }
 }
 
 #[cfg(feature = "tests")]
 #[no_mangle]
-pub extern "C" fn lib_ruby_parser__test__make_source_line_list() -> BlobSourceLineList {
-    BlobSourceLineList::from(vec![lib_ruby_parser__test__make_source_line_1_2_true()])
+pub extern "C" fn lib_ruby_parser__test__make_source_line_list(
+    source_line: SourceLine,
+) -> BlobSourceLineList {
+    BlobSourceLineList::from(vec![source_line])
 }
 
 #[no_mangle]

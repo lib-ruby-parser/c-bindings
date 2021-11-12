@@ -6,8 +6,8 @@ blob_type!(MaybeLocBlob, Option<Loc>);
 
 #[cfg(feature = "tests")]
 #[no_mangle]
-pub extern "C" fn lib_ruby_parser__test__make_loc_12() -> Loc {
-    Loc { begin: 1, end: 2 }
+pub extern "C" fn lib_ruby_parser__test__make_loc(begin: usize, end: usize) -> Loc {
+    Loc { begin, end }
 }
 
 #[cfg(feature = "tests")]
@@ -18,6 +18,6 @@ pub extern "C" fn lib_ruby_parser__test__make_none_loc() -> MaybeLocBlob {
 
 #[cfg(feature = "tests")]
 #[no_mangle]
-pub extern "C" fn lib_ruby_parser__test__make_some_loc_12() -> MaybeLocBlob {
-    MaybeLocBlob::from(Some(Loc { begin: 1, end: 2 }))
+pub extern "C" fn lib_ruby_parser__test__make_some_loc(begin: usize, end: usize) -> MaybeLocBlob {
+    MaybeLocBlob::from(Some(Loc { begin, end }))
 }
