@@ -1,7 +1,7 @@
 
 bytes.o: bytes.c bytes.h test_helper.h
 
-comment.o: comment.c comment.h loc.h
+comment.o: comment.c comment.h loc.h test_helper.h
 
 decoder.o: decoder.c decoder.h string.h bytes.h
 

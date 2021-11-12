@@ -36,6 +36,8 @@ mod token;
 
 mod source_line;
 
+mod comment;
+
 blob_type!(BlobParserOptions, ParserOptions);
 blob_type!(BlobParserResult, ParserResult);
 

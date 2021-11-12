@@ -3,7 +3,7 @@
 int main()
 {
     run_test_group(bytes);
-    // run_test_group(comment);
+    run_test_group(comment);
     // run_test_group(decoder);
     // run_test_group(diagnostic);
     run_test_group(loc);
