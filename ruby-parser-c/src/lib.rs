@@ -40,6 +40,8 @@ mod comment;
 
 mod shared_byte_list;
 
+mod magic_comment;
+
 blob_type!(BlobParserOptions, ParserOptions);
 blob_type!(BlobParserResult, ParserResult);
 

@@ -9,7 +9,7 @@ diagnostic.o: diagnostic.c diagnostic.h messages.h string.h loc.h
 
 loc.o: loc.c loc.h test_helper.h
 
-magic_comment.o: magic_comment.c magic_comment.h loc.h
+magic_comment.o: magic_comment.c magic_comment.h loc.h test_helper.h
 
 messages.o: messages.c messages.h string.h
 
