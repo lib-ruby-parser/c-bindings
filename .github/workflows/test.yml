@@ -37,23 +37,23 @@ jobs:
             ar: llvm-ar-12
             run: make tests/run
 
-          - name: test on mac (clang)
-            os: macos-latest
-            target: x86_64-apple-darwin
-            cc: clang
-            ld: ld
-            ar: ar
-            run: |
-              $CC --version
-              make tests/run
+          # - name: test on mac (clang)
+          #   os: macos-latest
+          #   target: x86_64-apple-darwin
+          #   cc: clang
+          #   ld: ld
+          #   ar: ar
+          #   run: |
+          #     $CC --version
+          #     make tests/run
 
-          - name: test on windows (msvc)
-            os: windows-latest
-            target: x86_64-pc-windows-msvc
-            cc: cl.exe
-            ld: link.exe
-            run: |
-              make tests/run
+          # - name: test on windows (msvc)
+          #   os: windows-latest
+          #   target: x86_64-pc-windows-msvc
+          #   cc: cl.exe
+          #   ld: link.exe
+          #   run: |
+          #     make tests/run
 
           - name: test on windows (mingw)
             os: windows-latest
@@ -65,25 +65,25 @@ jobs:
               gcc --version
               make tests/run
 
-          - name: valgrind
-            os: ubuntu-latest
-            target: x86_64-unknown-linux-gnu
-            cc: clang-12
-            ld: ld.lld-12
-            ar: llvm-ar-12
-            run: |
-              sudo apt-get update
-              sudo apt-get install -y valgrind libtool-bin
-              make tests/runner
-              valgrind ./tests/runner
+          # - name: valgrind
+          #   os: ubuntu-latest
+          #   target: x86_64-unknown-linux-gnu
+          #   cc: clang-12
+          #   ld: ld.lld-12
+          #   ar: llvm-ar-12
+          #   run: |
+          #     sudo apt-get update
+          #     sudo apt-get install -y valgrind libtool-bin
+          #     make tests/runner
+          #     valgrind ./tests/runner
 
-          - name: asan
-            os: ubuntu-latest
-            target: x86_64-unknown-linux-gnu
-            cc: clang-12
-            ld: ld.lld-12
-            ar: llvm-ar-12
-            run: ASAN_OPTIONS=detect_leaks=1 CFLAGS="-fsanitize=address" make tests/run
+          # - name: asan
+          #   os: ubuntu-latest
+          #   target: x86_64-unknown-linux-gnu
+          #   cc: clang-12
+          #   ld: ld.lld-12
+          #   ar: llvm-ar-12
+          #   run: ASAN_OPTIONS=detect_leaks=1 CFLAGS="-fsanitize=address" make tests/run
 
     steps:
       - name: setup msvc on windows
