@@ -10,7 +10,8 @@ typedef struct LIB_RUBY_PARSER_String
     size_t len;
     size_t capacity;
 } LIB_RUBY_PARSER_String;
-LIB_RUBY_PARSER_String LIB_RUBY_PARSER_new_string(const char *s);
+LIB_RUBY_PARSER_String LIB_RUBY_PARSER_new_string_owned(char *s, size_t len);
+LIB_RUBY_PARSER_String LIB_RUBY_PARSER_new_string_from_cstr(const char *s);
 void LIB_RUBY_PARSER_drop_string(LIB_RUBY_PARSER_String *string);
 
 typedef struct LIB_RUBY_PARSER_MaybeString
