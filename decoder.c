@@ -1,5 +1,14 @@
 #include "decoder.h"
 
+bool LIB_RUBY_PARSER_maybe_decoder_is_some(const LIB_RUBY_PARSER_MaybeDecoder *maybe_decoder)
+{
+    return maybe_decoder->decoder.f != NULL;
+}
+bool LIB_RUBY_PARSER_maybe_decoder_is_none(const LIB_RUBY_PARSER_MaybeDecoder *maybe_decoder)
+{
+    return maybe_decoder->decoder.f == NULL;
+}
+
 #ifdef TEST_ENV
 
 #include "test_helper.h"
@@ -83,10 +92,11 @@ test(maybe_decoder_fields, {
     LIB_RUBY_PARSER_Decoder always_ok_decoder = lib_ruby_parser__test__always_ok_decoder();
 
     maybe_decoder = lib_ruby_parser__test__some_always_ok_decoder();
-    assert_eq(maybe_decoder.tag, LIB_RUBY_PARSER_SOME_DECODER);
-    assert_eq(maybe_decoder.as.decoder.f, always_ok_decoder.f);
+    assert(LIB_RUBY_PARSER_maybe_decoder_is_some(&maybe_decoder));
+    assert_eq(maybe_decoder.decoder.f, always_ok_decoder.f);
 
     maybe_decoder = lib_ruby_parser__test__none_decoder();
+    assert(LIB_RUBY_PARSER_maybe_decoder_is_none(&maybe_decoder));
 });
 
 declare_test_group(

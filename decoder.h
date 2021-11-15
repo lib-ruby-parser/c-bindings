@@ -1,6 +1,7 @@
 #ifndef LIB_RUBY_PARSER_DECODER_H
 #define LIB_RUBY_PARSER_DECODER_H
 
+#include <stdbool.h>
 #include "string.h"
 #include "bytes.h"
 
@@ -45,17 +46,9 @@ typedef struct LIB_RUBY_PARSER_Decoder
 
 typedef struct LIB_RUBY_PARSER_MaybeDecoder
 {
-    enum
-    {
-        LIB_RUBY_PARSER_NONE_DECODER = 0,
-        LIB_RUBY_PARSER_SOME_DECODER = 1,
-    } tag;
-
-    union
-    {
-        LIB_RUBY_PARSER_Decoder decoder;
-        uint8_t none;
-    } as;
+    LIB_RUBY_PARSER_Decoder decoder;
 } LIB_RUBY_PARSER_MaybeDecoder;
+bool LIB_RUBY_PARSER_maybe_decoder_is_some(const LIB_RUBY_PARSER_MaybeDecoder *maybe_decoder);
+bool LIB_RUBY_PARSER_maybe_decoder_is_none(const LIB_RUBY_PARSER_MaybeDecoder *maybe_decoder);
 
 #endif // LIB_RUBY_PARSER_DECODER_H

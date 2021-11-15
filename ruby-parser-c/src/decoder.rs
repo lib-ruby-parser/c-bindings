@@ -4,14 +4,7 @@ use lib_ruby_parser::source::{DecoderResult, InputError};
 
 blob_type!(BlobInputError, InputError);
 blob_type!(BlobDecoderResult, DecoderResult);
-
-#[repr(u8)]
-pub enum MaybeDecoder {
-    None,
-    Some(Decoder),
-}
-
-blob_type!(BlobMaybeDecoder, MaybeDecoder);
+blob_type!(BlobMaybeDecoder, Option<Decoder>);
 
 #[cfg(feature = "tests")]
 #[no_mangle]
@@ -103,13 +96,11 @@ pub extern "C" fn lib_ruby_parser__test__always_err_decoder() -> Decoder {
 #[cfg(feature = "tests")]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__some_always_ok_decoder() -> BlobMaybeDecoder {
-    BlobMaybeDecoder::from(MaybeDecoder::Some(
-        lib_ruby_parser__test__always_ok_decoder(),
-    ))
+    BlobMaybeDecoder::from(Some(lib_ruby_parser__test__always_ok_decoder()))
 }
 
 #[cfg(feature = "tests")]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__none_decoder() -> BlobMaybeDecoder {
-    BlobMaybeDecoder::from(MaybeDecoder::None)
+    BlobMaybeDecoder::from(None)
 }
