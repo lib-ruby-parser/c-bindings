@@ -24,7 +24,6 @@ jobs:
       LD: ${{ matrix.build.ld }}
       AR: ${{ matrix.build.ar }}
       CFLAGS: ${{ matrix.build.cflags }}
-      RUSTFLAGS: ${{ matrix.build.rustflags }}
     strategy:
       fail-fast: false
       matrix:
@@ -63,7 +62,7 @@ jobs:
             ar: ar
             run: |
               gcc --version
-              CFLAGS="-fsanitize=address" make tests/run
+              make tests/run
 
           - name: valgrind
             os: ubuntu-latest

@@ -3,6 +3,7 @@ include scripts/setup_target.mk
 include scripts/setup_rustflags.mk
 
 SOURCES = \
+	alloc \
 	bytes \
 	comment \
 	decoder \

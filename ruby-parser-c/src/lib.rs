@@ -24,6 +24,9 @@ macro_rules! blob_type {
     };
 }
 
+#[cfg(feature = "use_external_allocator")]
+mod external_allocator;
+
 mod string;
 use string::BlobString;
 
@@ -74,7 +77,7 @@ pub extern "C" fn lib_ruby_parser__render_diagnostic_message(
 
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__print_build_info() {
-    println!(
+    eprintln!(
         "Rust build info:
 sizeof(usize) = {}
 sizeof(void*) = {}

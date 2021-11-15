@@ -5,10 +5,10 @@ void lib_ruby_parser__test__print_build_info();
 int main()
 {
     lib_ruby_parser__test__print_build_info();
-    printf("C build info:\n");
-    printf("sizeof(size_t): %d\n", (int)(sizeof(size_t)));
-    printf("sizeof(void*): %d\n", (int)(sizeof(void *)));
-    printf("\n");
+    fprintf(stderr, "C build info:\n");
+    fprintf(stderr, "sizeof(size_t): %d\n", (int)(sizeof(size_t)));
+    fprintf(stderr, "sizeof(void*): %d\n", (int)(sizeof(void *)));
+    fprintf(stderr, "\n");
 
     run_test_group(bytes);
     run_test_group(comment);

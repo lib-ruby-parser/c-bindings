@@ -7,6 +7,9 @@ STATIC_LIB_FILE = libruby_parser_c.$(A)
 LIST_DEPS = ldd
 
 CFLAGS += -Wall -Wextra -g
+# mingw uses a different allocator from Rust?
+# anyway, this is required to make strings allocated by C to be compatible with Rust
+CARGOFLAGS += --features=use_external_allocator
 
 ifeq ($(BUILD_ENV), debug)
 CFLAGS += -O0 -DTEST_ENV
