@@ -71,3 +71,15 @@ pub extern "C" fn lib_ruby_parser__render_diagnostic_message(
     let rendered = String::from(message.render());
     rendered.into()
 }
+
+#[no_mangle]
+pub extern "C" fn lib_ruby_parser__test__print_build_info() {
+    println!(
+        "Rust build info:
+sizeof(usize) = {}
+sizeof(void*) = {}
+",
+        std::mem::size_of::<usize>(),
+        std::mem::size_of::<*mut std::ffi::c_void>()
+    );
+}

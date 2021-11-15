@@ -1,7 +1,15 @@
 #include "../test_helper.h"
 
+void lib_ruby_parser__test__print_build_info();
+
 int main()
 {
+    lib_ruby_parser__test__print_build_info();
+    printf("C build info:\n");
+    printf("sizeof(size_t): %d\n", (int)(sizeof(size_t)));
+    printf("sizeof(void*): %d\n", (int)(sizeof(void *)));
+    printf("\n");
+
     run_test_group(bytes);
     run_test_group(comment);
     // run_test_group(decoder);
