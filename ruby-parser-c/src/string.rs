@@ -2,7 +2,11 @@ use crate::blob_type;
 
 blob_type!(BlobString, String);
 
-#[cfg(feature = "tests")]
+extern "C" {
+    fn lib_ruby_parser_internal_free_string(ptr: *mut u8);
+}
+
+// #[cfg(feature = "tests")]
 #[no_mangle]
 pub extern "C" fn LIB_RUBY_PARSER_new_string_owned(ptr: *mut u8, len: usize) -> BlobString {
     eprintln!("Constructing string owned");
@@ -24,5 +28,7 @@ pub extern "C" fn LIB_RUBY_PARSER_new_string_from_cstr(ptr: *const i8) -> BlobSt
 
 #[no_mangle]
 pub extern "C" fn LIB_RUBY_PARSER_drop_string(s: *mut String) {
-    unsafe { std::ptr::drop_in_place(s) }
+    let ptr = unsafe { s.as_mut().unwrap() };
+    unsafe { lib_ruby_parser_internal_free_string(ptr.as_mut_ptr()) }
+    // unsafe { std::ptr::drop_in_place(s) }
 }
