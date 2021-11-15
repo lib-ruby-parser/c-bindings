@@ -24,6 +24,9 @@ macro_rules! blob_type {
     };
 }
 
+#[cfg(feature = "use_external_allocator")]
+mod external_allocator;
+
 mod string;
 use string::BlobString;
 

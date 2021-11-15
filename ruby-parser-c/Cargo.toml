@@ -14,6 +14,9 @@ default = []
 # Include test APIs to run C tests
 tests = []
 
+# Use external allocator (compatible with C, needed for mingw target)
+use_external_allocator = []
+
 [dependencies]
 lib-ruby-parser = {version = "3.0.12"}
 
