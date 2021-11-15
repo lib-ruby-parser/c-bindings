@@ -21,7 +21,10 @@ LIB_RUBY_PARSER_InputError lib_ruby_parser__test__make_input_error__decoding_err
 
 const char *US_ASCII = "us-ascii";
 
-test(input_error_fields, {
+void test_input_error_fields()
+{
+    annotate_test;
+
     LIB_RUBY_PARSER_InputError input_error;
 
     input_error = lib_ruby_parser__test__make_input_error__unsupported_encoding(
@@ -37,12 +40,15 @@ test(input_error_fields, {
     assert_eq(input_error.as.decoding_error.len, strlen("bar"));
     assert_str_eq(input_error.as.decoding_error.ptr, "bar", strlen("bar"));
     LIB_RUBY_PARSER_drop_input_error(&input_error);
-});
+}
 
 LIB_RUBY_PARSER_DecoderResult lib_ruby_parser__test__make_decoder_result__ok(LIB_RUBY_PARSER_ByteList bytes);
 LIB_RUBY_PARSER_DecoderResult lib_ruby_parser__test__make_decoder_result__err(LIB_RUBY_PARSER_InputError err);
 
-test(decoder_result_fields, {
+void test_decoder_result_fields()
+{
+    annotate_test;
+
     LIB_RUBY_PARSER_DecoderResult result;
 
     result = lib_ruby_parser__test__make_decoder_result__ok(
@@ -60,11 +66,14 @@ test(decoder_result_fields, {
     assert_eq(result.as.err.as.unsupported_encoding.len, strlen(US_ASCII));
     assert_str_eq(result.as.err.as.unsupported_encoding.ptr, US_ASCII, strlen(US_ASCII));
     LIB_RUBY_PARSER_drop_decoder_result(&result);
-});
+}
 
 LIB_RUBY_PARSER_Decoder lib_ruby_parser__test__always_ok_decoder();
 LIB_RUBY_PARSER_Decoder lib_ruby_parser__test__always_err_decoder();
-test(decoder_fields, {
+void test_decoder_fields()
+{
+    annotate_test;
+
     LIB_RUBY_PARSER_Decoder d;
     LIB_RUBY_PARSER_DecoderResult decoder_result;
     const char *ALWAYS_OK = "always_ok";
@@ -83,11 +92,14 @@ test(decoder_fields, {
     assert_eq(decoder_result.as.err.as.unsupported_encoding.len, strlen(ALWAYS_ERR));
     assert_str_eq(decoder_result.as.err.as.unsupported_encoding.ptr, ALWAYS_ERR, strlen(ALWAYS_ERR));
     LIB_RUBY_PARSER_drop_decoder_result(&decoder_result);
-});
+}
 
 LIB_RUBY_PARSER_MaybeDecoder lib_ruby_parser__test__some_always_ok_decoder();
 LIB_RUBY_PARSER_MaybeDecoder lib_ruby_parser__test__none_decoder();
-test(maybe_decoder_fields, {
+void test_maybe_decoder_fields()
+{
+    annotate_test;
+
     LIB_RUBY_PARSER_MaybeDecoder maybe_decoder;
     LIB_RUBY_PARSER_Decoder always_ok_decoder = lib_ruby_parser__test__always_ok_decoder();
 
@@ -97,14 +109,14 @@ test(maybe_decoder_fields, {
 
     maybe_decoder = lib_ruby_parser__test__none_decoder();
     assert(LIB_RUBY_PARSER_maybe_decoder_is_none(&maybe_decoder));
-});
+}
 
 declare_test_group(
     decoder,
     4,
-    input_error_fields,
-    decoder_result_fields,
-    decoder_fields,
-    maybe_decoder_fields);
+    test_input_error_fields,
+    test_decoder_result_fields,
+    test_decoder_fields,
+    test_maybe_decoder_fields);
 
 #endif

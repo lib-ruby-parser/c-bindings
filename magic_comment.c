@@ -8,7 +8,10 @@ LIB_RUBY_PARSER_MagicCommentKind lib_ruby_parser__test__make_magic_comment_kind_
 LIB_RUBY_PARSER_MagicCommentKind lib_ruby_parser__test__make_magic_comment_kind_frozen_string_literal();
 LIB_RUBY_PARSER_MagicCommentKind lib_ruby_parser__test__make_magic_comment_kind_warn_indent();
 LIB_RUBY_PARSER_MagicCommentKind lib_ruby_parser__test__make_magic_comment_kind_shareable_constant_value();
-test(magic_comment_kind_options, {
+void test_magic_comment_kind_options()
+{
+    annotate_test;
+
     LIB_RUBY_PARSER_MagicCommentKind magic_comment_kind;
 
     magic_comment_kind = lib_ruby_parser__test__make_magic_comment_kind_encoding();
@@ -22,7 +25,7 @@ test(magic_comment_kind_options, {
 
     magic_comment_kind = lib_ruby_parser__test__make_magic_comment_kind_shareable_constant_value();
     assert_eq(magic_comment_kind, LIB_RUBY_PARSER_MAGIC_COMMENT_KIND_SHAREABLE_CONSTANT_VALUE);
-});
+}
 
 #define assert_magic_comment(comment, _kind, _key_l, _value_l) \
     assert_eq(comment.kind, _kind);                            \
@@ -30,7 +33,10 @@ test(magic_comment_kind_options, {
     assert_loc(comment.value_l, _value_l);
 
 LIB_RUBY_PARSER_MagicComment lib_ruby_parser__test__make_magic_comment(LIB_RUBY_PARSER_MagicCommentKind kind, LIB_RUBY_PARSER_Loc key_l, LIB_RUBY_PARSER_Loc value_l);
-test(magic_comment_fields, {
+void test_magic_comment_fields()
+{
+    annotate_test;
+
     LIB_RUBY_PARSER_Loc key_l = {.begin = 1, .end = 2};
     LIB_RUBY_PARSER_Loc value_l = {.begin = 3, .end = 4};
     LIB_RUBY_PARSER_MagicComment comment = lib_ruby_parser__test__make_magic_comment(
@@ -39,10 +45,13 @@ test(magic_comment_fields, {
     assert_magic_comment(
         comment,
         LIB_RUBY_PARSER_MAGIC_COMMENT_KIND_FROZEN_STRING_LITERAL, key_l, value_l);
-});
+}
 
 LIB_RUBY_PARSER_MagicCommentList lib_ruby_parser__test__make_magic_comment_list(LIB_RUBY_PARSER_MagicComment magic_comment);
-test(magic_comment_list_fields, {
+void test_magic_comment_list_fields()
+{
+    annotate_test;
+
     LIB_RUBY_PARSER_Loc key_l = {.begin = 1, .end = 2};
     LIB_RUBY_PARSER_Loc value_l = {.begin = 3, .end = 4};
     LIB_RUBY_PARSER_MagicCommentList magic_comment_list = lib_ruby_parser__test__make_magic_comment_list(
@@ -53,13 +62,13 @@ test(magic_comment_list_fields, {
         magic_comment_list.ptr[0],
         LIB_RUBY_PARSER_MAGIC_COMMENT_KIND_FROZEN_STRING_LITERAL, key_l, value_l);
     LIB_RUBY_PARSER_drop_magic_comment_list(&magic_comment_list);
-});
+}
 
 declare_test_group(
     magic_comment,
     3,
-    magic_comment_kind_options,
-    magic_comment_fields,
-    magic_comment_list_fields);
+    test_magic_comment_kind_options,
+    test_magic_comment_fields,
+    test_magic_comment_list_fields);
 
 #endif

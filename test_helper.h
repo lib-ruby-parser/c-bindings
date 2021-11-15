@@ -9,13 +9,7 @@
 
 typedef void (*test_fn_t)();
 
-#define test(NAME, ...)                     \
-    void NAME()                             \
-    {                                       \
-        fprintf(stderr, "  - %s\n", #NAME); \
-        __VA_ARGS__                         \
-    }                                       \
-    int NAME##TEST_ignore = 1
+#define annotate_test fprintf(stderr, __func__)
 
 #define declare_test_group(NAME, N, ...)                                         \
     test_fn_t NAME##_TESTS[N] = {__VA_ARGS__};                                   \
@@ -27,7 +21,9 @@ typedef void (*test_fn_t)();
         for (size_t i = 0; i < count; i++)                                       \
         {                                                                        \
             test_fn_t test_fn = NAME##_TESTS[i];                                 \
+            fprintf(stderr, "  - ");                                             \
             test_fn();                                                           \
+            fprintf(stderr, "\n");                                               \
         }                                                                        \
     }                                                                            \
     int NAME##_TESTS_ignore = 0

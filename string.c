@@ -24,34 +24,46 @@ char *new_owned_string(const char *s)
 
 LIB_RUBY_PARSER_String lib_ruby_parser__test__make_string_foo();
 
-test(rust_string_fields, {
+void test_rust_string_fields()
+{
+    annotate_test;
+
     LIB_RUBY_PARSER_String foo = lib_ruby_parser__test__make_string_foo();
     assert_eq(foo.len, 3);
     assert_str_eq(foo.ptr, "foo", 3);
     // capacity doesn't matter
     LIB_RUBY_PARSER_drop_string(&foo);
-});
+}
 
-test(owned_string_fields, {
+void test_owned_string_fields()
+{
+    annotate_test;
+
     LIB_RUBY_PARSER_String foo = LIB_RUBY_PARSER_new_string_owned(new_owned_string("foo"), 3);
     assert_eq(foo.len, 3);
     assert_str_eq(foo.ptr, "foo", 3);
     // capacity doesn't matter
     LIB_RUBY_PARSER_drop_string(&foo);
-});
+}
 
-test(copied_string_fields, {
+void test_copied_string_fields()
+{
+    annotate_test;
+
     LIB_RUBY_PARSER_String foo = LIB_RUBY_PARSER_new_string_from_cstr("foo");
     assert_eq(foo.len, 3);
     assert_str_eq(foo.ptr, "foo", 3);
     // capacity doesn't matter
     LIB_RUBY_PARSER_drop_string(&foo);
-});
+}
 
 LIB_RUBY_PARSER_MaybeString lib_ruby_parser__test__make_some_string_foo();
 LIB_RUBY_PARSER_MaybeString lib_ruby_parser__test__make_none_string();
 
-test(maybe_string_fields, {
+void test_maybe_string_fields()
+{
+    annotate_test;
+
     LIB_RUBY_PARSER_MaybeString maybe_string;
 
     maybe_string = lib_ruby_parser__test__make_some_string_foo();
@@ -63,14 +75,14 @@ test(maybe_string_fields, {
     maybe_string = lib_ruby_parser__test__make_none_string();
     assert(LIB_RUBY_PARSER_maybe_string_is_none(&maybe_string));
     LIB_RUBY_PARSER_drop_maybe_string(&maybe_string);
-});
+}
 
 declare_test_group(
     string,
     4,
-    rust_string_fields,
-    owned_string_fields,
-    copied_string_fields,
-    maybe_string_fields);
+    test_rust_string_fields,
+    test_owned_string_fields,
+    test_copied_string_fields,
+    test_maybe_string_fields);
 
 #endif
