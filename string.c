@@ -21,7 +21,7 @@ test(owned_string_fields, {
     assert(foo.len == 3);
     assert_str_eq(foo.ptr, "foo", 3);
     // capacity doesn't matter
-    LIB_RUBY_PARSER_drop_string(&foo);
+    // LIB_RUBY_PARSER_drop_string(&foo);
     fprintf(stderr, "finishing owned string test\n");
 });
 
@@ -31,7 +31,7 @@ test(copied_string_fields, {
     assert(foo.len == 3);
     assert_str_eq(foo.ptr, "foo", 3);
     // capacity doesn't matter
-    LIB_RUBY_PARSER_drop_string(&foo);
+    // LIB_RUBY_PARSER_drop_string(&foo);
     fprintf(stderr, "finishing copied string test\n");
 });
 
