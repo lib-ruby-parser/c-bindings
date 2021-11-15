@@ -6,6 +6,7 @@ use lib_ruby_parser::{DiagnosticMessage, Parser, ParserOptions, ParserResult, To
 macro_rules! blob_type {
     ($c_type:ident, $rust_type:ty) => {
         #[repr(C)]
+        #[derive(Debug)]
         pub struct $c_type {
             content: [u8; std::mem::size_of::<$rust_type>()],
         }
