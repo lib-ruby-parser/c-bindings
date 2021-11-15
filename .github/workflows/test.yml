@@ -63,7 +63,7 @@ jobs:
             ar: ar
             run: |
               gcc --version
-              make tests/run
+              CFLAGS="-fsanitize=address" make tests/run
 
           - name: valgrind
             os: ubuntu-latest
