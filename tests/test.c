@@ -1,6 +1,9 @@
 #include "../test_helper.h"
 
 void lib_ruby_parser__test__print_build_info();
+#define run_test_group(NAME)      \
+    void run_test_group_##NAME(); \
+    run_test_group_##NAME()
 
 int main()
 {

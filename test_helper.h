@@ -11,26 +11,7 @@ typedef void (*test_fn_t)();
 
 #define annotate_test fprintf(stderr, __func__)
 
-#define declare_test_group(NAME, N, ...)                                         \
-    test_fn_t NAME##_TESTS[N] = {__VA_ARGS__};                                   \
-    size_t NAME##_TESTS_COUNT = N;                                               \
-    void run_test_group_##NAME()                                                 \
-    {                                                                            \
-        size_t count = NAME##_TESTS_COUNT;                                       \
-        fprintf(stderr, "Running group \"%s\" with %lu tests.\n", #NAME, count); \
-        for (size_t i = 0; i < count; i++)                                       \
-        {                                                                        \
-            test_fn_t test_fn = NAME##_TESTS[i];                                 \
-            fprintf(stderr, "  - ");                                             \
-            test_fn();                                                           \
-            fprintf(stderr, "\n");                                               \
-        }                                                                        \
-    }                                                                            \
-    int NAME##_TESTS_ignore = 0
-
-#define run_test_group(NAME)      \
-    void run_test_group_##NAME(); \
-    run_test_group_##NAME()
+void run_tests_as_group(const char *group_name, const test_fn_t *tests, size_t count);
 
 // assertion helpers
 

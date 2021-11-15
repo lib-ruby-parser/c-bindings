@@ -6,7 +6,7 @@
 
 LIB_RUBY_PARSER_SharedByteList lib_ruby_parser__test__make_shared_byte_list_foo();
 
-void test_shared_byte_list_fields()
+static void test_shared_byte_list_fields()
 {
     annotate_test;
 
@@ -15,9 +15,13 @@ void test_shared_byte_list_fields()
     assert_str_eq(foo.ptr, "foo", 3);
 }
 
-declare_test_group(
-    shared_byte_list,
-    1,
-    test_shared_byte_list_fields);
+void run_test_group_shared_byte_list()
+{
+    const test_fn_t tests[] = {
+        test_shared_byte_list_fields,
+    };
+
+    run_tests_as_group("shared_byte_list", tests, sizeof(tests) / sizeof(test_fn_t));
+}
 
 #endif

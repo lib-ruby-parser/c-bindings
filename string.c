@@ -24,7 +24,7 @@ char *new_owned_string(const char *s)
 
 LIB_RUBY_PARSER_String lib_ruby_parser__test__make_string_foo();
 
-void test_rust_string_fields()
+static void test_rust_string_fields()
 {
     annotate_test;
 
@@ -35,7 +35,7 @@ void test_rust_string_fields()
     LIB_RUBY_PARSER_drop_string(&foo);
 }
 
-void test_owned_string_fields()
+static void test_owned_string_fields()
 {
     annotate_test;
 
@@ -46,7 +46,7 @@ void test_owned_string_fields()
     LIB_RUBY_PARSER_drop_string(&foo);
 }
 
-void test_copied_string_fields()
+static void test_copied_string_fields()
 {
     annotate_test;
 
@@ -60,7 +60,7 @@ void test_copied_string_fields()
 LIB_RUBY_PARSER_MaybeString lib_ruby_parser__test__make_some_string_foo();
 LIB_RUBY_PARSER_MaybeString lib_ruby_parser__test__make_none_string();
 
-void test_maybe_string_fields()
+static void test_maybe_string_fields()
 {
     annotate_test;
 
@@ -77,12 +77,16 @@ void test_maybe_string_fields()
     LIB_RUBY_PARSER_drop_maybe_string(&maybe_string);
 }
 
-declare_test_group(
-    string,
-    4,
-    test_rust_string_fields,
-    test_owned_string_fields,
-    test_copied_string_fields,
-    test_maybe_string_fields);
+void run_test_group_string()
+{
+    const test_fn_t tests[] = {
+        test_rust_string_fields,
+        test_owned_string_fields,
+        test_copied_string_fields,
+        test_maybe_string_fields,
+    };
+
+    run_tests_as_group("string", tests, sizeof(tests) / sizeof(test_fn_t));
+}
 
 #endif

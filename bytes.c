@@ -7,7 +7,7 @@
 
 LIB_RUBY_PARSER_ByteList lib_ruby_parser__test__make_byte_list(char i1, char i2, char i3);
 
-void test_byte_list_fields()
+static void test_byte_list_fields()
 {
     annotate_test;
 
@@ -16,7 +16,7 @@ void test_byte_list_fields()
     LIB_RUBY_PARSER_drop_byte_list(&byte_list);
 }
 
-void test_byte_list_constructors()
+static void test_byte_list_constructors()
 {
     annotate_test;
 
@@ -37,7 +37,7 @@ void test_byte_list_constructors()
 }
 
 LIB_RUBY_PARSER_Bytes lib_ruby_parser__test__make_bytes(char i1, char i2, char i3);
-void test_bytes_fields()
+static void test_bytes_fields()
 {
     annotate_test;
 
@@ -46,11 +46,15 @@ void test_bytes_fields()
     LIB_RUBY_PARSER_drop_bytes(&bytes);
 }
 
-declare_test_group(
-    bytes,
-    3,
-    test_byte_list_fields,
-    test_byte_list_constructors,
-    test_bytes_fields);
+void run_test_group_bytes()
+{
+    const test_fn_t tests[] = {
+        test_byte_list_fields,
+        test_byte_list_constructors,
+        test_bytes_fields,
+    };
+
+    run_tests_as_group("bytes", tests, sizeof(tests) / sizeof(test_fn_t));
+}
 
 #endif

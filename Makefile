@@ -20,6 +20,10 @@ SOURCES = \
 	token \
 	token_rewriter
 
+ifeq ($(BUILD_ENV), debug)
+SOURCES += test_helper
+endif
+
 C_FILES = $(foreach source,$(SOURCES),$(source).c)
 H_FILES = $(foreach source,$(SOURCES),$(source).h)
 O_FILES = $(foreach source,$(SOURCES),$(source).$(O))

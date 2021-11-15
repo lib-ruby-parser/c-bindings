@@ -5,7 +5,7 @@
 #include "test_helper.h"
 
 LIB_RUBY_PARSER_Loc lib_ruby_parser__test__make_loc(size_t begin, size_t end);
-void test_loc_fields()
+static void test_loc_fields()
 {
     annotate_test;
 
@@ -15,7 +15,7 @@ void test_loc_fields()
 }
 
 LIB_RUBY_PARSER_MaybeLoc lib_ruby_parser__test__make_none_loc(void);
-void test_none_loc_fields()
+static void test_none_loc_fields()
 {
     annotate_test;
 
@@ -24,7 +24,7 @@ void test_none_loc_fields()
 }
 
 LIB_RUBY_PARSER_MaybeLoc lib_ruby_parser__test__make_some_loc(size_t begin, size_t end);
-void test_some_loc_fields()
+static void test_some_loc_fields()
 {
     annotate_test;
 
@@ -33,11 +33,15 @@ void test_some_loc_fields()
     assert_some_loc(some_loc, expected);
 }
 
-declare_test_group(
-    loc,
-    3,
-    test_loc_fields,
-    test_none_loc_fields,
-    test_some_loc_fields);
+void run_test_group_loc()
+{
+    const test_fn_t tests[] = {
+        test_loc_fields,
+        test_none_loc_fields,
+        test_some_loc_fields,
+    };
+
+    run_tests_as_group("loc", tests, sizeof(tests) / sizeof(test_fn_t));
+}
 
 #endif

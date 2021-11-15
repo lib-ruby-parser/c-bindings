@@ -7,7 +7,7 @@
 LIB_RUBY_PARSER_CommentType lib_ruby_parser__test__make_comment_type_document();
 LIB_RUBY_PARSER_CommentType lib_ruby_parser__test__make_comment_type_inline();
 LIB_RUBY_PARSER_CommentType lib_ruby_parser__test__make_comment_type_unknown();
-void test_comment_type_options()
+static void test_comment_type_options()
 {
     annotate_test;
 
@@ -28,7 +28,7 @@ void test_comment_type_options()
     assert_eq(comment.kind, _kind);
 
 LIB_RUBY_PARSER_Comment lib_ruby_parser__test__make_comment(LIB_RUBY_PARSER_Loc location, LIB_RUBY_PARSER_CommentType kind);
-void test_comment_fields()
+static void test_comment_fields()
 {
     annotate_test;
 
@@ -41,7 +41,7 @@ void test_comment_fields()
 }
 
 LIB_RUBY_PARSER_CommentList lib_ruby_parser__test__make_comment_list(LIB_RUBY_PARSER_Comment comment);
-void test_comment_list_fields()
+static void test_comment_list_fields()
 {
     annotate_test;
 
@@ -55,11 +55,15 @@ void test_comment_list_fields()
     LIB_RUBY_PARSER_drop_comment_list(&comment_list);
 }
 
-declare_test_group(
-    comment,
-    3,
-    test_comment_type_options,
-    test_comment_fields,
-    test_comment_list_fields);
+void run_test_group_comment()
+{
+    const test_fn_t tests[] = {
+        test_comment_type_options,
+        test_comment_fields,
+        test_comment_list_fields,
+    };
+
+    run_tests_as_group("comment", tests, sizeof(tests) / sizeof(test_fn_t));
+}
 
 #endif
