@@ -24,6 +24,11 @@ test(some_loc_fields, {
     assert_some_loc(some_loc, expected);
 });
 
-declare_test_group(loc, 3, loc_fields, none_loc_fields, some_loc_fields);
+declare_test_group(
+    loc,
+    3,
+    loc_fields,
+    none_loc_fields,
+    some_loc_fields);
 
 #endif

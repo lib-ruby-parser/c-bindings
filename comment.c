@@ -46,6 +46,11 @@ test(comment_list_fields, {
     LIB_RUBY_PARSER_drop_comment_list(&comment_list);
 });
 
-declare_test_group(comment, 3, comment_type_options, comment_fields, comment_list_fields);
+declare_test_group(
+    comment,
+    3,
+    comment_type_options,
+    comment_fields,
+    comment_list_fields);
 
 #endif

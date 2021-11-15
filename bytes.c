@@ -37,6 +37,11 @@ test(bytes_fields, {
     LIB_RUBY_PARSER_drop_bytes(&bytes);
 });
 
-declare_test_group(bytes, 3, byte_list_fields, byte_list_constructors, bytes_fields);
+declare_test_group(
+    bytes,
+    3,
+    byte_list_fields,
+    byte_list_constructors,
+    bytes_fields);
 
 #endif

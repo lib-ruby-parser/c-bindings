@@ -39,6 +39,11 @@ test(copied_string_fields, {
     LIB_RUBY_PARSER_drop_string(&foo);
 });
 
-declare_test_group(string, 3, rust_string_fields, owned_string_fields, copied_string_fields);
+declare_test_group(
+    string,
+    3,
+    rust_string_fields,
+    owned_string_fields,
+    copied_string_fields);
 
 #endif

@@ -37,7 +37,7 @@ typedef struct LIB_RUBY_PARSER_DecoderResult
 void LIB_RUBY_PARSER_drop_decoder_result(LIB_RUBY_PARSER_DecoderResult *decoder_result);
 
 struct LIB_RUBY_PARSER_Decoder;
-typedef LIB_RUBY_PARSER_DecoderResult (*LIB_RUBY_PARSER_Decoder_Function)(struct LIB_RUBY_PARSER_Decoder *, LIB_RUBY_PARSER_String, LIB_RUBY_PARSER_ByteList);
+typedef LIB_RUBY_PARSER_DecoderResult (*LIB_RUBY_PARSER_Decoder_Function)(LIB_RUBY_PARSER_String, LIB_RUBY_PARSER_ByteList);
 typedef struct LIB_RUBY_PARSER_Decoder
 {
     LIB_RUBY_PARSER_Decoder_Function f;
@@ -47,8 +47,8 @@ typedef struct LIB_RUBY_PARSER_MaybeDecoder
 {
     enum
     {
-        LIB_RUBY_PARSER_SOME_DECODER,
-        LIB_RUBY_PARSER_NONE_DECODER
+        LIB_RUBY_PARSER_NONE_DECODER = 0,
+        LIB_RUBY_PARSER_SOME_DECODER = 1,
     } tag;
 
     union

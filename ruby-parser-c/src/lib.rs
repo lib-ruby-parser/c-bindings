@@ -45,6 +45,9 @@ mod shared_byte_list;
 
 mod magic_comment;
 
+mod decoder;
+pub use decoder::{Decoder, MaybeDecoder};
+
 blob_type!(BlobParserOptions, ParserOptions);
 blob_type!(BlobParserResult, ParserResult);
 

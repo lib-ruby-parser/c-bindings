@@ -24,6 +24,10 @@ test(source_line_list_fields, {
     LIB_RUBY_PARSER_drop_source_line_list(&source_line_list);
 });
 
-declare_test_group(source_line, 2, source_line_fields, source_line_list_fields);
+declare_test_group(
+    source_line,
+    2,
+    source_line_fields,
+    source_line_list_fields);
 
 #endif

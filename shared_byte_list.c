@@ -12,6 +12,9 @@ test(shared_byte_list_fields, {
     assert_str_eq(foo.ptr, "foo", 3);
 });
 
-declare_test_group(shared_byte_list, 1, shared_byte_list_fields);
+declare_test_group(
+    shared_byte_list,
+    1,
+    shared_byte_list_fields);
 
 #endif

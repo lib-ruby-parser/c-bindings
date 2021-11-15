@@ -55,6 +55,11 @@ test(magic_comment_list_fields, {
     LIB_RUBY_PARSER_drop_magic_comment_list(&magic_comment_list);
 });
 
-declare_test_group(magic_comment, 3, magic_comment_kind_options, magic_comment_fields, magic_comment_list_fields);
+declare_test_group(
+    magic_comment,
+    3,
+    magic_comment_kind_options,
+    magic_comment_fields,
+    magic_comment_list_fields);
 
 #endif

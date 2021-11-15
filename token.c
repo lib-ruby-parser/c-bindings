@@ -32,6 +32,10 @@ test(token_list_fields, {
     LIB_RUBY_PARSER_drop_token_list(&token_list);
 });
 
-declare_test_group(token, 2, token_fields, token_list_fields);
+declare_test_group(
+    token,
+    2,
+    token_fields,
+    token_list_fields);
 
 #endif
