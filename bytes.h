@@ -10,6 +10,8 @@ typedef struct LIB_RUBY_PARSER_ByteList
     size_t capacity;
 } LIB_RUBY_PARSER_ByteList;
 void LIB_RUBY_PARSER_drop_byte_list(LIB_RUBY_PARSER_ByteList *byte_list);
+LIB_RUBY_PARSER_ByteList LIB_RUBY_PARSER_new_bytes_owned(char *s, size_t len);
+LIB_RUBY_PARSER_ByteList LIB_RUBY_PARSER_new_bytes_from_cstr(const char *s, size_t len);
 
 typedef struct LIB_RUBY_PARSER_Bytes
 {

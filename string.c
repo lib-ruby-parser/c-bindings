@@ -8,8 +8,8 @@
 
 char *new_owned_string(const char *s)
 {
-    char *out = (char *)malloc(strlen(s) + 1);
-    strcpy(out, s);
+    char *out = (char *)malloc(strlen(s));
+    strncpy(out, s, strlen(s));
     return out;
 }
 
