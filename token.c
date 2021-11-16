@@ -3,6 +3,7 @@
 #ifdef TEST_ENV
 
 #include "test_helper.h"
+#include <string.h>
 
 #define assert_token(token, _token_name) \
     assert_str_eq(LIB_RUBY_PARSER_token_name(&token), _token_name, strlen(_token_name))

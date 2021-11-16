@@ -15,6 +15,12 @@ bool LIB_RUBY_PARSER_maybe_string_is_none(const LIB_RUBY_PARSER_MaybeString *may
 #include "test_helper.h"
 #include <string.h>
 
+void assert_string_eq(LIB_RUBY_PARSER_String string, const char *s)
+{
+    assert_eq(string.len, strlen(s));
+    assert(strncmp(string.ptr, s, strlen(s)) == 0);
+}
+
 static char *new_owned_string(const char *s)
 {
     char *out = (char *)malloc(strlen(s));
@@ -29,8 +35,7 @@ static void test_rust_string_fields(void)
     annotate_test;
 
     LIB_RUBY_PARSER_String foo = lib_ruby_parser__test__make_string_foo();
-    assert_eq(foo.len, 3);
-    assert_str_eq(foo.ptr, "foo", 3);
+    assert_string_eq(foo, "foo");
     // capacity doesn't matter
     LIB_RUBY_PARSER_drop_string(&foo);
 }
@@ -39,22 +44,20 @@ static void test_owned_string_fields(void)
 {
     annotate_test;
 
-    LIB_RUBY_PARSER_String foo = LIB_RUBY_PARSER_new_string_owned(new_owned_string("foo"), 3);
-    assert_eq(foo.len, 3);
-    assert_str_eq(foo.ptr, "foo", 3);
+    LIB_RUBY_PARSER_String bar = LIB_RUBY_PARSER_new_string_owned(new_owned_string("bar"), 3);
+    assert_string_eq(bar, "bar");
     // capacity doesn't matter
-    LIB_RUBY_PARSER_drop_string(&foo);
+    LIB_RUBY_PARSER_drop_string(&bar);
 }
 
 static void test_copied_string_fields(void)
 {
     annotate_test;
 
-    LIB_RUBY_PARSER_String foo = LIB_RUBY_PARSER_new_string_from_cstr("foo");
-    assert_eq(foo.len, 3);
-    assert_str_eq(foo.ptr, "foo", 3);
+    LIB_RUBY_PARSER_String baz = LIB_RUBY_PARSER_new_string_from_cstr("baz");
+    assert_string_eq(baz, "baz");
     // capacity doesn't matter
-    LIB_RUBY_PARSER_drop_string(&foo);
+    LIB_RUBY_PARSER_drop_string(&baz);
 }
 
 LIB_RUBY_PARSER_MaybeString lib_ruby_parser__test__make_some_string_foo(void);
@@ -68,8 +71,7 @@ static void test_maybe_string_fields(void)
 
     maybe_string = lib_ruby_parser__test__make_some_string_foo();
     assert(LIB_RUBY_PARSER_maybe_string_is_some(&maybe_string));
-    assert_eq(maybe_string.string.len, 3);
-    assert_str_eq(maybe_string.string.ptr, "foo", 3);
+    assert_string_eq(maybe_string.string, "foo");
     LIB_RUBY_PARSER_drop_maybe_string(&maybe_string);
 
     maybe_string = lib_ruby_parser__test__make_none_string();

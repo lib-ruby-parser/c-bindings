@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stddef.h>
-#include <string.h>
 #include <assert.h>
 
 typedef void (*test_fn_t)(void);
@@ -17,8 +16,7 @@ void run_tests_as_group(const char *group_name, const test_fn_t *tests, size_t c
 
 #define assert_eq(a, b) assert((a) == (b))
 
-#define assert_str_eq(a, b, len) \
-    assert_eq(strncmp(a, b, len), 0)
+void assert_str_eq(const char *lhs, const char *rhs, size_t len);
 
 #define assert_loc(loc, _expected)             \
     assert_eq((loc).begin, (_expected).begin); \

@@ -1,4 +1,6 @@
 #include "test_helper.h"
+#include <string.h>
+#include "string.h"
 
 void run_tests_as_group(const char *group_name, const test_fn_t *tests, size_t count)
 {
@@ -11,4 +13,9 @@ void run_tests_as_group(const char *group_name, const test_fn_t *tests, size_t c
         test_fn();
         fprintf(stderr, "\n");
     }
+}
+
+void assert_str_eq(const char *lhs, const char *rhs, size_t len)
+{
+    assert_eq(strncmp(lhs, rhs, len), 0);
 }

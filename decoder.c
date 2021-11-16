@@ -30,15 +30,13 @@ static void test_input_error_fields(void)
     input_error = lib_ruby_parser__test__make_input_error__unsupported_encoding(
         LIB_RUBY_PARSER_new_string_from_cstr(US_ASCII));
     assert_eq(input_error.tag, LIB_RUBY_PARSER_INPUT_ERROR_UNSUPPORTED_ENCODING);
-    assert_eq(input_error.as.unsupported_encoding.len, strlen(US_ASCII));
-    assert_str_eq(input_error.as.unsupported_encoding.ptr, US_ASCII, strlen(US_ASCII));
+    assert_string_eq(input_error.as.unsupported_encoding, US_ASCII);
     LIB_RUBY_PARSER_drop_input_error(&input_error);
 
     input_error = lib_ruby_parser__test__make_input_error__decoding_error(
         LIB_RUBY_PARSER_new_string_from_cstr("bar"));
     assert_eq(input_error.tag, LIB_RUBY_PARSER_INPUT_ERROR_DECODING_ERROR);
-    assert_eq(input_error.as.decoding_error.len, strlen("bar"));
-    assert_str_eq(input_error.as.decoding_error.ptr, "bar", strlen("bar"));
+    assert_string_eq(input_error.as.decoding_error, "bar");
     LIB_RUBY_PARSER_drop_input_error(&input_error);
 }
 
@@ -63,8 +61,7 @@ static void test_decoder_result_fields(void)
             LIB_RUBY_PARSER_new_string_from_cstr(US_ASCII)));
     assert_eq(result.tag, LIB_RUBY_PARSER_DECODER_RESULT_ERR);
     assert_eq(result.as.err.tag, LIB_RUBY_PARSER_INPUT_ERROR_UNSUPPORTED_ENCODING);
-    assert_eq(result.as.err.as.unsupported_encoding.len, strlen(US_ASCII));
-    assert_str_eq(result.as.err.as.unsupported_encoding.ptr, US_ASCII, strlen(US_ASCII));
+    assert_string_eq(result.as.err.as.unsupported_encoding, US_ASCII);
     LIB_RUBY_PARSER_drop_decoder_result(&result);
 }
 
