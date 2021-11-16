@@ -27,11 +27,6 @@ static void test_magic_comment_kind_options(void)
     assert_eq(magic_comment_kind, LIB_RUBY_PARSER_MAGIC_COMMENT_KIND_SHAREABLE_CONSTANT_VALUE);
 }
 
-#define assert_magic_comment(comment, _kind, _key_l, _value_l) \
-    assert_eq(comment.kind, _kind);                            \
-    assert_loc(comment.key_l, _key_l);                         \
-    assert_loc(comment.value_l, _value_l)
-
 LIB_RUBY_PARSER_MagicComment lib_ruby_parser__test__make_magic_comment(LIB_RUBY_PARSER_MagicCommentKind kind, LIB_RUBY_PARSER_Loc key_l, LIB_RUBY_PARSER_Loc value_l);
 static void test_magic_comment_fields(void)
 {

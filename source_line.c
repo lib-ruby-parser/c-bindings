@@ -4,11 +4,6 @@
 
 #include "test_helper.h"
 
-#define assert_source_line(source_line, _start, _end, _ends_with_eof) \
-    assert_eq(source_line.start, _start);                             \
-    assert_eq(source_line.end, _end);                                 \
-    assert_eq(source_line.ends_with_eof, _ends_with_eof)
-
 LIB_RUBY_PARSER_SourceLine lib_ruby_parser__test__make_source_line(size_t begin, size_t end, bool ends_with_eof);
 static void test_source_line_fields(void)
 {

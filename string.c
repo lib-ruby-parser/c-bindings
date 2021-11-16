@@ -15,12 +15,6 @@ bool LIB_RUBY_PARSER_maybe_string_is_none(const LIB_RUBY_PARSER_MaybeString *may
 #include "test_helper.h"
 #include <string.h>
 
-void assert_string_eq(LIB_RUBY_PARSER_String string, const char *s)
-{
-    assert_eq(string.len, strlen(s));
-    assert(strncmp(string.ptr, s, strlen(s)) == 0);
-}
-
 static char *new_owned_string(const char *s)
 {
     char *out = (char *)malloc(strlen(s));

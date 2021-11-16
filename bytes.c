@@ -11,8 +11,8 @@ static void test_byte_list_fields(void)
 {
     annotate_test;
 
-    LIB_RUBY_PARSER_ByteList byte_list = lib_ruby_parser__test__make_byte_list(1, 2, 3);
-    assert_byte_list(byte_list, 3, MAKE_ARRAY(1, 2, 3));
+    LIB_RUBY_PARSER_ByteList byte_list = lib_ruby_parser__test__make_byte_list('1', '2', '3');
+    assert_byte_list(byte_list, "123");
     LIB_RUBY_PARSER_drop_byte_list(&byte_list);
 }
 
@@ -28,11 +28,11 @@ static void test_byte_list_constructors(void)
     owned[2] = '3';
     owned[3] = '4';
     byte_list = LIB_RUBY_PARSER_new_bytes_owned(owned, 4);
-    assert_byte_list(byte_list, 4, MAKE_ARRAY('1', '2', '3', '4'));
+    assert_byte_list(byte_list, "1234");
     LIB_RUBY_PARSER_drop_byte_list(&byte_list);
 
     byte_list = LIB_RUBY_PARSER_new_bytes_from_cstr("56789", 5);
-    assert_byte_list(byte_list, 5, MAKE_ARRAY('5', '6', '7', '8', '9'));
+    assert_byte_list(byte_list, "56789");
     LIB_RUBY_PARSER_drop_byte_list(&byte_list);
 }
 
@@ -41,8 +41,8 @@ static void test_bytes_fields(void)
 {
     annotate_test;
 
-    LIB_RUBY_PARSER_Bytes bytes = lib_ruby_parser__test__make_bytes(1, 2, 3);
-    assert_byte_list(bytes.raw, 3, MAKE_ARRAY(1, 2, 3));
+    LIB_RUBY_PARSER_Bytes bytes = lib_ruby_parser__test__make_bytes('a', 'b', 'c');
+    assert_byte_list(bytes.raw, "abc");
     LIB_RUBY_PARSER_drop_bytes(&bytes);
 }
 

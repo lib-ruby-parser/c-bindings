@@ -24,9 +24,6 @@ bool LIB_RUBY_PARSER_maybe_string_is_none(const LIB_RUBY_PARSER_MaybeString *may
 void LIB_RUBY_PARSER_drop_maybe_string(LIB_RUBY_PARSER_MaybeString *maybe_string);
 
 #ifdef TEST_ENV
-#include <assert.h>
-#include <string.h>
-void assert_string_eq(LIB_RUBY_PARSER_String string, const char *s);
 void run_test_group_string(void);
 #endif
 

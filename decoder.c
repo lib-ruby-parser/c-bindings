@@ -53,7 +53,7 @@ static void test_decoder_result_fields(void)
         LIB_RUBY_PARSER_new_bytes_from_cstr("bar", 3));
     assert_eq(result.tag, LIB_RUBY_PARSER_DECODER_RESULT_OK);
     assert_eq(result.as.ok.len, 3);
-    assert_str_eq(result.as.ok.ptr, "bar", 3);
+    assert_str_eq(result.as.ok.ptr, "bar");
     LIB_RUBY_PARSER_drop_decoder_result(&result);
 
     result = lib_ruby_parser__test__make_decoder_result__err(
@@ -80,14 +80,14 @@ static void test_decoder_fields(void)
     decoder_result = (d.f)(LIB_RUBY_PARSER_new_string_from_cstr("utf-8"), LIB_RUBY_PARSER_new_bytes_from_cstr("2 + 2", 5));
     assert_eq(decoder_result.tag, LIB_RUBY_PARSER_DECODER_RESULT_OK);
     assert_eq(decoder_result.as.ok.len, strlen(ALWAYS_OK));
-    assert_str_eq(decoder_result.as.ok.ptr, ALWAYS_OK, strlen(ALWAYS_OK));
+    assert_str_eq(decoder_result.as.ok.ptr, ALWAYS_OK);
     LIB_RUBY_PARSER_drop_decoder_result(&decoder_result);
 
     d = lib_ruby_parser__test__always_err_decoder();
     decoder_result = (d.f)(LIB_RUBY_PARSER_new_string_from_cstr("utf-8"), LIB_RUBY_PARSER_new_bytes_from_cstr("2 + 2", 5));
     assert_eq(decoder_result.as.err.tag, LIB_RUBY_PARSER_INPUT_ERROR_DECODING_ERROR);
     assert_eq(decoder_result.as.err.as.unsupported_encoding.len, strlen(ALWAYS_ERR));
-    assert_str_eq(decoder_result.as.err.as.unsupported_encoding.ptr, ALWAYS_ERR, strlen(ALWAYS_ERR));
+    assert_str_eq(decoder_result.as.err.as.unsupported_encoding.ptr, ALWAYS_ERR);
     LIB_RUBY_PARSER_drop_decoder_result(&decoder_result);
 }
 

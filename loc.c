@@ -4,23 +4,6 @@
 
 #include "test_helper.h"
 
-void assert_loc(LIB_RUBY_PARSER_Loc left, LIB_RUBY_PARSER_Loc right)
-{
-    assert_eq(left.begin, right.begin);
-    assert_eq(left.end, right.end);
-}
-
-void assert_some_loc(LIB_RUBY_PARSER_MaybeLoc maybe_loc, LIB_RUBY_PARSER_Loc loc)
-{
-    assert_eq(maybe_loc.tag, LIB_RUBY_PARSER_SOME_LOC);
-    assert_loc(maybe_loc.as.loc, loc);
-}
-
-void assert_none_loc(LIB_RUBY_PARSER_MaybeLoc maybe_loc)
-{
-    assert_eq(maybe_loc.tag, LIB_RUBY_PARSER_NONE_LOC);
-}
-
 LIB_RUBY_PARSER_Loc lib_ruby_parser__test__make_loc(size_t begin, size_t end);
 static void test_loc_fields(void)
 {

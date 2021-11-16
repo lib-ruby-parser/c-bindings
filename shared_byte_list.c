@@ -12,7 +12,7 @@ static void test_shared_byte_list_fields(void)
 
     LIB_RUBY_PARSER_SharedByteList foo = lib_ruby_parser__test__make_shared_byte_list_foo();
     assert(foo.len == 3);
-    assert_str_eq(foo.ptr, "foo", 3);
+    assert_str_eq(foo.ptr, "foo");
 }
 
 void run_test_group_shared_byte_list(void)

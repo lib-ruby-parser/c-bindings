@@ -23,10 +23,6 @@ static void test_comment_type_options(void)
     assert_eq(comment_type, LIB_RUBY_PARSER_COMMENT_TYPE_UNKNOWN);
 }
 
-#define assert_comment(comment, _location, _kind) \
-    assert_loc(comment.location, _location);      \
-    assert_eq(comment.kind, _kind)
-
 LIB_RUBY_PARSER_Comment lib_ruby_parser__test__make_comment(LIB_RUBY_PARSER_Loc location, LIB_RUBY_PARSER_CommentType kind);
 static void test_comment_fields(void)
 {
