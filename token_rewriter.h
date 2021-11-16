@@ -2,6 +2,7 @@
 #define LIB_RUBY_PARSER_TOKEN_REWRITER_H
 
 #include <stdint.h>
+#include <stdbool.h>
 #include "token.h"
 #include "shared_byte_list.h"
 
@@ -33,25 +34,21 @@ typedef struct LIB_RUBY_PARSER_TokenRewriterResult
 void LIB_RUBY_PARSER_drop_token_rewriter_result(LIB_RUBY_PARSER_TokenRewriterResult *);
 
 struct LIB_RUBY_PARSER_TokenRewriter;
-typedef LIB_RUBY_PARSER_TokenRewriterResult (*LIB_RUBY_PARSER_TokenRewriter_Function)(struct LIB_RUBY_PARSER_TokenRewriter *, LIB_RUBY_PARSER_Token *, LIB_RUBY_PARSER_SharedByteList);
+typedef LIB_RUBY_PARSER_TokenRewriterResult (*LIB_RUBY_PARSER_TokenRewriter_Function)(LIB_RUBY_PARSER_Token *, LIB_RUBY_PARSER_SharedByteList);
 typedef struct LIB_RUBY_PARSER_TokenRewriter
 {
-    LIB_RUBY_PARSER_TokenRewriter_Function rewrite_fn;
+    LIB_RUBY_PARSER_TokenRewriter_Function f;
 } LIB_RUBY_PARSER_TokenRewriter;
 
 typedef struct LIB_RUBY_PARSER_MaybeTokenRewriter
 {
-    enum
-    {
-        LIB_RUBY_PARSER_SOME_TOKEN_REWRITER,
-        LIB_RUBY_PARSER_NONE_TOKEN_REWRITER
-    } tag;
-
-    union
-    {
-        LIB_RUBY_PARSER_TokenRewriter token_rewriter;
-        uint8_t none;
-    } as;
+    LIB_RUBY_PARSER_TokenRewriter token_rewriter;
 } LIB_RUBY_PARSER_MaybeTokenRewriter;
+bool LIB_RUBY_PARSER_maybe_token_rewriter_is_some(const LIB_RUBY_PARSER_MaybeTokenRewriter *maybe_token_rewriter);
+bool LIB_RUBY_PARSER_maybe_token_rewriter_is_none(const LIB_RUBY_PARSER_MaybeTokenRewriter *maybe_token_rewriter);
+
+#ifdef TEST_ENV
+void run_test_group_token_rewriter(void);
+#endif
 
 #endif // LIB_RUBY_PARSER_TOKEN_REWRITER_H

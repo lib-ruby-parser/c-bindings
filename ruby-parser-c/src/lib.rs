@@ -49,6 +49,9 @@ mod magic_comment;
 mod decoder;
 pub use decoder::Decoder;
 
+mod token_rewriter;
+pub use token_rewriter::TokenRewriter;
+
 blob_type!(BlobParserOptions, ParserOptions);
 blob_type!(BlobParserResult, ParserResult);
 

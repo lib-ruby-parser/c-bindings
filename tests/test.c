@@ -35,7 +35,7 @@ int main()
     run_test_group_shared_byte_list();
     run_test_group_source_line();
     run_test_group_string();
-    // run_test_group_token_rewriter();
+    run_test_group_token_rewriter();
     run_test_group_token();
     return 0;
 }

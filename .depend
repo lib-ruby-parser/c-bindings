@@ -30,10 +30,17 @@ source_line.o: source_line.c source_line.h test_helper.h
 
 string.o: string.c string.h test_helper.h
 
+test_helper.o: test_helper.c test_helper.h string.h
+
 token.o: token.c token.h bytes.h loc.h test_helper.h
 
 token_rewriter.o: token_rewriter.c token_rewriter.h token.h bytes.h loc.h \
-  shared_byte_list.h
+  shared_byte_list.h test_helper.h
 
-tests/runner: tests/test.c tests/../test_helper.h
+tests/runner: tests/test.c tests/../test_helper.h tests/../bytes.h \
+  tests/../comment.h tests/../loc.h tests/../decoder.h tests/../string.h \
+  tests/../diagnostic.h tests/../messages.h tests/../magic_comment.h \
+  tests/../parser_options.h tests/../token_rewriter.h tests/../token.h \
+  tests/../shared_byte_list.h tests/../parser_result.h \
+  tests/../source_line.h tests/../nodes.h
 

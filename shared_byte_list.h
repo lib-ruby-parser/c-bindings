@@ -5,7 +5,7 @@
 
 typedef struct LIB_RUBY_PARSER_SharedByteList
 {
-    char *ptr;
+    const char *ptr;
     size_t len;
 } LIB_RUBY_PARSER_SharedByteList;
 

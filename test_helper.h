@@ -29,7 +29,7 @@ void run_tests_as_group(const char *group_name, const test_fn_t *tests, size_t c
     assert(strncmp(_string.ptr, _s, strlen(_s)) == 0)
 
 #define assert_token(_token, _token_name) \
-    assert_str_eq(LIB_RUBY_PARSER_token_name(&_token), _token_name)
+    assert_str_eq(LIB_RUBY_PARSER_token_name(&(_token)), _token_name)
 
 #define assert_loc(_left, _right)         \
     assert_eq(_left.begin, _right.begin); \
