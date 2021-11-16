@@ -30,7 +30,7 @@ int main()
     // run_test_group_diagnostic();
     run_test_group_loc();
     run_test_group_magic_comment();
-    // run_test_group_parser_options();
+    run_test_group_parser_options();
     // run_test_group_parser_result();
     run_test_group_shared_byte_list();
     run_test_group_source_line();

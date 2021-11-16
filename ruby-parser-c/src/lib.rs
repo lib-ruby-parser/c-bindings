@@ -1,6 +1,6 @@
 extern crate lib_ruby_parser;
 
-use lib_ruby_parser::{DiagnosticMessage, Parser, ParserOptions, ParserResult, Token};
+use lib_ruby_parser::{DiagnosticMessage, Parser, ParserResult, Token};
 
 #[macro_export]
 macro_rules! blob_type {
@@ -52,7 +52,9 @@ pub use decoder::Decoder;
 mod token_rewriter;
 pub use token_rewriter::TokenRewriter;
 
-blob_type!(BlobParserOptions, ParserOptions);
+mod parser_options;
+use parser_options::{BlobParserOptions, ParserOptions};
+
 blob_type!(BlobParserResult, ParserResult);
 
 #[no_mangle]
@@ -60,7 +62,7 @@ pub extern "C" fn LIB_RUBY_PARSER_parse(
     options: BlobParserOptions,
     input: BlobByteList,
 ) -> BlobParserResult {
-    let options: ParserOptions = options.into();
+    let options: lib_ruby_parser::ParserOptions = ParserOptions::from(options).into();
     let input: Vec<u8> = input.into();
     let result = Parser::new(input, options).do_parse();
     result.into()

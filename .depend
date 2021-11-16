@@ -18,7 +18,8 @@ messages.o: messages.c messages.h string.h
 nodes.o: nodes.c nodes.h string.h loc.h bytes.h
 
 parser_options.o: parser_options.c parser_options.h string.h decoder.h \
-  bytes.h token_rewriter.h token.h loc.h shared_byte_list.h
+  bytes.h token_rewriter.h token.h loc.h shared_byte_list.h \
+  test_helper.h
 
 parser_result.o: parser_result.c parser_result.h string.h source_line.h \
   bytes.h nodes.h loc.h token.h diagnostic.h messages.h comment.h \

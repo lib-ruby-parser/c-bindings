@@ -50,7 +50,7 @@ pub extern "C" fn LIB_RUBY_PARSER_drop_decoder_result(decoder_result: *mut Decod
 
 #[repr(C)]
 pub struct Decoder {
-    f: extern "C" fn(encoding: BlobString, input: BlobByteList) -> BlobDecoderResult,
+    pub f: extern "C" fn(encoding: BlobString, input: BlobByteList) -> BlobDecoderResult,
 }
 
 #[cfg(feature = "tests")]

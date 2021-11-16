@@ -59,7 +59,7 @@ pub extern "C" fn LIB_RUBY_PARSER_drop_token_rewriter_result(
 
 #[repr(C)]
 pub struct TokenRewriter {
-    f: extern "C" fn(token: *mut Token, input: BlobSharedByteList) -> TokenRewriterResult,
+    pub f: extern "C" fn(token: *mut Token, input: BlobSharedByteList) -> TokenRewriterResult,
 }
 
 #[cfg(feature = "tests")]

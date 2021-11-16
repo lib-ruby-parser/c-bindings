@@ -10,11 +10,14 @@
 typedef struct LIB_RUBY_PARSER_ParserOptions
 {
     LIB_RUBY_PARSER_String buffer_name;
-    uint8_t debug;
     LIB_RUBY_PARSER_MaybeDecoder decoder;
     LIB_RUBY_PARSER_MaybeTokenRewriter token_rewriter;
     bool record_tokens;
 } LIB_RUBY_PARSER_ParserOptions;
 void LIB_RUBY_PARSER_drop_parser_options(LIB_RUBY_PARSER_ParserOptions *parser_options);
+
+#ifdef TEST_ENV
+void run_test_group_parser_options(void);
+#endif
 
 #endif // LIB_RUBY_PARSER_PARSER_OPTIONS_H
