@@ -51,4 +51,8 @@ typedef struct LIB_RUBY_PARSER_MaybeDecoder
 bool LIB_RUBY_PARSER_maybe_decoder_is_some(const LIB_RUBY_PARSER_MaybeDecoder *maybe_decoder);
 bool LIB_RUBY_PARSER_maybe_decoder_is_none(const LIB_RUBY_PARSER_MaybeDecoder *maybe_decoder);
 
+#ifdef TEST_ENV
+void run_test_group_decoder(void);
+#endif
+
 #endif // LIB_RUBY_PARSER_DECODER_H

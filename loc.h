@@ -25,4 +25,8 @@ typedef struct LIB_RUBY_PARSER_MaybeLoc
     } as;
 } LIB_RUBY_PARSER_MaybeLoc;
 
+#ifdef TEST_ENV
+void run_test_group_loc(void);
+#endif
+
 #endif // LIB_RUBY_PARSER_LOC_H

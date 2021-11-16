@@ -4,9 +4,9 @@
 
 #include "test_helper.h"
 
-LIB_RUBY_PARSER_SharedByteList lib_ruby_parser__test__make_shared_byte_list_foo();
+LIB_RUBY_PARSER_SharedByteList lib_ruby_parser__test__make_shared_byte_list_foo(void);
 
-static void test_shared_byte_list_fields()
+static void test_shared_byte_list_fields(void)
 {
     annotate_test;
 
@@ -15,7 +15,7 @@ static void test_shared_byte_list_fields()
     assert_str_eq(foo.ptr, "foo", 3);
 }
 
-void run_test_group_shared_byte_list()
+void run_test_group_shared_byte_list(void)
 {
     const test_fn_t tests[] = {
         test_shared_byte_list_fields,

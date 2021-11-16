@@ -4,10 +4,10 @@
 
 #include "test_helper.h"
 
-LIB_RUBY_PARSER_CommentType lib_ruby_parser__test__make_comment_type_document();
-LIB_RUBY_PARSER_CommentType lib_ruby_parser__test__make_comment_type_inline();
-LIB_RUBY_PARSER_CommentType lib_ruby_parser__test__make_comment_type_unknown();
-static void test_comment_type_options()
+LIB_RUBY_PARSER_CommentType lib_ruby_parser__test__make_comment_type_document(void);
+LIB_RUBY_PARSER_CommentType lib_ruby_parser__test__make_comment_type_inline(void);
+LIB_RUBY_PARSER_CommentType lib_ruby_parser__test__make_comment_type_unknown(void);
+static void test_comment_type_options(void)
 {
     annotate_test;
 
@@ -25,10 +25,10 @@ static void test_comment_type_options()
 
 #define assert_comment(comment, _location, _kind) \
     assert_loc(comment.location, _location);      \
-    assert_eq(comment.kind, _kind);
+    assert_eq(comment.kind, _kind)
 
 LIB_RUBY_PARSER_Comment lib_ruby_parser__test__make_comment(LIB_RUBY_PARSER_Loc location, LIB_RUBY_PARSER_CommentType kind);
-static void test_comment_fields()
+static void test_comment_fields(void)
 {
     annotate_test;
 
@@ -41,7 +41,7 @@ static void test_comment_fields()
 }
 
 LIB_RUBY_PARSER_CommentList lib_ruby_parser__test__make_comment_list(LIB_RUBY_PARSER_Comment comment);
-static void test_comment_list_fields()
+static void test_comment_list_fields(void)
 {
     annotate_test;
 
@@ -55,7 +55,7 @@ static void test_comment_list_fields()
     LIB_RUBY_PARSER_drop_comment_list(&comment_list);
 }
 
-void run_test_group_comment()
+void run_test_group_comment(void)
 {
     const test_fn_t tests[] = {
         test_comment_type_options,

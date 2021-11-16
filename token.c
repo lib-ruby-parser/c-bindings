@@ -5,10 +5,10 @@
 #include "test_helper.h"
 
 #define assert_token(token, _token_name) \
-    assert_str_eq(LIB_RUBY_PARSER_token_name(&token), _token_name, strlen(_token_name));
+    assert_str_eq(LIB_RUBY_PARSER_token_name(&token), _token_name, strlen(_token_name))
 
 LIB_RUBY_PARSER_Token lib_ruby_parser__test__make_token_eq(LIB_RUBY_PARSER_Loc loc, uint32_t lex_state_before, uint32_t lex_state_after);
-static void test_token_fields()
+static void test_token_fields(void)
 {
     annotate_test;
 
@@ -25,7 +25,7 @@ static void test_token_fields()
 }
 
 LIB_RUBY_PARSER_TokenList lib_ruby_parser__test__make_token_list(LIB_RUBY_PARSER_Token token);
-static void test_token_list_fields()
+static void test_token_list_fields(void)
 {
     annotate_test;
 
@@ -38,7 +38,7 @@ static void test_token_list_fields()
     LIB_RUBY_PARSER_drop_token_list(&token_list);
 }
 
-void run_test_group_token()
+void run_test_group_token(void)
 {
     const test_fn_t tests[] = {
         test_token_fields,

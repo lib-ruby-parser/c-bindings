@@ -1,9 +1,20 @@
 #include "../test_helper.h"
 
-void lib_ruby_parser__test__print_build_info();
-#define run_test_group(NAME)      \
-    void run_test_group_##NAME(); \
-    run_test_group_##NAME()
+#include "../bytes.h"
+#include "../comment.h"
+#include "../decoder.h"
+#include "../diagnostic.h"
+#include "../loc.h"
+#include "../magic_comment.h"
+#include "../parser_options.h"
+#include "../parser_result.h"
+#include "../shared_byte_list.h"
+#include "../source_line.h"
+#include "../string.h"
+#include "../token_rewriter.h"
+#include "../token.h"
+
+void lib_ruby_parser__test__print_build_info(void);
 
 int main()
 {
@@ -13,18 +24,18 @@ int main()
     fprintf(stderr, "sizeof(void*): %d\n", (int)(sizeof(void *)));
     fprintf(stderr, "\n");
 
-    run_test_group(bytes);
-    run_test_group(comment);
-    run_test_group(decoder);
-    // run_test_group(diagnostic);
-    run_test_group(loc);
-    run_test_group(magic_comment);
-    // run_test_group(parser_options);
-    // run_test_group(parser_result);
-    run_test_group(shared_byte_list);
-    run_test_group(source_line);
-    run_test_group(string);
-    // run_test_group(token_rewriter);
-    run_test_group(token);
+    run_test_group_bytes();
+    run_test_group_comment();
+    run_test_group_decoder();
+    // run_test_group_diagnostic();
+    run_test_group_loc();
+    run_test_group_magic_comment();
+    // run_test_group_parser_options();
+    // run_test_group_parser_result();
+    run_test_group_shared_byte_list();
+    run_test_group_source_line();
+    run_test_group_string();
+    // run_test_group_token_rewriter();
+    run_test_group_token();
     return 0;
 }

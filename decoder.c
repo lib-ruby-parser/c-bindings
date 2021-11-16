@@ -19,9 +19,9 @@ LIB_RUBY_PARSER_InputError lib_ruby_parser__test__make_input_error__unsupported_
 LIB_RUBY_PARSER_InputError lib_ruby_parser__test__make_input_error__decoding_error(
     LIB_RUBY_PARSER_String decoding_error);
 
-const char *US_ASCII = "us-ascii";
+static const char *US_ASCII = "us-ascii";
 
-static void test_input_error_fields()
+static void test_input_error_fields(void)
 {
     annotate_test;
 
@@ -45,7 +45,7 @@ static void test_input_error_fields()
 LIB_RUBY_PARSER_DecoderResult lib_ruby_parser__test__make_decoder_result__ok(LIB_RUBY_PARSER_ByteList bytes);
 LIB_RUBY_PARSER_DecoderResult lib_ruby_parser__test__make_decoder_result__err(LIB_RUBY_PARSER_InputError err);
 
-static void test_decoder_result_fields()
+static void test_decoder_result_fields(void)
 {
     annotate_test;
 
@@ -68,9 +68,9 @@ static void test_decoder_result_fields()
     LIB_RUBY_PARSER_drop_decoder_result(&result);
 }
 
-LIB_RUBY_PARSER_Decoder lib_ruby_parser__test__always_ok_decoder();
-LIB_RUBY_PARSER_Decoder lib_ruby_parser__test__always_err_decoder();
-static void test_decoder_fields()
+LIB_RUBY_PARSER_Decoder lib_ruby_parser__test__always_ok_decoder(void);
+LIB_RUBY_PARSER_Decoder lib_ruby_parser__test__always_err_decoder(void);
+static void test_decoder_fields(void)
 {
     annotate_test;
 
@@ -94,9 +94,9 @@ static void test_decoder_fields()
     LIB_RUBY_PARSER_drop_decoder_result(&decoder_result);
 }
 
-LIB_RUBY_PARSER_MaybeDecoder lib_ruby_parser__test__some_always_ok_decoder();
-LIB_RUBY_PARSER_MaybeDecoder lib_ruby_parser__test__none_decoder();
-static void test_maybe_decoder_fields()
+LIB_RUBY_PARSER_MaybeDecoder lib_ruby_parser__test__some_always_ok_decoder(void);
+LIB_RUBY_PARSER_MaybeDecoder lib_ruby_parser__test__none_decoder(void);
+static void test_maybe_decoder_fields(void)
 {
     annotate_test;
 
@@ -111,7 +111,7 @@ static void test_maybe_decoder_fields()
     assert(LIB_RUBY_PARSER_maybe_decoder_is_none(&maybe_decoder));
 }
 
-void run_test_group_decoder()
+void run_test_group_decoder(void)
 {
     const test_fn_t tests[] = {
         test_input_error_fields,

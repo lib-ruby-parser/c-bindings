@@ -23,4 +23,8 @@ typedef struct LIB_RUBY_PARSER_TokenList
 } LIB_RUBY_PARSER_TokenList;
 void LIB_RUBY_PARSER_drop_token_list(LIB_RUBY_PARSER_TokenList *token_list);
 
+#ifdef TEST_ENV
+void run_test_group_token(void);
+#endif
+
 #endif // LIB_RUBY_PARSER_TOKEN_H
