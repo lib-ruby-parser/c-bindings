@@ -26,6 +26,9 @@ typedef struct LIB_RUBY_PARSER_MaybeLoc
 } LIB_RUBY_PARSER_MaybeLoc;
 
 #ifdef TEST_ENV
+void assert_loc(LIB_RUBY_PARSER_Loc left, LIB_RUBY_PARSER_Loc right);
+void assert_some_loc(LIB_RUBY_PARSER_MaybeLoc maybe_loc, LIB_RUBY_PARSER_Loc loc);
+void assert_none_loc(LIB_RUBY_PARSER_MaybeLoc maybe_loc);
 void run_test_group_loc(void);
 #endif
 

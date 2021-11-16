@@ -18,17 +18,6 @@ void run_tests_as_group(const char *group_name, const test_fn_t *tests, size_t c
 
 void assert_str_eq(const char *lhs, const char *rhs, size_t len);
 
-#define assert_loc(loc, _expected)             \
-    assert_eq((loc).begin, (_expected).begin); \
-    assert_eq((loc).end, (_expected).end)
-
-#define assert_some_loc(_loc, _expected)             \
-    assert_eq((_loc).tag, LIB_RUBY_PARSER_SOME_LOC); \
-    assert_loc((_loc).as.loc, _expected)
-
-#define assert_none_loc(_loc) \
-    assert_eq((_loc).tag, LIB_RUBY_PARSER_NONE_LOC)
-
 #define MAKE_ARRAY(...) __VA_ARGS__
 
 #define assert_byte_list(_byte_list, _len, ...)        \
