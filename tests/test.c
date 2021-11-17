@@ -6,6 +6,7 @@
 #include "../diagnostic.h"
 #include "../loc.h"
 #include "../magic_comment.h"
+#include "../nodes.h"
 #include "../parser_options.h"
 #include "../parser_result.h"
 #include "../shared_byte_list.h"
@@ -30,6 +31,7 @@ int main()
     // run_test_group_diagnostic();
     run_test_group_loc();
     run_test_group_magic_comment();
+    run_test_group_node();
     run_test_group_parser_options();
     // run_test_group_parser_result();
     run_test_group_shared_byte_list();

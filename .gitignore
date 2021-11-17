@@ -1,3 +1,4 @@
+ruby-parser-c/src/node.rs
 ruby-parser-c/target
 ruby-parser-c/Cargo.lock
 codegen/Cargo.lock

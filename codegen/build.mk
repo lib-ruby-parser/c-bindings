@@ -30,6 +30,10 @@ nodes.h: $(CODEGEN_DEPS)
 	$(DO_CODEGEN)
 CLEAN += nodes.h
 
+ruby-parser-c/src/node.rs: $(CODEGEN_DEPS)
+	$(DO_CODEGEN)
+CLEAN += ruby-parser-c/src/node.rs
+
 # manual codegen task
 do-codegen:
 	$(DO_CODEGEN)

@@ -51,9 +51,11 @@ void LIB_RUBY_PARSER_drop_node_{{ helper node-lower-name }}(LIB_RUBY_PARSER_{{ h
 {{ end }}<dnl>
 
 void LIB_RUBY_PARSER_drop_node(LIB_RUBY_PARSER_Node *node);
-void LIB_RUBY_PARSER_drop_maybe_node_ptr(LIB_RUBY_PARSER_Node **node);
-void LIB_RUBY_PARSER_drop_node_ptr(LIB_RUBY_PARSER_Node **node);
 void LIB_RUBY_PARSER_drop_node_list(LIB_RUBY_PARSER_NodeList *node_list);
+
+#ifdef TEST_ENV
+void run_test_group_node(void);
+#endif
 
 #endif // LIB_RUBY_PARSER_NODES_H
 ";

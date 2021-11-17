@@ -55,6 +55,8 @@ pub use token_rewriter::TokenRewriter;
 mod parser_options;
 use parser_options::{BlobParserOptions, ParserOptions};
 
+mod node;
+
 blob_type!(BlobParserResult, ParserResult);
 
 #[no_mangle]
