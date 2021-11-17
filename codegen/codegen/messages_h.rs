@@ -40,11 +40,19 @@ typedef struct LIB_RUBY_PARSER_DiagnosticMessage {
     } as;
 } LIB_RUBY_PARSER_DiagnosticMessage;
 
-{{ each message }}<dnl>
-void LIB_RUBY_PARSER_drop_message_{{ helper message-lower-name }}(LIB_RUBY_PARSER_{{ helper message-camelcase-name }}* variant);
-{{ end }}<dnl>
+void LIB_RUBY_PARSER_drop_message(LIB_RUBY_PARSER_DiagnosticMessage *message);
 
-void LIB_RUBY_PARSER_drop_diagnostic_message(LIB_RUBY_PARSER_DiagnosticMessage *message);
+typedef struct LIB_RUBY_PARSER_DiagnosticMessageList
+{
+    LIB_RUBY_PARSER_DiagnosticMessage *ptr;
+    size_t len;
+    size_t capacity;
+} LIB_RUBY_PARSER_DiagnosticMessageList;
+void LIB_RUBY_PARSER_drop_message_list(LIB_RUBY_PARSER_DiagnosticMessageList *message_list);
+
+#ifdef TEST_ENV
+void run_test_group_message(void);
+#endif
 
 #endif // LIB_RUBY_PARSER_MESSAGES_H
 ";

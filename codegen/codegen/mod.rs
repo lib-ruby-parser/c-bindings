@@ -8,6 +8,7 @@ mod messages_h;
 mod nodes_c;
 mod nodes_h;
 
+mod message_rs;
 mod node_rs;
 
 pub(crate) fn codegen() {
@@ -18,4 +19,5 @@ pub(crate) fn codegen() {
     nodes_c::codegen();
 
     node_rs::codegen();
+    message_rs::codegen();
 }

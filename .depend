@@ -13,9 +13,9 @@ loc.o: loc.c loc.h test_helper.h
 
 magic_comment.o: magic_comment.c magic_comment.h loc.h test_helper.h
 
-messages.o: messages.c messages.h string.h
+messages.o: messages.c messages.h string.h test_helper.h
 
-nodes.o: nodes.c nodes.h string.h loc.h bytes.h
+nodes.o: nodes.c nodes.h string.h loc.h bytes.h test_helper.h
 
 parser_options.o: parser_options.c parser_options.h string.h decoder.h \
   bytes.h token_rewriter.h token.h loc.h shared_byte_list.h \
@@ -41,7 +41,7 @@ token_rewriter.o: token_rewriter.c token_rewriter.h token.h bytes.h loc.h \
 tests/runner: tests/test.c tests/../test_helper.h tests/../bytes.h \
   tests/../comment.h tests/../loc.h tests/../decoder.h tests/../string.h \
   tests/../diagnostic.h tests/../messages.h tests/../magic_comment.h \
-  tests/../parser_options.h tests/../token_rewriter.h tests/../token.h \
-  tests/../shared_byte_list.h tests/../parser_result.h \
-  tests/../source_line.h tests/../nodes.h
+  tests/../nodes.h tests/../parser_options.h tests/../token_rewriter.h \
+  tests/../token.h tests/../shared_byte_list.h tests/../parser_result.h \
+  tests/../source_line.h
 

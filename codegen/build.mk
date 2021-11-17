@@ -34,6 +34,10 @@ ruby-parser-c/src/node.rs: $(CODEGEN_DEPS)
 	$(DO_CODEGEN)
 CLEAN += ruby-parser-c/src/node.rs
 
+ruby-parser-c/src/message.rs: $(CODEGEN_DEPS)
+	$(DO_CODEGEN)
+CLEAN += ruby-parser-c/src/message.rs
+
 # manual codegen task
 do-codegen:
 	$(DO_CODEGEN)
