@@ -78,8 +78,8 @@ jobs:
       - name: upload ${{ matrix.build.output_file }}
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.build.lib_file }}
-          path: ${{ matrix.build.output_artifact_name }}
+          name: ${{ matrix.build.output_artifact_name }}
+          path: ${{ matrix.build.lib_file }}
 
       - name: benchmark
         run: make benchmark/download && make benchmark/record
