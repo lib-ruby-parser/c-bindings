@@ -31,13 +31,13 @@ void run_tests_as_group(const char *group_name, const test_fn_t *tests, size_t c
 #define assert_token(_token, _token_name) \
     assert_str_eq(LIB_RUBY_PARSER_token_name(&(_token)), _token_name)
 
-#define assert_loc(_left, _right)         \
-    assert_eq(_left.begin, _right.begin); \
-    assert_eq(_left.end, _right.end)
+#define assert_loc(_loc, _begin, _end) \
+    assert_eq(_loc.begin, _begin);     \
+    assert_eq(_loc.end, _end)
 
-#define assert_some_loc(_maybe_loc, _loc)                \
+#define assert_some_loc(_maybe_loc, _begin, _end)        \
     assert_eq(_maybe_loc.tag, LIB_RUBY_PARSER_SOME_LOC); \
-    assert_loc(_maybe_loc.as.loc, _loc)
+    assert_loc(_maybe_loc.as.loc, _begin, _end)
 
 #define assert_none_loc(_maybe_loc) \
     assert_eq(_maybe_loc.tag, LIB_RUBY_PARSER_NONE_LOC)
@@ -47,13 +47,13 @@ void run_tests_as_group(const char *group_name, const test_fn_t *tests, size_t c
     assert_eq(source_line.end, _end);                                 \
     assert_eq(source_line.ends_with_eof, _ends_with_eof)
 
-#define assert_comment(_comment, _location, _kind) \
-    assert_loc(_comment.location, _location);      \
+#define assert_comment(_comment, _begin, _end, _kind) \
+    assert_loc(_comment.location, _begin, _end);      \
     assert_eq(_comment.kind, _kind)
 
-#define assert_magic_comment(_magic_comment, _kind, _key_l, _value_l) \
-    assert_eq(_magic_comment.kind, _kind);                            \
-    assert_loc(_magic_comment.key_l, _key_l);                         \
-    assert_loc(_magic_comment.value_l, _value_l)
+#define assert_magic_comment(_magic_comment, _kind, _key_begin, _key_end, _value_begin, _value_end) \
+    assert_eq(_magic_comment.kind, _kind);                                                          \
+    assert_loc(_magic_comment.key_l, _key_begin, _key_end);                                         \
+    assert_loc(_magic_comment.value_l, _value_begin, _value_end)
 
 #endif // LIB_RUBY_PARSER_TEST_HELPER_H

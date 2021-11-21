@@ -35,7 +35,7 @@ int main()
     run_test_group_message();
     run_test_group_node();
     run_test_group_parser_options();
-    // run_test_group_parser_result();
+    run_test_group_parser_result();
     run_test_group_shared_byte_list();
     run_test_group_source_line();
     run_test_group_string();

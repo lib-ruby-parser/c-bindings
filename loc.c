@@ -10,8 +10,7 @@ static void test_loc_fields(void)
     annotate_test;
 
     LIB_RUBY_PARSER_Loc loc = lib_ruby_parser__test__make_loc(1, 2);
-    LIB_RUBY_PARSER_Loc expected = (LIB_RUBY_PARSER_Loc){.begin = 1, .end = 2};
-    assert_loc(loc, expected);
+    assert_loc(loc, 1, 2);
 }
 
 LIB_RUBY_PARSER_MaybeLoc lib_ruby_parser__test__make_none_loc(void);
@@ -29,8 +28,7 @@ static void test_some_loc_fields(void)
     annotate_test;
 
     LIB_RUBY_PARSER_MaybeLoc some_loc = lib_ruby_parser__test__make_some_loc(1, 2);
-    LIB_RUBY_PARSER_Loc expected = (LIB_RUBY_PARSER_Loc){.begin = 1, .end = 2};
-    assert_some_loc(some_loc, expected);
+    assert_some_loc(some_loc, 1, 2);
 }
 
 void run_test_group_loc(void)

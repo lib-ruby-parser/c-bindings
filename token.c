@@ -10,12 +10,11 @@ static void test_token_fields(void)
 {
     annotate_test;
 
-    LIB_RUBY_PARSER_Loc loc = {.begin = 1, .end = 2};
-    LIB_RUBY_PARSER_Token token = lib_ruby_parser__test__make_token_eq(loc, 3, 4);
+    LIB_RUBY_PARSER_Token token = lib_ruby_parser__test__make_token_eq((LIB_RUBY_PARSER_Loc){.begin = 1, .end = 2}, 3, 4);
 
     assert_token(token, "tEQ");
     assert_byte_list(token.token_value.raw, "=");
-    assert_loc(token.loc, loc);
+    assert_loc(token.loc, 1, 2);
     assert_eq(token.lex_state_before, 3);
     assert_eq(token.lex_state_after, 4);
 

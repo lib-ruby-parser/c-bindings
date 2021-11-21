@@ -30,4 +30,8 @@ typedef struct LIB_RUBY_PARSER_ParserResult
 } LIB_RUBY_PARSER_ParserResult;
 void LIB_RUBY_PARSER_drop_parser_result(LIB_RUBY_PARSER_ParserResult *parser_result);
 
+#ifdef TEST_ENV
+void run_test_group_parser_result(void);
+#endif
+
 #endif // LIB_RUBY_PARSER_PARSER_RESULT_H

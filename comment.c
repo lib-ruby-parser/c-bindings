@@ -28,12 +28,11 @@ static void test_comment_fields(void)
 {
     annotate_test;
 
-    LIB_RUBY_PARSER_Loc loc = {.begin = 1, .end = 2};
     LIB_RUBY_PARSER_Comment comment = lib_ruby_parser__test__make_comment(
-        loc,
+        (LIB_RUBY_PARSER_Loc){.begin = 1, .end = 2},
         LIB_RUBY_PARSER_COMMENT_TYPE_INLINE);
 
-    assert_comment(comment, loc, LIB_RUBY_PARSER_COMMENT_TYPE_INLINE);
+    assert_comment(comment, 1, 2, LIB_RUBY_PARSER_COMMENT_TYPE_INLINE);
 }
 
 LIB_RUBY_PARSER_CommentList lib_ruby_parser__test__make_comment_list(LIB_RUBY_PARSER_Comment comment);
@@ -41,13 +40,12 @@ static void test_comment_list_fields(void)
 {
     annotate_test;
 
-    LIB_RUBY_PARSER_Loc loc = {.begin = 1, .end = 2};
     LIB_RUBY_PARSER_CommentList comment_list = lib_ruby_parser__test__make_comment_list(
         lib_ruby_parser__test__make_comment(
-            loc,
+            (LIB_RUBY_PARSER_Loc){.begin = 1, .end = 2},
             LIB_RUBY_PARSER_COMMENT_TYPE_INLINE));
     assert_eq(comment_list.len, 1);
-    assert_comment(comment_list.ptr[0], loc, LIB_RUBY_PARSER_COMMENT_TYPE_INLINE);
+    assert_comment(comment_list.ptr[0], 1, 2, LIB_RUBY_PARSER_COMMENT_TYPE_INLINE);
     LIB_RUBY_PARSER_drop_comment_list(&comment_list);
 }
 

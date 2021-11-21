@@ -32,14 +32,16 @@ static void test_magic_comment_fields(void)
 {
     annotate_test;
 
-    LIB_RUBY_PARSER_Loc key_l = {.begin = 1, .end = 2};
-    LIB_RUBY_PARSER_Loc value_l = {.begin = 3, .end = 4};
     LIB_RUBY_PARSER_MagicComment comment = lib_ruby_parser__test__make_magic_comment(
-        LIB_RUBY_PARSER_MAGIC_COMMENT_KIND_FROZEN_STRING_LITERAL, key_l, value_l);
+        LIB_RUBY_PARSER_MAGIC_COMMENT_KIND_FROZEN_STRING_LITERAL,
+        (LIB_RUBY_PARSER_Loc){.begin = 1, .end = 2},
+        (LIB_RUBY_PARSER_Loc){.begin = 3, .end = 4});
 
     assert_magic_comment(
         comment,
-        LIB_RUBY_PARSER_MAGIC_COMMENT_KIND_FROZEN_STRING_LITERAL, key_l, value_l);
+        LIB_RUBY_PARSER_MAGIC_COMMENT_KIND_FROZEN_STRING_LITERAL,
+        1, 2,
+        3, 4);
 }
 
 LIB_RUBY_PARSER_MagicCommentList lib_ruby_parser__test__make_magic_comment_list(LIB_RUBY_PARSER_MagicComment magic_comment);
@@ -47,15 +49,17 @@ static void test_magic_comment_list_fields(void)
 {
     annotate_test;
 
-    LIB_RUBY_PARSER_Loc key_l = {.begin = 1, .end = 2};
-    LIB_RUBY_PARSER_Loc value_l = {.begin = 3, .end = 4};
     LIB_RUBY_PARSER_MagicCommentList magic_comment_list = lib_ruby_parser__test__make_magic_comment_list(
         lib_ruby_parser__test__make_magic_comment(
-            LIB_RUBY_PARSER_MAGIC_COMMENT_KIND_FROZEN_STRING_LITERAL, key_l, value_l));
+            LIB_RUBY_PARSER_MAGIC_COMMENT_KIND_FROZEN_STRING_LITERAL,
+            (LIB_RUBY_PARSER_Loc){.begin = 1, .end = 2},
+            (LIB_RUBY_PARSER_Loc){.begin = 3, .end = 4}));
     assert_eq(magic_comment_list.len, 1);
     assert_magic_comment(
         magic_comment_list.ptr[0],
-        LIB_RUBY_PARSER_MAGIC_COMMENT_KIND_FROZEN_STRING_LITERAL, key_l, value_l);
+        LIB_RUBY_PARSER_MAGIC_COMMENT_KIND_FROZEN_STRING_LITERAL,
+        1, 2,
+        3, 4);
     LIB_RUBY_PARSER_drop_magic_comment_list(&magic_comment_list);
 }
 

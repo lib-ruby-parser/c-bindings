@@ -60,6 +60,8 @@ mod node;
 
 mod diagnostic;
 
+mod parser_result;
+
 blob_type!(BlobParserResult, ParserResult);
 
 #[no_mangle]
