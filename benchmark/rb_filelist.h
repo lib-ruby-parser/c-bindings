@@ -103,6 +103,70 @@ static void list_push_file(FileList *filelist, const char *fpath)
     list_push(filelist, file);
 }
 
+// `getline` is a POSIX function that doesn't work on Windows :)
+static long lib_ruby_parser__getline(char **lineptr, size_t *n, FILE *stream)
+{
+    char *bufptr = NULL;
+    char *p = bufptr;
+    size_t size;
+    int c;
+
+    if (lineptr == NULL)
+    {
+        return -1;
+    }
+    if (stream == NULL)
+    {
+        return -1;
+    }
+    if (n == NULL)
+    {
+        return -1;
+    }
+    bufptr = *lineptr;
+    size = *n;
+
+    c = fgetc(stream);
+    if (c == EOF)
+    {
+        return -1;
+    }
+    if (bufptr == NULL)
+    {
+        bufptr = malloc(128);
+        if (bufptr == NULL)
+        {
+            return -1;
+        }
+        size = 128;
+    }
+    p = bufptr;
+    while (c != EOF)
+    {
+        if ((size_t)(p - bufptr) > (size - 1))
+        {
+            size = size + 128;
+            bufptr = realloc(bufptr, size);
+            if (bufptr == NULL)
+            {
+                return -1;
+            }
+        }
+        *p++ = (char)c;
+        if (c == '\n')
+        {
+            break;
+        }
+        c = fgetc(stream);
+    }
+
+    *p++ = '\0';
+    *lineptr = bufptr;
+    *n = size;
+
+    return p - bufptr - 1;
+}
+
 FileList *read_filelist(const char *path)
 {
     FileList *list = list_alloc(10);
@@ -110,13 +174,13 @@ FileList *read_filelist(const char *path)
     FILE *fp;
     char *line = NULL;
     size_t len = 0;
-    ssize_t read;
+    long read;
 
     fp = fopen(path, "r");
     if (fp == NULL)
         return NULL;
 
-    while ((read = getline(&line, &len, fp)) != -1)
+    while ((read = lib_ruby_parser__getline(&line, &len, fp)) != -1)
     {
         if (line[read - 1] == '\n')
         {
