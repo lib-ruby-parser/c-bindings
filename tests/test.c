@@ -29,7 +29,7 @@ int main()
     run_test_group_bytes();
     run_test_group_comment();
     run_test_group_decoder();
-    // run_test_group_diagnostic();
+    run_test_group_diagnostic();
     run_test_group_loc();
     run_test_group_magic_comment();
     run_test_group_message();

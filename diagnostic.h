@@ -27,4 +27,8 @@ typedef struct LIB_RUBY_PARSER_DiagnosticList
 } LIB_RUBY_PARSER_DiagnosticList;
 void LIB_RUBY_PARSER_drop_diagnostic_list(LIB_RUBY_PARSER_DiagnosticList *diagnostic_list);
 
+#ifdef TEST_ENV
+void run_test_group_diagnostic(void);
+#endif
+
 #endif // LIB_RUBY_PARSER_DIAGNOSTIC_H

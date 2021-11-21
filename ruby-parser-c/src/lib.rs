@@ -58,6 +58,8 @@ use parser_options::{BlobParserOptions, ParserOptions};
 mod message;
 mod node;
 
+mod diagnostic;
+
 blob_type!(BlobParserResult, ParserResult);
 
 #[no_mangle]
