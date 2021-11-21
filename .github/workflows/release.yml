@@ -73,13 +73,15 @@ jobs:
         run: cd codegen && cargo build
 
       - name: make lib file
-        run: make ${{ matrix.build.lib_file }}
+        run: |
+          make ${{ matrix.build.lib_file }}
+          cp ${{ matrix.build.lib_file }} ${{ matrix.build.output_artifact_name }}
 
-      - name: upload ${{ matrix.build.output_file }}
+      - name: upload ${{ matrix.build.output_artifact_name }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.build.output_artifact_name }}
-          path: ${{ matrix.build.lib_file }}
+          path: ${{ matrix.build.output_artifact_name }}
 
       - name: benchmark
         run: make benchmark/download && make benchmark/record
@@ -203,6 +205,6 @@ jobs:
         with:
           allowUpdates: true
           artifactErrorsFailBuild: true
-          artifacts: "libruby_parser_c-x86_64-unknown-linux-gnu.a,libruby_parser_c-x86_64-apple-darwin.a,libruby_parser_c-x86_64-pc-windows-msvc.lib,libruby_parser_c-x86_64-pc-windows-gnu.a,lib-ruby-parser.h"
+          artifacts: "libruby_parser_c-*,lib-ruby-parser.h"
           bodyFile: release_notes.md
           token: ${{ secrets.GITHUB_TOKEN }}
