@@ -23,7 +23,6 @@ jobs:
       CC: ${{ matrix.build.cc }}
       LD: ${{ matrix.build.ld }}
       AR: ${{ matrix.build.ar }}
-      CFLAGS: ${{ matrix.build.cflags }}
     strategy:
       fail-fast: false
       matrix:

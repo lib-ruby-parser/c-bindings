@@ -40,3 +40,12 @@ benchmark/compare: benchmark/c-parser
 	$(call run_benchmark, ./rust-parser)
 	$(call run_benchmark, ruby ruby-parser.rb)
 	$(call run_benchmark, ./c-parser)
+
+BENCHMARK_RECORDING = $(TARGET).benchmark-out
+benchmark/record: benchmark/c-parser
+	echo "Rust:" > $(BENCHMARK_RECORDING)
+	$(call run_benchmark, ./rust-parser >> ../$(BENCHMARK_RECORDING))
+	echo "Ruby:" >> $(BENCHMARK_RECORDING)
+	$(call run_benchmark, ruby ruby-parser.rb >> ../$(BENCHMARK_RECORDING))
+	echo "C:" >> $(BENCHMARK_RECORDING)
+	$(call run_benchmark, ./c-parser >> ../$(BENCHMARK_RECORDING))

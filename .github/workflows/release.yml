@@ -5,162 +5,201 @@ on:
       - 'v*'
 
 jobs:
-  create-release:
-    name: create-release
-    runs-on: ubuntu-latest
-    steps:
-      - name: get version number
-        run: |
-          echo "GITHUB_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
-
-      - name: print version number
-        run: |
-          echo "tag = ${{ env.GITHUB_TAG }}"
-
-      - name: create release on github
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.GITHUB_TAG }}
-          release_name: ${{ env.GITHUB_TAG }}
-
-      - name: generate env artifact
-        run: |
-          echo "RELEASE_UPLOAD_URL=${{ steps.create_release.outputs.upload_url }}" > artifact-env
-          echo "GITHUB_TAG=$GITHUB_TAG" >> artifact-env
-
-      - name: save env artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: artifact-env
-          path: artifact-env
-
-  upload-release:
-    name: ${{ matrix.build.target }}
-    needs: ['create-release']
+  build-lib:
+    name: build lib file (target = ${{ matrix.build.target }})
     runs-on: ${{ matrix.build.os }}
     env:
-      CARGO_BUILD_TARGET: ${{ matrix.build.target }}
-      CC: ${{ matrix.build.cc }}
-      CXX: ${{ matrix.build.cxx }}
-      LD: ${{ matrix.build.ld }}
-      CARGOFLAGS: ${{ matrix.build.cargoflags }}
       BUILD_ENV: release
+      TARGET: ${{ matrix.build.target }}
+      CC: ${{ matrix.build.cc }}
+      LD: ${{ matrix.build.ld }}
+      AR: ${{ matrix.build.ar }}
     strategy:
       fail-fast: false
       matrix:
         build:
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            cc: clang-9
-            cxx: clang++-9
-            ld: ld.lld-9
-            cargoflags: --features="onig"
-            output: lib-ruby-parser.a
-            upload_as: lib-ruby-parser-x86_64-unknown-linux-gnu.a
+            cc: clang-12
+            ld: ld.lld-12
+            ar: llvm-ar-12
+            lib_file: libruby_parser_c.a
+            output_artifact_name: libruby_parser_c-x86_64-unknown-linux-gnu.a
 
           - os: macos-latest
             target: x86_64-apple-darwin
             cc: clang
-            cxx: clang++
             ld: ld
-            cargoflags: --features="onig"
-            output: lib-ruby-parser.a
-            upload_as: lib-ruby-parser-x86_64-apple-darwin.a
+            ar: ar
+            lib_file: libruby_parser_c.a
+            output_artifact_name: libruby_parser_c-x86_64-apple-darwin.a
 
           - os: windows-latest
             target: x86_64-pc-windows-msvc
             cc: cl.exe
-            cxx: cl.exe
             ld: link.exe
-            cargoflags: ""
-            output: lib-ruby-parser.lib
-            upload_as: lib-ruby-parser-x86_64-pc-windows-msvc.lib
+            lib_file: libruby_parser_c.lib
+            output_artifact_name: libruby_parser_c-x86_64-pc-windows-msvc.lib
 
           - os: windows-latest
             target: x86_64-pc-windows-gnu
             cc: gcc
-            cxx: g++
             ld: ld
-            cargoflags: ""
-            output: lib-ruby-parser.a
-            upload_as: lib-ruby-parser-x86_64-pc-windows-gnu.a
-
+            ar: ar
+            lib_file: libruby_parser_c.a
+            output_artifact_name: libruby_parser_c-x86_64-pc-windows-gnu.a
     steps:
       - name: setup msvc on windows
         if: runner.os == 'Windows'
         uses: ilammy/msvc-dev-cmd@v1
 
-      - name: fix linker on windows
-        if: runner.os == 'Windows'
-        run: |
-          rm "C:\\Program Files\\Git\\usr\\bin\\link.exe"
-          which -a link.exe
+      - name: install rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          target: ${{ matrix.build.target }}
+          override: true
+
+      - name: print rustc detailed version
+        run: rustc --version --verbose
 
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: download env artifact
-        uses: actions/download-artifact@v1
+      - name: codegen
+        env:
+          RUSTFLAGS: ""
+        run: cd codegen && cargo build
+
+      - name: make lib file
+        run: make ${{ matrix.build.lib_file }}
+
+      - name: upload ${{ matrix.build.output_file }}
+        uses: actions/upload-artifact@v2
         with:
-          name: artifact-env
-          path: artifact-env
+          name: ${{ matrix.build.lib_file }}
+          path: ${{ matrix.build.output_artifact_name }}
 
-      - name: load env artifact
-        shell: bash
-        run: cat artifact-env/artifact-env >> $GITHUB_ENV
+      - name: benchmark
+        run: make benchmark/download && make benchmark/record
 
+      - name: upload ${{ matrix.build.target }}.benchmark-out
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.build.target }}.benchmark-out
+          path: ${{ matrix.build.target }}.benchmark-out
+
+  build-header:
+    name: build header file
+    runs-on: ubuntu-latest
+    env:
+      TARGET: x86_64-unknown-linux-gnu
+    steps:
       - name: install rust
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: nightly
           profile: minimal
+          toolchain: stable
           override: true
-          target: ${{ matrix.build.target }}
 
-      - name: build
-        shell: bash
-        run: make clean build-static
+      - name: checkout
+        uses: actions/checkout@v2
 
-      - name: show asset
-        shell: bash
-        run: ls -l target/release/${{ matrix.build.output }}
+      - name: build lib-ruby-parser.h
+        run: make lib-ruby-parser.h
 
-      - name: upload assets
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: upload lib-ruby-parser.h
+        uses: actions/upload-artifact@v2
         with:
-          upload_url: ${{ env.RELEASE_UPLOAD_URL }}
-          asset_path: target/release/${{ matrix.build.output }}
-          asset_name: ${{ matrix.build.upload_as }}
-          asset_content_type: application/octet-stream
+          name: lib-ruby-parser.h
+          path: lib-ruby-parser.h
 
-  upload-headers:
-    name: upload-headers
-    needs: ['create-release']
+  build-release-notes:
+    name: build release notes
+    needs:
+      - 'build-lib'
     runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: download env artifact
-        uses: actions/download-artifact@v1
-        with:
-          name: artifact-env
-          path: artifact-env
+      # download benchmark results
+      - uses: actions/download-artifact@v2
+        with: { name: x86_64-unknown-linux-gnu.benchmark-out }
 
-      - name: load env artifact
-        run: cat artifact-env/artifact-env >> $GITHUB_ENV
+      - uses: actions/download-artifact@v2
+        with: { name: x86_64-apple-darwin.benchmark-out }
 
-      - name: upload assets
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/download-artifact@v2
+        with: { name: x86_64-pc-windows-msvc.benchmark-out }
+
+      - uses: actions/download-artifact@v2
+        with: { name: x86_64-pc-windows-gnu.benchmark-out }
+
+      - name: build release notes
+        run: |
+          ls -l
+          echo "### Results for x86_64-unknown-linux-gnu:" >> release_notes.md
+          echo "" >> release_notes.md
+          cat x86_64-unknown-linux-gnu.benchmark-out >> release_notes.md
+          echo "" >> release_notes.md
+          echo "### Results for x86_64-apple-darwin:" >> release_notes.md
+          echo "" >> release_notes.md
+          cat x86_64-apple-darwin.benchmark-out >> release_notes.md
+          echo "" >> release_notes.md
+          echo "### Results for x86_64-pc-windows-msvc:" >> release_notes.md
+          echo "" >> release_notes.md
+          cat x86_64-pc-windows-msvc.benchmark-out >> release_notes.md
+          echo "" >> release_notes.md
+          echo "### Results for x86_64-pc-windows-gnu:" >> release_notes.md
+          echo "" >> release_notes.md
+          cat x86_64-pc-windows-gnu.benchmark-out >> release_notes.md
+          cat release_notes.md
+
+      - name: upload release_notes.md
+        uses: actions/upload-artifact@v2
         with:
-          upload_url: ${{ env.RELEASE_UPLOAD_URL }}
-          asset_path: src/lib-ruby-parser.h
-          asset_name: lib-ruby-parser.h
-          asset_content_type: application/octet-stream
+          name: release_notes.md
+          path: release_notes.md
+
+  make-release:
+    name: release
+    needs:
+      - 'build-lib'
+      - 'build-header'
+      - 'build-release-notes'
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      # lib files
+      - uses: actions/download-artifact@v2
+        with: { name: libruby_parser_c-x86_64-unknown-linux-gnu.a }
+
+      - uses: actions/download-artifact@v2
+        with: { name: libruby_parser_c-x86_64-apple-darwin.a }
+
+      - uses: actions/download-artifact@v2
+        with: { name: libruby_parser_c-x86_64-pc-windows-msvc.lib }
+
+      - uses: actions/download-artifact@v2
+        with: { name: libruby_parser_c-x86_64-pc-windows-gnu.a }
+
+      # header file
+      - uses: actions/download-artifact@v2
+        with: { name: lib-ruby-parser.h }
+
+      # release notes
+      - uses: actions/download-artifact@v2
+        with: { name: release_notes.md }
+
+      - name: release
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          artifactErrorsFailBuild: true
+          artifacts: "libruby_parser_c-*,lib-ruby-parser.h"
+          bodyFile: release_notes.md
+          token: ${{ secrets.GITHUB_TOKEN }}

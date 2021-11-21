@@ -20,3 +20,4 @@ benchmark/repos
 benchmark/c-parser
 benchmark/filelist
 benchmark/stats
+*.benchmark-out
