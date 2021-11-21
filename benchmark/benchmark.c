@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "../lib-ruby-parser.h"
 #include "rb_filelist.h"
-#include "measure.h"
+#include "time.h"
 
 int main()
 {
@@ -15,7 +15,7 @@ int main()
 
     // printf("total files: %lu\n", filelist->size);
 
-    long start = now_in_millis();
+    clock_t start = clock();
     for (size_t i = 0; i < filelist->size; i++)
     {
         FileEntry *entry = &(filelist->list[i]);
@@ -33,8 +33,8 @@ int main()
         LIB_RUBY_PARSER_ParserResult result = LIB_RUBY_PARSER_parse(options, input);
         LIB_RUBY_PARSER_drop_parser_result(&result);
     }
-    long end = now_in_millis();
-    double delta = (double)(end - start) / 1000;
+    clock_t end = clock();
+    double delta = (double)(end - start) / CLOCKS_PER_SEC;
 
     printf("%f\n", delta);
 
