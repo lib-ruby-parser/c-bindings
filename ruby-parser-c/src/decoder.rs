@@ -1,25 +1,25 @@
 #[allow(unused_imports)]
-use crate::{blob_type, BlobByteList, BlobString};
+use crate::{blob_type, bytes::ByteListBlob, string::StringBlob};
 use lib_ruby_parser::source::{DecoderResult, InputError};
 
-blob_type!(BlobInputError, InputError);
-blob_type!(BlobDecoderResult, DecoderResult);
-blob_type!(BlobMaybeDecoder, Option<Decoder>);
+blob_type!(InputErrorBlob, InputError);
+blob_type!(DecoderResultBlob, DecoderResult);
+blob_type!(MaybeDecoderBlob, Option<Decoder>);
 
 #[cfg(feature = "tests")]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_input_error__unsupported_encoding(
-    s: BlobString,
-) -> BlobInputError {
-    BlobInputError::from(InputError::UnsupportedEncoding(String::from(s)))
+    s: StringBlob,
+) -> InputErrorBlob {
+    InputErrorBlob::from(InputError::UnsupportedEncoding(String::from(s)))
 }
 
 #[cfg(feature = "tests")]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_input_error__decoding_error(
-    s: BlobString,
-) -> BlobInputError {
-    BlobInputError::from(InputError::DecodingError(String::from(s)))
+    s: StringBlob,
+) -> InputErrorBlob {
+    InputErrorBlob::from(InputError::DecodingError(String::from(s)))
 }
 
 #[no_mangle]
@@ -30,17 +30,17 @@ pub extern "C" fn LIB_RUBY_PARSER_drop_input_error(input_error: *mut InputError)
 #[cfg(feature = "tests")]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_decoder_result__ok(
-    bytes: BlobByteList,
-) -> BlobDecoderResult {
-    BlobDecoderResult::from(DecoderResult::Ok(bytes.into()))
+    bytes: ByteListBlob,
+) -> DecoderResultBlob {
+    DecoderResultBlob::from(DecoderResult::Ok(bytes.into()))
 }
 
 #[cfg(feature = "tests")]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_decoder_result__err(
-    err: BlobInputError,
-) -> BlobDecoderResult {
-    BlobDecoderResult::from(DecoderResult::Err(err.into()))
+    err: InputErrorBlob,
+) -> DecoderResultBlob {
+    DecoderResultBlob::from(DecoderResult::Err(err.into()))
 }
 
 #[no_mangle]
@@ -50,7 +50,7 @@ pub extern "C" fn LIB_RUBY_PARSER_drop_decoder_result(decoder_result: *mut Decod
 
 #[repr(C)]
 pub struct Decoder {
-    pub f: extern "C" fn(encoding: BlobString, input: BlobByteList) -> BlobDecoderResult,
+    pub f: extern "C" fn(encoding: StringBlob, input: ByteListBlob) -> DecoderResultBlob,
 }
 
 #[cfg(feature = "tests")]
@@ -58,14 +58,14 @@ pub struct Decoder {
 pub extern "C" fn lib_ruby_parser__test__always_ok_decoder() -> Decoder {
     #[no_mangle]
     pub extern "C" fn lib_ruby_parser__test__always_ok_decoder_fn(
-        encoding: BlobString,
-        input: BlobByteList,
-    ) -> BlobDecoderResult {
+        encoding: StringBlob,
+        input: ByteListBlob,
+    ) -> DecoderResultBlob {
         // do cleanup
         drop(String::from(encoding));
         drop(Vec::<u8>::from(input));
         // and return constant output
-        BlobDecoderResult::from(DecoderResult::Ok("always_ok".as_bytes().to_vec()))
+        DecoderResultBlob::from(DecoderResult::Ok("always_ok".as_bytes().to_vec()))
     }
     Decoder {
         f: lib_ruby_parser__test__always_ok_decoder_fn,
@@ -77,14 +77,14 @@ pub extern "C" fn lib_ruby_parser__test__always_ok_decoder() -> Decoder {
 pub extern "C" fn lib_ruby_parser__test__always_err_decoder() -> Decoder {
     #[no_mangle]
     pub extern "C" fn lib_ruby_parser__test__always_err_decoder_fn(
-        encoding: BlobString,
-        input: BlobByteList,
-    ) -> BlobDecoderResult {
+        encoding: StringBlob,
+        input: ByteListBlob,
+    ) -> DecoderResultBlob {
         // do cleanup
         drop(String::from(encoding));
         drop(Vec::<u8>::from(input));
         // and return constant output
-        BlobDecoderResult::from(DecoderResult::Err(InputError::DecodingError(String::from(
+        DecoderResultBlob::from(DecoderResult::Err(InputError::DecodingError(String::from(
             "always_err",
         ))))
     }
@@ -95,12 +95,12 @@ pub extern "C" fn lib_ruby_parser__test__always_err_decoder() -> Decoder {
 
 #[cfg(feature = "tests")]
 #[no_mangle]
-pub extern "C" fn lib_ruby_parser__test__some_always_ok_decoder() -> BlobMaybeDecoder {
-    BlobMaybeDecoder::from(Some(lib_ruby_parser__test__always_ok_decoder()))
+pub extern "C" fn lib_ruby_parser__test__some_always_ok_decoder() -> MaybeDecoderBlob {
+    MaybeDecoderBlob::from(Some(lib_ruby_parser__test__always_ok_decoder()))
 }
 
 #[cfg(feature = "tests")]
 #[no_mangle]
-pub extern "C" fn lib_ruby_parser__test__none_decoder() -> BlobMaybeDecoder {
-    BlobMaybeDecoder::from(None)
+pub extern "C" fn lib_ruby_parser__test__none_decoder() -> MaybeDecoderBlob {
+    MaybeDecoderBlob::from(None)
 }

@@ -1,11 +1,14 @@
-use crate::blob_type;
+use crate::{
+    blob_type, bytes::ByteListBlob, parser_options::CParserOptions,
+    parser_options::ParserOptionsBlob,
+};
 #[allow(unused_imports)]
 use lib_ruby_parser::{
     nodes::Retry,
     source::{Comment, CommentType, MagicComment, MagicCommentKind},
     source::{DecodedInput, SourceLine},
-    Bytes, Diagnostic, DiagnosticMessage, ErrorLevel, LexState, Lexer, Loc, Node, ParserResult,
-    Token,
+    Bytes, Diagnostic, DiagnosticMessage, ErrorLevel, LexState, Lexer, Loc, Node, Parser,
+    ParserOptions, ParserResult, Token,
 };
 
 blob_type!(DecodedInputBlob, DecodedInput);
@@ -73,4 +76,15 @@ pub extern "C" fn lib_ruby_parser__test__make_parser_result() -> ParserResultBlo
 #[no_mangle]
 pub extern "C" fn LIB_RUBY_PARSER_drop_parser_result(parser_result: *mut ParserResult) {
     unsafe { std::ptr::drop_in_place(parser_result) }
+}
+
+#[no_mangle]
+pub extern "C" fn LIB_RUBY_PARSER_parse(
+    options: ParserOptionsBlob,
+    input: ByteListBlob,
+) -> ParserResultBlob {
+    let options: lib_ruby_parser::ParserOptions = CParserOptions::from(options).into();
+    let input: Vec<u8> = input.into();
+    let result = Parser::new(input, options).do_parse();
+    result.into()
 }

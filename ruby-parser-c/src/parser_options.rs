@@ -2,17 +2,17 @@ use crate::blob_type;
 use crate::{Decoder, TokenRewriter};
 
 #[repr(C)]
-pub struct ParserOptions {
+pub struct CParserOptions {
     buffer_name: String,
     decoder: Option<Decoder>,
     token_rewriter: Option<TokenRewriter>,
     record_tokens: bool,
 }
-blob_type!(BlobParserOptions, ParserOptions);
+blob_type!(ParserOptionsBlob, CParserOptions);
 
-impl From<ParserOptions> for lib_ruby_parser::ParserOptions {
-    fn from(options: ParserOptions) -> Self {
-        let ParserOptions {
+impl From<CParserOptions> for lib_ruby_parser::ParserOptions {
+    fn from(options: CParserOptions) -> Self {
+        let CParserOptions {
             buffer_name,
             decoder,
             token_rewriter,
@@ -45,8 +45,8 @@ impl From<ParserOptions> for lib_ruby_parser::ParserOptions {
 
 #[cfg(feature = "tests")]
 #[no_mangle]
-pub extern "C" fn lib_ruby_parser__test__make_parser_options() -> BlobParserOptions {
-    BlobParserOptions::from(ParserOptions {
+pub extern "C" fn lib_ruby_parser__test__make_parser_options() -> ParserOptionsBlob {
+    ParserOptionsBlob::from(CParserOptions {
         buffer_name: String::from("(eval)"),
         decoder: None,
         token_rewriter: None,
@@ -55,6 +55,6 @@ pub extern "C" fn lib_ruby_parser__test__make_parser_options() -> BlobParserOpti
 }
 
 #[no_mangle]
-pub extern "C" fn LIB_RUBY_PARSER_drop_parser_options(parser_options: *mut ParserOptions) {
+pub extern "C" fn LIB_RUBY_PARSER_drop_parser_options(parser_options: *mut CParserOptions) {
     unsafe { std::ptr::drop_in_place(parser_options) }
 }

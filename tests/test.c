@@ -15,6 +15,7 @@
 #include "../string.h"
 #include "../token_rewriter.h"
 #include "../token.h"
+#include "../api.h"
 
 void lib_ruby_parser__test__print_build_info(void);
 
@@ -41,5 +42,9 @@ int main()
     run_test_group_string();
     run_test_group_token_rewriter();
     run_test_group_token();
+    run_test_group_api();
+
+    printf("All tests are passing!\n");
+
     return 0;
 }

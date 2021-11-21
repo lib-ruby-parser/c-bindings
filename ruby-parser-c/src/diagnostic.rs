@@ -4,8 +4,8 @@ use crate::message::DiagnosticMessageBlob;
 #[allow(unused_imports)]
 use lib_ruby_parser::{Diagnostic, DiagnosticMessage, ErrorLevel, Loc};
 
-blob_type!(BlobDiagnostic, Diagnostic);
-blob_type!(BlobDiagnosticList, Vec<Diagnostic>);
+blob_type!(DiagnosticBlob, Diagnostic);
+blob_type!(DiagnosticListBlob, Vec<Diagnostic>);
 
 #[cfg(feature = "tests")]
 #[no_mangle]
@@ -13,8 +13,8 @@ pub extern "C" fn lib_ruby_parser__test__make_diagnostic(
     level: ErrorLevel,
     message: DiagnosticMessageBlob,
     loc: Loc,
-) -> BlobDiagnostic {
-    BlobDiagnostic::from(Diagnostic {
+) -> DiagnosticBlob {
+    DiagnosticBlob::from(Diagnostic {
         level,
         message: DiagnosticMessage::from(message),
         loc,
@@ -29,9 +29,9 @@ pub extern "C" fn LIB_RUBY_PARSER_drop_diagnostic(diagnostic: *mut Diagnostic) {
 #[cfg(feature = "tests")]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_diagnostic_list(
-    diagnostic: BlobDiagnostic,
-) -> BlobDiagnosticList {
-    BlobDiagnosticList::from(vec![Diagnostic::from(diagnostic)])
+    diagnostic: DiagnosticBlob,
+) -> DiagnosticListBlob {
+    DiagnosticListBlob::from(vec![Diagnostic::from(diagnostic)])
 }
 
 #[no_mangle]

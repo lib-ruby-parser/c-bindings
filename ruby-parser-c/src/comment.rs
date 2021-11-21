@@ -5,7 +5,7 @@ use lib_ruby_parser::{
     Loc,
 };
 
-blob_type!(BlobCommentList, Vec<Comment>);
+blob_type!(CommentListBlob, Vec<Comment>);
 
 #[cfg(feature = "tests")]
 #[no_mangle]
@@ -33,8 +33,8 @@ pub extern "C" fn lib_ruby_parser__test__make_comment(location: Loc, kind: Comme
 
 #[cfg(feature = "tests")]
 #[no_mangle]
-pub extern "C" fn lib_ruby_parser__test__make_comment_list(comment: Comment) -> BlobCommentList {
-    BlobCommentList::from(vec![comment])
+pub extern "C" fn lib_ruby_parser__test__make_comment_list(comment: Comment) -> CommentListBlob {
+    CommentListBlob::from(vec![comment])
 }
 
 #[no_mangle]

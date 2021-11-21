@@ -1,12 +1,12 @@
 use crate::blob_type;
-use crate::shared_byte_list::BlobSharedByteList;
+use crate::shared_byte_list::SharedByteListBlob;
 #[allow(unused_imports)]
 use lib_ruby_parser::{
     source::token_rewriter::{LexStateAction, RewriteAction, TokenRewriterResult},
     Bytes, LexState, Lexer, Loc, Token,
 };
 
-blob_type!(BlobMaybeTokenRewriter, Option<TokenRewriter>);
+blob_type!(MaybeTokenRewriterBlob, Option<TokenRewriter>);
 
 #[cfg(feature = "tests")]
 #[no_mangle]
@@ -59,7 +59,7 @@ pub extern "C" fn LIB_RUBY_PARSER_drop_token_rewriter_result(
 
 #[repr(C)]
 pub struct TokenRewriter {
-    pub f: extern "C" fn(token: *mut Token, input: BlobSharedByteList) -> TokenRewriterResult,
+    pub f: extern "C" fn(token: *mut Token, input: SharedByteListBlob) -> TokenRewriterResult,
 }
 
 #[cfg(feature = "tests")]
@@ -68,7 +68,7 @@ pub extern "C" fn lib_ruby_parser__test__always_keep_token_rewriter() -> TokenRe
     #[no_mangle]
     pub extern "C" fn lib_ruby_parser__test__always_keep_token_rewriter_fn(
         token: *mut Token,
-        _input: BlobSharedByteList,
+        _input: SharedByteListBlob,
     ) -> TokenRewriterResult {
         // and return constant output
         TokenRewriterResult {
@@ -88,7 +88,7 @@ pub extern "C" fn lib_ruby_parser__test__always_rewrite_token_rewriter() -> Toke
     #[no_mangle]
     pub extern "C" fn lib_ruby_parser__test__always_rewrite_token_rewriter_fn(
         token: *mut Token,
-        _input: BlobSharedByteList,
+        _input: SharedByteListBlob,
     ) -> TokenRewriterResult {
         // do cleanup
         unsafe { Box::from_raw(token) };
@@ -112,13 +112,13 @@ pub extern "C" fn lib_ruby_parser__test__always_rewrite_token_rewriter() -> Toke
 
 #[cfg(feature = "tests")]
 #[no_mangle]
-pub extern "C" fn lib_ruby_parser__test__some_always_keep_token_rewriter() -> BlobMaybeTokenRewriter
+pub extern "C" fn lib_ruby_parser__test__some_always_keep_token_rewriter() -> MaybeTokenRewriterBlob
 {
-    BlobMaybeTokenRewriter::from(Some(lib_ruby_parser__test__always_keep_token_rewriter()))
+    MaybeTokenRewriterBlob::from(Some(lib_ruby_parser__test__always_keep_token_rewriter()))
 }
 
 #[cfg(feature = "tests")]
 #[no_mangle]
-pub extern "C" fn lib_ruby_parser__test__none_token_rewriter() -> BlobMaybeTokenRewriter {
-    BlobMaybeTokenRewriter::from(None)
+pub extern "C" fn lib_ruby_parser__test__none_token_rewriter() -> MaybeTokenRewriterBlob {
+    MaybeTokenRewriterBlob::from(None)
 }

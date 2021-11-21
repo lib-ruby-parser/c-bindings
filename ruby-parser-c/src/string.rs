@@ -1,24 +1,24 @@
 use crate::blob_type;
 
-blob_type!(BlobString, String);
-blob_type!(BlobMaybeString, Option<String>);
+blob_type!(StringBlob, String);
+blob_type!(MaybeStringBlob, Option<String>);
 
 #[no_mangle]
-pub extern "C" fn LIB_RUBY_PARSER_new_string_owned(ptr: *mut u8, len: usize) -> BlobString {
+pub extern "C" fn LIB_RUBY_PARSER_new_string_owned(ptr: *mut u8, len: usize) -> StringBlob {
     let s = unsafe { String::from_raw_parts(ptr, len, len) };
-    BlobString::from(s)
+    StringBlob::from(s)
 }
 
 #[no_mangle]
-pub extern "C" fn LIB_RUBY_PARSER_new_string_from_cstr(ptr: *const i8) -> BlobString {
+pub extern "C" fn LIB_RUBY_PARSER_new_string_from_cstr(ptr: *const i8) -> StringBlob {
     let s = unsafe { std::ffi::CStr::from_ptr(ptr) };
-    BlobString::from(s.to_str().unwrap_or_default().to_owned())
+    StringBlob::from(s.to_str().unwrap_or_default().to_owned())
 }
 
 #[cfg(feature = "tests")]
 #[no_mangle]
-pub extern "C" fn lib_ruby_parser__test__make_string_foo() -> BlobString {
-    BlobString::from(String::from("foo"))
+pub extern "C" fn lib_ruby_parser__test__make_string_foo() -> StringBlob {
+    StringBlob::from(String::from("foo"))
 }
 
 #[no_mangle]
@@ -28,14 +28,14 @@ pub extern "C" fn LIB_RUBY_PARSER_drop_string(s: *mut String) {
 
 #[cfg(feature = "tests")]
 #[no_mangle]
-pub extern "C" fn lib_ruby_parser__test__make_some_string_foo() -> BlobMaybeString {
-    BlobMaybeString::from(Some(String::from("foo")))
+pub extern "C" fn lib_ruby_parser__test__make_some_string_foo() -> MaybeStringBlob {
+    MaybeStringBlob::from(Some(String::from("foo")))
 }
 
 #[cfg(feature = "tests")]
 #[no_mangle]
-pub extern "C" fn lib_ruby_parser__test__make_none_string() -> BlobMaybeString {
-    BlobMaybeString::from(None)
+pub extern "C" fn lib_ruby_parser__test__make_none_string() -> MaybeStringBlob {
+    MaybeStringBlob::from(None)
 }
 
 #[no_mangle]

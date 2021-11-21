@@ -2,8 +2,8 @@ use crate::blob_type;
 #[allow(unused_imports)]
 use lib_ruby_parser::{Bytes, LexState, Loc, Token};
 
-blob_type!(BlobToken, Token);
-blob_type!(BlobTokenList, Vec<Token>);
+blob_type!(TokenBlob, Token);
+blob_type!(TokenListBlob, Vec<Token>);
 
 #[cfg(feature = "tests")]
 #[no_mangle]
@@ -11,7 +11,7 @@ pub extern "C" fn lib_ruby_parser__test__make_token_eq(
     loc: Loc,
     lex_state_before_i32: i32,
     lex_state_after_i32: i32,
-) -> BlobToken {
+) -> TokenBlob {
     let mut lex_state_before = LexState::default();
     lex_state_before.set(lex_state_before_i32);
 
@@ -26,7 +26,7 @@ pub extern "C" fn lib_ruby_parser__test__make_token_eq(
         lex_state_after,
     };
     assert_eq!(token.token_name(), "tEQ");
-    BlobToken::from(token)
+    TokenBlob::from(token)
 }
 
 #[no_mangle]
@@ -43,8 +43,8 @@ pub extern "C" fn LIB_RUBY_PARSER_drop_token(token: *mut Token) {
 
 #[cfg(feature = "tests")]
 #[no_mangle]
-pub extern "C" fn lib_ruby_parser__test__make_token_list(token: BlobToken) -> BlobTokenList {
-    BlobTokenList::from(vec![Token::from(token)])
+pub extern "C" fn lib_ruby_parser__test__make_token_list(token: TokenBlob) -> TokenListBlob {
+    TokenListBlob::from(vec![Token::from(token)])
 }
 
 #[no_mangle]

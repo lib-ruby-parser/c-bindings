@@ -5,7 +5,7 @@ use lib_ruby_parser::{
     Loc,
 };
 
-blob_type!(BlobMagicCommentList, Vec<MagicComment>);
+blob_type!(MagicCommentListBlob, Vec<MagicComment>);
 
 #[cfg(feature = "tests")]
 #[no_mangle]
@@ -51,8 +51,8 @@ pub extern "C" fn lib_ruby_parser__test__make_magic_comment(
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_magic_comment_list(
     magic_comment: MagicComment,
-) -> BlobMagicCommentList {
-    BlobMagicCommentList::from(vec![magic_comment])
+) -> MagicCommentListBlob {
+    MagicCommentListBlob::from(vec![magic_comment])
 }
 
 #[no_mangle]

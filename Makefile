@@ -4,6 +4,7 @@ include scripts/setup_rustflags.mk
 
 SOURCES = \
 	alloc \
+	api \
 	bytes \
 	comment \
 	decoder \

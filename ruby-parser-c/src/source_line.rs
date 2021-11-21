@@ -1,7 +1,7 @@
 use crate::blob_type;
 use lib_ruby_parser::source::SourceLine;
 
-blob_type!(BlobSourceLineList, Vec<SourceLine>);
+blob_type!(SourceLineListBlob, Vec<SourceLine>);
 
 #[cfg(feature = "tests")]
 #[no_mangle]
@@ -21,8 +21,8 @@ pub extern "C" fn lib_ruby_parser__test__make_source_line(
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_source_line_list(
     source_line: SourceLine,
-) -> BlobSourceLineList {
-    BlobSourceLineList::from(vec![source_line])
+) -> SourceLineListBlob {
+    SourceLineListBlob::from(vec![source_line])
 }
 
 #[no_mangle]
