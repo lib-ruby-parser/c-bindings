@@ -1,13 +1,19 @@
 
 alloc.o: alloc.c alloc.h
 
+api.o: api.c api.h parser_options.h string.h decoder.h bytes.h \
+  token_rewriter.h token.h loc.h shared_byte_list.h parser_result.h \
+  source_line.h nodes.h diagnostic.h messages.h comment.h \
+  magic_comment.h test_helper.h
+
 bytes.o: bytes.c bytes.h test_helper.h
 
 comment.o: comment.c comment.h loc.h test_helper.h
 
 decoder.o: decoder.c decoder.h string.h bytes.h test_helper.h
 
-diagnostic.o: diagnostic.c diagnostic.h messages.h string.h loc.h
+diagnostic.o: diagnostic.c diagnostic.h messages.h string.h loc.h \
+  test_helper.h
 
 loc.o: loc.c loc.h test_helper.h
 
@@ -23,7 +29,7 @@ parser_options.o: parser_options.c parser_options.h string.h decoder.h \
 
 parser_result.o: parser_result.c parser_result.h string.h source_line.h \
   bytes.h nodes.h loc.h token.h diagnostic.h messages.h comment.h \
-  magic_comment.h
+  magic_comment.h test_helper.h
 
 shared_byte_list.o: shared_byte_list.c shared_byte_list.h test_helper.h
 
@@ -43,5 +49,8 @@ tests/runner: tests/test.c tests/../test_helper.h tests/../bytes.h \
   tests/../diagnostic.h tests/../messages.h tests/../magic_comment.h \
   tests/../nodes.h tests/../parser_options.h tests/../token_rewriter.h \
   tests/../token.h tests/../shared_byte_list.h tests/../parser_result.h \
-  tests/../source_line.h
+  tests/../source_line.h tests/../api.h
+
+benchmark/c-parser: benchmark/benchmark.c benchmark/../lib-ruby-parser.h \
+  benchmark/rb_filelist.h benchmark/measure.h
 

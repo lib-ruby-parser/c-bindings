@@ -15,5 +15,5 @@ done
 $CC -MT "tests/runner" -MM "tests/test.c" >> .depend
 echo "" >> .depend
 
-# $CC -MT "benchmark/c-parser" -MM "benchmark/benchmark.c" >> .depend
-# echo "" >> .depend
+$CC -MT "benchmark/c-parser" -MM "benchmark/benchmark.c" >> .depend
+echo "" >> .depend

@@ -122,7 +122,6 @@ jobs:
         with:
           profile: minimal
           toolchain: stable
-          target: ${{ matrix.env.TARGET }}
           override: true
 
       - name: checkout
