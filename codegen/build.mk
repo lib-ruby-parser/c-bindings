@@ -38,6 +38,10 @@ ruby-parser-c/src/message.rs: $(CODEGEN_DEPS)
 	$(DO_CODEGEN)
 CLEAN += ruby-parser-c/src/message.rs
 
+lib-ruby-parser.h: codegen/examples/merge_headers.rs $(H_FILES)
+	cargo run --example merge_headers --manifest-path codegen/Cargo.toml
+CLEAN += lib-ruby-parser.h
+
 # manual codegen task
 do-codegen:
 	$(DO_CODEGEN)

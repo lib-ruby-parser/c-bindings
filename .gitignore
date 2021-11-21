@@ -3,6 +3,7 @@ ruby-parser-c/src/node.rs
 ruby-parser-c/target
 ruby-parser-c/Cargo.lock
 codegen/Cargo.lock
+lib-ruby-parser.h
 messages.h
 messages.c
 nodes.h

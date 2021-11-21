@@ -110,3 +110,26 @@ jobs:
 
       - name: run tests
         run: ${{ matrix.build.run }}
+
+  test-header:
+    name: test building lib-ruby-parser.h
+    runs-on: ubuntu-latest
+    env:
+      TARGET: x86_64-unknown-linux-gnu
+    steps:
+      - name: install rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          target: ${{ matrix.env.TARGET }}
+          override: true
+
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: build lib-ruby-parser.h
+        run: make lib-ruby-parser.h
+
+      - name: validate lib-ruby-parser.h
+        run: clang -fsyntax-only -Wall -Wextra -Wpedantic lib-ruby-parser.h
