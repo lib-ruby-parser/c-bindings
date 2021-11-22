@@ -4,6 +4,7 @@
 #include <stddef.h>
 #include "messages.h"
 #include "loc.h"
+#include "decoded_input.h"
 
 /*
     Equivalent of `lib_ruby_parser::ErrorLevel`
@@ -34,6 +35,16 @@ typedef struct LIB_RUBY_PARSER_Diagnostic
     */
     LIB_RUBY_PARSER_Loc loc;
 } LIB_RUBY_PARSER_Diagnostic;
+
+/*
+    Render given diagnsostic on a given source input.
+    Equivalent of lib_ruby_parser::Diagnostic::render.
+    Return owned NULL-terminated string.
+*/
+char *LIB_RUBY_PARSER_render_diagnostic(
+    LIB_RUBY_PARSER_Diagnostic *diagnostic,
+    LIB_RUBY_PARSER_DecodedInput *input);
+
 /*
     Diagnostic destructor.
     Just like Rust/C++ destructor it performs cleanup of "embedded" resources.
