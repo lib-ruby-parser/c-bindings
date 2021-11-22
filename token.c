@@ -4,6 +4,7 @@
 
 #include "test_helper.h"
 #include <string.h>
+#include <stdlib.h>
 
 LIB_RUBY_PARSER_Token lib_ruby_parser__test__make_token_eq(LIB_RUBY_PARSER_Loc loc, uint32_t lex_state_before, uint32_t lex_state_after);
 static void test_token_fields(void)

@@ -3,6 +3,7 @@
 #ifdef TEST_ENV
 
 #include "test_helper.h"
+#include <stdlib.h>
 
 LIB_RUBY_PARSER_DecodedInput lib_ruby_parser__test__make_decoded_input(void);
 static void test_decoded_input(void)

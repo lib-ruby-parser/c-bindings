@@ -28,8 +28,13 @@ void run_tests_as_group(const char *group_name, const test_fn_t *tests, size_t c
     assert_eq(_string.len, strlen(_s)); \
     assert(strncmp(_string.ptr, _s, strlen(_s)) == 0)
 
-#define assert_token(_token, _token_name) \
-    assert_str_eq(LIB_RUBY_PARSER_token_name(&(_token)), _token_name)
+#define assert_token(_token, _token_name)                         \
+    {                                                             \
+        char *token_name = LIB_RUBY_PARSER_token_name(&(_token)); \
+        assert_str_eq(token_name, _token_name);                   \
+        free(token_name);                                         \
+    }                                                             \
+    assert_eq(1, 1)
 
 #define assert_loc(_loc, _begin, _end) \
     assert_eq(_loc.begin, _begin);     \
