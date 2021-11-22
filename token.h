@@ -19,7 +19,7 @@ typedef struct LIB_RUBY_PARSER_Token
 /*
     Returns token name (like "kDEF") for a given token.
 */
-char *LIB_RUBY_PARSER_token_name(LIB_RUBY_PARSER_Token *token);
+char *LIB_RUBY_PARSER_token_name(const LIB_RUBY_PARSER_Token *token);
 /*
     Token destructor.
     Just like Rust/C++ destructor it performs cleanup of "embedded" resources.

@@ -30,7 +30,7 @@ pub extern "C" fn lib_ruby_parser__test__make_token_eq(
 }
 
 #[no_mangle]
-pub extern "C" fn LIB_RUBY_PARSER_token_name(token: *mut Token) -> *mut i8 {
+pub extern "C" fn LIB_RUBY_PARSER_token_name(token: *const Token) -> *mut i8 {
     let token = unsafe { token.as_ref().unwrap() };
     let token_name = token.token_name();
     std::ffi::CString::new(token_name).unwrap().into_raw()

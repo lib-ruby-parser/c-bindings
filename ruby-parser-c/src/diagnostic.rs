@@ -42,8 +42,8 @@ pub extern "C" fn LIB_RUBY_PARSER_drop_diagnostic_list(diagnostic_list: *mut Vec
 
 #[no_mangle]
 pub extern "C" fn LIB_RUBY_PARSER_render_diagnostic(
-    diagnostic: *mut Diagnostic,
-    input: *mut DecodedInput,
+    diagnostic: *const Diagnostic,
+    input: *const DecodedInput,
 ) -> *mut i8 {
     let diagnostic = unsafe { diagnostic.as_ref().unwrap() };
     let input = unsafe { input.as_ref().unwrap() };

@@ -42,8 +42,8 @@ typedef struct LIB_RUBY_PARSER_Diagnostic
     Return owned NULL-terminated string.
 */
 char *LIB_RUBY_PARSER_render_diagnostic(
-    LIB_RUBY_PARSER_Diagnostic *diagnostic,
-    LIB_RUBY_PARSER_DecodedInput *input);
+    const LIB_RUBY_PARSER_Diagnostic *diagnostic,
+    const LIB_RUBY_PARSER_DecodedInput *input);
 
 /*
     Diagnostic destructor.
