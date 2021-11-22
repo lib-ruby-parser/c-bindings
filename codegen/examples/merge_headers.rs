@@ -4,6 +4,7 @@ const HEADERS: &[&str] = &[
     "bytes.h",
     "source_line.h",
     "loc.h",
+    "token_ids.h",
     "token.h",
     "comment.h",
     "magic_comment.h",
@@ -49,7 +50,7 @@ fn process_header(header_path: &str, sys_includes: &mut Vec<String>, contents: &
             continue;
         }
         if line.starts_with("#ifndef LIB_RUBY_PARSER_")
-            || line.starts_with("#define LIB_RUBY_PARSER_")
+            || (line.starts_with("#define LIB_RUBY_PARSER_") && line.ends_with("_H"))
             || line.starts_with("#endif // LIB_RUBY_PARSER_")
         {
             // header guard, skip

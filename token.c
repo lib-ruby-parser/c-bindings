@@ -13,6 +13,7 @@ static void test_token_fields(void)
 
     LIB_RUBY_PARSER_Token token = lib_ruby_parser__test__make_token_eq((LIB_RUBY_PARSER_Loc){.begin = 1, .end = 2}, 3, 4);
 
+    assert_eq(token.token_type, LIB_RUBY_PARSER_TOKEN_tEQ);
     assert_token(token, "tEQ");
     assert_byte_list(token.token_value.raw, "=");
     assert_loc(token.loc, 1, 2);

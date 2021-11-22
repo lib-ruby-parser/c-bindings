@@ -3,6 +3,7 @@
 
 #include "bytes.h"
 #include "loc.h"
+#include "token_ids.h"
 
 /*
     Equivalent of `lib_ruby_parser::Token`
