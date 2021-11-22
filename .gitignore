@@ -8,6 +8,7 @@ messages.h
 messages.c
 nodes.h
 nodes.c
+token_ids.h
 target
 *.o
 *.a
