@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include "decoded_input.h"
 
 /*
     `Loc` struct from `lib-ruby-parser`
@@ -12,6 +13,12 @@ typedef struct LIB_RUBY_PARSER_Loc
     size_t begin;
     size_t end;
 } LIB_RUBY_PARSER_Loc;
+
+/*
+    Returns source code of the given location.
+    Equivalent of `lib_ruby_parser::Loc::source`
+*/
+char *LIB_RUBY_PARSER_loc_source(const LIB_RUBY_PARSER_Loc *loc, const LIB_RUBY_PARSER_DecodedInput *input);
 
 /*
     Equivalent of `Option<Loc>`

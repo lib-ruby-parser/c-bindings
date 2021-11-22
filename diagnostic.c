@@ -29,6 +29,8 @@ static void test_diagnostic(void)
 
 static void test_diagnostic_render(void)
 {
+    annotate_test;
+
     LIB_RUBY_PARSER_Diagnostic diagnostic = {
         .level = LIB_RUBY_PARSER_ERROR_LEVEL_ERROR,
         .message = {
