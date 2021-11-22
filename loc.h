@@ -4,12 +4,18 @@
 #include <stddef.h>
 #include <stdint.h>
 
+/*
+    `Loc` struct from `lib-ruby-parser`
+*/
 typedef struct LIB_RUBY_PARSER_Loc
 {
     size_t begin;
     size_t end;
 } LIB_RUBY_PARSER_Loc;
 
+/*
+    Equivalent of `Option<Loc>`
+*/
 typedef struct LIB_RUBY_PARSER_MaybeLoc
 {
     enum

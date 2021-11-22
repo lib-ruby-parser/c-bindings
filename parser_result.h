@@ -10,24 +10,71 @@
 #include "comment.h"
 #include "magic_comment.h"
 
+/*
+    Equivalent of `lib_ruby_parser::source::DecodedInput`
+*/
 typedef struct LIB_RUBY_PARSER_DecodedInput
 {
     LIB_RUBY_PARSER_String name;
     LIB_RUBY_PARSER_SourceLineList lines;
     LIB_RUBY_PARSER_ByteList bytes;
 } LIB_RUBY_PARSER_DecodedInput;
+/*
+    DecodedInput destructor.
+    Just like Rust/C++ destructor it performs cleanup of "embedded" resources.
+    i.e. it doesn't call `free` on a given pointer.
+*/
 void LIB_RUBY_PARSER_drop_decoded_input(LIB_RUBY_PARSER_DecodedInput *decoded_input);
 
-// ParserResult
+/*
+    Equivalent of `lib_ruby_parser::ParserResult`
+*/
 typedef struct LIB_RUBY_PARSER_ParserResult
 {
+    /*
+        Final AST, nullable.
+    */
     LIB_RUBY_PARSER_Node *ast;
+
+    /*
+        List of tokens, empty if `parser_options.record_tokens` was set to false
+    */
     LIB_RUBY_PARSER_TokenList tokens;
+
+    /*
+        List of diagnostics (errors/warnings)
+    */
     LIB_RUBY_PARSER_DiagnosticList diagnostics;
+
+    /*
+        List of comments
+    */
     LIB_RUBY_PARSER_CommentList comments;
+
+    /*
+        List of magic comments
+    */
     LIB_RUBY_PARSER_MagicCommentList magic_comments;
+
+    /*
+        Decoded input
+
+        Sometimes source code has a magic encoding comment
+        that forces us to re-encode given source to other encoding.
+
+        In such cases source code on the byte level is different and so
+        all locations (LIB_RUBY_PARSER_Loc) refer to that new re-encode byte ranges.
+
+        Thus, always use this re-encoded byte array to compute source code
+        of any location.
+    */
     LIB_RUBY_PARSER_DecodedInput input;
 } LIB_RUBY_PARSER_ParserResult;
+/*
+    ParserResult destructor.
+    Just like Rust/C++ destructor it performs cleanup of "embedded" resources.
+    i.e. it doesn't call `free` on a given pointer.
+*/
 void LIB_RUBY_PARSER_drop_parser_result(LIB_RUBY_PARSER_ParserResult *parser_result);
 
 #ifdef TEST_ENV

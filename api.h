@@ -4,6 +4,10 @@
 #include "parser_options.h"
 #include "parser_result.h"
 
+/*
+    Parses given `input` according to `option`.
+    This is the main entrypoint API.
+*/
 LIB_RUBY_PARSER_ParserResult LIB_RUBY_PARSER_parse(
     LIB_RUBY_PARSER_ParserOptions options,
     LIB_RUBY_PARSER_ByteList input);

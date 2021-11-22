@@ -1,108 +1,59 @@
 # c bindings for `lib-ruby-parser`
 
-You can find some examples in `test/test.c`.
+All structs, enums and functions are prefixed with `LIB_RUBY_PARSER_`. API mostly mirrors Rust version.
 
 ## API
 
-1. `struct ParserResult *parse(struct ParserOptions *options, const char *input, uint32_t length)`
+```c
+char *input = "2 + 2";
+LIB_RUBY_PARSER_ByteList input = LIB_RUBY_PARSER_new_bytes_from_cstr(
+    input,
+    strlen(input));
 
-    Parses given input into `ParserResult`
+LIB_RUBY_PARSER_ParserOptions options = {
+    .buffer_name = LIB_RUBY_PARSER_new_string_from_cstr("(eval)"),
+    .decoder = {.decoder = {.f = NULL}},
+    .record_tokens = false,
+    .token_rewriter = {.token_rewriter = {.f = NULL}}};
 
-    ```c
-    const char *input = "2 + 2";
-    struct ParserOptions options = {
-        .buffer_name = "test.rb",
-        .debug = true,
-        .record_tokens = true};
-    struct ParserResult *result = parse(&options, input, strlen(input));
+LIB_RUBY_PARSER_ParserResult result = LIB_RUBY_PARSER_parse(options, input);
+```
 
-    // 1. AST
-    struct Node *node = result->ast;
+Parser input:
++ `LIB_RUBY_PARSER_ByteList input` - source code you want to parse
++ `LIB_RUBY_PARSER_ParserOptions options` - options of parsing:
+    + `buffer_name` - name of your source code
+    + `decoder` - decoder that is used if there's a magic comment with non-UTF-8 encoding
+    + `record_token` specifies whether tokens should be recorded during parsing
+    + `token_rewriter` - token rewriter, optional, called for each token **after** lexing but before shifting.
 
-    // 2. Tokens
-    struct TokenList *tokens = result->tokens;
-    for (uint32_t i = 0; i < tokens->len; i++) {
-        struct Token token = tokens->list[i];
-
-        // token_type
-        int token_type = token.token_type;
-        char *tok_name = token_name(token_type);
-        free(tok_name);
-
-        // token_value
-        char *token_value = token.token_value;
-
-        // loc
-        struct Loc *loc = token.loc;
-    }
-
-    // 3. Diagnostics
-    struct DiagnosticList *diagnostics = result->diagnostics;
-    for (uint32_t i = 0; i < diagnostics->len; i++) {
-        struct Token diagnostic = diagnostics->list[i];
-
-        // level
-        enum ErrorLevel level = diagnostic.level;
-
-        // message
-        struct DiagnosticMessage mesage = diagnostic.message;
-        char *only_message = diagnostic_render_message(message);
-        char *fully_rendered = diagnostic_render(message, result->input);
-
-        // loc
-        struct Loc *loc = diagnostic.loc;
-    }
-
-    // 4. Comments
-    struct CommentList *comments = result->comments;
-    for (uint32_t i = 0; i < comments->len; i++) {
-        struct Comment comment = comments->list[i];
-
-        // loc
-        struct Loc *loc = comment.loc;
-    }
-
-    // 5. Magic comments
-    struct MagicCommentList *magic_comments = result->magic_comments;
-    for (uint32_t i = 0; i < magic_comments->len; i++) {
-        struct MagicComment magic_comment = magic_comments->list[i];
-
-        // kind
-        enum MagicCommentKind kind = magic_comment.kind;
-
-        // key location
-        struct Loc *key_l = magic_comment.key_l;
-
-        // value location
-        struct Loc *value_l = magic_comment.value_l;
-    }
-
-    // 6. Decoded input
-    char *input = result->input;
-    const char *ptr = input_ptr(input);
-    uint32_t len = input_len(input);
-    ```
-2. `void parser_result_free(struct ParserResult *result)`
-
-    Deallocates the memory of the `ParserResult`, recursively `free`s all fields
-
-3. `node->node_type` and `node->inner`
-
-    Generic `Node` struct has only two fields: `node_type` and `inner`.
-    `node_type` is an enum that can be used to identify which variant of the `inner` union should be used.
-
-    ```c
-    assert(node->node_type == NODE_SEND);
-    struct Send *send = node->inner->_send;
-    ```
-
-    This way you can "unwrap" generic node and convert it into specific node type.
-    Specialized node types fully mirror API of Rust nodes, check [full documentation](https://docs.rs/lib-ruby-parser) to understand what is a specialized `Node`.
-
-5. `uint32_t loc_size(struct Loc *loc)`
-
-    Returns size of the loc (literally `end_pos - begin_pos`)
-
-6. `char *loc_source(struct Loc *loc, Input* input)`
-
-    Returns source of the given loc. `input` can be taken from the `ParserResult` struct.
+Parser output:
++ `LIB_RUBY_PARSER_ParserResult result` - all data that parser can output:
+    + `LIB_RUBY_PARSER_Node *ast` - pointer to AST where
+        + node is represented as `LIB_RUBY_PARSER_Node` that is a tagged union with `tag` and `as` fields
+        + every node type is represented by its own struct like `LIB_RUBY_PARSER_Class`
+    + `LIB_RUBY_PARSER_TokenList tokens` - a list of tokens (`ptr` + `len`) where
+        + token is represented as `LIB_RUBY_PARSER_Token` with
+            + `int32_t token_type` - type of the token (e.g. `LIB_RUBY_PARSER_tDEF`)
+            + `LIB_RUBY_PARSER_Bytes token_value` - value of the token
+            + `LIB_RUBY_PARSER_Loc loc` - location of the token
+            + `int32_t lex_state_before` - state before token was lex-ed (useless unless you have a custom token rewriter)
+            + `int32_t lex_state_after` - state after token was lex-ed (useless unless you have a custom token rewriter)
+    + `LIB_RUBY_PARSER_DiagnosticList diagnostics` - a list of diagnostics (`ptr` + `len`) where
+        + diagnostic is represented as `LIB_RUBY_PARSER_Diagnostic` with fields
+            + `LIB_RUBY_PARSER_ErrorLevel level` - level of the diagnostic (error or warning)
+            + `LIB_RUBY_PARSER_DiagnosticMessage message` - message that is a tagged union with `tag` and `as` fields, every message type is represented by its own struct like `LIB_RUBY_PARSER_UnterminatedList`
+            + `LIB_RUBY_PARSER_Loc loc` - location of the diagnostic
+    + `LIB_RUBY_PARSER_CommentList comments` - a list of comments (`ptr` + `len`) where
+        + comment is represented as `LIB_RUBY_PARSER_Comment` with fields
+            + `LIB_RUBY_PARSER_Loc location` - location of the comment
+            + `LIB_RUBY_PARSER_CommentType kind` - kind of the comment (inline/document/unknown)
+    + `LIB_RUBY_PARSER_MagicCommentList magic_comments` - a list of magic comments (`ptr` + `len`) where
+        + magic comment is represented as `LIB_RUBY_PARSER_MagicComment` with fields
+            + `LIB_RUBY_PARSER_MagicCommentKind kind`
+            + `LIB_RUBY_PARSER_Loc key_l`
+            + `LIB_RUBY_PARSER_Loc value_l`
+    + `LIB_RUBY_PARSER_DecodedInput input` - decoded input, is different from initial input if it has encoding different from utf-8, with fields:
+        + `LIB_RUBY_PARSER_String name` - initial name of the source code
+        + `LIB_RUBY_PARSER_SourceLineList lines` - parsed source lines
+        + `LIB_RUBY_PARSER_ByteList bytes` - (maybe re-encoded) initial input

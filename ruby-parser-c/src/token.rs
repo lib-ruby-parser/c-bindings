@@ -30,7 +30,6 @@ pub extern "C" fn lib_ruby_parser__test__make_token_eq(
 }
 
 #[no_mangle]
-#[cfg(feature = "tests")]
 pub extern "C" fn LIB_RUBY_PARSER_token_name(token: *mut Token) -> *const u8 {
     let token = unsafe { token.as_ref().unwrap() };
     token.token_name().as_ptr()

@@ -3,6 +3,10 @@
 
 #include <stddef.h>
 
+/*
+    Equivalent of `&[u8]` in Rust.
+    Holds a constant pointer + length.
+*/
 typedef struct LIB_RUBY_PARSER_SharedByteList
 {
     const char *ptr;
