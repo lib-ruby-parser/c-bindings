@@ -70,7 +70,9 @@ jobs:
       - name: codegen
         env:
           RUSTFLAGS: ""
-        run: cd codegen && cargo build
+        run: |
+          make do-codegen
+          make token_ids.h
 
       - name: make lib file
         run: |
