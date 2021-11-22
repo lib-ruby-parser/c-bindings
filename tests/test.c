@@ -2,6 +2,7 @@
 
 #include "../bytes.h"
 #include "../comment.h"
+#include "../decoded_input.h"
 #include "../decoder.h"
 #include "../diagnostic.h"
 #include "../loc.h"
@@ -29,6 +30,7 @@ int main()
 
     run_test_group_bytes();
     run_test_group_comment();
+    run_test_group_decoded_input();
     run_test_group_decoder();
     run_test_group_diagnostic();
     run_test_group_loc();

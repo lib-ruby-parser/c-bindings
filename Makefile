@@ -7,6 +7,7 @@ SOURCES = \
 	api \
 	bytes \
 	comment \
+	decoded_input \
 	decoder \
 	diagnostic \
 	loc \

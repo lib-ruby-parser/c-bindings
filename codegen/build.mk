@@ -11,8 +11,6 @@ CODEGEN_DEPS += codegen/build.rs
 
 DO_CODEGEN = cd codegen && cargo build
 
-CLEAN += codegen/target
-
 # Codegen deps
 messages.c: $(CODEGEN_DEPS)
 	$(DO_CODEGEN)

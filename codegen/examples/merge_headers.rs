@@ -8,6 +8,7 @@ const HEADERS: &[&str] = &[
     "token.h",
     "comment.h",
     "magic_comment.h",
+    "decoded_input.h",
     "nodes.h",
     "messages.h",
     "diagnostic.h",
