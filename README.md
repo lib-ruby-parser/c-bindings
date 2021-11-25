@@ -16,7 +16,7 @@ LIB_RUBY_PARSER_ParserOptions options = {
     .record_tokens = false,
     .token_rewriter = {.token_rewriter = {.f = NULL}}};
 
-LIB_RUBY_PARSER_ParserResult result = LIB_RUBY_PARSER_parse(options, input);
+LIB_RUBY_PARSER_ParserResult result = LIB_RUBY_PARSER_parse(input, options);
 ```
 
 Parser input:

@@ -30,7 +30,7 @@ int main()
         entry->content = NULL;
         entry->path = NULL;
 
-        LIB_RUBY_PARSER_ParserResult result = LIB_RUBY_PARSER_parse(options, input);
+        LIB_RUBY_PARSER_ParserResult result = LIB_RUBY_PARSER_parse(input, options);
         LIB_RUBY_PARSER_drop_parser_result(&result);
     }
     clock_t end = clock();

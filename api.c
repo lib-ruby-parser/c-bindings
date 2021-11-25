@@ -16,7 +16,7 @@ static void test_parse(void)
 
     LIB_RUBY_PARSER_ByteList input = LIB_RUBY_PARSER_new_bytes_from_cstr("2 + 3", 5);
 
-    LIB_RUBY_PARSER_ParserResult result = LIB_RUBY_PARSER_parse(options, input);
+    LIB_RUBY_PARSER_ParserResult result = LIB_RUBY_PARSER_parse(input, options);
 
     assert_eq(result.ast->tag, LIB_RUBY_PARSER_NODE_SEND);
     assert_eq(result.tokens.len, 4); // tINT tPLUS tINT EOF
