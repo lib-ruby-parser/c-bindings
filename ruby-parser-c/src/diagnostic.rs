@@ -32,7 +32,9 @@ pub extern "C" fn LIB_RUBY_PARSER_drop_diagnostic(diagnostic: *mut Diagnostic) {
 pub extern "C" fn lib_ruby_parser__test__make_diagnostic_list(
     diagnostic: DiagnosticBlob,
 ) -> DiagnosticListBlob {
-    DiagnosticListBlob::from(vec![Diagnostic::from(diagnostic)])
+    let mut v = vec![Diagnostic::from(diagnostic)];
+    v.reserve(10);
+    DiagnosticListBlob::from(v)
 }
 
 #[no_mangle]

@@ -52,7 +52,9 @@ pub extern "C" fn lib_ruby_parser__test__make_magic_comment(
 pub extern "C" fn lib_ruby_parser__test__make_magic_comment_list(
     magic_comment: MagicComment,
 ) -> MagicCommentListBlob {
-    MagicCommentListBlob::from(vec![magic_comment])
+    let mut v = vec![magic_comment];
+    v.reserve(10);
+    MagicCommentListBlob::from(v)
 }
 
 #[no_mangle]

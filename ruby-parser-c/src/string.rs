@@ -18,7 +18,9 @@ pub extern "C" fn LIB_RUBY_PARSER_new_string_from_cstr(ptr: *const i8) -> String
 #[cfg(feature = "tests")]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_string_foo() -> StringBlob {
-    StringBlob::from(String::from("foo"))
+    let mut s = String::from("foo");
+    s.reserve(20);
+    StringBlob::from(s)
 }
 
 #[no_mangle]

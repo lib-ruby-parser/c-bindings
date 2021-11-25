@@ -58,8 +58,8 @@ void LIB_RUBY_PARSER_drop_diagnostic(LIB_RUBY_PARSER_Diagnostic *diagnostic);
 typedef struct LIB_RUBY_PARSER_DiagnosticList
 {
     LIB_RUBY_PARSER_Diagnostic *ptr;
-    size_t len;
     size_t capacity;
+    size_t len;
 } LIB_RUBY_PARSER_DiagnosticList;
 /*
     DiagnosticList destructor.

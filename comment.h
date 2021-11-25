@@ -36,8 +36,8 @@ typedef struct LIB_RUBY_PARSER_Comment
 typedef struct LIB_RUBY_PARSER_CommentList
 {
     LIB_RUBY_PARSER_Comment *ptr;
-    size_t len;
     size_t capacity;
+    size_t len;
 } LIB_RUBY_PARSER_CommentList;
 
 /*

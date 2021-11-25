@@ -20,8 +20,8 @@ typedef struct LIB_RUBY_PARSER_SourceLine
 typedef struct LIB_RUBY_PARSER_SourceLineList
 {
     LIB_RUBY_PARSER_SourceLine *ptr;
-    size_t len;
     size_t capacity;
+    size_t len;
 } LIB_RUBY_PARSER_SourceLineList;
 /*
     LIB_RUBY_PARSER_SourceLineList destructor.

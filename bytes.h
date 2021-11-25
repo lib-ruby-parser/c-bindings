@@ -10,8 +10,8 @@
 typedef struct LIB_RUBY_PARSER_ByteList
 {
     char *ptr;
-    size_t len;
     size_t capacity;
+    size_t len;
 } LIB_RUBY_PARSER_ByteList;
 /*
     ByteList destructor.

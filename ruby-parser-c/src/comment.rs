@@ -34,7 +34,9 @@ pub extern "C" fn lib_ruby_parser__test__make_comment(location: Loc, kind: Comme
 #[cfg(feature = "tests")]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_comment_list(comment: Comment) -> CommentListBlob {
-    CommentListBlob::from(vec![comment])
+    let mut v = vec![comment];
+    v.reserve(10);
+    CommentListBlob::from(v)
 }
 
 #[no_mangle]

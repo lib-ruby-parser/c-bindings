@@ -33,8 +33,8 @@ void LIB_RUBY_PARSER_drop_token(LIB_RUBY_PARSER_Token *token);
 typedef struct LIB_RUBY_PARSER_TokenList
 {
     LIB_RUBY_PARSER_Token *ptr;
-    size_t len;
     size_t capacity;
+    size_t len;
 } LIB_RUBY_PARSER_TokenList;
 /*
     TokenList destructor.

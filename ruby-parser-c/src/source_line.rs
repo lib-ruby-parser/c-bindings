@@ -22,7 +22,9 @@ pub extern "C" fn lib_ruby_parser__test__make_source_line(
 pub extern "C" fn lib_ruby_parser__test__make_source_line_list(
     source_line: SourceLine,
 ) -> SourceLineListBlob {
-    SourceLineListBlob::from(vec![source_line])
+    let mut v = vec![source_line];
+    v.reserve(10);
+    SourceLineListBlob::from(v)
 }
 
 #[no_mangle]
