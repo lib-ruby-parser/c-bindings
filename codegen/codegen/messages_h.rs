@@ -45,8 +45,8 @@ void LIB_RUBY_PARSER_drop_message(LIB_RUBY_PARSER_DiagnosticMessage *message);
 typedef struct LIB_RUBY_PARSER_DiagnosticMessageList
 {
     LIB_RUBY_PARSER_DiagnosticMessage *ptr;
-    size_t len;
     size_t capacity;
+    size_t len;
 } LIB_RUBY_PARSER_DiagnosticMessageList;
 void LIB_RUBY_PARSER_drop_message_list(LIB_RUBY_PARSER_DiagnosticMessageList *message_list);
 

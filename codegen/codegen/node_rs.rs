@@ -71,7 +71,9 @@ pub extern \"C\" fn LIB_RUBY_PARSER_drop_node(node: *mut Node) {
 #[cfg(feature = \"tests\")]
 #[no_mangle]
 pub extern \"C\" fn lib_ruby_parser__test__make_node_list() -> NodeListBlob {
-    NodeListBlob::from(helpers::make_nodes())
+    let mut v = helpers::make_nodes();
+    v.reserve(10);
+    NodeListBlob::from(v)
 }
 
 #[no_mangle]

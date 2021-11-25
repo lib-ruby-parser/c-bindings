@@ -15,8 +15,8 @@ typedef struct LIB_RUBY_PARSER_Node LIB_RUBY_PARSER_Node;
 typedef struct LIB_RUBY_PARSER_NodeList
 {
     LIB_RUBY_PARSER_Node *ptr;
-    size_t len;
     size_t capacity;
+    size_t len;
 } LIB_RUBY_PARSER_NodeList;
 
 {{ each node }}<dnl>
