@@ -34,10 +34,11 @@ typedef struct LIB_RUBY_PARSER_TokenRewriterResult
 void LIB_RUBY_PARSER_drop_token_rewriter_result(LIB_RUBY_PARSER_TokenRewriterResult *);
 
 struct LIB_RUBY_PARSER_TokenRewriter;
-typedef LIB_RUBY_PARSER_TokenRewriterResult (*LIB_RUBY_PARSER_TokenRewriter_Function)(LIB_RUBY_PARSER_Token *, LIB_RUBY_PARSER_SharedByteList);
+typedef LIB_RUBY_PARSER_TokenRewriterResult (*LIB_RUBY_PARSER_TokenRewriter_Function)(void *state, LIB_RUBY_PARSER_Token *token, LIB_RUBY_PARSER_SharedByteList input);
 typedef struct LIB_RUBY_PARSER_TokenRewriter
 {
     LIB_RUBY_PARSER_TokenRewriter_Function f;
+    void *state;
 } LIB_RUBY_PARSER_TokenRewriter;
 
 typedef struct LIB_RUBY_PARSER_MaybeTokenRewriter

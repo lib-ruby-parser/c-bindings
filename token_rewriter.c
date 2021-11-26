@@ -76,7 +76,7 @@ static void test_token_rewriter(void)
     token = (LIB_RUBY_PARSER_Token *)malloc(sizeof(LIB_RUBY_PARSER_Token));
     token->token_type = 396; // tPLUS
     token->token_value.raw = (LIB_RUBY_PARSER_ByteList){.ptr = NULL, .len = 0, .capacity = 0};
-    result = (token_rewriter.f)(token, input);
+    result = (token_rewriter.f)(token_rewriter.state, token, input);
     assert_token(*(result.rewritten_token), "tPLUS");
     LIB_RUBY_PARSER_drop_token_rewriter_result(&result);
 
@@ -84,7 +84,7 @@ static void test_token_rewriter(void)
     token = (LIB_RUBY_PARSER_Token *)malloc(sizeof(LIB_RUBY_PARSER_Token));
     token->token_type = 396; // tPLUS
     token->token_value.raw = (LIB_RUBY_PARSER_ByteList){.ptr = NULL, .len = 0, .capacity = 0};
-    result = (token_rewriter.f)(token, input);
+    result = (token_rewriter.f)(token_rewriter.state, token, input);
     assert_token(*(result.rewritten_token), "tMINUS");
     LIB_RUBY_PARSER_drop_token_rewriter_result(&result);
 }

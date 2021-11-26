@@ -21,7 +21,8 @@ impl From<CParserOptions> for lib_ruby_parser::ParserOptions {
 
         let decoder = decoder.map(|decoder| {
             lib_ruby_parser::source::Decoder::new(Box::new(move |encoding, input| {
-                (decoder.f)(encoding.into(), input.into()).into()
+                let Decoder { f, state } = decoder;
+                f(state, encoding.into(), input.into()).into()
             }))
         });
 
@@ -29,7 +30,8 @@ impl From<CParserOptions> for lib_ruby_parser::ParserOptions {
             lib_ruby_parser::source::token_rewriter::TokenRewriter::new(Box::new(
                 move |token, input| {
                     let input: &'static [u8] = unsafe { std::mem::transmute(input) };
-                    (token_rewriter.f)(Box::leak(token), input.into())
+                    let TokenRewriter { f, state } = token_rewriter;
+                    f(state, Box::leak(token), input.into())
                 },
             ))
         });

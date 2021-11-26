@@ -38,10 +38,11 @@ typedef struct LIB_RUBY_PARSER_DecoderResult
 void LIB_RUBY_PARSER_drop_decoder_result(LIB_RUBY_PARSER_DecoderResult *decoder_result);
 
 struct LIB_RUBY_PARSER_Decoder;
-typedef LIB_RUBY_PARSER_DecoderResult (*LIB_RUBY_PARSER_Decoder_Function)(LIB_RUBY_PARSER_String, LIB_RUBY_PARSER_ByteList);
+typedef LIB_RUBY_PARSER_DecoderResult (*LIB_RUBY_PARSER_Decoder_Function)(void *state, LIB_RUBY_PARSER_String encoding, LIB_RUBY_PARSER_ByteList input);
 typedef struct LIB_RUBY_PARSER_Decoder
 {
     LIB_RUBY_PARSER_Decoder_Function f;
+    void *state;
 } LIB_RUBY_PARSER_Decoder;
 
 typedef struct LIB_RUBY_PARSER_MaybeDecoder

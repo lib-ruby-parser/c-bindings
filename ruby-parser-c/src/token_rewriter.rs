@@ -59,7 +59,12 @@ pub extern "C" fn LIB_RUBY_PARSER_drop_token_rewriter_result(
 
 #[repr(C)]
 pub struct TokenRewriter {
-    pub f: extern "C" fn(token: *mut Token, input: SharedByteListBlob) -> TokenRewriterResult,
+    pub f: extern "C" fn(
+        *mut std::ffi::c_void,
+        token: *mut Token,
+        input: SharedByteListBlob,
+    ) -> TokenRewriterResult,
+    pub state: *mut std::ffi::c_void,
 }
 
 #[cfg(feature = "tests")]
@@ -67,6 +72,7 @@ pub struct TokenRewriter {
 pub extern "C" fn lib_ruby_parser__test__always_keep_token_rewriter() -> TokenRewriter {
     #[no_mangle]
     pub extern "C" fn lib_ruby_parser__test__always_keep_token_rewriter_fn(
+        _state: *mut std::ffi::c_void,
         token: *mut Token,
         _input: SharedByteListBlob,
     ) -> TokenRewriterResult {
@@ -79,6 +85,7 @@ pub extern "C" fn lib_ruby_parser__test__always_keep_token_rewriter() -> TokenRe
     }
     TokenRewriter {
         f: lib_ruby_parser__test__always_keep_token_rewriter_fn,
+        state: std::ptr::null_mut(),
     }
 }
 
@@ -87,6 +94,7 @@ pub extern "C" fn lib_ruby_parser__test__always_keep_token_rewriter() -> TokenRe
 pub extern "C" fn lib_ruby_parser__test__always_rewrite_token_rewriter() -> TokenRewriter {
     #[no_mangle]
     pub extern "C" fn lib_ruby_parser__test__always_rewrite_token_rewriter_fn(
+        _state: *mut std::ffi::c_void,
         token: *mut Token,
         _input: SharedByteListBlob,
     ) -> TokenRewriterResult {
@@ -107,6 +115,7 @@ pub extern "C" fn lib_ruby_parser__test__always_rewrite_token_rewriter() -> Toke
     }
     TokenRewriter {
         f: lib_ruby_parser__test__always_rewrite_token_rewriter_fn,
+        state: std::ptr::null_mut(),
     }
 }
 
