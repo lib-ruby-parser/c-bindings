@@ -26,7 +26,7 @@ $(CC) $(1) $(CFLAGS) -c -o $(2)
 endef
 
 define build_c_exe
-$(CC) $(1) $(CFLAGS) -lws2_32 -luserenv -o $(2)
+$(CC) $(1) $(CFLAGS) -lws2_32 -luserenv -lbcrypt -o $(2)
 endef
 
 BENCHMARK_RUNNER_ASSET_NAME = rust-parser-x86_64-pc-windows-gnu.exe
