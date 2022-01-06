@@ -9,4 +9,4 @@ version = "0.1.0"
 cbindgen = "0.20.0"
 
 [build-dependencies]
-lib-ruby-parser-nodes = {version = "0.38.0"}
+lib-ruby-parser-nodes = {version = "0.47.0"}
