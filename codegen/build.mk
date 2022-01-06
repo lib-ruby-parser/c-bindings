@@ -1,10 +1,3 @@
-TAG_TO_SYNC = v3.0.11
-BASE_FN_SYNC_URL = https://raw.githubusercontent.com/lib-ruby-parser/lib-ruby-parser/$(TAG_TO_SYNC)
-
-codegen/sync-fns:
-	wget -q $(BASE_FN_SYNC_URL)/codegen/fns/shared.rs -O codegen/codegen/fns_shared.rs
-	wget -q $(BASE_FN_SYNC_URL)/codegen/fns/c.rs -O codegen/codegen/fns_c.rs
-
 CODEGEN_DEPS = $(wildcard codegen/codegen/*.rs)
 CODEGEN_DEPS += codegen/Cargo.toml
 CODEGEN_DEPS += codegen/build.rs

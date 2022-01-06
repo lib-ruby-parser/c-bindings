@@ -7,7 +7,7 @@ def abort(message)
 end
 
 asset_name = ENV.fetch('ASSET_NAME') { abort 'ASSET_NAME env var must be provided.' }
-asset_url = "https://github.com/lib-ruby-parser/bench/releases/download/v0.0.1/#{asset_name}"
+asset_url = "https://github.com/lib-ruby-parser/bench/releases/download/v4.0.0+ruby-3.1.0/#{asset_name}"
 save_as = ENV.fetch('SAVE_AS') { abort 'SAVE_AS env var must be provided' }
 
 File.open(save_as, 'wb') do |file|
