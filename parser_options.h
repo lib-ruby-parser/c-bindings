@@ -7,10 +7,14 @@
 #include "decoder.h"
 #include "token_rewriter.h"
 
-/*
-    Equivalent of `lib_ruby_parser::ParserOptions`
-*/
-typedef struct LIB_RUBY_PARSER_ParserOptions
+/// @defgroup input Parser Input
+/// @brief A set of structs and functions to work with parser input
+/// @{
+/// @}
+
+/// @brief Equivalent of `lib_ruby_parser::ParserOptions`
+/// @ingroup input
+typedef struct
 {
     LIB_RUBY_PARSER_String buffer_name;
     LIB_RUBY_PARSER_MaybeDecoder decoder;
@@ -18,11 +22,10 @@ typedef struct LIB_RUBY_PARSER_ParserOptions
     bool record_tokens;
 } LIB_RUBY_PARSER_ParserOptions;
 
-/*
-    ParserOptions destructor.
-    Just like Rust/C++ destructor it performs cleanup of "embedded" resources.
-    i.e. it doesn't call `free` on a given pointer.
-*/
+/// ParserOptions destructor.
+/// Just like Rust/C++ destructor it performs cleanup of "embedded" resources.
+/// i.e. it doesn't call `free` on a given pointer.
+/// @ingroup input
 void LIB_RUBY_PARSER_drop_parser_options(LIB_RUBY_PARSER_ParserOptions *parser_options);
 
 #ifdef TEST_ENV

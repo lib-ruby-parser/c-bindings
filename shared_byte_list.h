@@ -3,11 +3,14 @@
 
 #include <stddef.h>
 
-/*
-    Equivalent of `&[u8]` in Rust.
-    Holds a constant pointer + length.
-*/
-typedef struct LIB_RUBY_PARSER_SharedByteList
+/// @defgroup shared_byte_list Shared Byte List
+/// @{
+/// @}
+
+/// @brief Equivalent of `&[u8]` in Rust.
+/// Holds a constant pointer + length.
+/// @ingroup shared_byte_list
+typedef struct
 {
     const char *ptr;
     size_t len;

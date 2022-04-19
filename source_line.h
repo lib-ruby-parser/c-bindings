@@ -4,30 +4,32 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-/*
-    `SourceLine` struct from `lib-ruby-parser`
-*/
-typedef struct LIB_RUBY_PARSER_SourceLine
+/// @defgroup source_line Source Line
+/// @{
+/// @}
+
+/// @brief `SourceLine` struct from `lib-ruby-parser`
+/// @ingroup source_line
+typedef struct
 {
     size_t start;
     size_t end;
     bool ends_with_eof;
 } LIB_RUBY_PARSER_SourceLine;
 
-/*
-    Equivalent of `Vec<SourceLine>`
-*/
-typedef struct LIB_RUBY_PARSER_SourceLineList
+/// @brief Equivalent of `Vec<SourceLine>`
+/// @ingroup source_line
+typedef struct
 {
     LIB_RUBY_PARSER_SourceLine *ptr;
     size_t capacity;
     size_t len;
 } LIB_RUBY_PARSER_SourceLineList;
-/*
-    LIB_RUBY_PARSER_SourceLineList destructor.
-    Just like Rust/C++ destructor it performs cleanup of "embedded" resources.
-    i.e. it doesn't call `free` on a given pointer.
-*/
+
+/// LIB_RUBY_PARSER_SourceLineList destructor.
+/// Just like Rust/C++ destructor it performs cleanup of "embedded" resources.
+/// i.e. it doesn't call `free` on a given pointer.
+/// @ingroup source_line
 void LIB_RUBY_PARSER_drop_source_line_list(LIB_RUBY_PARSER_SourceLineList *source_line_list);
 
 #ifdef TEST_ENV

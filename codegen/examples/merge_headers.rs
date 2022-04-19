@@ -85,6 +85,8 @@ fn main() {
         "#ifndef LIB_RUBY_PARSER_H
 #define LIB_RUBY_PARSER_H
 
+/// @file lib-ruby-parser.h
+
 {sys_includes}
 {contents}
 #endif // LIB_RUBY_PARSER_H

@@ -5,25 +5,29 @@
 #include <stdint.h>
 #include "decoded_input.h"
 
-/*
-    `Loc` struct from `lib-ruby-parser`
-*/
-typedef struct LIB_RUBY_PARSER_Loc
+/// @defgroup loc Loc
+/// @brief A set of structs and functions to work with source locations
+/// @{
+/// @}
+
+/// `Loc` struct from `lib-ruby-parser`
+/// @ingroup loc
+typedef struct
 {
+    /// Begin of the location
     size_t begin;
+    /// End of the location
     size_t end;
 } LIB_RUBY_PARSER_Loc;
 
-/*
-    Returns source code of the given location.
-    Equivalent of `lib_ruby_parser::Loc::source`
-*/
+/// Returns source code of the given location.
+/// Equivalent of `lib_ruby_parser::Loc::source`
+/// @ingroup loc
 char *LIB_RUBY_PARSER_loc_source(const LIB_RUBY_PARSER_Loc *loc, const LIB_RUBY_PARSER_DecodedInput *input);
 
-/*
-    Equivalent of `Option<Loc>`
-*/
-typedef struct LIB_RUBY_PARSER_MaybeLoc
+/// Equivalent of `Option<Loc>`
+/// @ingroup loc
+typedef struct
 {
     enum
     {

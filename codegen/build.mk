@@ -38,7 +38,7 @@ CLEAN += token_ids.h
 update-depend: token_ids.h
 
 # lib-ruby-parser.h codegen
-lib-ruby-parser.h: codegen/examples/merge_headers.rs $(H_FILES) token_ids.h
+lib-ruby-parser.h: codegen/examples/merge_headers.rs $(H_FILES) token_ids.h nodes.h messages.h
 	cargo run --example merge_headers --manifest-path codegen/Cargo.toml
 CLEAN += lib-ruby-parser.h
 update-depend: lib-ruby-parser.h

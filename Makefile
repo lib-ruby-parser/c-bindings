@@ -63,6 +63,11 @@ clean:
 	rm -f *.$(O)
 	rm -f *.$(A)
 	rm -rf *.dSYM
+	touch codegen/Cargo.toml
 
 check:
 	CC=$(CC) ruby assert_defs.rb bindings.h bindings.c bindings_messages.c bindings_nodes.c
+
+doxygen: messages.h nodes.h token_ids.h
+	rm -rf docs
+	doxygen

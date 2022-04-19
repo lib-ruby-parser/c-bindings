@@ -5,7 +5,7 @@
 #include "string.h"
 #include "bytes.h"
 
-typedef struct LIB_RUBY_PARSER_InputError
+typedef struct
 {
     enum
     {
@@ -21,7 +21,7 @@ typedef struct LIB_RUBY_PARSER_InputError
 } LIB_RUBY_PARSER_InputError;
 void LIB_RUBY_PARSER_drop_input_error(LIB_RUBY_PARSER_InputError *input_error);
 
-typedef struct LIB_RUBY_PARSER_DecoderResult
+typedef struct
 {
     enum
     {
@@ -37,15 +37,14 @@ typedef struct LIB_RUBY_PARSER_DecoderResult
 } LIB_RUBY_PARSER_DecoderResult;
 void LIB_RUBY_PARSER_drop_decoder_result(LIB_RUBY_PARSER_DecoderResult *decoder_result);
 
-struct LIB_RUBY_PARSER_Decoder;
 typedef LIB_RUBY_PARSER_DecoderResult (*LIB_RUBY_PARSER_Decoder_Function)(void *state, LIB_RUBY_PARSER_String encoding, LIB_RUBY_PARSER_ByteList input);
-typedef struct LIB_RUBY_PARSER_Decoder
+typedef struct
 {
     LIB_RUBY_PARSER_Decoder_Function f;
     void *state;
 } LIB_RUBY_PARSER_Decoder;
 
-typedef struct LIB_RUBY_PARSER_MaybeDecoder
+typedef struct
 {
     LIB_RUBY_PARSER_Decoder decoder;
 } LIB_RUBY_PARSER_MaybeDecoder;

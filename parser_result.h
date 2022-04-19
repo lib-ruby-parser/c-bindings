@@ -8,55 +8,46 @@
 #include "magic_comment.h"
 #include "decoded_input.h"
 
-/*
-    Equivalent of `lib_ruby_parser::ParserResult`
-*/
-typedef struct LIB_RUBY_PARSER_ParserResult
+/// @defgroup output Parser Output
+/// @{
+/// @}
+
+/// @brief Parser output
+/// @ingroup output
+typedef struct
 {
-    /*
-        Final AST, nullable.
-    */
+    /// Final AST, nullable.
     LIB_RUBY_PARSER_Node *ast;
 
-    /*
-        List of tokens, empty if `parser_options.record_tokens` was set to false
-    */
+    /// List of tokens, empty if `parser_options.record_tokens` was set to false
     LIB_RUBY_PARSER_TokenList tokens;
 
-    /*
-        List of diagnostics (errors/warnings)
-    */
+    /// List of diagnostics (errors/warnings)
     LIB_RUBY_PARSER_DiagnosticList diagnostics;
 
-    /*
-        List of comments
-    */
+    /// List of comments
     LIB_RUBY_PARSER_CommentList comments;
 
-    /*
-        List of magic comments
-    */
+    /// List of magic comments
     LIB_RUBY_PARSER_MagicCommentList magic_comments;
 
-    /*
-        Decoded input
-
-        Sometimes source code has a magic encoding comment
-        that forces us to re-encode given source to other encoding.
-
-        In such cases source code on the byte level is different and so
-        all locations (LIB_RUBY_PARSER_Loc) refer to that new re-encode byte ranges.
-
-        Thus, always use this re-encoded byte array to compute source code
-        of any location.
-    */
+    /// Decoded input
+    ///
+    /// Sometimes source code has a magic encoding comment
+    /// that forces us to re-encode given source to other encoding.
+    ///
+    /// In such cases source code on the byte level is different and so
+    /// all locations (LIB_RUBY_PARSER_Loc) refer to that new re-encode byte ranges.
+    ///
+    /// Thus, always use this re-encoded byte array to compute source code
+    /// of any location.
     LIB_RUBY_PARSER_DecodedInput input;
 } LIB_RUBY_PARSER_ParserResult;
-/*
-    ParserResult destructor.
-    Just like Rust/C++ destructor it performs cleanup of "embedded" resources.
-    i.e. it doesn't call `free` on a given pointer.
-*/
+
+/// ParserResult destructor.
+/// Just like Rust/C++ destructor it performs cleanup of "embedded" resources.
+/// i.e. it doesn't call `free` on a given pointer.
+/// @ingroup output
 void LIB_RUBY_PARSER_drop_parser_result(LIB_RUBY_PARSER_ParserResult *parser_result);
 
 #ifdef TEST_ENV

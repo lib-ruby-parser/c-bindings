@@ -8,12 +8,17 @@ const TEMPLATE: &str = "#ifndef LIB_RUBY_PARSER_MESSAGES_H
 #include <stdint.h>
 #include \"string.h\"
 
+/// @defgroup messages Diagnostic Message Variants
+/// @{
+/// @}
+
 {{ each message }}<dnl>
 {{ helper message-comment }}
-typedef struct LIB_RUBY_PARSER_{{ helper message-camelcase-name }}
+/// @ingroup messages
+typedef struct
 {
 {{ if message-has-no-fields }}<dnl>
-    // dummy byte (zero-sized structs are no allowed in C)
+    /// dummy byte (zero-sized structs are no allowed in C)
     uint8_t dummy;
 {{ else }}<dnl>
 {{ end }}<dnl>
@@ -26,7 +31,9 @@ typedef struct LIB_RUBY_PARSER_{{ helper message-camelcase-name }}
 
 {{ end }}<dnl>
 
-typedef struct LIB_RUBY_PARSER_DiagnosticMessage {
+/// @ingroup output
+typedef struct
+{
     enum {
 {{ each message }}<dnl>
         LIB_RUBY_PARSER_MESSAGE_{{ helper message-upper-name }},
@@ -42,7 +49,7 @@ typedef struct LIB_RUBY_PARSER_DiagnosticMessage {
 
 void LIB_RUBY_PARSER_drop_message(LIB_RUBY_PARSER_DiagnosticMessage *message);
 
-typedef struct LIB_RUBY_PARSER_DiagnosticMessageList
+typedef struct
 {
     LIB_RUBY_PARSER_DiagnosticMessage *ptr;
     size_t capacity;

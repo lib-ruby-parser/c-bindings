@@ -6,13 +6,13 @@
 #include "token.h"
 #include "shared_byte_list.h"
 
-typedef enum LIB_RUBY_PARSER_RewriteAction
+typedef enum
 {
     LIB_RUBY_PARSER_REWRITE_ACTION_DROP,
     LIB_RUBY_PARSER_REWRITE_ACTION_KEEP
 } LIB_RUBY_PARSER_RewriteAction;
 
-typedef struct LIB_RUBY_PARSER_LexStateAction
+typedef struct
 {
     enum
     {
@@ -25,7 +25,7 @@ typedef struct LIB_RUBY_PARSER_LexStateAction
     } as;
 } LIB_RUBY_PARSER_LexStateAction;
 
-typedef struct LIB_RUBY_PARSER_TokenRewriterResult
+typedef struct
 {
     LIB_RUBY_PARSER_Token *rewritten_token;
     LIB_RUBY_PARSER_RewriteAction token_action;
@@ -33,15 +33,14 @@ typedef struct LIB_RUBY_PARSER_TokenRewriterResult
 } LIB_RUBY_PARSER_TokenRewriterResult;
 void LIB_RUBY_PARSER_drop_token_rewriter_result(LIB_RUBY_PARSER_TokenRewriterResult *);
 
-struct LIB_RUBY_PARSER_TokenRewriter;
 typedef LIB_RUBY_PARSER_TokenRewriterResult (*LIB_RUBY_PARSER_TokenRewriter_Function)(void *state, LIB_RUBY_PARSER_Token *token, LIB_RUBY_PARSER_SharedByteList input);
-typedef struct LIB_RUBY_PARSER_TokenRewriter
+typedef struct
 {
     LIB_RUBY_PARSER_TokenRewriter_Function f;
     void *state;
 } LIB_RUBY_PARSER_TokenRewriter;
 
-typedef struct LIB_RUBY_PARSER_MaybeTokenRewriter
+typedef struct
 {
     LIB_RUBY_PARSER_TokenRewriter token_rewriter;
 } LIB_RUBY_PARSER_MaybeTokenRewriter;

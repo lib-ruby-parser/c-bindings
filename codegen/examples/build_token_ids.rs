@@ -48,7 +48,8 @@ fn collect_token_ids() -> Vec<TokenId> {
     for line in bindings.lines() {
         if line.starts_with("/// Token") {
             // token comment line
-            token_id.comment = line.to_string();
+            token_id.comment =
+                line.replace("/// Token", "/// @ingroup token_ids\n/// @brief Token");
         } else if line.starts_with("static const int32_t Lexer_") {
             let line = line
                 .replace("static const int32_t Lexer_", "")
@@ -72,6 +73,10 @@ pub fn main() {
     let token_ids_h = format!(
         "#ifndef LIB_RUBY_PARSER_TOKEN_IDS_H
 #define LIB_RUBY_PARSER_TOKEN_IDS_H
+
+/// @defgroup token_ids Token IDs
+/// @{{
+/// @}}
 
 {declarations}
 

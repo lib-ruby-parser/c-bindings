@@ -6,9 +6,11 @@ A = a
 STATIC_LIB_FILE = libruby_parser_c.$(A)
 LIST_DEPS = otool -L
 
-CFLAGS += -Wall -Wextra -Wpedantic -Weverything -g
+CFLAGS += -Wall -Wextra -Wpedantic -Weverything -Wdocumentation -g
 # but disable -Wpadded, we inherit Rust layouts
 CFLAGS += -Wno-padded
+# ignore documentation, it has examples of syntax errors on purpose
+CFLAGS += -Wno-documentation-unknown-command
 
 ifeq ($(BUILD_ENV), debug)
 CFLAGS += -O0 -DTEST_ENV

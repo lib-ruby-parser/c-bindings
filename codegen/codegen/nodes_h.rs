@@ -10,9 +10,15 @@ const TEMPLATE: &str = "#ifndef LIB_RUBY_PARSER_NODES_H
 #include \"loc.h\"
 #include \"bytes.h\"
 
+/// @defgroup nodes Node variants
+/// @{
+/// @}
+
 struct LIB_RUBY_PARSER_Node;
 typedef struct LIB_RUBY_PARSER_Node LIB_RUBY_PARSER_Node;
-typedef struct LIB_RUBY_PARSER_NodeList
+/// Node list (an equivalent of `Vec<Node>`)
+/// @ingroup output
+typedef struct
 {
     LIB_RUBY_PARSER_Node *ptr;
     size_t capacity;
@@ -21,7 +27,8 @@ typedef struct LIB_RUBY_PARSER_NodeList
 
 {{ each node }}<dnl>
 {{ helper node-comment }}
-typedef struct LIB_RUBY_PARSER_{{ helper node-camelcase-name }}
+/// @ingroup nodes
+typedef struct
 {
 {{ each node-field }}<dnl>
 {{ helper node-field-comment }}
@@ -32,6 +39,7 @@ typedef struct LIB_RUBY_PARSER_{{ helper node-camelcase-name }}
 
 {{ end }}<dnl>
 
+/// @ingroup output
 struct LIB_RUBY_PARSER_Node {
     enum {
 {{ each node }}<dnl>
