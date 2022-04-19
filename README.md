@@ -2,6 +2,8 @@
 
 All structs, enums and functions are prefixed with `LIB_RUBY_PARSER_`. API mostly mirrors Rust version.
 
+[Documentation](https://lib-ruby-parser.github.io/c-bindings/)
+
 ## API
 
 ```c

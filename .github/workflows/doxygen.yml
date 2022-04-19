@@ -37,7 +37,7 @@ jobs:
       - name: generate docs
         run: make doxygen
 
-      - name: deploy yo GH pages
+      - name: deploy to GH pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
