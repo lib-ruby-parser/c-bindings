@@ -1,0 +1,45 @@
+name: doxygen
+
+on:
+  push:
+    branches: [ master ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  doxygen:
+    name: doxygen
+    runs-on: ubuntu-latest
+    env:
+      BUILD_ENV: debug
+      TARGET: x86_64-unknown-linux-gnu
+      CC: clang-12
+    steps:
+      - name: install rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          target: x86_64-unknown-linux-gnu
+          override: true
+
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: install doxygen
+        run: sudo apt-get install doxygen
+
+      - name: generate docs
+        run: make doxygen
+
+      - name: deploy yo GH pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/html
+
