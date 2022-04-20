@@ -10,7 +10,7 @@ pub(crate) mod nodes {
     }
 
     pub(crate) fn comment(node: &Node) -> String {
-        node.render_comment("///", 0)
+        node.render_comment("///", 0).replace("\\", "\\\\")
     }
 
     pub(crate) fn str_type(node: &Node) -> String {
@@ -70,7 +70,7 @@ pub(crate) mod messages {
     }
 
     pub(crate) fn comment(message: &Message) -> String {
-        message.render_comment("///", 0)
+        message.render_comment("///", 0).replace("\\", "\\\\")
     }
 
     pub(crate) fn is_last(message: &Message) -> bool {
