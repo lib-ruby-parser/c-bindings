@@ -98,10 +98,67 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:afcc9ba3bc6aa4f91d14540d63a45180c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___node_list.html">LIB_RUBY_PARSER_NodeList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___xstr.html#afcc9ba3bc6aa4f91d14540d63a45180c">parts</a></td></tr>
 <tr class="memdesc:afcc9ba3bc6aa4f91d14540d63a45180c"><td class="mdescLeft">&#160;</td><td class="mdescRight">A list of string parts (static literals and interpolated expressions)  <a href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___xstr.html#afcc9ba3bc6aa4f91d14540d63a45180c">More...</a><br /></td></tr>
 <tr class="separator:afcc9ba3bc6aa4f91d14540d63a45180c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a035d0053acfb0472a871493a8677ff50"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___xstr.html#a035d0053acfb0472a871493a8677ff50">begin_l</a></td></tr>
+<tr class="separator:a035d0053acfb0472a871493a8677ff50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9685b84d948cfbcd6ae28ab114e67020"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___xstr.html#a9685b84d948cfbcd6ae28ab114e67020">end_l</a></td></tr>
+<tr class="separator:a9685b84d948cfbcd6ae28ab114e67020"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f694b305730120b6ef759ff55d9887a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___xstr.html#a1f694b305730120b6ef759ff55d9887a">expression_l</a></td></tr>
+<tr class="separator:a1f694b305730120b6ef759ff55d9887a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents an executable string (i.e. <code>`sh #{script_name}`</code>) </p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a035d0053acfb0472a871493a8677ff50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a035d0053acfb0472a871493a8677ff50">&#9670;&nbsp;</a></span>begin_l</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a> LIB_RUBY_PARSER_Xstr::begin_l</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Location of the string begin</p>
+<p>``<code>text </code>#{foo}` ^</p>
+<p>X{#{foo}} ^^^ ``` </p>
+
+</div>
+</div>
+<a id="a9685b84d948cfbcd6ae28ab114e67020"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9685b84d948cfbcd6ae28ab114e67020">&#9670;&nbsp;</a></span>end_l</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a> LIB_RUBY_PARSER_Xstr::end_l</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Location of the string end</p>
+<p>``<code>text </code>#{foo}` ^</p>
+<p>X{#{foo}} ^ ``` </p>
+
+</div>
+</div>
+<a id="a1f694b305730120b6ef759ff55d9887a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f694b305730120b6ef759ff55d9887a">&#9670;&nbsp;</a></span>expression_l</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a> LIB_RUBY_PARSER_Xstr::expression_l</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Location of the full expression</p>
+<p>``<code>text </code>#{foo}` ^^^^^^^^</p>
+<p>X{#{foo}} ^^^^^^^^^^ ``` </p>
+
+</div>
+</div>
 <a id="afcc9ba3bc6aa4f91d14540d63a45180c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afcc9ba3bc6aa4f91d14540d63a45180c">&#9670;&nbsp;</a></span>parts</h2>
 

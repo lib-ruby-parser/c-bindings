@@ -111,5 +111,164 @@ var group__messages =
     ] ],
     [ "LIB_RUBY_PARSER_UnknownRegexOptions", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___unknown_regex_options.html", [
       [ "options", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___unknown_regex_options.html#ab65938e81af746eea3c85fc744eeb7af", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_UnterminatedUnicodeEscape", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___unterminated_unicode_escape.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___unterminated_unicode_escape.html#ab0a92f3b3e69ae1311c395ad44372fa2", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_EncodingError", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___encoding_error.html", [
+      [ "error", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___encoding_error.html#a1937d7a8a7c59b1221685bf66d53df40", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_InvalidMultibyteChar", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___invalid_multibyte_char.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___invalid_multibyte_char.html#a1a1627bc1fc21f9d65427e30e04aa4f4", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_AmbiguousTernaryOperator", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___ambiguous_ternary_operator.html", [
+      [ "condition", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___ambiguous_ternary_operator.html#a566008f15803cb697e81da6e771151e1", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_AmbiguousRegexp", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___ambiguous_regexp.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___ambiguous_regexp.html#a89334c7b5da8b65e1d6b4bc6e796814f", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_ElseWithoutRescue", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___else_without_rescue.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___else_without_rescue.html#a55a49e56f70a29cc5330fe42496635ca", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_BeginNotAtTopLevel", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___begin_not_at_top_level.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___begin_not_at_top_level.html#a68be8cb3d7caa20cf4f7cd93bbe90d33", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_AliasNthRef", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___alias_nth_ref.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___alias_nth_ref.html#a6bee13aab72c3ef3e3c24e6901f04984", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_CsendInsideMasgn", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___csend_inside_masgn.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___csend_inside_masgn.html#ad9772ac8aa02b03cdb087130393596fc", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_ClassOrModuleNameMustBeConstant", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___class_or_module_name_must_be_constant.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___class_or_module_name_must_be_constant.html#ac8b3876f561a27647fdb17faa849068f", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_EndlessSetterDefinition", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___endless_setter_definition.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___endless_setter_definition.html#a02a7e2b380afaa64565926418323fe28", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_UnexpectedToken", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___unexpected_token.html", [
+      [ "token_name", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___unexpected_token.html#ac75f0fc1b2ddde22f9fcc35b4bf4e446", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_ClassDefinitionInMethodBody", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___class_definition_in_method_body.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___class_definition_in_method_body.html#aba37b849af9aaf31ed8647f7690e405a", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_ModuleDefinitionInMethodBody", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___module_definition_in_method_body.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___module_definition_in_method_body.html#a743b6b3feec8a5a83a98d689f309b877", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_InvalidReturnInClassOrModuleBody", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___invalid_return_in_class_or_module_body.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___invalid_return_in_class_or_module_body.html#a3983575525583900888ef1415d3dadc6", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_ConstArgument", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___const_argument.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___const_argument.html#ae0f5fa574e08274d3b49080e8d904209", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_IvarArgument", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___ivar_argument.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___ivar_argument.html#ad0e5cf59ea17940642eda83a7bfa97cf", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_GvarArgument", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___gvar_argument.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___gvar_argument.html#a885a2fe425d6b364a394049114f90560", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_CvarArgument", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___cvar_argument.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___cvar_argument.html#a2c96fab7531e651f196d44a57978de06", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_NoSuchLocalVariable", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___no_such_local_variable.html", [
+      [ "var_name", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___no_such_local_variable.html#ae0207b985078cea33410168304fca520", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_OrdinaryParamDefined", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___ordinary_param_defined.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___ordinary_param_defined.html#aafcdcd6cbf612ede6695843da961cdce", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_NumparamUsed", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___numparam_used.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___numparam_used.html#a65439b676be6128167f953d021bbeb1b", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_TokAtEolWithoutExpression", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___tok_at_eol_without_expression.html", [
+      [ "token_name", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___tok_at_eol_without_expression.html#a6db27585762e6ed153de48b7f01a5265", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_InvalidIdToGet", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___invalid_id_to_get.html", [
+      [ "identifier", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___invalid_id_to_get.html#adc92a08ffb5eced2b28a42c426936b68", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_ForwardArgAfterRestarg", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___forward_arg_after_restarg.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___forward_arg_after_restarg.html#a5524c6e94aab42a60d5d45df680c007f", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_NoAnonymousBlockarg", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___no_anonymous_blockarg.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___no_anonymous_blockarg.html#a16995f8d733ad55d3e46b8f106e264c4", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_EndInMethod", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___end_in_method.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___end_in_method.html#a05357b6e8ffcf9f961a3a5efb3d1cb2b", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_ComparisonAfterComparison", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___comparison_after_comparison.html", [
+      [ "comparison", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___comparison_after_comparison.html#a0762a46019c493bbe6f45a1ef7332584", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_DuplicateHashKey", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___duplicate_hash_key.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___duplicate_hash_key.html#aa26df83bd75b0535c8ed8331b89bcfa9", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_CircularArgumentReference", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___circular_argument_reference.html", [
+      [ "arg_name", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___circular_argument_reference.html#a39027fba9cece1777f127eabf9f97e39", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_DynamicConstantAssignment", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___dynamic_constant_assignment.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___dynamic_constant_assignment.html#aed3b2ca08d65f0584e1772b62abfe893", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_CantAssignToSelf", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___cant_assign_to_self.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___cant_assign_to_self.html#afbe3a2e5dea5ba22a97251a6a0bfb73c", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_CantAssignToNil", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___cant_assign_to_nil.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___cant_assign_to_nil.html#a8f86e2854b8173efbd558debc044b37b", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_CantAssignToTrue", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___cant_assign_to_true.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___cant_assign_to_true.html#af94d3cd4b9134328a638e93a02b778da", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_CantAssignToFalse", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___cant_assign_to_false.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___cant_assign_to_false.html#af2cb71b311a4adcad4612454556c8729", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_CantAssignToFile", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___cant_assign_to_file.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___cant_assign_to_file.html#ac44dc46b39989b9481e75936149d6c20", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_CantAssignToLine", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___cant_assign_to_line.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___cant_assign_to_line.html#a0b7192a589392effd7c43c97afd05e19", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_CantAssignToEncoding", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___cant_assign_to_encoding.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___cant_assign_to_encoding.html#a9708dbcb75ebd9bd84c809742c89795c", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_CantAssignToNumparam", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___cant_assign_to_numparam.html", [
+      [ "numparam", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___cant_assign_to_numparam.html#a5b98d30e46ae50f9397c4c58544d50dd", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_CantSetVariable", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___cant_set_variable.html", [
+      [ "var_name", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___cant_set_variable.html#a260e16023df3ea61a620c1da22427a88", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_BlockGivenToYield", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___block_given_to_yield.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___block_given_to_yield.html#a3477844daddce4719229961cc0dd6184", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_BlockAndBlockArgGiven", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___block_and_block_arg_given.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___block_and_block_arg_given.html#aae61405a7a577466c422b46f3ff62e10", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_SymbolLiteralWithInterpolation", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___symbol_literal_with_interpolation.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___symbol_literal_with_interpolation.html#adfb14c1c649324bba9253921f8ac7282", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_ReservedForNumparam", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___reserved_for_numparam.html", [
+      [ "numparam", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___reserved_for_numparam.html#adac0c954eec9e0c0d75fe15f9e93d980", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_KeyMustBeValidAsLocalVariable", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___key_must_be_valid_as_local_variable.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___key_must_be_valid_as_local_variable.html#a1faf7b14fc35e45d68b7651f2a2a946d", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_DuplicateVariableName", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___duplicate_variable_name.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___duplicate_variable_name.html#aee0a244e5d271982ee19c897ca2c2102", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_DuplicateKeyName", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___duplicate_key_name.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___duplicate_key_name.html#aa404f9c69493b8fecd670f067d7a0683", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_SingletonLiteral", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___singleton_literal.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___singleton_literal.html#a8a22ab46f6d7c4c8f4fb4b115edcd543", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_NthRefIsTooBig", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___nth_ref_is_too_big.html", [
+      [ "nth_ref", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___nth_ref_is_too_big.html#a2c6fdbc4f3b37dc9b0824e87e049253d", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_DuplicatedArgumentName", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___duplicated_argument_name.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___duplicated_argument_name.html#aa5fde198e66856ed81308c5ddb9949d4", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_RegexError", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___regex_error.html", [
+      [ "error", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___regex_error.html#a0b687722c1eb9995bdae3c8226e471b6", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_InvalidSymbol", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___invalid_symbol.html", [
+      [ "symbol", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___invalid_symbol.html#ad9eee09390fd1a215c2a0f7aa7ad0dcf", null ]
+    ] ],
+    [ "LIB_RUBY_PARSER_VoidValueExpression", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___void_value_expression.html", [
+      [ "dummy", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___void_value_expression.html#a80e2c5456029d2e9fef0aaea066b2a0d", null ]
     ] ]
 ];

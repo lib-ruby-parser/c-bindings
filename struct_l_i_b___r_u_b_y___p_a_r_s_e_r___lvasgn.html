@@ -101,10 +101,33 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:ade938e243548baf5d4e4d94cdcede891"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___node.html">LIB_RUBY_PARSER_Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lvasgn.html#ade938e243548baf5d4e4d94cdcede891">value</a></td></tr>
 <tr class="memdesc:ade938e243548baf5d4e4d94cdcede891"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value that is assigned to a local variable.  <a href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lvasgn.html#ade938e243548baf5d4e4d94cdcede891">More...</a><br /></td></tr>
 <tr class="separator:ade938e243548baf5d4e4d94cdcede891"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8199febcd1aebc76c61eee00ddc35cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lvasgn.html#af8199febcd1aebc76c61eee00ddc35cc">name_l</a></td></tr>
+<tr class="separator:af8199febcd1aebc76c61eee00ddc35cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a02f84c554621ff898dcd36fde84726"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___maybe_loc.html">LIB_RUBY_PARSER_MaybeLoc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lvasgn.html#a3a02f84c554621ff898dcd36fde84726">operator_l</a></td></tr>
+<tr class="separator:a3a02f84c554621ff898dcd36fde84726"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8eda222c94fda94fcf8b087b49d5333a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lvasgn.html#a8eda222c94fda94fcf8b087b49d5333a">expression_l</a></td></tr>
+<tr class="separator:a8eda222c94fda94fcf8b087b49d5333a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents local variable assignment (i.e. <code>foo = 42</code>) </p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a8eda222c94fda94fcf8b087b49d5333a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8eda222c94fda94fcf8b087b49d5333a">&#9670;&nbsp;</a></span>expression_l</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a> LIB_RUBY_PARSER_Lvasgn::expression_l</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Location of the full expression</p>
+<div class="fragment"><div class="line">foo = 42</div>
+<div class="line">^^^^^^^^</div>
+</div><!-- fragment --> 
+</div>
+</div>
 <a id="a2dbebb513fa21aec003167aabc2c9100"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2dbebb513fa21aec003167aabc2c9100">&#9670;&nbsp;</a></span>name</h2>
 
@@ -118,6 +141,41 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Name of the local variable. </p>
+
+</div>
+</div>
+<a id="af8199febcd1aebc76c61eee00ddc35cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8199febcd1aebc76c61eee00ddc35cc">&#9670;&nbsp;</a></span>name_l</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a> LIB_RUBY_PARSER_Lvasgn::name_l</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Location of the local variable name</p>
+<div class="fragment"><div class="line">foo = 42</div>
+<div class="line">^^^</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a3a02f84c554621ff898dcd36fde84726"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a02f84c554621ff898dcd36fde84726">&#9670;&nbsp;</a></span>operator_l</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___maybe_loc.html">LIB_RUBY_PARSER_MaybeLoc</a> LIB_RUBY_PARSER_Lvasgn::operator_l</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Location of the <code>=</code> operator</p>
+<div class="fragment"><div class="line">foo = 42</div>
+<div class="line">    ^</div>
+</div><!-- fragment --><p><code>None</code> if local variable assignment is a part of the multi-assignment. In such case <code>value</code> is a part of the <code>Masgn</code> node. </p>
 
 </div>
 </div>

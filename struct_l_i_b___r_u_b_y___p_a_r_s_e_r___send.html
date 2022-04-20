@@ -148,7 +148,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of open parenthesis</p>
 <div class="fragment"><div class="line">foo(42)</div>
-<div class="line">   ~</div>
+<div class="line">   ^</div>
 </div><!-- fragment --><p><code>None</code> if there are no parentheses </p>
 
 </div>
@@ -166,7 +166,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the <code>.</code> operator</p>
 <div class="fragment"><div class="line">foo.bar(42)</div>
-<div class="line">   ~</div>
+<div class="line">   ^</div>
 </div><!-- fragment --><p><code>None</code> for implicit method call (e.g. <code>foo(42)</code>) </p>
 
 </div>
@@ -184,7 +184,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of closing parenthesis</p>
 <div class="fragment"><div class="line">foo(42)</div>
-<div class="line">      ~</div>
+<div class="line">      ^</div>
 </div><!-- fragment --><p><code>None</code> if there are no parentheses </p>
 
 </div>
@@ -202,7 +202,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the full expression</p>
 <div class="fragment"><div class="line">foo.bar(42)</div>
-<div class="line">~~~~~~~~~~~</div>
+<div class="line">^^^^^^^^^^^</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -235,7 +235,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the operator if method is a setter</p>
 <div class="fragment"><div class="line">foo.bar = 42</div>
-<div class="line">        ~</div>
+<div class="line">        ^</div>
 </div><!-- fragment --><p><code>None</code> otherwise </p>
 
 </div>
@@ -269,7 +269,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the method name</p>
 <div class="fragment"><div class="line">foo.bar(42)</div>
-<div class="line">    ~~~</div>
+<div class="line">    ^^^</div>
 </div><!-- fragment --><p><code>None</code> in a very special case when method call is implicit (i.e. <code>foo.(42)</code>) </p>
 
 </div>

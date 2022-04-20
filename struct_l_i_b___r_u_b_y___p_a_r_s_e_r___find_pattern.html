@@ -122,7 +122,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the begin</p>
 <div class="fragment"><div class="line">case foo; in [*x, 1 =&gt; a, *y]; end</div>
-<div class="line">             ~</div>
+<div class="line">             ^</div>
 </div><!-- fragment --><p><code>None</code> if there are no brackets/parentheses </p>
 
 </div>
@@ -156,7 +156,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the end</p>
 <div class="fragment"><div class="line">case foo; in [*x, 1 =&gt; a, *y]; end</div>
-<div class="line">                            ~</div>
+<div class="line">                            ^</div>
 </div><!-- fragment --><p><code>None</code> if there are no brackets/parentheses </p>
 
 </div>
@@ -174,7 +174,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the full expression</p>
 <div class="fragment"><div class="line">case foo; in [*x, 1 =&gt; a, *y]; end</div>
-<div class="line">             ~~~~~~~~~~~~~~~~</div>
+<div class="line">             ^^^^^^^^^^^^^^^^</div>
 </div><!-- fragment --> 
 </div>
 </div>

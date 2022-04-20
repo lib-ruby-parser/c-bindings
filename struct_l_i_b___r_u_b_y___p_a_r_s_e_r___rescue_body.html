@@ -127,7 +127,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the <code>=&gt;</code> operator</p>
 <div class="fragment"><div class="line">begin; 1; rescue E =&gt; e; 2; end</div>
-<div class="line">                   ~~</div>
+<div class="line">                   ^^</div>
 </div><!-- fragment --><p><code>None</code> if exception is not captured. </p>
 
 </div>
@@ -145,7 +145,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the <code>then</code> keyword</p>
 <div class="fragment"><div class="line">begin; 1; rescue E =&gt; e then; 2; end</div>
-<div class="line">                        ~~~~</div>
+<div class="line">                        ^^^^</div>
 </div><!-- fragment --><p><code>then</code> is optional, so <code>begin_l</code> can be <code>None</code> </p>
 
 </div>
@@ -211,7 +211,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the full expression</p>
 <div class="fragment"><div class="line">begin; 1; rescue E =&gt; e then; 2; end</div>
-<div class="line">          ~~~~~~~~~~~~~~~~~~~~~</div>
+<div class="line">          ^^^^^^^^^^^^^^^^^^^^^</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -228,7 +228,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the <code>rescue</code> keyword</p>
 <div class="fragment"><div class="line">begin; 1; rescue E =&gt; e; 2; end</div>
-<div class="line">          ~~~~~~</div>
+<div class="line">          ^^^^^^</div>
 </div><!-- fragment --> 
 </div>
 </div>

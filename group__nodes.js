@@ -120,6 +120,7 @@ var group__nodes =
       [ "superclass", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___class.html#accfdf8d637ee7cd0ab840e8c8c45cf0c", null ]
     ] ],
     [ "LIB_RUBY_PARSER_Complex", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___complex.html", [
+      [ "expression_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___complex.html#a23806cce805434deb4d16a7ae5f509da", null ],
       [ "operator_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___complex.html#abcd025a6272ada821e692e9c85c53791", null ],
       [ "value", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___complex.html#a6d0c50a602e06c9d945cea551b973059", null ]
     ] ],
@@ -161,8 +162,13 @@ var group__nodes =
     ] ],
     [ "LIB_RUBY_PARSER_Def", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___def.html", [
       [ "args", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___def.html#abafbd1a699e5166e45325fbac96d50b7", null ],
+      [ "assignment_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___def.html#afb29b1f7f2b1c252927371de4e7597ef", null ],
       [ "body", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___def.html#a6f11d24e73900051cf3dc20c992d8c17", null ],
-      [ "name", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___def.html#a37e9f0dec5362dd0efd37a4cdaa96640", null ]
+      [ "end_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___def.html#aeb7c622ee9e930be217a5608a0803d84", null ],
+      [ "expression_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___def.html#adb245413edc76d3483e8f519e5375758", null ],
+      [ "keyword_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___def.html#a929131466cab263a8aa9b3c1c9d9bca7", null ],
+      [ "name", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___def.html#a37e9f0dec5362dd0efd37a4cdaa96640", null ],
+      [ "name_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___def.html#aa0e58e89d951bae73b83cc670c7c69dc", null ]
     ] ],
     [ "LIB_RUBY_PARSER_Defined", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___defined.html", [
       [ "begin_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___defined.html#aa30e2918d23a162544e44806fe92fe50", null ],
@@ -173,11 +179,20 @@ var group__nodes =
     ] ],
     [ "LIB_RUBY_PARSER_Defs", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___defs.html", [
       [ "args", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___defs.html#a6c05d8eaa5069803a536dd3ac044205d", null ],
+      [ "assignment_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___defs.html#ab20c43fd7972742b00fdc91d3397b34b", null ],
       [ "body", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___defs.html#a3b08224426b209181dc9d3fd25387f40", null ],
       [ "definee", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___defs.html#a642a8bbb7656ab88d8af1c71eecdf71a", null ],
-      [ "name", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___defs.html#ad601b4e70fcb6ae2e6aed77dc71618bd", null ]
+      [ "end_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___defs.html#aa60659b55ef38c6ea7754ba19beab269", null ],
+      [ "expression_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___defs.html#a3a454ece0c4e2ec5282b5fd844c56c14", null ],
+      [ "keyword_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___defs.html#a3ca8f36e369adcf5ab18760e34352495", null ],
+      [ "name", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___defs.html#ad601b4e70fcb6ae2e6aed77dc71618bd", null ],
+      [ "name_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___defs.html#acbcfad62e66b352f5668c839c205adad", null ],
+      [ "operator_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___defs.html#a7374a436fad659fd1d6032206a83cfc6", null ]
     ] ],
     [ "LIB_RUBY_PARSER_Dstr", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___dstr.html", [
+      [ "begin_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___dstr.html#ac85e9511a60a384e76c926f2a8e223a6", null ],
+      [ "end_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___dstr.html#a0fc28c8d585b8628d8cf9b27874770ef", null ],
+      [ "expression_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___dstr.html#ac029ac59844283b8d5103638ae8f636c", null ],
       [ "parts", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___dstr.html#abf6452109e110f371407372d45842e95", null ]
     ] ],
     [ "LIB_RUBY_PARSER_Dsym", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___dsym.html", [
@@ -205,7 +220,9 @@ var group__nodes =
       [ "keyword_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___ensure.html#a31b7a38891438369803740570afa2088", null ]
     ] ],
     [ "LIB_RUBY_PARSER_Erange", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___erange.html", [
+      [ "expression_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___erange.html#aa81b55af77dd91e403f5ba4962154fbc", null ],
       [ "left", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___erange.html#ac84c243c8e2b373e669564d51c792031", null ],
+      [ "operator_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___erange.html#a915b65fb7d0839e4d88edfc0dc37eeba", null ],
       [ "right", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___erange.html#add4c6a69685242d65d2a79091b6ced75", null ]
     ] ],
     [ "LIB_RUBY_PARSER_False", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___false.html", [
@@ -226,9 +243,14 @@ var group__nodes =
       [ "value", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___float.html#a4083a7112ebd7416922937d6a0d54a4a", null ]
     ] ],
     [ "LIB_RUBY_PARSER_For", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___for.html", [
+      [ "begin_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___for.html#a24935a72aa2b7f4aa5eeb41a92a489d2", null ],
       [ "body", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___for.html#a6f3c43cb11c71cf1e9ce22bcb6039d42", null ],
+      [ "end_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___for.html#a43dfd52a879e7808484392974ce6c7e2", null ],
+      [ "expression_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___for.html#a9de92f9cda33a7851b49906830fe6c06", null ],
       [ "iteratee", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___for.html#a8cbf6f045f0a8ff1bb65a653974eedbf", null ],
-      [ "iterator", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___for.html#a9e7fc7e78aae012a399c906701548b55", null ]
+      [ "iterator", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___for.html#a9e7fc7e78aae012a399c906701548b55", null ],
+      [ "keyword_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___for.html#ad1f079a1da863dfa567020e01cdd00d4", null ],
+      [ "operator_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___for.html#ab983ada2cff364868c23881c05339238", null ]
     ] ],
     [ "LIB_RUBY_PARSER_ForwardArg", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___forward_arg.html", [
       [ "expression_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___forward_arg.html#a08a1e2d34f12d5bbe6726ec54713fcf4", null ]
@@ -326,6 +348,7 @@ var group__nodes =
       [ "pattern", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___in_pattern.html#a6de7c080190739c3e5644ca30436c378", null ]
     ] ],
     [ "LIB_RUBY_PARSER_Int", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___int.html", [
+      [ "expression_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___int.html#a37c05ca4cb25b2d66482b88438052cc8", null ],
       [ "operator_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___int.html#a5b24f78dbb0d3fd40f852b7045866879", null ],
       [ "value", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___int.html#a169ee0a3a879c59aacd53b03cdb45b42", null ]
     ] ],
@@ -389,10 +412,14 @@ var group__nodes =
       [ "expression_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___line.html#adabfe7b8a448694da3705bfbba0e7ec3", null ]
     ] ],
     [ "LIB_RUBY_PARSER_Lvar", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lvar.html", [
+      [ "expression_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lvar.html#a55d91db77e6ee91663b80f6294c82973", null ],
       [ "name", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lvar.html#a964d8f98d980866d524a422e45e7a91f", null ]
     ] ],
     [ "LIB_RUBY_PARSER_Lvasgn", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lvasgn.html", [
+      [ "expression_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lvasgn.html#a8eda222c94fda94fcf8b087b49d5333a", null ],
       [ "name", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lvasgn.html#a2dbebb513fa21aec003167aabc2c9100", null ],
+      [ "name_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lvasgn.html#af8199febcd1aebc76c61eee00ddc35cc", null ],
+      [ "operator_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lvasgn.html#a3a02f84c554621ff898dcd36fde84726", null ],
       [ "value", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lvasgn.html#ade938e243548baf5d4e4d94cdcede891", null ]
     ] ],
     [ "LIB_RUBY_PARSER_Masgn", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___masgn.html", [
@@ -468,7 +495,9 @@ var group__nodes =
       [ "expression_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___next.html#a616e32575910dbdc0220529798dcda50", null ],
       [ "keyword_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___next.html#a73cb3431fdbc5c4e7dcd43e710e07b4e", null ]
     ] ],
-    [ "LIB_RUBY_PARSER_Nil", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___nil.html", null ],
+    [ "LIB_RUBY_PARSER_Nil", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___nil.html", [
+      [ "expression_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___nil.html#a4fb3aad1b3cf2a874b2695e73fbbdd51", null ]
+    ] ],
     [ "LIB_RUBY_PARSER_NthRef", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___nth_ref.html", [
       [ "expression_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___nth_ref.html#a560f1974474e2b3d17e5be8daf9b584a", null ],
       [ "name", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___nth_ref.html#a949312cb1bc2922f906f4e4e4725c741", null ]
@@ -519,7 +548,11 @@ var group__nodes =
       [ "var", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___pin.html#a7638155c29aeb6660fdaa672adbeda03", null ]
     ] ],
     [ "LIB_RUBY_PARSER_Postexe", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___postexe.html", [
-      [ "body", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___postexe.html#a9f8a8b378f41b7e7b16cb22d57bbaa4f", null ]
+      [ "begin_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___postexe.html#ac9812935f3d2ec6012c86b8f745bc066", null ],
+      [ "body", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___postexe.html#a9f8a8b378f41b7e7b16cb22d57bbaa4f", null ],
+      [ "end_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___postexe.html#a09ffe20ead11ba96a14430172d5943cd", null ],
+      [ "expression_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___postexe.html#a8257167956b1ab6070828465eb74307b", null ],
+      [ "keyword_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___postexe.html#a83c5f8162a681e1921ee2d0bf0ee942b", null ]
     ] ],
     [ "LIB_RUBY_PARSER_Preexe", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___preexe.html", [
       [ "begin_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___preexe.html#ae3a96014f6105bd01c07b032daaa7f1e", null ],
@@ -535,6 +568,7 @@ var group__nodes =
       [ "expression_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___procarg0.html#ab3544eec449252b79e068d55c66a45e2", null ]
     ] ],
     [ "LIB_RUBY_PARSER_Rational", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___rational.html", [
+      [ "expression_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___rational.html#a21dbba653a158da13004c68f66ff810f", null ],
       [ "operator_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___rational.html#a6e1aab5a73cab313484d87bea9fb193b", null ],
       [ "value", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___rational.html#ac1c0c7ecbca4b43aa3d1bd8bf138f79e", null ]
     ] ],
@@ -687,6 +721,9 @@ var group__nodes =
       [ "parts", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___x_heredoc.html#a9a2d1d90b01370ab939cc6d84992b167", null ]
     ] ],
     [ "LIB_RUBY_PARSER_Xstr", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___xstr.html", [
+      [ "begin_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___xstr.html#a035d0053acfb0472a871493a8677ff50", null ],
+      [ "end_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___xstr.html#a9685b84d948cfbcd6ae28ab114e67020", null ],
+      [ "expression_l", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___xstr.html#a1f694b305730120b6ef759ff55d9887a", null ],
       [ "parts", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___xstr.html#afcc9ba3bc6aa4f91d14540d63a45180c", null ]
     ] ],
     [ "LIB_RUBY_PARSER_Yield", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___yield.html", [

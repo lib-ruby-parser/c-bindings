@@ -104,10 +104,38 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a6f3c43cb11c71cf1e9ce22bcb6039d42"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___node.html">LIB_RUBY_PARSER_Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___for.html#a6f3c43cb11c71cf1e9ce22bcb6039d42">body</a></td></tr>
 <tr class="memdesc:a6f3c43cb11c71cf1e9ce22bcb6039d42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Body of the loop. <code>None</code> if there's no body.  <a href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___for.html#a6f3c43cb11c71cf1e9ce22bcb6039d42">More...</a><br /></td></tr>
 <tr class="separator:a6f3c43cb11c71cf1e9ce22bcb6039d42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1f079a1da863dfa567020e01cdd00d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___for.html#ad1f079a1da863dfa567020e01cdd00d4">keyword_l</a></td></tr>
+<tr class="separator:ad1f079a1da863dfa567020e01cdd00d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab983ada2cff364868c23881c05339238"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___for.html#ab983ada2cff364868c23881c05339238">operator_l</a></td></tr>
+<tr class="separator:ab983ada2cff364868c23881c05339238"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24935a72aa2b7f4aa5eeb41a92a489d2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___for.html#a24935a72aa2b7f4aa5eeb41a92a489d2">begin_l</a></td></tr>
+<tr class="separator:a24935a72aa2b7f4aa5eeb41a92a489d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43dfd52a879e7808484392974ce6c7e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___for.html#a43dfd52a879e7808484392974ce6c7e2">end_l</a></td></tr>
+<tr class="separator:a43dfd52a879e7808484392974ce6c7e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9de92f9cda33a7851b49906830fe6c06"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___for.html#a9de92f9cda33a7851b49906830fe6c06">expression_l</a></td></tr>
+<tr class="separator:a9de92f9cda33a7851b49906830fe6c06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a <code>for</code> loop </p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a24935a72aa2b7f4aa5eeb41a92a489d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24935a72aa2b7f4aa5eeb41a92a489d2">&#9670;&nbsp;</a></span>begin_l</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a> LIB_RUBY_PARSER_For::begin_l</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Location of the <code>do</code> keyword</p>
+<div class="fragment"><div class="line">for a in b do; end</div>
+<div class="line">           ^^</div>
+</div><!-- fragment --><p><b>Note</b>: this <code>do</code> is optional, and so <code>begin_l</code> can be <code>None</code>. </p>
+
+</div>
+</div>
 <a id="a6f3c43cb11c71cf1e9ce22bcb6039d42"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6f3c43cb11c71cf1e9ce22bcb6039d42">&#9670;&nbsp;</a></span>body</h2>
 
@@ -122,6 +150,40 @@ Public Attributes</h2></td></tr>
 
 <p>Body of the loop. <code>None</code> if there's no body. </p>
 
+</div>
+</div>
+<a id="a43dfd52a879e7808484392974ce6c7e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43dfd52a879e7808484392974ce6c7e2">&#9670;&nbsp;</a></span>end_l</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a> LIB_RUBY_PARSER_For::end_l</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Location of the <code>end</code> keyword</p>
+<div class="fragment"><div class="line">for a in b; end</div>
+<div class="line">            ^^^</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a9de92f9cda33a7851b49906830fe6c06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9de92f9cda33a7851b49906830fe6c06">&#9670;&nbsp;</a></span>expression_l</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a> LIB_RUBY_PARSER_For::expression_l</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Location of the full expression</p>
+<div class="fragment"><div class="line">for a in b; end</div>
+<div class="line">^^^^^^^^^^^^^^^</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="a8cbf6f045f0a8ff1bb65a653974eedbf"></a>
@@ -154,6 +216,40 @@ Public Attributes</h2></td></tr>
 
 <p>Variable that is used in loop, <code>Lvasgn("a")</code> in <code>for a in b; end</code> </p>
 
+</div>
+</div>
+<a id="ad1f079a1da863dfa567020e01cdd00d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1f079a1da863dfa567020e01cdd00d4">&#9670;&nbsp;</a></span>keyword_l</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a> LIB_RUBY_PARSER_For::keyword_l</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Location of the <code>for</code> keyword</p>
+<div class="fragment"><div class="line">for a in b; end</div>
+<div class="line">^^^</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ab983ada2cff364868c23881c05339238"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab983ada2cff364868c23881c05339238">&#9670;&nbsp;</a></span>operator_l</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a> LIB_RUBY_PARSER_For::operator_l</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Location of the <code>in</code> keyword</p>
+<div class="fragment"><div class="line">for a in b; end</div>
+<div class="line">      ^^</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>

@@ -131,7 +131,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the <code>then</code> keyword</p>
 <div class="fragment"><div class="line">if foo then; end</div>
-<div class="line">       ~~~~</div>
+<div class="line">       ^^^^</div>
 </div><!-- fragment --><p><code>None</code> if <code>then</code> keyword is omitted </p>
 
 </div>
@@ -165,7 +165,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the <code>else</code> keyword</p>
 <div class="fragment"><div class="line">if foo; else; end</div>
-<div class="line">        ~~~~</div>
+<div class="line">        ^^^^</div>
 </div><!-- fragment --><p><code>None</code> if there's no <code>else</code> branch </p>
 
 </div>
@@ -183,7 +183,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the <code>end</code> keyword</p>
 <div class="fragment"><div class="line">if foo; end</div>
-<div class="line">        ~~~</div>
+<div class="line">        ^^^</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -200,7 +200,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the full expression</p>
 <div class="fragment"><div class="line">if a then; b; else; c end</div>
-<div class="line">~~~~~~~~~~~~~~~~~~~~~~~~~</div>
+<div class="line">^^^^^^^^^^^^^^^^^^^^^^^^^</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -249,7 +249,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the <code>if</code> keyword</p>
 <div class="fragment"><div class="line">if foo; end</div>
-<div class="line">~~</div>
+<div class="line">^^</div>
 </div><!-- fragment --> 
 </div>
 </div>

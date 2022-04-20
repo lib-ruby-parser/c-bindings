@@ -156,7 +156,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the <code>else</code> keyword</p>
 <div class="fragment"><div class="line">begin; 1; rescue StandardError =&gt; e; 2; else; 3; end</div>
-<div class="line">                                        ~~~~</div>
+<div class="line">                                        ^^^^</div>
 </div><!-- fragment --><p><code>None</code> if there's no <code>else</code> branch </p>
 
 </div>
@@ -174,7 +174,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the full expression</p>
 <div class="fragment"><div class="line">begin; 1; rescue StandardError =&gt; e; 2; else; 3; end</div>
-<div class="line">       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</div>
+<div class="line">       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</div>
 </div><!-- fragment --><p><b>Note</b>: <code>begin/end</code> keywords belong to <code>KwBegin</code> node </p>
 
 </div>

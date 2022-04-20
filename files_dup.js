@@ -8,7 +8,7 @@ var files_dup =
     [ "diagnostic.h", "diagnostic_8h.html", "diagnostic_8h" ],
     [ "loc.h", "loc_8h.html", "loc_8h" ],
     [ "magic_comment.h", "magic__comment_8h.html", "magic__comment_8h" ],
-    [ "messages.h", "messages_8h.html", null ],
+    [ "messages.h", "messages_8h.html", "messages_8h" ],
     [ "nodes.h", "nodes_8h.html", "nodes_8h" ],
     [ "parser_options.h", "parser__options_8h.html", "parser__options_8h" ],
     [ "parser_result.h", "parser__result_8h.html", "parser__result_8h" ],

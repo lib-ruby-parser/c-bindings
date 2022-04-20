@@ -150,7 +150,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the open parenthesis</p>
 <div class="fragment"><div class="line">foo&amp;.bar(42)</div>
-<div class="line">        ~</div>
+<div class="line">        ^</div>
 </div><!-- fragment --><p><code>None</code> if there are no parentheses </p>
 
 </div>
@@ -168,7 +168,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the <code>&amp;.</code> operator</p>
 <div class="fragment"><div class="line">foo&amp;.bar</div>
-<div class="line">   ~~</div>
+<div class="line">   ^^</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -185,7 +185,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the closing parenthesis</p>
 <div class="fragment"><div class="line">foo&amp;.bar(42)</div>
-<div class="line">           ~</div>
+<div class="line">           ^</div>
 </div><!-- fragment --><p><code>None</code> if there are no parentheses </p>
 
 </div>
@@ -203,7 +203,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the full expression</p>
 <div class="fragment"><div class="line">foo&amp;.bar(42)</div>
-<div class="line">~~~~~~~~~~~~</div>
+<div class="line">^^^^^^^^^^^^</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -236,7 +236,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the operator if <code>CSend</code> is a part of assignment like</p>
 <div class="fragment"><div class="line">foo&amp;.bar = 1</div>
-<div class="line">         ~</div>
+<div class="line">         ^</div>
 </div><!-- fragment --><p><code>None</code> for a regular call. </p>
 
 </div>
@@ -270,7 +270,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the method name</p>
 <div class="fragment"><div class="line">foo&amp;.bar(42)</div>
-<div class="line">     ~~~</div>
+<div class="line">     ^^^</div>
 </div><!-- fragment --><p><code>None</code> in a very special case when method call is implicit (i.e. <code>foo&amp;.()</code>) </p>
 
 </div>

@@ -125,7 +125,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the <code>do</code> keyword</p>
 <div class="fragment"><div class="line">until cond do; foo; end</div>
-<div class="line">           ~~</div>
+<div class="line">           ^^</div>
 </div><!-- fragment --><p><code>do</code> is optional, and so <code>begin_l</code> can be <code>None</code> </p>
 
 </div>
@@ -175,7 +175,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the <code>end</code> keyword</p>
 <div class="fragment"><div class="line">until cond do; foo; end</div>
-<div class="line">                    ~~~</div>
+<div class="line">                    ^^^</div>
 </div><!-- fragment --><p><code>None</code> if loop is a modifier (i.e. <code>foo until bar</code>) </p>
 
 </div>
@@ -193,10 +193,10 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the full expression</p>
 <div class="fragment"><div class="line">until cond do; foo; end</div>
-<div class="line">~~~~~~~~~~~~~~~~~~~~~~~</div>
+<div class="line">^^^^^^^^^^^^^^^^^^^^^^^</div>
 <div class="line"> </div>
 <div class="line">foo until bar</div>
-<div class="line">~~~~~~~~~~~~~</div>
+<div class="line">^^^^^^^^^^^^^</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -213,7 +213,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the <code>until</code> keyword</p>
 <div class="fragment"><div class="line">until cond do; foo; end</div>
-<div class="line">~~~~~</div>
+<div class="line">^^^^^</div>
 </div><!-- fragment --> 
 </div>
 </div>

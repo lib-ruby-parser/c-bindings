@@ -141,7 +141,7 @@ API</h1>
 <li><code><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___diagnostic_list.html">LIB_RUBY_PARSER_DiagnosticList</a> diagnostics</code> - a list of diagnostics (<code>ptr</code> + <code>len</code>) where<ul>
 <li>diagnostic is represented as <code><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___diagnostic.html">LIB_RUBY_PARSER_Diagnostic</a></code> with fields<ul>
 <li><code>LIB_RUBY_PARSER_ErrorLevel level</code> - level of the diagnostic (error or warning)</li>
-<li><code>LIB_RUBY_PARSER_DiagnosticMessage message</code> - message that is a tagged union with <code>tag</code> and <code>as</code> fields, every message type is represented by its own struct like <code><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___unterminated_list.html">LIB_RUBY_PARSER_UnterminatedList</a></code></li>
+<li><code><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___diagnostic_message.html">LIB_RUBY_PARSER_DiagnosticMessage</a> message</code> - message that is a tagged union with <code>tag</code> and <code>as</code> fields, every message type is represented by its own struct like <code><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___unterminated_list.html">LIB_RUBY_PARSER_UnterminatedList</a></code></li>
 <li><code><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a> loc</code> - location of the diagnostic</li>
 </ul>
 </li>

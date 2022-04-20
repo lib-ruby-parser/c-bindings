@@ -144,7 +144,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the <code>end</code> keyword.</p>
 <div class="fragment"><div class="line">class Foo; end</div>
-<div class="line">           ~~~</div>
+<div class="line">           ^^^</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -161,7 +161,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the full expression</p>
 <div class="fragment"><div class="line">class Foo; end</div>
-<div class="line">~~~~~~~~~~~~~~</div>
+<div class="line">^^^^^^^^^^^^^^</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -178,7 +178,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the <code>class</code> keyword.</p>
 <div class="fragment"><div class="line">class Foo; end</div>
-<div class="line">~~~~~</div>
+<div class="line">^^^^^</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -211,7 +211,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the <code>&lt;</code> operator</p>
 <div class="fragment"><div class="line">class A &lt; B; end</div>
-<div class="line">        ~</div>
+<div class="line">        ^</div>
 </div><!-- fragment --><p><code>None</code> if there's no explicit superclass given. </p>
 
 </div>

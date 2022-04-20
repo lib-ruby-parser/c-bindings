@@ -127,10 +127,10 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the <code>::</code> operator</p>
 <div class="fragment"><div class="line">A::B = 1</div>
-<div class="line"> ~~</div>
+<div class="line"> ^^</div>
 <div class="line"> </div>
 <div class="line">::A = 1</div>
-<div class="line">~~</div>
+<div class="line">^^</div>
 </div><!-- fragment --><p><code>None</code> if the constant is defined in the current scope </p>
 
 </div>
@@ -148,7 +148,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the full expression</p>
 <div class="fragment"><div class="line">A = 1</div>
-<div class="line">~~~~~</div>
+<div class="line">^^^^^</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -181,7 +181,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the constant name</p>
 <div class="fragment"><div class="line">A::CONST = 1</div>
-<div class="line">   ~~~~~</div>
+<div class="line">   ^^^^^</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -198,7 +198,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the <code>=</code> operator</p>
 <div class="fragment"><div class="line">A = 1</div>
-<div class="line">  ~</div>
+<div class="line">  ^</div>
 </div><!-- fragment --><p><code>None</code> if constant assignment is a part of the multi-assignment. In such case <code>=</code> belongs to a <code>Masgn</code> node </p>
 
 </div>

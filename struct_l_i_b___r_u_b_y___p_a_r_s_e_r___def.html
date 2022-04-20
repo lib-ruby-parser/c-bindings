@@ -103,6 +103,16 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a6f11d24e73900051cf3dc20c992d8c17"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___node.html">LIB_RUBY_PARSER_Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___def.html#a6f11d24e73900051cf3dc20c992d8c17">body</a></td></tr>
 <tr class="memdesc:a6f11d24e73900051cf3dc20c992d8c17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Body of a method, <code>None</code> if there's no body.  <a href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___def.html#a6f11d24e73900051cf3dc20c992d8c17">More...</a><br /></td></tr>
 <tr class="separator:a6f11d24e73900051cf3dc20c992d8c17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a929131466cab263a8aa9b3c1c9d9bca7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___def.html#a929131466cab263a8aa9b3c1c9d9bca7">keyword_l</a></td></tr>
+<tr class="separator:a929131466cab263a8aa9b3c1c9d9bca7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0e58e89d951bae73b83cc670c7c69dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___def.html#aa0e58e89d951bae73b83cc670c7c69dc">name_l</a></td></tr>
+<tr class="separator:aa0e58e89d951bae73b83cc670c7c69dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb7c622ee9e930be217a5608a0803d84"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___maybe_loc.html">LIB_RUBY_PARSER_MaybeLoc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___def.html#aeb7c622ee9e930be217a5608a0803d84">end_l</a></td></tr>
+<tr class="separator:aeb7c622ee9e930be217a5608a0803d84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb29b1f7f2b1c252927371de4e7597ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___maybe_loc.html">LIB_RUBY_PARSER_MaybeLoc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___def.html#afb29b1f7f2b1c252927371de4e7597ef">assignment_l</a></td></tr>
+<tr class="separator:afb29b1f7f2b1c252927371de4e7597ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb245413edc76d3483e8f519e5375758"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___def.html#adb245413edc76d3483e8f519e5375758">expression_l</a></td></tr>
+<tr class="separator:adb245413edc76d3483e8f519e5375758"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents method definition using <code>def</code> keyword (not on a singleton, see <code>Defs</code> node). </p>
@@ -123,6 +133,24 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="afb29b1f7f2b1c252927371de4e7597ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb29b1f7f2b1c252927371de4e7597ef">&#9670;&nbsp;</a></span>assignment_l</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___maybe_loc.html">LIB_RUBY_PARSER_MaybeLoc</a> LIB_RUBY_PARSER_Def::assignment_l</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Location of the <code>=</code> operator for endless method definition</p>
+<div class="fragment"><div class="line">def m() = 1</div>
+<div class="line">        ^</div>
+</div><!-- fragment --><p><code>None</code> for regular method definition </p>
+
+</div>
+</div>
 <a id="a6f11d24e73900051cf3dc20c992d8c17"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6f11d24e73900051cf3dc20c992d8c17">&#9670;&nbsp;</a></span>body</h2>
 
@@ -139,6 +167,58 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="aeb7c622ee9e930be217a5608a0803d84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb7c622ee9e930be217a5608a0803d84">&#9670;&nbsp;</a></span>end_l</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___maybe_loc.html">LIB_RUBY_PARSER_MaybeLoc</a> LIB_RUBY_PARSER_Def::end_l</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Location of the <code>end</code> keyword.</p>
+<div class="fragment"><div class="line">def foo; end</div>
+<div class="line">         ^^^</div>
+</div><!-- fragment --><p><code>None</code> for endless method definition </p>
+
+</div>
+</div>
+<a id="adb245413edc76d3483e8f519e5375758"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb245413edc76d3483e8f519e5375758">&#9670;&nbsp;</a></span>expression_l</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a> LIB_RUBY_PARSER_Def::expression_l</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Location of the full expression</p>
+<div class="fragment"><div class="line">def m(a); foo; end</div>
+<div class="line">^^^^^^^^^^^^^^^^^^</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a929131466cab263a8aa9b3c1c9d9bca7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a929131466cab263a8aa9b3c1c9d9bca7">&#9670;&nbsp;</a></span>keyword_l</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a> LIB_RUBY_PARSER_Def::keyword_l</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Location of the <code>def</code> keyword.</p>
+<div class="fragment"><div class="line">def foo; end</div>
+<div class="line">^^^</div>
+</div><!-- fragment --> 
+</div>
+</div>
 <a id="a37e9f0dec5362dd0efd37a4cdaa96640"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a37e9f0dec5362dd0efd37a4cdaa96640">&#9670;&nbsp;</a></span>name</h2>
 
@@ -153,6 +233,23 @@ Public Attributes</h2></td></tr>
 
 <p>Name of the method, <code>String("foo")</code> for <code>def foo; end</code> </p>
 
+</div>
+</div>
+<a id="aa0e58e89d951bae73b83cc670c7c69dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0e58e89d951bae73b83cc670c7c69dc">&#9670;&nbsp;</a></span>name_l</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html">LIB_RUBY_PARSER_Loc</a> LIB_RUBY_PARSER_Def::name_l</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Location of the method name.</p>
+<div class="fragment"><div class="line">def foo; end</div>
+<div class="line">    ^^^</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>

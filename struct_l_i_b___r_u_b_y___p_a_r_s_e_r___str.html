@@ -120,7 +120,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the string begin</p>
 <div class="fragment"><div class="line">&quot;foo&quot;</div>
-<div class="line">~</div>
+<div class="line">^</div>
 </div><!-- fragment --><p><code>None</code> if string literal is a part of the words array (like <code>w[foo bar baz]</code>) </p>
 
 </div>
@@ -138,7 +138,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the string begin</p>
 <div class="fragment"><div class="line">&quot;foo&quot;</div>
-<div class="line">    ~</div>
+<div class="line">    ^</div>
 </div><!-- fragment --><p><code>None</code> if string literal is a part of the words array (like <code>w[foo bar baz]</code>) </p>
 
 </div>
@@ -156,7 +156,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the full expression</p>
 <div class="fragment"><div class="line">&quot;foo&quot;</div>
-<div class="line">~~~~~</div>
+<div class="line">^^^^^</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -172,8 +172,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Value of the string literal</p>
-<p>Note that it's a <code>StringValue</code>, not a <code>String</code>. The reason is that you can get UTF-8 incompatible strings from a valid UTF-8 source using escape sequences like <code>"\xFF"</code></p>
-<p>These "\", "x", "F", "F" chars are valid separately, but together they construct a char with code = 255 that is invalid for UTF-8.</p>
+<p>Note that it's a <code>StringValue</code>, not a <code>String</code>. The reason is that you can get UTF-8 incompatible strings from a valid UTF-8 source using escape sequences like <code>"\\xFF"</code></p>
+<p>These "\\", "x", "F", "F" chars are valid separately, but together they construct a char with code = 255 that is invalid for UTF-8.</p>
 <p>You can use <code>to_string_lossy</code> or <code>to_string</code> methods to get a raw string value. </p>
 
 </div>

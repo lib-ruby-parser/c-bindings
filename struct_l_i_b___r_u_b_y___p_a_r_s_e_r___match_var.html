@@ -119,10 +119,10 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the full expression</p>
 <div class="fragment"><div class="line">case foo; in pattern =&gt; bar; end</div>
-<div class="line">                        ~~~</div>
+<div class="line">                        ^^^</div>
 </div><!-- fragment --><p><b>Note</b> it can also be produced by a hash pattern</p>
 <div class="fragment"><div class="line">case foo; in { a: }; end</div>
-<div class="line">               ~~</div>
+<div class="line">               ^^</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -155,10 +155,10 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Location of the name</p>
 <div class="fragment"><div class="line">case foo; in pattern =&gt; bar; end</div>
-<div class="line">                        ~~~</div>
+<div class="line">                        ^^^</div>
 </div><!-- fragment --><p><b>Note</b> it can also be produced by a hash pattern</p>
 <div class="fragment"><div class="line">case foo; in { a: }; end</div>
-<div class="line">               ~</div>
+<div class="line">               ^</div>
 </div><!-- fragment --> 
 </div>
 </div>
