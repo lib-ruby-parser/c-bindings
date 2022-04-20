@@ -4,6 +4,13 @@ All structs, enums and functions are prefixed with `LIB_RUBY_PARSER_`. API mostl
 
 [Documentation](https://lib-ruby-parser.github.io/c-bindings/)
 
+Pre-compiled library and header file are available on [Releases](https://github.com/lib-ruby-parser/c-bindings/releases), supported platforms:
+
++ `x86_64-apple-darwin`
++ `x86_64-unknown-linux-gnu`
++ `x86_64-pc-windows-msvc`
++ `x86_64-pc-windows-gnu`
+
 ## API
 
 ```c
@@ -59,3 +66,23 @@ Parser output:
         + `LIB_RUBY_PARSER_String name` - initial name of the source code
         + `LIB_RUBY_PARSER_SourceLineList lines` - parsed source lines
         + `LIB_RUBY_PARSER_ByteList bytes` - (maybe re-encoded) initial input
+
+# Development
+
++ Clone the repo
++ Set environment variables:
+    + `TARGET` (e.g. `export TARGET=x86_64-apple-darwin`, no default value)
+    + `CC` (e.g. `gcc`)
+    + `BUILD_ENV` (`debug` or `release`, `debug` is the default value)
++ run `make tests/run` to run tests
++ run `make libruby_parser_c.a` (or `make libruby_parser_c.lib` for MSVC) to get a static library
++ run `make lib-ruby-parser.h` to get a header file
+
+# Structure
+
++ Each directory has its own `build.mk` file that is included my the main `Makefile`
++ Rust parser with basic C bindings is located under `ruby-parser-c`.
++ Actual C bindings are located in `*.{h, c}` files in the root directory
++ `scripts` directory contains per-triplet additional configurations for `make`
++ `codegen` directory is a Rust micro-library that does code generation
++ `benchmark` directory contains a set of scripts to compare performance of Rust vs C vs Ripper
