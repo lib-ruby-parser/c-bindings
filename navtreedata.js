@@ -24,7 +24,9 @@ var NAVTREE =
 [
   [ "lib-ruby-parser (C bindings)", "index.html", [
     [ "c bindings for <tt>lib-ruby-parser</tt>", "index.html", [
-      [ "API", "index.html#autotoc_md1", null ]
+      [ "API", "index.html#autotoc_md1", null ],
+      [ "Development", "index.html#autotoc_md2", null ],
+      [ "Structure", "index.html#autotoc_md3", null ]
     ] ],
     [ "Modules", "modules.html", "modules" ],
     [ "Classes", "annotated.html", [
@@ -54,11 +56,11 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "group__token__ids.html#ga42d4d1212f3bb5c7dfa7d4d5bf342399",
-"nodes_8h.html#a178da168bbe8ef6de7c32bb4c254ee17",
-"struct_l_i_b___r_u_b_y___p_a_r_s_e_r___comment.html#a14410d82e0e2f00b539617b0730b53fd",
-"struct_l_i_b___r_u_b_y___p_a_r_s_e_r___kw_begin.html#ad8707c83624cec6252da2858d5236495",
-"struct_l_i_b___r_u_b_y___p_a_r_s_e_r___node.html#a307bb4204c00071bc879da79d70ae14dad23e3602501b8c26df8d5dcd3a504f27",
-"struct_l_i_b___r_u_b_y___p_a_r_s_e_r___self__.html"
+"nodes_8h.html#a15a91fb17ea701e2956c0f5ea8722c94",
+"struct_l_i_b___r_u_b_y___p_a_r_s_e_r___class.html#ae7508249183e176950850ef744a1d02a",
+"struct_l_i_b___r_u_b_y___p_a_r_s_e_r___kw_begin.html#a892c427e6bd9441954f9d60c70c195d0",
+"struct_l_i_b___r_u_b_y___p_a_r_s_e_r___node.html#a307bb4204c00071bc879da79d70ae14dad00d3f1278c53d6c7538504ddb813777",
+"struct_l_i_b___r_u_b_y___p_a_r_s_e_r___s_class.html#aa3a94c7439cfa6968ed4533f55e72e0d"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

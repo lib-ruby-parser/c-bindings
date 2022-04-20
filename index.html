@@ -89,6 +89,13 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="contents">
 <div class="textblock"><p>All structs, enums and functions are prefixed with <code>LIB_RUBY_PARSER_</code>. API mostly mirrors Rust version.</p>
 <p><a href="https://lib-ruby-parser.github.io/c-bindings/">Documentation</a></p>
+<p>Pre-compiled library and header file are available on <a href="https://github.com/lib-ruby-parser/c-bindings/releases">Releases</a>, supported platforms:</p>
+<ul>
+<li><code>x86_64-apple-darwin</code></li>
+<li><code>x86_64-unknown-linux-gnu</code></li>
+<li><code>x86_64-pc-windows-msvc</code></li>
+<li><code>x86_64-pc-windows-gnu</code></li>
+</ul>
 <h1><a class="anchor" id="autotoc_md1"></a>
 API</h1>
 <div class="fragment"><div class="line"><span class="keywordtype">char</span> *input = <span class="stringliteral">&quot;2 + 2&quot;</span>;</div>
@@ -160,11 +167,35 @@ API</h1>
 <li><code><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___decoded_input.html">LIB_RUBY_PARSER_DecodedInput</a> input</code> - decoded input, is different from initial input if it has encoding different from utf-8, with fields:<ul>
 <li><code><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___string.html">LIB_RUBY_PARSER_String</a> name</code> - initial name of the source code</li>
 <li><code><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___source_line_list.html" title="Equivalent of Vec&lt;SourceLine&gt;">LIB_RUBY_PARSER_SourceLineList</a> lines</code> - parsed source lines</li>
-<li><code><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___byte_list.html">LIB_RUBY_PARSER_ByteList</a> bytes</code> - (maybe re-encoded) initial input </li>
+<li><code><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___byte_list.html">LIB_RUBY_PARSER_ByteList</a> bytes</code> - (maybe re-encoded) initial input</li>
 </ul>
 </li>
 </ul>
 </li>
+</ul>
+<h1><a class="anchor" id="autotoc_md2"></a>
+Development</h1>
+<ul>
+<li>Clone the repo</li>
+<li>Set environment variables:<ul>
+<li><code>TARGET</code> (e.g. <code>export TARGET=x86_64-apple-darwin</code>, no default value)</li>
+<li><code>CC</code> (e.g. <code>gcc</code>)</li>
+<li><code>BUILD_ENV</code> (<code>debug</code> or <code>release</code>, <code>debug</code> is the default value)</li>
+</ul>
+</li>
+<li>run <code>make tests/run</code> to run tests</li>
+<li>run <code>make libruby_parser_c.a</code> (or <code>make libruby_parser_c.lib</code> for MSVC) to get a static library</li>
+<li>run <code>make lib-ruby-parser.h</code> to get a header file</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md3"></a>
+Structure</h1>
+<ul>
+<li>Each directory has its own <code>build.mk</code> file that is included my the main <code>Makefile</code></li>
+<li>Rust parser with basic C bindings is located under <code>ruby-parser-c</code>.</li>
+<li>Actual C bindings are located in <code>*.{h, c}</code> files in the root directory</li>
+<li><code>scripts</code> directory contains per-triplet additional configurations for <code>make</code></li>
+<li><code>codegen</code> directory is a Rust micro-library that does code generation</li>
+<li><code>benchmark</code> directory contains a set of scripts to compare performance of Rust vs C vs Ripper </li>
 </ul>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
