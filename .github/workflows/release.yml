@@ -61,6 +61,11 @@ jobs:
           target: ${{ matrix.build.target }}
           override: true
 
+      - name: install ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.1.1"
+
       - name: print rustc detailed version
         run: rustc --version --verbose
 
