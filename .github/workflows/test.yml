@@ -96,8 +96,13 @@ jobs:
           target: ${{ matrix.build.target }}
           override: true
 
-      - name: print rustc detailed version
-        run: rustc --version --verbose
+      - name: print system info
+        run: |
+          rustc --version --verbose
+          which make
+          make --version
+          which bash
+          bash --version
 
       - name: checkout
         uses: actions/checkout@v2

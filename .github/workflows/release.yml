@@ -4,6 +4,10 @@ on:
     tags:
       - 'v*'
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   build-lib:
     name: build lib file (target = ${{ matrix.build.target }})
@@ -61,13 +65,13 @@ jobs:
           target: ${{ matrix.build.target }}
           override: true
 
-      - name: install ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "3.1.1"
-
-      - name: print rustc detailed version
-        run: rustc --version --verbose
+      - name: print system info
+        run: |
+          rustc --version --verbose
+          which make
+          make --version
+          which bash
+          bash --version
 
       - name: checkout
         uses: actions/checkout@v2
@@ -90,8 +94,21 @@ jobs:
           name: ${{ matrix.build.output_artifact_name }}
           path: ${{ matrix.build.output_artifact_name }}
 
+      - name: download benchmark assets
+        run: make benchmark/download
+
+      - name: build C runner
+        run: make benchmark/c-parser
+
+      # NOTE: ruby/setup-ruby breaks paths for MSVC,
+      #       and so all files must be compiled before running Ruby
+      - name: install ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.1.1"
+
       - name: benchmark
-        run: make benchmark/download && make benchmark/record
+        run: make benchmark/record
 
       - name: upload ${{ matrix.build.target }}.benchmark-out
         uses: actions/upload-artifact@v2
