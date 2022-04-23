@@ -1,23 +1,20 @@
-mod fns;
-mod fns_c;
-mod fns_shared;
+use lib_ruby_parser_nodes::LiquidTemplate;
 
-mod messages_c;
-mod messages_h;
-
-mod nodes_c;
-mod nodes_h;
-
-mod message_rs;
-mod node_rs;
+fn render(template_path: &str, output_path: &str) {
+    let rendered = LiquidTemplate::new(template_path).render();
+    std::fs::write(output_path, rendered).unwrap();
+}
 
 pub(crate) fn codegen() {
-    messages_h::codegen();
-    messages_c::codegen();
+    render("codegen/messages.h.liquid", "../messages.h");
+    render("codegen/messages.c.liquid", "../messages.c");
 
-    nodes_h::codegen();
-    nodes_c::codegen();
+    render("codegen/nodes.h.liquid", "../nodes.h");
+    render("codegen/nodes.c.liquid", "../nodes.c");
 
-    node_rs::codegen();
-    message_rs::codegen();
+    render(
+        "codegen/messages.rs.liquid",
+        "../ruby-parser-c/src/message.rs",
+    );
+    render("codegen/nodes.rs.liquid", "../ruby-parser-c/src/node.rs");
 }
