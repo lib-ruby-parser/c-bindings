@@ -179,8 +179,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Value of the symbol literal</p>
-<p>Note that it's a <code>StringValue</code>, not a <code>String</code>. The reason is that you can get UTF-8 incompatible strings from a valid UTF-8 source using escape sequences like <code>"\\xFF"</code></p>
-<p>These "\\", "x", "F", "F" chars are valid separately, but together they construct a char with code = 255 that is invalid for UTF-8.</p>
+<p>Note that it's a <code>StringValue</code>, not a <code>String</code>. The reason is that you can get UTF-8 incompatible strings from a valid UTF-8 source using escape sequences like <code>"\xFF"</code></p>
+<p>These "\", "x", "F", "F" chars are valid separately, but together they construct a char with code = 255 that is invalid for UTF-8.</p>
 <p>You can use <code>to_string_lossy</code> or <code>to_string</code> methods to get a raw symbol value. </p>
 
 </div>
