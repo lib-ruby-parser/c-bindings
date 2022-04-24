@@ -33,7 +33,7 @@ jobs:
             ar: llvm-ar-12
             run: |
               cmake ..
-              make run-tests
+              make test
 
           - name: test on mac (clang)
             os: macos-latest
@@ -43,7 +43,7 @@ jobs:
             run: |
               cmake ..
               $CC --version
-              make run-tests
+              make test
 
           - name: test on windows (msvc)
             os: windows-latest
@@ -51,10 +51,7 @@ jobs:
             cc: cl.exe
             run: |
               cmake -G"MinGW Makefiles" ..
-              cat Makefile
-              make --help
-              make
-              make run-tests
+              make test
 
           - name: test on windows (mingw)
             os: windows-latest
@@ -63,13 +60,7 @@ jobs:
             ar: ar
             run: |
               cmake -G"MinGW Makefiles" ..
-              pwd
-              gcc --version
-              ls -la
-              cat Makefile
-              make --help
-              make
-              make run-tests
+              make test
 
           - name: valgrind
             os: ubuntu-latest
@@ -90,7 +81,7 @@ jobs:
             ar: llvm-ar-12
             run: |
               cmake ..
-              ASAN_OPTIONS=detect_leaks=1 CFLAGS="-fsanitize=address" make run-tests
+              ASAN_OPTIONS=detect_leaks=1 CFLAGS="-fsanitize=address" make test
 
     steps:
       - name: setup msvc on windows

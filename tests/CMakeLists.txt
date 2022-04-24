@@ -11,7 +11,7 @@ target_link_libraries(
 add_dependencies(test-runner build_libruby_parser_c)
 
 add_custom_target(
-    run-tests
+    test
     COMMAND test-runner
     COMMENT "Running tests..."
 )

@@ -22,9 +22,9 @@ endif()
 add_custom_command(
     OUTPUT
         ${RUST_DIR}/lib_ruby_parser_c${CMAKE_STATIC_LIBRARY_SUFFIX}
+    WORKING_DIRECTORY ${RUST_DIR}
     COMMAND
-        cd ${RUST_DIR}
-            && RUSTFLAGS="${RUSTFLAGS}" cargo build ${CARGOFLAGS}
+        ${CMAKE_COMMAND} -E env "RUSTFLAGS=${RUSTFLAGS}" cargo build ${CARGOFLAGS}
             && ls -l target/${RUST_TARGET}
             && ls -l target/${RUST_TARGET}/${RUST_ENV}
             && cp target/${RUST_TARGET}/${RUST_ENV}/${STATIC_LIB_FILE} lib_ruby_parser_c${CMAKE_STATIC_LIBRARY_SUFFIX}
