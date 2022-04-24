@@ -4,9 +4,14 @@ add_executable(
     test-runner
     test.c
 )
+if(MSVC)
+    set(LIB_NAME libruby_parser_c)
+else()
+    set(LIB_NAME ruby_parser_c)
+endif()
 target_link_libraries(
     test-runner
-    ruby_parser_c
+    ${LIB_NAME}
 )
 add_dependencies(test-runner build_libruby_parser_c)
 

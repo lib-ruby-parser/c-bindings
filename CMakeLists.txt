@@ -27,6 +27,12 @@ endif()
 
 if(UNIX AND NOT APPLE)
    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lpthread -ldl -lm")
+elseif(APPLE)
+   #
+elseif(MSVC)
+   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ws2_32.lib userenv.lib bcrypt.lib")
+else()
+   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lws2_32 -luserenv -lbcrypt")
 endif()
 
 set(ROOT_DIR    ${CMAKE_SOURCE_DIR})
