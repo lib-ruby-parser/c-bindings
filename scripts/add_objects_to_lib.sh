@@ -2,6 +2,10 @@
 
 set -eu
 
+AR=$1
+LIB=$2
+OBJECTS=$3
+
 echo "AR = $AR"
 echo "LIB = $LIB"
 echo "OBJECTS = $OBJECTS"
