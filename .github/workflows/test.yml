@@ -31,7 +31,9 @@ jobs:
             target: x86_64-unknown-linux-gnu
             cc: clang-12
             ar: llvm-ar-12
-            run: make tests/run
+            run: |
+              cmake ..
+              make run-tests
 
           - name: test on mac (clang)
             os: macos-latest
@@ -39,15 +41,20 @@ jobs:
             cc: clang
             ar: ar
             run: |
+              cmake ..
               $CC --version
-              make tests/run
+              make run-tests
 
           - name: test on windows (msvc)
             os: windows-latest
             target: x86_64-pc-windows-msvc
             cc: cl.exe
             run: |
-              make tests/run
+              cmake -G"MinGW Makefiles" ..
+              cat Makefile
+              make --help
+              make
+              make run-tests
 
           - name: test on windows (mingw)
             os: windows-latest
@@ -55,8 +62,14 @@ jobs:
             cc: gcc
             ar: ar
             run: |
+              cmake -G"MinGW Makefiles" ..
+              pwd
               gcc --version
-              make tests/run
+              ls -la
+              cat Makefile
+              make --help
+              make
+              make run-tests
 
           - name: valgrind
             os: ubuntu-latest
@@ -66,15 +79,18 @@ jobs:
             run: |
               sudo apt-get update
               sudo apt-get install -y valgrind libtool-bin
-              make tests/runner
-              valgrind ./tests/runner
+              cmake ..
+              make test-runner
+              valgrind ./tests/test-runner
 
           - name: asan
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             cc: clang-12
             ar: llvm-ar-12
-            run: ASAN_OPTIONS=detect_leaks=1 CFLAGS="-fsanitize=address" make tests/run
+            run: |
+              cmake ..
+              ASAN_OPTIONS=detect_leaks=1 CFLAGS="-fsanitize=address" make run-tests
 
     steps:
       - name: setup msvc on windows
@@ -106,8 +122,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake ..
-          make test
+          ${{ matrix.build.run }}
 
   test-header:
     name: test building lib-ruby-parser.h
