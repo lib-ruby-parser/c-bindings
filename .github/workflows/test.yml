@@ -21,7 +21,6 @@ jobs:
       BUILD_ENV: debug
       TARGET: ${{ matrix.build.target }}
       CC: ${{ matrix.build.cc }}
-      LD: ${{ matrix.build.ld }}
       AR: ${{ matrix.build.ar }}
     strategy:
       fail-fast: false
@@ -31,7 +30,6 @@ jobs:
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             cc: clang-12
-            ld: ld.lld-12
             ar: llvm-ar-12
             run: make tests/run
 
@@ -39,7 +37,6 @@ jobs:
             os: macos-latest
             target: x86_64-apple-darwin
             cc: clang
-            ld: ld
             ar: ar
             run: |
               $CC --version
@@ -49,7 +46,6 @@ jobs:
             os: windows-latest
             target: x86_64-pc-windows-msvc
             cc: cl.exe
-            ld: link.exe
             run: |
               make tests/run
 
@@ -57,7 +53,6 @@ jobs:
             os: windows-latest
             target: x86_64-pc-windows-gnu
             cc: gcc
-            ld: ld
             ar: ar
             run: |
               gcc --version
@@ -67,7 +62,6 @@ jobs:
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             cc: clang-12
-            ld: ld.lld-12
             ar: llvm-ar-12
             run: |
               sudo apt-get update
@@ -79,7 +73,6 @@ jobs:
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             cc: clang-12
-            ld: ld.lld-12
             ar: llvm-ar-12
             run: ASAN_OPTIONS=detect_leaks=1 CFLAGS="-fsanitize=address" make tests/run
 
