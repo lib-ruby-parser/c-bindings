@@ -9,7 +9,13 @@ endif()
 set(RUST_TARGET "$ENV{RUST_TARGET}")
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-   add_compile_definitions(TEST_ENV)
+   if(MSVC)
+      # Somehow add_compile_definitions(TEST_ENV) on MSVC
+      # produces "-DTEST_ENV" as if it's gcc
+      set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /DTEST_ENV")
+   else()
+      add_compile_definitions(TEST_ENV)
+   endif()
    set(CARGOFLAGS "${CARGOFLAGS}" "--features=tests")
 endif()
 
