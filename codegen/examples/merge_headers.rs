@@ -1,22 +1,22 @@
 const HEADERS: &[&str] = &[
-    "src/shared_byte_list.h",
-    "src/string.h",
-    "src/bytes.h",
-    "src/source_line.h",
-    "src/decoded_input.h",
-    "src/loc.h",
-    "src/token_ids.h",
-    "src/token.h",
-    "src/comment.h",
-    "src/magic_comment.h",
-    "src/nodes.h",
-    "src/messages.h",
-    "src/diagnostic.h",
-    "src/decoder.h",
-    "src/token_rewriter.h",
-    "src/parser_options.h",
-    "src/parser_result.h",
-    "src/api.h",
+    "../src/shared_byte_list.h",
+    "../src/string.h",
+    "../src/bytes.h",
+    "../src/source_line.h",
+    "../src/decoded_input.h",
+    "../src/loc.h",
+    "../src/token_ids.h",
+    "../src/token.h",
+    "../src/comment.h",
+    "../src/magic_comment.h",
+    "../src/nodes.h",
+    "../src/messages.h",
+    "../src/diagnostic.h",
+    "../src/decoder.h",
+    "../src/token_rewriter.h",
+    "../src/parser_options.h",
+    "../src/parser_result.h",
+    "../src/api.h",
 ];
 
 fn process_header(header_path: &str, sys_includes: &mut Vec<String>, contents: &mut Vec<String>) {
@@ -95,5 +95,5 @@ fn main() {
         contents = contents.join("\n")
     );
 
-    std::fs::write("src/lib-ruby-parser.h", contents).unwrap();
+    std::fs::write("lib-ruby-parser.h", contents).unwrap();
 }

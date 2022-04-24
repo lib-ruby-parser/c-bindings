@@ -100,15 +100,14 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: codegen
+      - name: test
         env:
-          RUSTFLAGS: ""
+          VERBOSE: "1"
         run: |
-          make do-codegen
-          make token_ids.h
-
-      - name: run tests
-        run: ${{ matrix.build.run }}
+          mkdir build
+          cd build
+          cmake ..
+          make test
 
   test-header:
     name: test building lib-ruby-parser.h
@@ -127,7 +126,15 @@ jobs:
         uses: actions/checkout@v2
 
       - name: build lib-ruby-parser.h
-        run: make lib-ruby-parser.h
+        env:
+          VERBOSE: "1"
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make codegen_main_header
 
       - name: validate lib-ruby-parser.h
-        run: clang -fsyntax-only -Wall -Wextra -Wpedantic lib-ruby-parser.h
+        run: |
+          cd build
+          clang -fsyntax-only -Wall -Wextra -Wpedantic lib-ruby-parser.h
