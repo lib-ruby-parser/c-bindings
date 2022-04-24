@@ -1,7 +1,3 @@
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTEST_ENV")
-endif()
-
 file(GLOB C_FILES "${SRC_DIR}/*.c")
 list(APPEND C_FILES messages.c nodes.c)
 

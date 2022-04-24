@@ -8,6 +8,25 @@ endif()
 
 set(RUST_TARGET "$ENV{RUST_TARGET}")
 
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+   add_compile_definitions(TEST_ENV)
+   set(CARGOFLAGS "${CARGOFLAGS}" "--features=tests")
+endif()
+
+if(MSVC)
+   # set(CMAKE_C_FLAGS, "${CMAKE_C_FLAGS} /bigobj /MT /Zi")
+else()
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wpedantic -Weverything -Wdocumentation")
+   # but disable -Wpadded, we inherit Rust layouts
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-padded")
+   # ignore documentation, it has examples of syntax errors on purpose
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-documentation-unknown-command")
+endif()
+
+if(UNIX AND NOT APPLE)
+   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lpthread -ldl -lm")
+endif()
+
 set(ROOT_DIR    ${CMAKE_SOURCE_DIR})
 set(CODEGEN_DIR ${ROOT_DIR}/codegen)
 set(SRC_DIR     ${ROOT_DIR}/src)

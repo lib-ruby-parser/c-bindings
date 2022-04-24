@@ -1,9 +1,5 @@
 link_directories(${CMAKE_BINARY_DIR})
 
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTEST_ENV")
-endif()
-
 add_executable(
     test-runner
     test.c
