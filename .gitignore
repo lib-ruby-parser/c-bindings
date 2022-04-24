@@ -4,11 +4,11 @@ ruby-parser-c/target
 ruby-parser-c/Cargo.lock
 codegen/Cargo.lock
 lib-ruby-parser.h
-messages.h
-messages.c
-nodes.h
-nodes.c
-token_ids.h
+src/messages.h
+src/messages.c
+src/nodes.h
+src/nodes.c
+src/token_ids.h
 target
 *.o
 *.a
@@ -23,3 +23,4 @@ benchmark/filelist
 benchmark/stats
 *.benchmark-out
 docs/
+build
