@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(lib-ruby-parser)
+project(lib-ruby-parser C)
 
 if(NOT CMAKE_BUILD_TYPE)
    set(CMAKE_BUILD_TYPE Debug)
@@ -15,12 +15,14 @@ endif()
 
 if(MSVC)
    # set(CMAKE_C_FLAGS, "${CMAKE_C_FLAGS} /bigobj /MT /Zi")
-else()
+elseif(UNIX)
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wpedantic -Weverything -Wdocumentation")
    # but disable -Wpadded, we inherit Rust layouts
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-padded")
    # ignore documentation, it has examples of syntax errors on purpose
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-documentation-unknown-command")
+else()
+   # Ignore MinGW
 endif()
 
 if(UNIX AND NOT APPLE)
