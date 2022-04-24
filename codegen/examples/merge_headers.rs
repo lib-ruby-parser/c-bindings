@@ -1,22 +1,22 @@
 const HEADERS: &[&str] = &[
-    "shared_byte_list.h",
-    "string.h",
-    "bytes.h",
-    "source_line.h",
-    "decoded_input.h",
-    "loc.h",
-    "token_ids.h",
-    "token.h",
-    "comment.h",
-    "magic_comment.h",
-    "nodes.h",
-    "messages.h",
-    "diagnostic.h",
-    "decoder.h",
-    "token_rewriter.h",
-    "parser_options.h",
-    "parser_result.h",
-    "api.h",
+    "src/shared_byte_list.h",
+    "src/string.h",
+    "src/bytes.h",
+    "src/source_line.h",
+    "src/decoded_input.h",
+    "src/loc.h",
+    "src/token_ids.h",
+    "src/token.h",
+    "src/comment.h",
+    "src/magic_comment.h",
+    "src/nodes.h",
+    "src/messages.h",
+    "src/diagnostic.h",
+    "src/decoder.h",
+    "src/token_rewriter.h",
+    "src/parser_options.h",
+    "src/parser_result.h",
+    "src/api.h",
 ];
 
 fn process_header(header_path: &str, sys_includes: &mut Vec<String>, contents: &mut Vec<String>) {
@@ -95,5 +95,5 @@ fn main() {
         contents = contents.join("\n")
     );
 
-    std::fs::write("lib-ruby-parser.h", contents).unwrap();
+    std::fs::write("src/lib-ruby-parser.h", contents).unwrap();
 }

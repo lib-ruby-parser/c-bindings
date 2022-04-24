@@ -6,11 +6,11 @@ fn render(template_path: &str, output_path: &str) {
 }
 
 pub(crate) fn codegen() {
-    render("codegen/messages.h.liquid", "../messages.h");
-    render("codegen/messages.c.liquid", "../messages.c");
+    render("codegen/messages.h.liquid", "../src/messages.h");
+    render("codegen/messages.c.liquid", "../src/messages.c");
 
-    render("codegen/nodes.h.liquid", "../nodes.h");
-    render("codegen/nodes.c.liquid", "../nodes.c");
+    render("codegen/nodes.h.liquid", "../src/nodes.h");
+    render("codegen/nodes.c.liquid", "../src/nodes.c");
 
     render(
         "codegen/messages.rs.liquid",

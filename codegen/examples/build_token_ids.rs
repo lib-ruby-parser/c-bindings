@@ -89,5 +89,5 @@ pub fn main() {
             .join("\n\n")
     );
 
-    std::fs::write("token_ids.h", token_ids_h).unwrap();
+    std::fs::write("src/token_ids.h", token_ids_h).unwrap();
 }
