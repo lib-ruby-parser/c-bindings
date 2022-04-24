@@ -19,7 +19,7 @@ jobs:
     runs-on: ${{ matrix.build.os }}
     env:
       BUILD_ENV: debug
-      TARGET: ${{ matrix.build.target }}
+      RUST_TARGET: ${{ matrix.build.target }}
       CC: ${{ matrix.build.cc }}
       AR: ${{ matrix.build.ar }}
     strategy:

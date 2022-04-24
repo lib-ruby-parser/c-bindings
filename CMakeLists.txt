@@ -6,11 +6,7 @@ if(NOT CMAKE_BUILD_TYPE)
    set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-# if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-#     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTEST_ENV")
-# endif()
-
-set(RUST_TARGET "x86_64-apple-darwin")
+set(RUST_TARGET "$ENV{RUST_TARGET}")
 
 set(ROOT_DIR    ${CMAKE_SOURCE_DIR})
 set(CODEGEN_DIR ${ROOT_DIR}/codegen)
