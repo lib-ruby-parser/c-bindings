@@ -14,9 +14,8 @@ set(STATIC_LIB ${CMAKE_BINARY_DIR}/libruby_parser_c${CMAKE_STATIC_LIBRARY_SUFFIX
 
 add_custom_command(
     OUTPUT ${STATIC_LIB}
-    COMMAND
-        cp ${RUST_STATIC_LIB} ${STATIC_LIB}
-            && ${ROOT_DIR}/scripts/add_objects_to_lib.sh ${CMAKE_AR} ${STATIC_LIB} \"$<JOIN:$<TARGET_OBJECTS:c_obj_files>,$<SEMICOLON>>\"
+    COMMAND cp ${RUST_STATIC_LIB} ${STATIC_LIB}
+    COMMAND bash ${ROOT_DIR}/scripts/add_objects_to_lib.sh ${CMAKE_AR} ${STATIC_LIB} \"$<JOIN:$<TARGET_OBJECTS:c_obj_files>,$<SEMICOLON>>\"
     DEPENDS
         lib_ruby_parser_rust
         c_obj_files

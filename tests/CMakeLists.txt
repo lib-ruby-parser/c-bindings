@@ -5,8 +5,10 @@ add_executable(
     test.c
 )
 if(MSVC)
+    # For MSVC lib are passed by full name
     set(LIB_NAME libruby_parser_c)
 else()
+    # For other compilers -l<lib name without "lib" prefix>
     set(LIB_NAME ruby_parser_c)
 endif()
 target_link_libraries(
