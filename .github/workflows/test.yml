@@ -38,7 +38,7 @@ jobs:
           - name: test on mac (clang)
             os: macos-latest
             target: x86_64-apple-darwin
-            cc: clang
+            cc: /usr/bin/clang
             ar: ar
             run: |
               which -a clang
@@ -60,6 +60,7 @@ jobs:
             cc: gcc
             ar: ar
             run: |
+              which -a gcc
               cmake -G"MinGW Makefiles" ..
               make test_runner_target test
 
