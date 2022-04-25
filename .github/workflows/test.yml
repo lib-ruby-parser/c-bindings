@@ -22,6 +22,7 @@ jobs:
       RUST_TARGET: ${{ matrix.build.target }}
       CC: ${{ matrix.build.cc }}
       AR: ${{ matrix.build.ar }}
+      CI: true
     strategy:
       fail-fast: false
       matrix:

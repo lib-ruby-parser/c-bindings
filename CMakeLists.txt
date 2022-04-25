@@ -41,7 +41,17 @@ else()
    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lws2_32 -luserenv -lbcrypt")
 endif()
 
-message(INFO " CMAKE_EXE_LINKER_FLAGS = ${CMAKE_EXE_LINKER_FLAGS}")
+if($ENV{CI})
+   set(CI TRUE)
+else()
+   set(CI FALSE)
+endif()
+
+if(CI AND APPLE)
+    # CI on Mac finds a wrong compiler
+    message(INFO " Setting CC=clang")
+    set(CMAKE_C_COMPILER clang)
+endif()
 
 set(ROOT_DIR    ${CMAKE_SOURCE_DIR})
 set(CODEGEN_DIR ${ROOT_DIR}/codegen)

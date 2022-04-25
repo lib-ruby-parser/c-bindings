@@ -19,5 +19,5 @@ if [ $BASE_CC = "cl.exe" ]; then
     "$CC" $CFLAGS $INPUTS /link /OUT:$OUTPUT
 else
     # Clang/GCC/MinGW
-    "$CC" $CFLAGS $INPUTS -o $OUTPUT
+    "$CC" $INPUTS $CFLAGS -o $OUTPUT
 fi
