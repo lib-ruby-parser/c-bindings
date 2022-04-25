@@ -14,7 +14,7 @@ OBJECTS=$(echo "$OBJECTS" | sed "s/;/ /g")
 echo "Adding $OBJECTS"
 
 if [ "$AR" = "lib.exe" ]; then
-    lib.exe $LIB $OBJECTS /OUT:$LIB
+    lib.exe "$LIB" "$OBJECTS" /OUT:"$LIB"
 else
-    $AR r $LIB $OBJECTS
+    $AR r "$LIB" "$OBJECTS"
 fi

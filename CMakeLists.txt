@@ -41,6 +41,8 @@ else()
    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lws2_32 -luserenv -lbcrypt")
 endif()
 
+message(INFO " CMAKE_EXE_LINKER_FLAGS = ${CMAKE_EXE_LINKER_FLAGS}")
+
 set(ROOT_DIR    ${CMAKE_SOURCE_DIR})
 set(CODEGEN_DIR ${ROOT_DIR}/codegen)
 set(SRC_DIR     ${ROOT_DIR}/src)
