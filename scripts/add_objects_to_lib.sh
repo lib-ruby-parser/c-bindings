@@ -16,7 +16,7 @@ read -ra OBJECTS <<<"$OBJECTS_SEP_BY_SIME"
 for item in "${OBJECTS[@]}";
 do
     echo "Adding $item"
-    if [ "$AR" = "lib.exe" ]; then
+    if [ "$(basename $AR)" = "lib.exe" ]; then
         $AR "$LIB" "$item" /OUT:"$LIB"
     else
         $AR r "$LIB" "$item"
