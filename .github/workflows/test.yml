@@ -41,6 +41,7 @@ jobs:
             cc: clang
             ar: ar
             run: |
+              which -a clang
               cmake ..
               $CC --version
               make test_runner_target test

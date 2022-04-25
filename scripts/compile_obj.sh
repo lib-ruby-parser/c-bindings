@@ -14,8 +14,8 @@ echo "OUTPUT = $OUTPUT"
 
 if [ "$(basename $CC)" = "cl.exe" ]; then
     # MSVC
-    $CC $CFLAGS $INPUTS /link /OUT:$OUTPUT
+    "$CC" $CFLAGS $INPUTS /link /OUT:$OUTPUT
 else
     # Clang/GCC/MinGW
-    $CC $CFLAGS $INPUTS -o $OUTPUT
+    "$CC" $CFLAGS $INPUTS -o $OUTPUT
 fi
