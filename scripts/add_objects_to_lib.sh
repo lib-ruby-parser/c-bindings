@@ -4,17 +4,21 @@ set -eux
 
 AR=$1
 LIB=$2
-OBJECTS=$3
+OBJECTS_SEP_BY_SIME=$3
 
 echo "AR = $AR"
 echo "LIB = $LIB"
-echo "OBJECTS = $OBJECTS"
+echo "OBJECTS_SEP_BY_SIME = $OBJECTS_SEP_BY_SIME"
 
-OBJECTS=$(echo "$OBJECTS" | sed "s/;/ /g")
-echo "Adding $OBJECTS"
+IFS=";"
+read -ra OBJECTS <<<"$OBJECTS_SEP_BY_SIME"
 
-if [ "$AR" = "lib.exe" ]; then
-    lib.exe "$LIB" "$OBJECTS" /OUT:"$LIB"
-else
-    $AR r "$LIB" "$OBJECTS"
-fi
+for item in "${OBJECTS[@]}";
+do
+    echo "Adding $item"
+    if [ "$AR" = "lib.exe" ]; then
+        $AR "$LIB" "$item" /OUT:"$LIB"
+    else
+        $AR r "$LIB" "$item"
+    fi
+done
