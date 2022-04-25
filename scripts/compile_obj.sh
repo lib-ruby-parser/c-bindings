@@ -12,7 +12,7 @@ echo "CFLAGS = $CFLAGS"
 echo "INPUTS = $INPUTS"
 echo "OUTPUT = $OUTPUT"
 
-if [ "$(basename $CC)" = "cl.exe" ]; then
+if [ "$(basename \"$CC\")" = "cl.exe" ]; then
     # MSVC
     "$CC" $CFLAGS $INPUTS /link /OUT:$OUTPUT
 else
