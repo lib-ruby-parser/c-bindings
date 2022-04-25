@@ -33,7 +33,7 @@ jobs:
             ar: llvm-ar-12
             run: |
               cmake ..
-              make test
+              make test_runner_target test
 
           - name: test on mac (clang)
             os: macos-latest
@@ -43,7 +43,7 @@ jobs:
             run: |
               cmake ..
               $CC --version
-              make test
+              make test_runner_target test
 
           - name: test on windows (msvc)
             os: windows-latest
@@ -51,7 +51,7 @@ jobs:
             cc: cl.exe
             run: |
               cmake -G"MinGW Makefiles" ..
-              make test
+              make test_runner_target test
 
           - name: test on windows (mingw)
             os: windows-latest
@@ -60,7 +60,7 @@ jobs:
             ar: ar
             run: |
               cmake -G"MinGW Makefiles" ..
-              make test
+              make test_runner_target test
 
           - name: valgrind
             os: ubuntu-latest
@@ -71,8 +71,8 @@ jobs:
               sudo apt-get update
               sudo apt-get install -y valgrind libtool-bin
               cmake ..
-              make test-runner
-              valgrind ./tests/test-runner
+              make test_runner_target
+              valgrind ./test-runner
 
           - name: asan
             os: ubuntu-latest
@@ -81,7 +81,7 @@ jobs:
             ar: llvm-ar-12
             run: |
               cmake ..
-              ASAN_OPTIONS=detect_leaks=1 CFLAGS="-fsanitize=address" make test
+              ASAN_OPTIONS=detect_leaks=1 CFLAGS="-fsanitize=address" make test_runner_target test
 
     steps:
       - name: setup msvc on windows

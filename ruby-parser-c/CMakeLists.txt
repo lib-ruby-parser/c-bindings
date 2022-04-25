@@ -38,4 +38,4 @@ add_custom_command(
 set(RUST_STATIC_LIB ${RUST_DIR}/lib_ruby_parser_c${CMAKE_STATIC_LIBRARY_SUFFIX})
 set(RUST_STATIC_LIB ${RUST_DIR}/lib_ruby_parser_c${CMAKE_STATIC_LIBRARY_SUFFIX} PARENT_SCOPE)
 
-add_custom_target(lib_ruby_parser_rust DEPENDS ${RUST_STATIC_LIB})
+add_custom_target(lib_ruby_parser_rust_target DEPENDS ${RUST_STATIC_LIB})

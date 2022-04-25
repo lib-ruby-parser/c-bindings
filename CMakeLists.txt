@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 project(lib-ruby-parser C)
+enable_testing()
 
 if(NOT CMAKE_BUILD_TYPE)
    set(CMAKE_BUILD_TYPE Debug)
@@ -10,12 +11,11 @@ set(RUST_TARGET "$ENV{RUST_TARGET}")
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
    if(MSVC)
-      # Somehow add_compile_definitions(TEST_ENV) on MSVC
-      # produces "-DTEST_ENV" as if it's gcc
       set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /DTEST_ENV")
    else()
-      add_compile_definitions(TEST_ENV)
+      set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTEST_ENV")
    endif()
+
    set(CARGOFLAGS "${CARGOFLAGS}" "--features=tests")
 endif()
 
@@ -36,7 +36,7 @@ if(UNIX AND NOT APPLE)
 elseif(APPLE)
    #
 elseif(MSVC)
-   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ws2_32.lib userenv.lib bcrypt.lib")
+   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ws2_32.lib advapi32.lib userenv.lib bcrypt.lib")
 else()
    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lws2_32 -luserenv -lbcrypt")
 endif()
