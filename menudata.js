@@ -85,16 +85,11 @@ var menudata={children:[
 {text:"File List",url:"files.html"},
 {text:"File Members",url:"globals.html",children:[
 {text:"All",url:"globals.html",children:[
-{text:"a",url:"globals.html#index_a"},
-{text:"l",url:"globals_l.html#index_l"},
-{text:"r",url:"globals_r.html#index_r"},
-{text:"t",url:"globals_t.html#index_t"}]},
+{text:"l",url:"globals.html#index_l"}]},
 {text:"Functions",url:"globals_func.html",children:[
-{text:"l",url:"globals_func.html#index_l"},
-{text:"r",url:"globals_func.html#index_r"}]},
+{text:"l",url:"globals_func.html#index_l"}]},
 {text:"Typedefs",url:"globals_type.html"},
 {text:"Enumerations",url:"globals_enum.html"},
 {text:"Enumerator",url:"globals_eval.html"},
 {text:"Macros",url:"globals_defs.html",children:[
-{text:"a",url:"globals_defs.html#index_a"},
 {text:"l",url:"globals_defs.html#index_l"}]}]}]}]}

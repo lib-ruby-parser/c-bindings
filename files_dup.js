@@ -15,7 +15,6 @@ var files_dup =
     [ "shared_byte_list.h", "shared__byte__list_8h.html", null ],
     [ "source_line.h", "source__line_8h.html", "source__line_8h" ],
     [ "string.h", "string_8h.html", "string_8h" ],
-    [ "test_helper.h", "test__helper_8h.html", "test__helper_8h" ],
     [ "token.h", "token_8h.html", "token_8h" ],
     [ "token_ids.h", "token__ids_8h.html", "token__ids_8h" ],
     [ "token_rewriter.h", "token__rewriter_8h.html", "token__rewriter_8h" ]
