@@ -46,8 +46,4 @@ typedef struct
 /// @ingroup magic_comment
 void LIB_RUBY_PARSER_drop_magic_comment_list(LIB_RUBY_PARSER_MagicCommentList *magic_comment_list);
 
-#ifdef TEST_ENV
-void run_test_group_magic_comment(void);
-#endif
-
 #endif // LIB_RUBY_PARSER_MAGIC_COMMENT_H

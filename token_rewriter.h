@@ -47,8 +47,4 @@ typedef struct
 bool LIB_RUBY_PARSER_maybe_token_rewriter_is_some(const LIB_RUBY_PARSER_MaybeTokenRewriter *maybe_token_rewriter);
 bool LIB_RUBY_PARSER_maybe_token_rewriter_is_none(const LIB_RUBY_PARSER_MaybeTokenRewriter *maybe_token_rewriter);
 
-#ifdef TEST_ENV
-void run_test_group_token_rewriter(void);
-#endif
-
 #endif // LIB_RUBY_PARSER_TOKEN_REWRITER_H

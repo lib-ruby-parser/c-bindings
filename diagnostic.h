@@ -62,8 +62,4 @@ typedef struct
 /// @ingroup diagnostic
 void LIB_RUBY_PARSER_drop_diagnostic_list(LIB_RUBY_PARSER_DiagnosticList *diagnostic_list);
 
-#ifdef TEST_ENV
-void run_test_group_diagnostic(void);
-#endif
-
 #endif // LIB_RUBY_PARSER_DIAGNOSTIC_H

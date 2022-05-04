@@ -1,8 +1,5 @@
-#include "api.h"
-
-#ifdef TEST_ENV
-
 #include "test_helper.h"
+#include "../api.h"
 
 static void test_parse(void)
 {
@@ -27,6 +24,7 @@ static void test_parse(void)
     LIB_RUBY_PARSER_drop_parser_result(&result);
 }
 
+void run_test_group_api(void);
 void run_test_group_api(void)
 {
     const test_fn_t tests[] = {
@@ -35,5 +33,3 @@ void run_test_group_api(void)
 
     run_tests_as_group("api", tests, sizeof(tests) / sizeof(test_fn_t));
 }
-
-#endif

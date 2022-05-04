@@ -1,8 +1,5 @@
-#include "token.h"
-
-#ifdef TEST_ENV
-
 #include "test_helper.h"
+#include "../token.h"
 #include <string.h>
 #include <stdlib.h>
 
@@ -37,6 +34,7 @@ static void test_token_list_fields(void)
     LIB_RUBY_PARSER_drop_token_list(&token_list);
 }
 
+void run_test_group_token(void);
 void run_test_group_token(void)
 {
     const test_fn_t tests[] = {
@@ -46,5 +44,3 @@ void run_test_group_token(void)
 
     run_tests_as_group("token", tests, sizeof(tests) / sizeof(test_fn_t));
 }
-
-#endif

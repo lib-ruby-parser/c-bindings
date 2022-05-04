@@ -55,8 +55,4 @@ typedef struct
 /// @ingroup bytes
 void LIB_RUBY_PARSER_drop_bytes(LIB_RUBY_PARSER_Bytes *bytes);
 
-#ifdef TEST_ENV
-void run_test_group_bytes(void);
-#endif
-
 #endif // LIB_RUBY_PARSER_BYTES_H

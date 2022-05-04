@@ -1,8 +1,5 @@
-#include "decoded_input.h"
-
-#ifdef TEST_ENV
-
 #include "test_helper.h"
+#include "../decoded_input.h"
 
 LIB_RUBY_PARSER_DecodedInput lib_ruby_parser__test__make_decoded_input(void);
 static void test_decoded_input(void)
@@ -19,6 +16,7 @@ static void test_decoded_input(void)
     LIB_RUBY_PARSER_drop_decoded_input(&decoded_input);
 }
 
+void run_test_group_decoded_input(void);
 void run_test_group_decoded_input(void)
 {
     const test_fn_t tests[] = {
@@ -27,5 +25,3 @@ void run_test_group_decoded_input(void)
 
     run_tests_as_group("decoded_input", tests, sizeof(tests) / sizeof(test_fn_t));
 }
-
-#endif

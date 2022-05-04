@@ -5,17 +5,17 @@ CODEGEN_DEPS += codegen/build.rs
 DO_CODEGEN = cd codegen && touch build.rs && cargo build
 
 # Codegen deps
-messages.c: $(CODEGEN_DEPS)
+tests/messages_test.c: $(CODEGEN_DEPS)
 	$(DO_CODEGEN)
-CLEAN += messages.c
+CLEAN += tests/messages_test.c
 
 messages.h: $(CODEGEN_DEPS)
 	$(DO_CODEGEN)
 CLEAN += messages.h
 
-nodes.c: $(CODEGEN_DEPS)
+tests/nodes_test.c: $(CODEGEN_DEPS)
 	$(DO_CODEGEN)
-CLEAN += nodes.c
+CLEAN += tests/nodes_test.c
 
 nodes.h: $(CODEGEN_DEPS)
 	$(DO_CODEGEN)

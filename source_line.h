@@ -32,8 +32,4 @@ typedef struct
 /// @ingroup source_line
 void LIB_RUBY_PARSER_drop_source_line_list(LIB_RUBY_PARSER_SourceLineList *source_line_list);
 
-#ifdef TEST_ENV
-void run_test_group_source_line(void);
-#endif
-
 #endif // LIB_RUBY_PARSER_SOURCE_LINE_H

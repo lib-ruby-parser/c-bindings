@@ -1,9 +1,6 @@
-#include "diagnostic.h"
-
-#ifdef TEST_ENV
-
 #include "test_helper.h"
 #include <stdlib.h>
+#include "../diagnostic.h"
 
 LIB_RUBY_PARSER_Diagnostic lib_ruby_parser__test__make_diagnostic(
     LIB_RUBY_PARSER_ErrorLevel level,
@@ -81,6 +78,7 @@ static void test_diagnostic_list(void)
     LIB_RUBY_PARSER_drop_diagnostic_list(&diagnostic_list);
 }
 
+void run_test_group_diagnostic(void);
 void run_test_group_diagnostic(void)
 {
     const test_fn_t tests[] = {
@@ -91,5 +89,3 @@ void run_test_group_diagnostic(void)
 
     run_tests_as_group("diagnostic", tests, sizeof(tests) / sizeof(test_fn_t));
 }
-
-#endif

@@ -62,8 +62,4 @@ bool LIB_RUBY_PARSER_maybe_string_is_none(const LIB_RUBY_PARSER_MaybeString *may
 /// @ingroup string
 void LIB_RUBY_PARSER_drop_maybe_string(LIB_RUBY_PARSER_MaybeString *maybe_string);
 
-#ifdef TEST_ENV
-void run_test_group_string(void);
-#endif
-
 #endif // LIB_RUBY_PARSER_STRING_H

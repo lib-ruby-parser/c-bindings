@@ -7,10 +7,10 @@ fn render(template_path: &str, output_path: &str) {
 
 pub(crate) fn codegen() {
     render("codegen/messages.h.liquid", "../messages.h");
-    render("codegen/messages.c.liquid", "../messages.c");
+    render("codegen/messages_test.c.liquid", "../tests/messages_test.c");
 
     render("codegen/nodes.h.liquid", "../nodes.h");
-    render("codegen/nodes.c.liquid", "../nodes.c");
+    render("codegen/nodes_test.c.liquid", "../tests/nodes_test.c");
 
     render(
         "codegen/messages.rs.liquid",

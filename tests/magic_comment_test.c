@@ -1,8 +1,5 @@
-#include "magic_comment.h"
-
-#ifdef TEST_ENV
-
 #include "test_helper.h"
+#include "../magic_comment.h"
 
 LIB_RUBY_PARSER_MagicCommentKind lib_ruby_parser__test__make_magic_comment_kind_encoding(void);
 LIB_RUBY_PARSER_MagicCommentKind lib_ruby_parser__test__make_magic_comment_kind_frozen_string_literal(void);
@@ -63,6 +60,7 @@ static void test_magic_comment_list_fields(void)
     LIB_RUBY_PARSER_drop_magic_comment_list(&magic_comment_list);
 }
 
+void run_test_group_magic_comment(void);
 void run_test_group_magic_comment(void)
 {
     const test_fn_t tests[] = {
@@ -73,5 +71,3 @@ void run_test_group_magic_comment(void)
 
     run_tests_as_group("magic_comment", tests, sizeof(tests) / sizeof(test_fn_t));
 }
-
-#endif

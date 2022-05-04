@@ -1,33 +1,31 @@
+.DELETE_ON_ERROR:
+
 include scripts/detect_build_env.mk
 include scripts/setup_target.mk
 include scripts/setup_rustflags.mk
 
-SOURCES = \
-	alloc \
-	api \
-	bytes \
-	comment \
-	decoded_input \
-	decoder \
-	diagnostic \
-	loc \
-	magic_comment \
-	messages \
-	nodes \
-	parser_options \
-	parser_result \
-	shared_byte_list \
-	source_line \
-	string \
-	token \
-	token_rewriter
-
-ifeq ($(BUILD_ENV), debug)
-SOURCES += test_helper
-endif
+SOURCES = alloc decoder string token_rewriter
 
 C_FILES = $(foreach source,$(SOURCES),$(source).c)
-H_FILES = $(foreach source,$(SOURCES),$(source).h)
+H_FILES = alloc.h \
+	bytes.h \
+	decoded_input.h \
+	diagnostic.h \
+	loc.h \
+	messages.h \
+	parser_options.h \
+	shared_byte_list.h \
+	string.h \
+	token_ids.h \
+	api.h \
+	comment.h \
+	decoder.h \
+	magic_comment.h \
+	nodes.h \
+	parser_result.h \
+	source_line.h \
+	token.h \
+	token_rewriter.h
 O_FILES = $(foreach source,$(SOURCES),$(source).$(O))
 STATIC_LIB = libruby_parser_c.$(A)
 

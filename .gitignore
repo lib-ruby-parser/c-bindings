@@ -5,9 +5,9 @@ ruby-parser-c/Cargo.lock
 codegen/Cargo.lock
 lib-ruby-parser.h
 messages.h
-messages.c
+tests/messages_test.c
 nodes.h
-nodes.c
+tests/nodes_test.c
 token_ids.h
 target
 *.o

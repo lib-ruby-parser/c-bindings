@@ -1,65 +1,21 @@
 
 alloc.o: alloc.c alloc.h
 
-api.o: api.c api.h parser_options.h string.h decoder.h bytes.h \
-  token_rewriter.h token.h loc.h decoded_input.h source_line.h \
-  token_ids.h shared_byte_list.h parser_result.h nodes.h diagnostic.h \
-  messages.h comment.h magic_comment.h test_helper.h
+decoder.o: decoder.c decoder.h string.h bytes.h
 
-bytes.o: bytes.c bytes.h test_helper.h
-
-comment.o: comment.c comment.h loc.h decoded_input.h string.h \
-  source_line.h bytes.h test_helper.h
-
-decoded_input.o: decoded_input.c decoded_input.h string.h source_line.h \
-  bytes.h test_helper.h
-
-decoder.o: decoder.c decoder.h string.h bytes.h test_helper.h
-
-diagnostic.o: diagnostic.c diagnostic.h messages.h string.h loc.h \
-  decoded_input.h source_line.h bytes.h test_helper.h
-
-loc.o: loc.c loc.h decoded_input.h string.h source_line.h bytes.h \
-  test_helper.h
-
-magic_comment.o: magic_comment.c magic_comment.h loc.h decoded_input.h \
-  string.h source_line.h bytes.h test_helper.h
-
-messages.o: messages.c messages.h string.h test_helper.h
-
-nodes.o: nodes.c nodes.h string.h loc.h decoded_input.h source_line.h \
-  bytes.h test_helper.h
-
-parser_options.o: parser_options.c parser_options.h string.h decoder.h \
-  bytes.h token_rewriter.h token.h loc.h decoded_input.h source_line.h \
-  token_ids.h shared_byte_list.h test_helper.h
-
-parser_result.o: parser_result.c parser_result.h nodes.h string.h loc.h \
-  decoded_input.h source_line.h bytes.h token.h token_ids.h diagnostic.h \
-  messages.h comment.h magic_comment.h test_helper.h
-
-shared_byte_list.o: shared_byte_list.c shared_byte_list.h test_helper.h
-
-source_line.o: source_line.c source_line.h test_helper.h
-
-string.o: string.c string.h test_helper.h
-
-test_helper.o: test_helper.c test_helper.h string.h
-
-token.o: token.c token.h bytes.h loc.h decoded_input.h string.h \
-  source_line.h token_ids.h test_helper.h
+string.o: string.c string.h
 
 token_rewriter.o: token_rewriter.c token_rewriter.h token.h bytes.h loc.h \
-  decoded_input.h string.h source_line.h token_ids.h shared_byte_list.h \
-  test_helper.h
+  decoded_input.h string.h source_line.h token_ids.h shared_byte_list.h
 
-tests/runner: tests/test.c tests/../test_helper.h tests/../bytes.h \
-  tests/../comment.h tests/../loc.h tests/../decoded_input.h \
-  tests/../string.h tests/../source_line.h tests/../decoder.h \
-  tests/../diagnostic.h tests/../messages.h tests/../magic_comment.h \
-  tests/../nodes.h tests/../parser_options.h tests/../token_rewriter.h \
-  tests/../token.h tests/../token_ids.h tests/../shared_byte_list.h \
-  tests/../parser_result.h tests/../api.h
+tests/runner: tests/runner.c tests/test_helper.h tests/api_test.c \
+  tests/../api.h tests/../parser_options.h tests/../string.h \
+  tests/../decoder.h tests/../bytes.h tests/../token_rewriter.h \
+  tests/../token.h tests/../loc.h tests/../decoded_input.h \
+  tests/../source_line.h tests/../token_ids.h \
+  tests/../shared_byte_list.h tests/../parser_result.h tests/../nodes.h \
+  tests/../diagnostic.h tests/../messages.h tests/../comment.h \
+  tests/../magic_comment.h
 
 benchmark/c-parser: benchmark/benchmark.c benchmark/../lib-ruby-parser.h \
   benchmark/rb_filelist.h

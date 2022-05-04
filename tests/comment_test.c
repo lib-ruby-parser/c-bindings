@@ -1,8 +1,5 @@
-#include "comment.h"
-
-#ifdef TEST_ENV
-
 #include "test_helper.h"
+#include "../comment.h"
 
 LIB_RUBY_PARSER_CommentType lib_ruby_parser__test__make_comment_type_document(void);
 LIB_RUBY_PARSER_CommentType lib_ruby_parser__test__make_comment_type_inline(void);
@@ -49,6 +46,7 @@ static void test_comment_list_fields(void)
     LIB_RUBY_PARSER_drop_comment_list(&comment_list);
 }
 
+void run_test_group_comment(void);
 void run_test_group_comment(void)
 {
     const test_fn_t tests[] = {
@@ -59,5 +57,3 @@ void run_test_group_comment(void)
 
     run_tests_as_group("comment", tests, sizeof(tests) / sizeof(test_fn_t));
 }
-
-#endif

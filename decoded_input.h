@@ -28,8 +28,4 @@ typedef struct
 /// @ingroup decoded_input
 void LIB_RUBY_PARSER_drop_decoded_input(LIB_RUBY_PARSER_DecodedInput *decoded_input);
 
-#ifdef TEST_ENV
-void run_test_group_decoded_input(void);
-#endif
-
 #endif // LIB_RUBY_PARSER_DECODED_INPUT_H

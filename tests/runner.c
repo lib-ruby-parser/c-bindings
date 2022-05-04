@@ -1,24 +1,37 @@
-#include "../test_helper.h"
+#include "test_helper.h"
 
-#include "../bytes.h"
-#include "../comment.h"
-#include "../decoded_input.h"
-#include "../decoder.h"
-#include "../diagnostic.h"
-#include "../loc.h"
-#include "../magic_comment.h"
-#include "../messages.h"
-#include "../nodes.h"
-#include "../parser_options.h"
-#include "../parser_result.h"
-#include "../shared_byte_list.h"
-#include "../source_line.h"
-#include "../string.h"
-#include "../token_rewriter.h"
-#include "../token.h"
-#include "../api.h"
+#include "api_test.c"
+#include "bytes_test.c"
+#include "comment_test.c"
+#include "decoded_input_test.c"
+#include "decoder_test.c"
+#include "diagnostic_test.c"
+#include "loc_test.c"
+#include "magic_comment_test.c"
+#include "messages_test.c"
+#include "nodes_test.c"
+#include "parser_options_test.c"
+#include "parser_result_test.c"
+#include "shared_byte_list_test.c"
+#include "source_line_test.c"
+#include "string_test.c"
+#include "token_rewriter_test.c"
+#include "token_test.c"
 
 void lib_ruby_parser__test__print_build_info(void);
+
+void run_tests_as_group(const char *group_name, const test_fn_t *tests, size_t count)
+{
+    fprintf(stderr, "Running group \"%s\"", group_name);
+    fprintf(stderr, " with %lu tests:\n", count);
+    for (size_t i = 0; i < count; i++)
+    {
+        test_fn_t test_fn = tests[i];
+        fprintf(stderr, "  - ");
+        test_fn();
+        fprintf(stderr, "\n");
+    }
+}
 
 int main()
 {

@@ -16,8 +16,4 @@ typedef struct
     size_t len;
 } LIB_RUBY_PARSER_SharedByteList;
 
-#ifdef TEST_ENV
-void run_test_group_shared_byte_list(void);
-#endif
-
 #endif // LIB_RUBY_PARSER_SHARED_BYTE_LIST_H

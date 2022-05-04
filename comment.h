@@ -50,8 +50,4 @@ typedef struct
 /// @ingroup comments
 void LIB_RUBY_PARSER_drop_comment_list(LIB_RUBY_PARSER_CommentList *comment_list);
 
-#ifdef TEST_ENV
-void run_test_group_comment(void);
-#endif
-
 #endif // LIB_RUBY_PARSER_COMMENT_H

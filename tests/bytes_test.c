@@ -1,8 +1,5 @@
-#include "bytes.h"
-
-#ifdef TEST_ENV
-
 #include "test_helper.h"
+#include "../bytes.h"
 #include <stdlib.h>
 
 LIB_RUBY_PARSER_ByteList lib_ruby_parser__test__make_byte_list(char i1, char i2, char i3);
@@ -46,6 +43,7 @@ static void test_bytes_fields(void)
     LIB_RUBY_PARSER_drop_bytes(&bytes);
 }
 
+void run_test_group_bytes(void);
 void run_test_group_bytes(void)
 {
     const test_fn_t tests[] = {
@@ -56,5 +54,3 @@ void run_test_group_bytes(void)
 
     run_tests_as_group("bytes", tests, sizeof(tests) / sizeof(test_fn_t));
 }
-
-#endif

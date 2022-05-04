@@ -1,8 +1,5 @@
-#include "source_line.h"
-
-#ifdef TEST_ENV
-
 #include "test_helper.h"
+#include "../source_line.h"
 
 LIB_RUBY_PARSER_SourceLine lib_ruby_parser__test__make_source_line(size_t begin, size_t end, bool ends_with_eof);
 static void test_source_line_fields(void)
@@ -25,6 +22,7 @@ static void test_source_line_list_fields(void)
     LIB_RUBY_PARSER_drop_source_line_list(&source_line_list);
 }
 
+void run_test_group_source_line(void);
 void run_test_group_source_line(void)
 {
     const test_fn_t tests[] = {
@@ -34,5 +32,3 @@ void run_test_group_source_line(void)
 
     run_tests_as_group("source_line", tests, sizeof(tests) / sizeof(test_fn_t));
 }
-
-#endif

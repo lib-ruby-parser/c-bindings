@@ -1,8 +1,5 @@
-#include "parser_result.h"
-
-#ifdef TEST_ENV
-
 #include "test_helper.h"
+#include "../parser_result.h"
 #include <stdlib.h>
 
 LIB_RUBY_PARSER_ParserResult lib_ruby_parser__test__make_parser_result(void);
@@ -46,6 +43,7 @@ static void test_parser_result(void)
     LIB_RUBY_PARSER_drop_parser_result(&parser_result);
 }
 
+void run_test_group_parser_result(void);
 void run_test_group_parser_result(void)
 {
     const test_fn_t tests[] = {
@@ -54,5 +52,3 @@ void run_test_group_parser_result(void)
 
     run_tests_as_group("parser_result", tests, sizeof(tests) / sizeof(test_fn_t));
 }
-
-#endif

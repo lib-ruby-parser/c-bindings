@@ -1,8 +1,5 @@
-#include "loc.h"
-
-#ifdef TEST_ENV
-
 #include "test_helper.h"
+#include "../loc.h"
 #include <stdlib.h>
 
 LIB_RUBY_PARSER_Loc lib_ruby_parser__test__make_loc(size_t begin, size_t end);
@@ -49,6 +46,7 @@ static void test_some_loc_fields(void)
     assert_some_loc(some_loc, 1, 2);
 }
 
+void run_test_group_loc(void);
 void run_test_group_loc(void)
 {
     const test_fn_t tests[] = {
@@ -60,5 +58,3 @@ void run_test_group_loc(void)
 
     run_tests_as_group("loc", tests, sizeof(tests) / sizeof(test_fn_t));
 }
-
-#endif
