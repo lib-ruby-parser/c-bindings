@@ -37,9 +37,29 @@ token_ids.h: codegen/examples/build_token_ids.rs
 CLEAN += token_ids.h
 update-depend: token_ids.h
 
+merge-headers:
+	wget -q https://github.com/iliabylich/merge_headers/releases/download/v1.0.0/merge-headers-$(TARGET) -O merge-headers
+	chmod +x merge-headers
+CLEAN += merge-headers
+
+# A literal space.
+space :=
+space +=
+
+# Joins elements of the list in arg 2 with the given separator.
+#   1. Element separator.
+#   2. The list.
+join-with = $(subst $(space),$1,$(strip $2))
+
 # lib-ruby-parser.h codegen
-lib-ruby-parser.h: codegen/examples/merge_headers.rs $(H_FILES) token_ids.h nodes.h messages.h
-	cargo run --example merge_headers --manifest-path codegen/Cargo.toml
+lib-ruby-parser.h: merge-headers $(H_FILES) token_ids.h nodes.h messages.h
+	./merge-headers \
+		--cc $(CC) \
+		--headers "$(call join-with,;,$(H_FILES));token_ids.h" \
+		--write-to lib-ruby-parser.h \
+		--include-guard-prefix LIB_RUBY_PARSER_ \
+		--output-guard LIB_RUBY_PARSER_H
+
 CLEAN += lib-ruby-parser.h
 update-depend: lib-ruby-parser.h
 
