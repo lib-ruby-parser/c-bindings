@@ -2,7 +2,7 @@ CODEGEN_DEPS = $(wildcard codegen/codegen/*.rs)
 CODEGEN_DEPS += codegen/Cargo.toml
 CODEGEN_DEPS += codegen/build.rs
 
-DO_CODEGEN = cd codegen && cargo build
+DO_CODEGEN = cd codegen && touch build.rs && cargo build
 
 # Codegen deps
 messages.c: $(CODEGEN_DEPS)
