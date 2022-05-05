@@ -15,5 +15,5 @@ var modules =
     [ "Source Line", "group__source__line.html", "group__source__line" ],
     [ "String", "group__string.html", "group__string" ],
     [ "Token", "group__token.html", "group__token" ],
-    [ "Token IDs", "group__token__ids.html", "group__token__ids" ]
+    [ "Token IDs", "group__token__ids.html", null ]
 ];
