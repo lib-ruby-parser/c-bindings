@@ -3,9 +3,8 @@ URL="$(1)" SAVE_AS="$(2)" ruby scripts/download_file.rb
 endef
 
 CODEGEN_EXE = codegen/codegen$(EXE)
-
 $(CODEGEN_EXE):
-	$(call download_file, https://github.com/lib-ruby-parser/nodes/releases/download/v0.52.0/codegen-$(TARGET)$(EXE), $@)
+	$(call download_file, https://github.com/lib-ruby-parser/lib-ruby-parser/releases/download/v4.0.2+ruby-3.1.1/codegen-$(TARGET)$(EXE), $@)
 	chmod +x $(CODEGEN_EXE)
 CLEAN += $(CODEGEN_EXE)
 
@@ -34,13 +33,9 @@ ruby-parser-c/src/message.rs: codegen/messages.rs.liquid $(CODEGEN_EXE)
 	$(CODEGEN_EXE) --template $< --write-to $@
 CLEAN += ruby-parser-c/src/message.rs
 
-# token_id.{h,c} codegen
-DO_CODEGEN_TOKEN_IDS = cargo run --example build_token_ids --manifest-path codegen/Cargo.toml
-
-token_ids.h: codegen/examples/build_token_ids.rs
-	$(DO_CODEGEN_TOKEN_IDS)
+token_ids.h: codegen/token_ids.h.liquid $(CODEGEN_EXE)
+	$(CODEGEN_EXE) --template $< --write-to $@
 CLEAN += token_ids.h
-update-depend: token_ids.h
 
 merge-headers:
 	wget -q https://github.com/iliabylich/merge_headers/releases/download/v1.0.0/merge-headers-$(TARGET) -O merge-headers
@@ -60,14 +55,10 @@ join-with = $(subst $(space),$1,$(strip $2))
 lib-ruby-parser.h: merge-headers $(H_FILES) token_ids.h nodes.h messages.h
 	./merge-headers \
 		--cc $(CC) \
-		--headers "$(call join-with,;,$(H_FILES));token_ids.h" \
+		--headers "$(call join-with,;,$(H_FILES))" \
 		--write-to lib-ruby-parser.h \
 		--include-guard-prefix LIB_RUBY_PARSER_ \
 		--output-guard LIB_RUBY_PARSER_H
 
 CLEAN += lib-ruby-parser.h
 update-depend: lib-ruby-parser.h
-
-# manual codegen task
-do-codegen:
-	$(DO_CODEGEN)

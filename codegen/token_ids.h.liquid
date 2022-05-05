@@ -1,0 +1,13 @@
+#ifndef LIB_RUBY_PARSER_TOKEN_IDS_H
+#define LIB_RUBY_PARSER_TOKEN_IDS_H
+
+/// @defgroup token_ids Token IDs
+/// @{
+/// @}
+
+{% for token in tokens %}
+/// {{ token.comment }}
+#define LIB_RUBY_PARSER_TOKEN_{{ token.name }} {{ token.value }}
+{% endfor %}
+
+#endif // LIB_RUBY_PARSER_TOKEN_IDS_H

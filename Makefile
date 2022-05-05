@@ -25,6 +25,7 @@ H_FILES = alloc.h \
 	parser_result.h \
 	source_line.h \
 	token.h \
+	token_ids.h \
 	token_rewriter.h
 O_FILES = $(foreach source,$(SOURCES),$(source).$(O))
 STATIC_LIB = libruby_parser_c.$(A)

@@ -100,13 +100,6 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: codegen
-        env:
-          RUSTFLAGS: ""
-        run: |
-          make do-codegen
-          make token_ids.h
-
       - name: run tests
         run: ${{ matrix.build.run }}
 
