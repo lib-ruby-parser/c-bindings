@@ -1,7 +1,11 @@
+define download_file
+URL="$(1)" SAVE_AS="$(2)" ruby scripts/download_file.rb
+endef
+
 CODEGEN_EXE = codegen/codegen$(EXE)
 
 $(CODEGEN_EXE):
-	wget -q https://github.com/lib-ruby-parser/nodes/releases/download/v0.52.0/codegen-$(TARGET)$(EXE) -O $(CODEGEN_EXE)
+	$(call download_file, https://github.com/lib-ruby-parser/nodes/releases/download/v0.52.0/codegen-$(TARGET)$(EXE), $@)
 	chmod +x $(CODEGEN_EXE)
 CLEAN += $(CODEGEN_EXE)
 
