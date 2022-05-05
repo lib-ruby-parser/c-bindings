@@ -62,3 +62,7 @@ lib-ruby-parser.h: merge-headers $(H_FILES) token_ids.h nodes.h messages.h
 
 CLEAN += lib-ruby-parser.h
 update-depend: lib-ruby-parser.h
+
+do-codegen: token_ids.h tests/messages_test.c tests/nodes_test.c nodes.h messages.h
+
+.PHONY: do-codegen

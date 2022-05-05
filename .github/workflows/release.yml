@@ -71,6 +71,9 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
+      - name: codegen
+        run: make do-codegen
+
       - name: make lib file
         run: |
           make ${{ matrix.build.lib_file }}
