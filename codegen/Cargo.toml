@@ -7,8 +7,3 @@ version = "0.1.0"
 
 [dependencies]
 cbindgen = "0.20.0"
-liquid = "0.26.0"
-serde = "1.0.136"
-
-[build-dependencies]
-lib-ruby-parser-nodes = {version = "0.49.0"}

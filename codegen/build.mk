@@ -1,31 +1,33 @@
-codegen/codegen$(EXE):
-	wget -q https://github.com/lib-ruby-parser/nodes/releases/download/v0.51.0/codegen-$(TARGET)$(EXE) -O codegen/codegen$(EXE)
-	chmod +x codegen/codegen$(EXE)
-CLEAN += codegen/codegen$(EXE)
+CODEGEN_EXE = codegen/codegen$(EXE)
+
+$(CODEGEN_EXE):
+	wget -q https://github.com/lib-ruby-parser/nodes/releases/download/v0.52.0/codegen-$(TARGET)$(EXE) -O $(CODEGEN_EXE)
+	chmod +x $(CODEGEN_EXE)
+CLEAN += $(CODEGEN_EXE)
 
 # Codegen deps
-tests/messages_test.c: codegen/messages_test.c.liquid codegen/codegen$(EXE)
-	codegen/codegen$(EXE) --template $< --write-to $@
+tests/messages_test.c: codegen/messages_test.c.liquid $(CODEGEN_EXE)
+	$(CODEGEN_EXE) --template $< --write-to $@
 CLEAN += tests/messages_test.c
 
-messages.h: codegen/messages.h.liquid codegen/codegen$(EXE)
-	codegen/codegen$(EXE) --template $< --write-to $@
+messages.h: codegen/messages.h.liquid $(CODEGEN_EXE)
+	$(CODEGEN_EXE) --template $< --write-to $@
 CLEAN += messages.h
 
-tests/nodes_test.c: codegen/nodes_test.c.liquid codegen/codegen$(EXE)
-	codegen/codegen$(EXE) --template $< --write-to $@
+tests/nodes_test.c: codegen/nodes_test.c.liquid $(CODEGEN_EXE)
+	$(CODEGEN_EXE) --template $< --write-to $@
 CLEAN += tests/nodes_test.c
 
-nodes.h: codegen/nodes.h.liquid codegen/codegen$(EXE)
-	codegen/codegen$(EXE) --template $< --write-to $@
+nodes.h: codegen/nodes.h.liquid $(CODEGEN_EXE)
+	$(CODEGEN_EXE) --template $< --write-to $@
 CLEAN += nodes.h
 
-ruby-parser-c/src/node.rs: codegen/nodes.rs.liquid codegen/codegen$(EXE)
-	codegen/codegen$(EXE) --template $< --write-to $@
+ruby-parser-c/src/node.rs: codegen/nodes.rs.liquid $(CODEGEN_EXE)
+	$(CODEGEN_EXE) --template $< --write-to $@
 CLEAN += ruby-parser-c/src/node.rs
 
-ruby-parser-c/src/message.rs: codegen/messages.rs.liquid codegen/codegen$(EXE)
-	codegen/codegen$(EXE) --template $< --write-to $@
+ruby-parser-c/src/message.rs: codegen/messages.rs.liquid $(CODEGEN_EXE)
+	$(CODEGEN_EXE) --template $< --write-to $@
 CLEAN += ruby-parser-c/src/message.rs
 
 # token_id.{h,c} codegen
