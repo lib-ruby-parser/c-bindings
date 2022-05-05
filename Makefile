@@ -61,7 +61,6 @@ clean:
 	rm -f *.$(O)
 	rm -f *.$(A)
 	rm -rf *.dSYM
-	touch codegen/build.rs
 
 doxygen: messages.h nodes.h token_ids.h
 	rm -rf docs

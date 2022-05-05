@@ -2,6 +2,7 @@ $(info Compiling x86_64-pc-windows-gnu target)
 
 O = o
 A = a
+EXE = .exe
 
 STATIC_LIB_FILE = libruby_parser_c.$(A)
 LIST_DEPS = ldd

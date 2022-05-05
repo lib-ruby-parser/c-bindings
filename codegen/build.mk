@@ -1,32 +1,31 @@
-CODEGEN_DEPS = $(wildcard codegen/codegen/*.rs)
-CODEGEN_DEPS += codegen/Cargo.toml
-CODEGEN_DEPS += codegen/build.rs
-
-DO_CODEGEN = cd codegen && touch build.rs && cargo build
+codegen/codegen$(EXE):
+	wget -q https://github.com/lib-ruby-parser/nodes/releases/download/v0.51.0/codegen-$(TARGET)$(EXE) -O codegen/codegen$(EXE)
+	chmod +x codegen/codegen$(EXE)
+CLEAN += codegen/codegen$(EXE)
 
 # Codegen deps
-tests/messages_test.c: $(CODEGEN_DEPS)
-	$(DO_CODEGEN)
+tests/messages_test.c: codegen/messages_test.c.liquid codegen/codegen$(EXE)
+	codegen/codegen$(EXE) --template $< --write-to $@
 CLEAN += tests/messages_test.c
 
-messages.h: $(CODEGEN_DEPS)
-	$(DO_CODEGEN)
+messages.h: codegen/messages.h.liquid codegen/codegen$(EXE)
+	codegen/codegen$(EXE) --template $< --write-to $@
 CLEAN += messages.h
 
-tests/nodes_test.c: $(CODEGEN_DEPS)
-	$(DO_CODEGEN)
+tests/nodes_test.c: codegen/nodes_test.c.liquid codegen/codegen$(EXE)
+	codegen/codegen$(EXE) --template $< --write-to $@
 CLEAN += tests/nodes_test.c
 
-nodes.h: $(CODEGEN_DEPS)
-	$(DO_CODEGEN)
+nodes.h: codegen/nodes.h.liquid codegen/codegen$(EXE)
+	codegen/codegen$(EXE) --template $< --write-to $@
 CLEAN += nodes.h
 
-ruby-parser-c/src/node.rs: $(CODEGEN_DEPS)
-	$(DO_CODEGEN)
+ruby-parser-c/src/node.rs: codegen/nodes.rs.liquid codegen/codegen$(EXE)
+	codegen/codegen$(EXE) --template $< --write-to $@
 CLEAN += ruby-parser-c/src/node.rs
 
-ruby-parser-c/src/message.rs: $(CODEGEN_DEPS)
-	$(DO_CODEGEN)
+ruby-parser-c/src/message.rs: codegen/messages.rs.liquid codegen/codegen$(EXE)
+	codegen/codegen$(EXE) --template $< --write-to $@
 CLEAN += ruby-parser-c/src/message.rs
 
 # token_id.{h,c} codegen

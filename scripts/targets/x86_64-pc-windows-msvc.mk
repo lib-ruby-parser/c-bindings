@@ -2,6 +2,7 @@ $(info Compiling x86_64-pc-windows-msvc target)
 
 O = obj
 A = lib
+EXE = .exe
 
 STATIC_LIB_FILE = ruby_parser_c.$(A)
 LIST_DEPS = dumpbin /dependents

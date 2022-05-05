@@ -17,3 +17,6 @@ echo "" >> .depend
 
 $CC -MT "benchmark/c-parser" -MM "benchmark/benchmark.c" >> .depend
 echo "" >> .depend
+
+sed 's/tests\/\.\.\///g' .depend > .depend-tmp
+mv .depend-tmp .depend

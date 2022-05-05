@@ -9,13 +9,19 @@ token_rewriter.o: token_rewriter.c token_rewriter.h token.h bytes.h loc.h \
   decoded_input.h string.h source_line.h token_ids.h shared_byte_list.h
 
 tests/runner: tests/runner.c tests/test_helper.h tests/api_test.c \
-  tests/../api.h tests/../parser_options.h tests/../string.h \
-  tests/../decoder.h tests/../bytes.h tests/../token_rewriter.h \
-  tests/../token.h tests/../loc.h tests/../decoded_input.h \
-  tests/../source_line.h tests/../token_ids.h \
-  tests/../shared_byte_list.h tests/../parser_result.h tests/../nodes.h \
-  tests/../diagnostic.h tests/../messages.h tests/../comment.h \
-  tests/../magic_comment.h
+  api.h parser_options.h string.h \
+  decoder.h bytes.h token_rewriter.h \
+  token.h loc.h decoded_input.h \
+  source_line.h token_ids.h \
+  shared_byte_list.h parser_result.h nodes.h \
+  diagnostic.h messages.h comment.h \
+  magic_comment.h tests/bytes_test.c tests/comment_test.c \
+  tests/decoded_input_test.c tests/decoder_test.c \
+  tests/diagnostic_test.c tests/loc_test.c tests/magic_comment_test.c \
+  tests/messages_test.c tests/nodes_test.c tests/parser_options_test.c \
+  tests/parser_result_test.c tests/shared_byte_list_test.c \
+  tests/source_line_test.c tests/string_test.c \
+  tests/token_rewriter_test.c tests/token_test.c
 
 benchmark/c-parser: benchmark/benchmark.c benchmark/../lib-ruby-parser.h \
   benchmark/rb_filelist.h

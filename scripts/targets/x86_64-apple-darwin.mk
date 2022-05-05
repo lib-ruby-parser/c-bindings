@@ -2,6 +2,7 @@ $(info Compiling x86_64-apple-darwin target)
 
 O = o
 A = a
+EXE =
 
 STATIC_LIB_FILE = libruby_parser_c.$(A)
 LIST_DEPS = otool -L

@@ -24,3 +24,4 @@ benchmark/stats
 *.benchmark-out
 docs/
 merge-headers
+codegen/codegen
