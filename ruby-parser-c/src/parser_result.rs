@@ -14,7 +14,7 @@ use lib_ruby_parser::{
 blob_type!(DecodedInputBlob, DecodedInput);
 blob_type!(ParserResultBlob, ParserResult);
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_decoded_input() -> DecodedInputBlob {
     DecodedInputBlob::from(DecodedInput {
@@ -33,7 +33,7 @@ pub extern "C" fn LIB_RUBY_PARSER_drop_decoded_input(decoded_input: *mut Decoded
     unsafe { std::ptr::drop_in_place(decoded_input) }
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_parser_result() -> ParserResultBlob {
     ParserResultBlob::from(ParserResult {

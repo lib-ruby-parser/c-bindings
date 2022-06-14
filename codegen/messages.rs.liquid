@@ -7,7 +7,7 @@ use crate::blob_type;
 blob_type!(DiagnosticMessageBlob, DiagnosticMessage);
 blob_type!(DiagnosticMessageListBlob, Vec<DiagnosticMessage>);
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 mod helpers {
     use super::*;
 
@@ -26,7 +26,7 @@ mod helpers {
 }
 
 {% for message in messages %}
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_{{ message.camelcase_name | camelcase_to_snakecase }}_message() -> DiagnosticMessageBlob {
     DiagnosticMessageBlob::from(
@@ -53,7 +53,7 @@ pub extern "C" fn LIB_RUBY_PARSER_drop_message(message: *mut DiagnosticMessage) 
     unsafe { std::ptr::drop_in_place(message) }
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_message_list() -> DiagnosticMessageListBlob {
     let mut v = helpers::make_messages();

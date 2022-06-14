@@ -7,31 +7,31 @@ use lib_ruby_parser::{
 
 blob_type!(CommentListBlob, Vec<Comment>);
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_comment_type_document() -> CommentType {
     CommentType::Document
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_comment_type_inline() -> CommentType {
     CommentType::Inline
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_comment_type_unknown() -> CommentType {
     CommentType::Unknown
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_comment(location: Loc, kind: CommentType) -> Comment {
     Comment { location, kind }
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_comment_list(comment: Comment) -> CommentListBlob {
     let mut v = vec![comment];

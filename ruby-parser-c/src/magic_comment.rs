@@ -7,33 +7,33 @@ use lib_ruby_parser::{
 
 blob_type!(MagicCommentListBlob, Vec<MagicComment>);
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_magic_comment_kind_encoding() -> MagicCommentKind {
     MagicCommentKind::Encoding
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_magic_comment_kind_frozen_string_literal(
 ) -> MagicCommentKind {
     MagicCommentKind::FrozenStringLiteral
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_magic_comment_kind_shareable_constant_value(
 ) -> MagicCommentKind {
     MagicCommentKind::ShareableConstantValue
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_magic_comment_kind_warn_indent() -> MagicCommentKind {
     MagicCommentKind::WarnIndent
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_magic_comment(
     kind: MagicCommentKind,
@@ -47,7 +47,7 @@ pub extern "C" fn lib_ruby_parser__test__make_magic_comment(
     }
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_magic_comment_list(
     magic_comment: MagicComment,

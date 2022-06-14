@@ -3,7 +3,7 @@ use lib_ruby_parser::source::SourceLine;
 
 blob_type!(SourceLineListBlob, Vec<SourceLine>);
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_source_line(
     start: usize,
@@ -17,7 +17,7 @@ pub extern "C" fn lib_ruby_parser__test__make_source_line(
     }
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_source_line_list(
     source_line: SourceLine,

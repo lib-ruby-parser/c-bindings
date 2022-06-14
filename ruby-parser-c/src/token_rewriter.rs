@@ -8,19 +8,19 @@ use lib_ruby_parser::{
 
 blob_type!(MaybeTokenRewriterBlob, Option<TokenRewriter>);
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_rewrite_action__drop() -> RewriteAction {
     RewriteAction::Drop
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_rewrite_action__keep() -> RewriteAction {
     RewriteAction::Keep
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_lex_state_action__set(
     next_state: i32,
@@ -28,13 +28,13 @@ pub extern "C" fn lib_ruby_parser__test__make_lex_state_action__set(
     LexStateAction::Set(next_state)
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_lex_state_action__keep() -> LexStateAction {
     LexStateAction::Keep
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_token_rewriter_result() -> TokenRewriterResult {
     TokenRewriterResult {
@@ -67,7 +67,7 @@ pub struct TokenRewriter {
     pub state: *mut std::ffi::c_void,
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__always_keep_token_rewriter() -> TokenRewriter {
     #[no_mangle]
@@ -89,7 +89,7 @@ pub extern "C" fn lib_ruby_parser__test__always_keep_token_rewriter() -> TokenRe
     }
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__always_rewrite_token_rewriter() -> TokenRewriter {
     #[no_mangle]
@@ -119,14 +119,14 @@ pub extern "C" fn lib_ruby_parser__test__always_rewrite_token_rewriter() -> Toke
     }
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__some_always_keep_token_rewriter() -> MaybeTokenRewriterBlob
 {
     MaybeTokenRewriterBlob::from(Some(lib_ruby_parser__test__always_keep_token_rewriter()))
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__none_token_rewriter() -> MaybeTokenRewriterBlob {
     MaybeTokenRewriterBlob::from(None)

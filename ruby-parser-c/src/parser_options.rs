@@ -45,7 +45,7 @@ impl From<CParserOptions> for lib_ruby_parser::ParserOptions {
     }
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_parser_options() -> ParserOptionsBlob {
     ParserOptionsBlob::from(CParserOptions {

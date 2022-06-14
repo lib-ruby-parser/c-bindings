@@ -2,7 +2,7 @@ CARGOFLAGS += --target $(TARGET)
 
 ifeq ($(BUILD_ENV), debug)
 RUST_ENV = debug
-CARGOFLAGS += --features=tests
+RUSTFLAGS += --cfg test
 else
 RUST_ENV = release
 CARGOFLAGS += --release

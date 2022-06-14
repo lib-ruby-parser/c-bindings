@@ -6,7 +6,7 @@ blob_type!(InputErrorBlob, InputError);
 blob_type!(DecoderResultBlob, DecoderResult);
 blob_type!(MaybeDecoderBlob, Option<Decoder>);
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_input_error__unsupported_encoding(
     s: StringBlob,
@@ -14,7 +14,7 @@ pub extern "C" fn lib_ruby_parser__test__make_input_error__unsupported_encoding(
     InputErrorBlob::from(InputError::UnsupportedEncoding(String::from(s)))
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_input_error__decoding_error(
     s: StringBlob,
@@ -27,7 +27,7 @@ pub extern "C" fn LIB_RUBY_PARSER_drop_input_error(input_error: *mut InputError)
     unsafe { std::ptr::drop_in_place(input_error) }
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_decoder_result__ok(
     bytes: ByteListBlob,
@@ -35,7 +35,7 @@ pub extern "C" fn lib_ruby_parser__test__make_decoder_result__ok(
     DecoderResultBlob::from(DecoderResult::Ok(bytes.into()))
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_decoder_result__err(
     err: InputErrorBlob,
@@ -58,7 +58,7 @@ pub struct Decoder {
     pub state: *mut std::ffi::c_void,
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__always_ok_decoder() -> Decoder {
     #[no_mangle]
@@ -79,7 +79,7 @@ pub extern "C" fn lib_ruby_parser__test__always_ok_decoder() -> Decoder {
     }
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__always_err_decoder() -> Decoder {
     #[no_mangle]
@@ -102,13 +102,13 @@ pub extern "C" fn lib_ruby_parser__test__always_err_decoder() -> Decoder {
     }
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__some_always_ok_decoder() -> MaybeDecoderBlob {
     MaybeDecoderBlob::from(Some(lib_ruby_parser__test__always_ok_decoder()))
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__none_decoder() -> MaybeDecoderBlob {
     MaybeDecoderBlob::from(None)

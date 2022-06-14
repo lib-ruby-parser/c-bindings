@@ -4,7 +4,7 @@ use lib_ruby_parser::Bytes;
 blob_type!(ByteListBlob, Vec<u8>);
 blob_type!(BytesBlob, Bytes);
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_byte_list(i1: u8, i2: u8, i3: u8) -> ByteListBlob {
     let mut v = vec![i1, i2, i3];
@@ -17,7 +17,7 @@ pub extern "C" fn LIB_RUBY_PARSER_drop_byte_list(byte_list: *mut Vec<u8>) {
     unsafe { std::ptr::drop_in_place(byte_list) }
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_bytes(i1: u8, i2: u8, i3: u8) -> BytesBlob {
     BytesBlob::from(Bytes::new(vec![i1, i2, i3]))

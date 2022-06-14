@@ -11,9 +11,6 @@ crate-type = ["staticlib"]
 [features]
 default = []
 
-# Include test APIs to run C tests
-tests = []
-
 # Use external allocator (compatible with C, needed for mingw target)
 use_external_allocator = []
 

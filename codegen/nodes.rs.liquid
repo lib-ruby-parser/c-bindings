@@ -7,7 +7,7 @@ use crate::blob_type;
 blob_type!(NodeBlob, Node);
 blob_type!(NodeListBlob, Vec<Node>);
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 mod helpers {
     use super::*;
 
@@ -41,7 +41,7 @@ mod helpers {
 }
 
 {% for node in nodes %}
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_{{ node.camelcase_name | camelcase_to_snakecase }}_node() -> NodeBlob {
     NodeBlob::from(
@@ -89,7 +89,7 @@ pub extern "C" fn LIB_RUBY_PARSER_drop_node(node: *mut Node) {
     unsafe { std::ptr::drop_in_place(node) }
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_node_list() -> NodeListBlob {
     let mut v = helpers::make_nodes();

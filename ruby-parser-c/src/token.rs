@@ -5,7 +5,7 @@ use lib_ruby_parser::{Bytes, LexState, Loc, Token};
 blob_type!(TokenBlob, Token);
 blob_type!(TokenListBlob, Vec<Token>);
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_token_eq(
     loc: Loc,
@@ -41,7 +41,7 @@ pub extern "C" fn LIB_RUBY_PARSER_drop_token(token: *mut Token) {
     unsafe { std::ptr::drop_in_place(token) }
 }
 
-#[cfg(feature = "tests")]
+#[cfg(test)]
 #[no_mangle]
 pub extern "C" fn lib_ruby_parser__test__make_token_list(token: TokenBlob) -> TokenListBlob {
     let mut v = vec![Token::from(token)];
