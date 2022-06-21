@@ -15,7 +15,7 @@ default = []
 use_external_allocator = []
 
 [dependencies]
-lib-ruby-parser = {version = "4.0.2+ruby-3.1.1"}
+lib-ruby-parser = {version = "4.0.3+ruby-3.1.1"}
 
 [profile.dev]
 panic = "abort"
