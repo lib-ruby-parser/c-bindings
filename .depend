@@ -23,6 +23,14 @@ tests/runner: tests/runner.c tests/test_helper.h tests/api_test.c \
   tests/source_line_test.c tests/string_test.c \
   tests/token_rewriter_test.c tests/token_test.c
 
-benchmark/c-parser: benchmark/benchmark.c benchmark/../lib-ruby-parser.h \
+benchmark/c-parser: benchmark/benchmark.c api.h \
+  parser_options.h string.h \
+  decoder.h bytes.h \
+  token_rewriter.h token.h loc.h \
+  decoded_input.h source_line.h \
+  token_ids.h shared_byte_list.h \
+  parser_result.h nodes.h \
+  diagnostic.h messages.h \
+  comment.h magic_comment.h \
   benchmark/rb_filelist.h
 

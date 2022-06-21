@@ -1,4 +1,4 @@
-benchmark/c-parser: $(STATIC_LIB) lib-ruby-parser.h benchmark/benchmark.c
+benchmark/c-parser: $(STATIC_LIB) benchmark/benchmark.c
 	$(call build_c_exe,benchmark/benchmark.c $(STATIC_LIB),benchmark/c-parser)
 
 define download_latest_bench_asset

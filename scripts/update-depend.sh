@@ -20,3 +20,6 @@ echo "" >> .depend
 
 sed 's/tests\/\.\.\///g' .depend > .depend-tmp
 mv .depend-tmp .depend
+
+sed 's/benchmark\/\.\.\///g' .depend > .depend-tmp
+mv .depend-tmp .depend

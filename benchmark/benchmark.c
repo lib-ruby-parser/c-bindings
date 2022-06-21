@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../lib-ruby-parser.h"
+#include "../api.h"
 #include "rb_filelist.h"
 #include "time.h"
 
