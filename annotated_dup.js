@@ -140,6 +140,7 @@ var annotated_dup =
     [ "LIB_RUBY_PARSER_Lambda", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lambda.html", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lambda" ],
     [ "LIB_RUBY_PARSER_LexStateAction", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lex_state_action.html", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lex_state_action" ],
     [ "LIB_RUBY_PARSER_Line", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___line.html", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___line" ],
+    [ "LIB_RUBY_PARSER_LineCol", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___line_col.html", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___line_col" ],
     [ "LIB_RUBY_PARSER_Loc", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc.html", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___loc" ],
     [ "LIB_RUBY_PARSER_Lvar", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lvar.html", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lvar" ],
     [ "LIB_RUBY_PARSER_Lvasgn", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lvasgn.html", "struct_l_i_b___r_u_b_y___p_a_r_s_e_r___lvasgn" ],

@@ -101,6 +101,8 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:gaf2de9fa1bd7c8aabc8e673f941bed34d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___line_col.html">LIB_RUBY_PARSER_LineCol</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__decoded__input.html#gaf2de9fa1bd7c8aabc8e673f941bed34d">LIB_RUBY_PARSER_line_col_for_pos</a> (<a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___decoded_input.html">LIB_RUBY_PARSER_DecodedInput</a> *input, size_t pos)</td></tr>
+<tr class="separator:gaf2de9fa1bd7c8aabc8e673f941bed34d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1f8e8a3d7a60fc570ebb2d5e1a2752b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__decoded__input.html#ga1f8e8a3d7a60fc570ebb2d5e1a2752b3">LIB_RUBY_PARSER_drop_decoded_input</a> (<a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___decoded_input.html">LIB_RUBY_PARSER_DecodedInput</a> *decoded_input)</td></tr>
 <tr class="separator:ga1f8e8a3d7a60fc570ebb2d5e1a2752b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -123,6 +125,35 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>DecodedInput destructor. Just like Rust/C++ destructor it performs cleanup of "embedded" resources. i.e. it doesn't call <code>free</code> on a given pointer. </p>
+
+</div>
+</div>
+<a id="gaf2de9fa1bd7c8aabc8e673f941bed34d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf2de9fa1bd7c8aabc8e673f941bed34d">&#9670;&nbsp;</a></span>LIB_RUBY_PARSER_line_col_for_pos()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___line_col.html">LIB_RUBY_PARSER_LineCol</a> LIB_RUBY_PARSER_line_col_for_pos </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_l_i_b___r_u_b_y___p_a_r_s_e_r___decoded_input.html">LIB_RUBY_PARSER_DecodedInput</a> *&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>pos</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns line/col for a given byte offset </p>
 
 </div>
 </div>
