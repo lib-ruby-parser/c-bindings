@@ -12,6 +12,8 @@ CFLAGS += -Wall -Wextra -Wpedantic -Weverything -Wdocumentation -g
 CFLAGS += -Wno-padded
 # ignore documentation, it has examples of syntax errors on purpose
 CFLAGS += -Wno-documentation-unknown-command
+# we do mix Rust extern C declarations and C tests
+CFLAGS += -Wno-declaration-after-statement
 
 ifeq ($(BUILD_ENV), debug)
 CFLAGS += -O0 -DTEST_ENV

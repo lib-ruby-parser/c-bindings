@@ -55,6 +55,8 @@ mod node;
 
 mod diagnostic;
 
+mod decoded_input;
+
 mod parser_result;
 
 #[no_mangle]

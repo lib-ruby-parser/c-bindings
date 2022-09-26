@@ -22,6 +22,16 @@ typedef struct
     LIB_RUBY_PARSER_ByteList bytes;
 } LIB_RUBY_PARSER_DecodedInput;
 
+typedef struct
+{
+    size_t line;
+    size_t col;
+} LIB_RUBY_PARSER_LineCol;
+
+/// Returns line/col for a given byte offset
+/// @ingroup decoded_input
+LIB_RUBY_PARSER_LineCol LIB_RUBY_PARSER_line_col_for_pos(LIB_RUBY_PARSER_DecodedInput *input, size_t pos);
+
 /// DecodedInput destructor.
 /// Just like Rust/C++ destructor it performs cleanup of "embedded" resources.
 /// i.e. it doesn't call `free` on a given pointer.

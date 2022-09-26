@@ -19,12 +19,19 @@ blob_type!(ParserResultBlob, ParserResult);
 pub extern "C" fn lib_ruby_parser__test__make_decoded_input() -> DecodedInputBlob {
     DecodedInputBlob::from(DecodedInput {
         name: String::from("(eval)"),
-        lines: vec![SourceLine {
-            start: 10,
-            end: 20,
-            ends_with_eof: false,
-        }],
-        bytes: vec![b'2', b' ', b'+', b' ', b'2'],
+        lines: vec![
+            SourceLine {
+                start: 0,
+                end: 6,
+                ends_with_eof: false,
+            },
+            SourceLine {
+                start: 6,
+                end: 8,
+                ends_with_eof: true,
+            },
+        ],
+        bytes: vec![b'2', b' ', b'+', b' ', b'2', b'\n', b'4', b'2'],
     })
 }
 
