@@ -15,12 +15,12 @@
 /// @ingroup bytes
 typedef struct
 {
+    /// Capacity of the byte list. Simply ignore this field.
+    size_t capacity;
+
     /// Pointer to beginning of the byte sequence
     /// NOTE: There are no guarantees that byte sequence is valid
     char *ptr;
-
-    /// Capacity of the byte list. Simply ignore this field.
-    size_t capacity;
 
     /// Length of the byte list
     size_t len;

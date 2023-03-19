@@ -34,8 +34,8 @@ void LIB_RUBY_PARSER_drop_token(LIB_RUBY_PARSER_Token *token);
 /// @ingroup token
 typedef struct
 {
-    LIB_RUBY_PARSER_Token *ptr;
     size_t capacity;
+    LIB_RUBY_PARSER_Token *ptr;
     size_t len;
 } LIB_RUBY_PARSER_TokenList;
 

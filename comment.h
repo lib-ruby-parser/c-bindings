@@ -36,10 +36,10 @@ typedef struct
 /// @ingroup comments
 typedef struct
 {
-    /// Pointer to beginning of the comments list
-    LIB_RUBY_PARSER_Comment *ptr;
     /// Capacity
     size_t capacity;
+    /// Pointer to beginning of the comments list
+    LIB_RUBY_PARSER_Comment *ptr;
     /// Length of the array
     size_t len;
 } LIB_RUBY_PARSER_CommentList;

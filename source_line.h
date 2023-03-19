@@ -21,8 +21,8 @@ typedef struct
 /// @ingroup source_line
 typedef struct
 {
-    LIB_RUBY_PARSER_SourceLine *ptr;
     size_t capacity;
+    LIB_RUBY_PARSER_SourceLine *ptr;
     size_t len;
 } LIB_RUBY_PARSER_SourceLineList;
 

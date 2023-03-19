@@ -3,7 +3,7 @@
 #include "rb_filelist.h"
 #include "time.h"
 
-int main()
+int main(void)
 {
     char *filelist_path = getenv("FILELIST_PATH");
     if (filelist_path == NULL)
