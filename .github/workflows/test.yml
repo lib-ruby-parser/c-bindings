@@ -47,7 +47,7 @@ jobs:
           - name: build for mac m1 (zig)
             os: macos-latest
             target: aarch64-apple-darwin
-            cc: zig cc
+            cc: zig cc --target=aarch64-macos
             ar: ar
             zig: true
             run: |
