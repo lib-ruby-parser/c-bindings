@@ -1,4 +1,5 @@
 name: release
+
 on:
   push:
     tags:
@@ -25,6 +26,7 @@ jobs:
             target: x86_64-unknown-linux-gnu
             cc: clang-12
             ar: llvm-ar-12
+            zig: false
             lib_file: libruby_parser_c.a
             output_artifact_name: libruby_parser_c-x86_64-unknown-linux-gnu.a
 
@@ -32,12 +34,22 @@ jobs:
             target: x86_64-apple-darwin
             cc: clang
             ar: ar
+            zig: false
             lib_file: libruby_parser_c.a
             output_artifact_name: libruby_parser_c-x86_64-apple-darwin.a
+
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            cc: zig cc
+            ar: ar
+            zig: true
+            lib_file: libruby_parser_c.a
+            output_artifact_name: libruby_parser_c-aarch64-apple-darwin.a
 
           - os: windows-latest
             target: x86_64-pc-windows-msvc
             cc: cl.exe
+            zig: false
             lib_file: libruby_parser_c.lib
             output_artifact_name: libruby_parser_c-x86_64-pc-windows-msvc.lib
 
@@ -45,6 +57,7 @@ jobs:
             target: x86_64-pc-windows-gnu
             cc: gcc
             ar: ar
+            zig: false
             lib_file: libruby_parser_c.a
             output_artifact_name: libruby_parser_c-x86_64-pc-windows-gnu.a
     steps:
@@ -71,6 +84,18 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
+      - name: fix link.exe on windows
+        if: runner.os == 'Windows'
+        run: rm "C:\\Program Files\\Git\\usr\\bin\\link.exe"
+
+      - name: install zig
+        uses: goto-bus-stop/setup-zig@v2
+        if: ${{ matrix.build.zig }}
+
+      - name: install cargo-zigbuild
+        run: cargo install cargo-zigbuild
+        if: ${{ matrix.build.zig }}
+
       - name: codegen
         run: make do-codegen
 
@@ -84,28 +109,6 @@ jobs:
         with:
           name: ${{ matrix.build.output_artifact_name }}
           path: ${{ matrix.build.output_artifact_name }}
-
-      - name: download benchmark assets
-        run: make benchmark/download
-
-      - name: build C runner
-        run: make benchmark/c-parser
-
-      # NOTE: ruby/setup-ruby breaks paths for MSVC,
-      #       and so all files must be compiled before running Ruby
-      - name: install ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "3.1.1"
-
-      - name: benchmark
-        run: make benchmark/record
-
-      - name: upload ${{ matrix.build.target }}.benchmark-out
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ matrix.build.target }}.benchmark-out
-          path: ${{ matrix.build.target }}.benchmark-out
 
   build-header:
     name: build header file
@@ -132,60 +135,11 @@ jobs:
           name: lib-ruby-parser.h
           path: lib-ruby-parser.h
 
-  build-release-notes:
-    name: build release notes
-    needs:
-      - 'build-lib'
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
-
-      # download benchmark results
-      - uses: actions/download-artifact@v2
-        with: { name: x86_64-unknown-linux-gnu.benchmark-out }
-
-      - uses: actions/download-artifact@v2
-        with: { name: x86_64-apple-darwin.benchmark-out }
-
-      - uses: actions/download-artifact@v2
-        with: { name: x86_64-pc-windows-msvc.benchmark-out }
-
-      - uses: actions/download-artifact@v2
-        with: { name: x86_64-pc-windows-gnu.benchmark-out }
-
-      - name: build release notes
-        run: |
-          ls -l
-          echo "### Results for x86_64-unknown-linux-gnu:" >> release_notes.md
-          echo "" >> release_notes.md
-          cat x86_64-unknown-linux-gnu.benchmark-out >> release_notes.md
-          echo "" >> release_notes.md
-          echo "### Results for x86_64-apple-darwin:" >> release_notes.md
-          echo "" >> release_notes.md
-          cat x86_64-apple-darwin.benchmark-out >> release_notes.md
-          echo "" >> release_notes.md
-          echo "### Results for x86_64-pc-windows-msvc:" >> release_notes.md
-          echo "" >> release_notes.md
-          cat x86_64-pc-windows-msvc.benchmark-out >> release_notes.md
-          echo "" >> release_notes.md
-          echo "### Results for x86_64-pc-windows-gnu:" >> release_notes.md
-          echo "" >> release_notes.md
-          cat x86_64-pc-windows-gnu.benchmark-out >> release_notes.md
-          cat release_notes.md
-
-      - name: upload release_notes.md
-        uses: actions/upload-artifact@v2
-        with:
-          name: release_notes.md
-          path: release_notes.md
-
   make-release:
     name: release
     needs:
       - 'build-lib'
       - 'build-header'
-      - 'build-release-notes'
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -199,6 +153,9 @@ jobs:
         with: { name: libruby_parser_c-x86_64-apple-darwin.a }
 
       - uses: actions/download-artifact@v2
+        with: { name: libruby_parser_c-aarch64-apple-darwin.a }
+
+      - uses: actions/download-artifact@v2
         with: { name: libruby_parser_c-x86_64-pc-windows-msvc.lib }
 
       - uses: actions/download-artifact@v2
@@ -207,10 +164,6 @@ jobs:
       # header file
       - uses: actions/download-artifact@v2
         with: { name: lib-ruby-parser.h }
-
-      # release notes
-      - uses: actions/download-artifact@v2
-        with: { name: release_notes.md }
 
       - name: show artifacts
         run: ls -l
@@ -221,5 +174,4 @@ jobs:
           allowUpdates: true
           artifactErrorsFailBuild: true
           artifacts: "libruby_parser_c-*,lib-ruby-parser.h"
-          bodyFile: release_notes.md
           token: ${{ secrets.GITHUB_TOKEN }}
