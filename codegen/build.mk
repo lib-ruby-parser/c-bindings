@@ -38,7 +38,7 @@ token_ids.h: codegen/token_ids.h.liquid $(CODEGEN_EXE)
 CLEAN += token_ids.h
 
 merge-headers:
-	wget -q https://github.com/iliabylich/merge_headers/releases/download/v1.0.0/merge-headers-$(TARGET) -O merge-headers
+	wget -q https://github.com/iliabylich/merge_headers/releases/download/v1.0.1/merge-headers-$(TARGET) -O merge-headers
 	chmod +x merge-headers
 CLEAN += merge-headers
 
