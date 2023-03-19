@@ -31,6 +31,7 @@ jobs:
             target: x86_64-unknown-linux-gnu
             cc: clang-12
             ar: llvm-ar-12
+            zig: false
             run: make tests/run
 
           - name: test on mac (clang)
@@ -38,14 +39,25 @@ jobs:
             target: x86_64-apple-darwin
             cc: clang
             ar: ar
+            zig: false
             run: |
               $CC --version
               make tests/run
+
+          - name: build for mac m1 (zig)
+            os: macos-latest
+            target: aarch64-apple-darwin
+            cc: zig cc
+            ar: ar
+            zig: true
+            run: |
+              make libruby_parser_c.a
 
           - name: test on windows (msvc)
             os: windows-latest
             target: x86_64-pc-windows-msvc
             cc: cl.exe
+            zig: false
             run: |
               make tests/run
 
@@ -54,6 +66,7 @@ jobs:
             target: x86_64-pc-windows-gnu
             cc: gcc
             ar: ar
+            zig: false
             run: |
               gcc --version
               make tests/run
@@ -63,6 +76,7 @@ jobs:
             target: x86_64-unknown-linux-gnu
             cc: clang-12
             ar: llvm-ar-12
+            zig: false
             run: |
               sudo apt-get update
               sudo apt-get install -y valgrind libtool-bin
@@ -74,6 +88,7 @@ jobs:
             target: x86_64-unknown-linux-gnu
             cc: clang-12
             ar: llvm-ar-12
+            zig: false
             run: ASAN_OPTIONS=detect_leaks=1 CFLAGS="-fsanitize=address" make tests/run
 
     steps:
@@ -103,6 +118,14 @@ jobs:
       - name: fix link.exe on windows
         if: runner.os == 'Windows'
         run: rm "C:\\Program Files\\Git\\usr\\bin\\link.exe"
+
+      - name: install zig
+        uses: goto-bus-stop/setup-zig@v2
+        if: ${{ matrix.build.zig }}
+
+      - name: install cargo-zigbuild
+        run: cargo install cargo-zigbuild
+        if: ${{ matrix.build.zig }}
 
       - name: codegen
         run: make do-codegen

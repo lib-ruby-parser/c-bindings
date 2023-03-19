@@ -6,6 +6,7 @@ EXE =
 
 STATIC_LIB_FILE = libruby_parser_c.$(A)
 LIST_DEPS = ldd
+CARGO_BUILD = cargo build
 
 CFLAGS += -Wall -Wextra -g -target $(TARGET)
 
@@ -28,3 +29,4 @@ $(CC) $(1) $(CFLAGS) -lpthread -ldl -lm -o $(2)
 endef
 
 BENCHMARK_RUNNER_ASSET_NAME = rust-parser-x86_64-unknown-linux-gnu
+CODEGEN_ASSET_NAME = codegen-x86_64-unknown-linux-gnu
