@@ -51,8 +51,8 @@ void LIB_RUBY_PARSER_drop_diagnostic(LIB_RUBY_PARSER_Diagnostic *diagnostic);
 /// @ingroup diagnostic
 typedef struct
 {
-    LIB_RUBY_PARSER_Diagnostic *ptr;
     size_t capacity;
+    LIB_RUBY_PARSER_Diagnostic *ptr;
     size_t len;
 } LIB_RUBY_PARSER_DiagnosticList;
 

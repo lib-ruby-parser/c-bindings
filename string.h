@@ -15,8 +15,8 @@
 /// @ingroup string
 typedef struct
 {
-    char *ptr;
     size_t capacity;
+    char *ptr;
     size_t len;
 } LIB_RUBY_PARSER_String;
 

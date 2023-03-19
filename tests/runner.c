@@ -33,7 +33,7 @@ void run_tests_as_group(const char *group_name, const test_fn_t *tests, size_t c
     }
 }
 
-int main()
+int main(void)
 {
     lib_ruby_parser__test__print_build_info();
     fprintf(stderr, "C build info:\n");

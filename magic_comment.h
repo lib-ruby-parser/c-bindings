@@ -35,8 +35,8 @@ typedef struct
 /// @ingroup magic_comment
 typedef struct
 {
-    LIB_RUBY_PARSER_MagicComment *ptr;
     size_t capacity;
+    LIB_RUBY_PARSER_MagicComment *ptr;
     size_t len;
 } LIB_RUBY_PARSER_MagicCommentList;
 
