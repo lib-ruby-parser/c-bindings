@@ -1,4 +1,4 @@
-$(info Compiling x86_64-apple-darwin target)
+$(info Compiling aarch64-apple-darwin target)
 
 O = o
 A = a
@@ -6,7 +6,7 @@ EXE =
 
 STATIC_LIB_FILE = libruby_parser_c.$(A)
 LIST_DEPS = otool -L
-CARGO_BUILD = cargo build
+CARGO_BUILD = cargo zigbuild
 
 CFLAGS += -Wall -Wextra -Wpedantic -Weverything -Wdocumentation -g
 # but disable -Wpadded, we inherit Rust layouts
@@ -34,5 +34,6 @@ define build_c_exe
 $(CC) $(1) $(CFLAGS) -o $(2)
 endef
 
-BENCHMARK_RUNNER_ASSET_NAME = rust-parser-x86_64-apple-darwin
+BENCHMARK_RUNNER_ASSET_NAME = rust-parser-aarch64-apple-darwin
 CODEGEN_ASSET_NAME = codegen-x86_64-apple-darwin
+

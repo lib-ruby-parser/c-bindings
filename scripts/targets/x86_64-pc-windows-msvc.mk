@@ -6,6 +6,7 @@ EXE = .exe
 
 STATIC_LIB_FILE = ruby_parser_c.$(A)
 LIST_DEPS = dumpbin /dependents
+CARGO_BUILD = cargo build
 
 # /nologo
 CFLAGS += /bigobj /MT /Zi
@@ -29,3 +30,4 @@ $(CC) $(CFLAGS) ws2_32.lib advapi32.lib userenv.lib bcrypt.lib $(1) /link /OUT:$
 endef
 
 BENCHMARK_RUNNER_ASSET_NAME = rust-parser-x86_64-pc-windows-msvc.exe
+CODEGEN_ASSET_NAME = codegen-x86_64-pc-windows-msvc.exe

@@ -6,6 +6,7 @@ EXE = .exe
 
 STATIC_LIB_FILE = libruby_parser_c.$(A)
 LIST_DEPS = ldd
+CARGO_BUILD = cargo build
 
 CFLAGS += -Wall -Wextra -g
 # mingw uses a different allocator from Rust?
@@ -31,3 +32,4 @@ $(CC) $(1) $(CFLAGS) -lws2_32 -luserenv -lbcrypt -o $(2)
 endef
 
 BENCHMARK_RUNNER_ASSET_NAME = rust-parser-x86_64-pc-windows-gnu.exe
+CODEGEN_ASSET_NAME = codegen-x86_64-pc-windows-msvc.exe
