@@ -146,23 +146,23 @@ jobs:
         uses: actions/checkout@v2
 
       # lib files
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v4.1.7
         with: { name: libruby_parser_c-x86_64-unknown-linux-gnu.a }
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v4.1.7
         with: { name: libruby_parser_c-x86_64-apple-darwin.a }
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v4.1.7
         with: { name: libruby_parser_c-aarch64-apple-darwin.a }
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v4.1.7
         with: { name: libruby_parser_c-x86_64-pc-windows-msvc.lib }
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v4.1.7
         with: { name: libruby_parser_c-x86_64-pc-windows-gnu.a }
 
       # header file
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v4.1.7
         with: { name: lib-ruby-parser.h }
 
       - name: show artifacts
